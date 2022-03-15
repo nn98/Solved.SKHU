@@ -1,9 +1,9 @@
 # 2022-1SoftP
 
 
-[deatil]#1 Project Setting documentation
+[detail]#1 Project Setting documentation
 
-  [/deatil]
+  [/detail]
 
 #2 Front-MainPage
 
