@@ -1,14 +1,26 @@
 # 2022-1SoftP
 
+* * *
 
-[detail]#1 Project Setting documentation
+<details><summary>#1 Project Setting documentation</summary>
+  
+  </details>
 
-  [/detail]
+<details><summary>#2 Front-MainPage</summary>
+  
+  </details>
 
-#2 Front-MainPage
+<details><summary>#3 Front-User Profile</summary>
+  
+  </details>
 
-#3 Front-User Profile
+<details><summary>#4 Front-Algorithm/Problem Suggestion</summary>
+  
+  </details>
 
-#4 Front-Algorithm/Problem Suggestion
+<details><summary>#5 Front-BaekJoon Assignments</summary>
+  
+  </details>
 
-#5 Front-BaekJoon Assignments
+
+
