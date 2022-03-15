@@ -1,5 +1,5 @@
-# 2022-1SoftP
-
+# 2022-1Software Capstonedesign
+##### prof. Lee
 * * *
 
 <details><summary>#1 Project Setting documentation</summary>
