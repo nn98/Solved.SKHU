@@ -3,7 +3,7 @@
 * * *
 
 <details><summary>#1 Project Setting documentation</summary>
-    - [JS 개발 환경 기본](https://webnautes.tistory.com/1473)
+  - [JS 개발 환경 기본](https://webnautes.tistory.com/1473)
   </details>
 
 <details><summary>#2 Front-MainPage</summary>
