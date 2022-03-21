@@ -8,7 +8,7 @@
   
   </details>
 
-<details><summary>#2 Front-MainPage</summary>
+<details><summary>#2 Front-MainPage</summary><div markdown="1">
   |문제점|해결방식|
   |--|--|
   |자바 코드에서 생성된 버튼 조작 어려움|xml에서 버튼 생성-자바 코드에서 R, R.id 활용해 버튼 정의 후 조작|
