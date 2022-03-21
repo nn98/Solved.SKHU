@@ -38,7 +38,7 @@
   |문제점|해결방식|날짜|
   |--|--|--|
   |1번 문제 mysql 연동 문제|검색을 해보니 connection.end()를 사용하면 안되었는데 connection.end()를 사용하여서현재 json으로 값이 도출이 되지 않았습니다|2022-03-21|
-  |2번 문제 pull 한 후 pullrequest|vscode를 이용해서 github pullrequest라는 플러그인을 이용하여 해결|2022-03-21|
+  |2번 문제 pull 한 후 pullrequest|새로운 브랜치를 만든 후(github상에 있지 않는) github remote를 하고, 필요파일을 만든다 그 후에 git pull origin main을 한다 그 이후에 vscode를 이용해서 github pullrequest라는 플러그인을 이용하여 해결|2022-03-21|
   |||2022-03-21|
   
   </details>
