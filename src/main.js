@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import './styles/main.css'
-import './styles/common2.css'
+import { useEffect, useState } from 'react'
+import './styles/main.scss'
 import Footer from './footer'
 import MainMenu from './mainMenu'
 
@@ -29,14 +28,14 @@ const Main = () => {
   }, [])
 
   return (
-    <>
+    <div className="main">
       <MainMenu test={1} />
       <div className="container2">
         <div className="nav">&gt; 시스템 관리 &gt; 로그기록</div>
 
         <div className="panel">
           <h1 className="panel-header">로그기록 목록</h1>
-          <div className="panel-body">
+          <div className="panel_body">
             <button type="button" className="btn2 red small right">
               선택항목 삭제
             </button>
@@ -116,7 +115,7 @@ const Main = () => {
 
         <Footer />
       </div>
-    </>
+    </div>
   )
 }
 

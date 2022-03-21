@@ -1,5 +1,3 @@
-import React from 'react'
-import './styles/common2.css'
 import { Link } from 'react-router-dom'
 
 const MainMenu = (props) => {

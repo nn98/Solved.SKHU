@@ -1,13 +1,12 @@
 import React from 'react'
-import './styles/main.css'
-import './styles/signup.css'
+import './styles/signup.scss'
 import Footer from './footer'
 import MainMenu from './mainMenu'
 import { Link } from 'react-router-dom'
 
 const SignUp = () => {
   return (
-    <>
+    <div className="signup">
       <MainMenu test={1} />
       <div className="container2">
         <div className="nav">&gt; 회원가입</div>
@@ -72,7 +71,7 @@ const SignUp = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   )
 }
 

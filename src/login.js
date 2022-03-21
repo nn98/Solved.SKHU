@@ -1,6 +1,4 @@
-import React from 'react'
-import './styles/login.css'
-import './styles/common2.css'
+import './styles/login.scss'
 import SkhuLogo from './image/skhu_logo.png'
 import Footer from './footer'
 import MainMenu from './mainMenu'
@@ -8,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 const Login = () => {
   return (
-    <>
+    <div className="login">
       <MainMenu />
       <div className="container2">
         <div className="login-form">
@@ -42,7 +40,7 @@ const Login = () => {
 
         <Footer />
       </div>
-    </>
+    </div>
   )
 }
 

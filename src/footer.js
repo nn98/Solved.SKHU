@@ -1,5 +1,3 @@
-import React from 'react'
-import './styles/common2.css'
 import Skhu from './image/skhu.png'
 
 const Footer = () => {
