@@ -12,6 +12,7 @@
   
   |문제점|해결방식|날짜|
   |--|--|--|
+  |validateDOMNesting(...): <tr> cannot appear as a child of <table>. react에서 <table> 안에 바로 <tr> 태그 사용 시 오류| <table> 안에 <thead> or <tbody>를 쓰고 <tr> 태그를 사용해야 함 (이유 = React가 rerender를 진행할 때, DOM tree가 예상과는 달리 진행될 수 있으므로)|2022-03-22|
   |react의 페이지간 이동 기능을 알지 못헸음|Route로 경로를 정하고 Link로 경로로 이동시키면 된다는 것을 깨달음 |2022-03-21|
   |login, main, signup의 css가 모든 컴포넌트에 중첩 적용되어 문제|전역 css인 common2.css는 .scss로 변경 후 app.js에 적용하고 각 컴포넌트에 적용할 각 css들은 scss로 변경 후 최상위 태그에 적용|2022-03-21|
   
