@@ -7,19 +7,21 @@ const MainMenu = (props) => {
     <>
       <div className="main-menu">
         <table>
-          <tr>
-            <td>
-              <img
-                src={Logo}
-                style={{ float: 'left', marginLeft: '10%' }}
-                alt="profile"
-              />
-            </td>
-            <td>Menu</td>
-            <td>Menu</td>
-            <td>Menu</td>
-            <td>Menu</td>
-          </tr>
+          <thead>
+            <tr>
+              <td>
+                <img
+                  src={Logo}
+                  style={{ float: 'left', marginLeft: '10%' }}
+                  alt="profile"
+                />
+              </td>
+              <td>Menu</td>
+              <td>Menu</td>
+              <td>Menu</td>
+              <td>Menu</td>
+            </tr>
+          </thead>
         </table>
         <hr style={{ width: '98%', background: '#000' }} />
       </div>

@@ -1,15 +1,13 @@
-import logo from './logo.svg'
 import './App.css'
 import Footer from './footer'
 import MainMeue from './mainMenu'
+import MainPage from './mainPage'
 
 function App() {
   return (
     <div className="App">
       <MainMeue />
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      <MainPage />
       <Footer />
     </div>
   )
