@@ -4,7 +4,6 @@
 
 <details><summary>#1 Project Setting documentation</summary>
   
-  * 회의록  
   # 회의록  
   |회의 No.|회의내용|날짜|
   |--|--|--|
