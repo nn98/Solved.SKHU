@@ -54,6 +54,14 @@
   
   </details>
   
+<details><summary>#X Static contents</summary>
+  
+  #### 개발 방향성
+  **알고리즘 카테고리별 문제 정렬/제공**(first) >> 알고리즘 추천(second)
+  
+  </details>
+
+  
 ## 추가 구현 기능
 - 사용자간 의견 교류/질의응답용 게시판  
 - 게시판 기여 정도에 따른 리워드  
