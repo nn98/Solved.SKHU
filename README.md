@@ -4,7 +4,7 @@
 
 <details><summary>#1 Project Setting documentation</summary>
   
-  * 회의록
+  * 회의록  
   |회의 No.|회의내용|날짜|
   |--|--|--|
   |0|팀 결성 및 역할 배분|2022-03-08|
