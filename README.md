@@ -47,7 +47,4 @@
   </details>
   
 <details><summary>#16 Back/Crawling_Practice</summary><div markdown="1">
-  |문제점|해결방식|날짜|
-  |---|---|---|
-  |1번 문제 <br>Jsoup |검색을 해보니 connection.end()를 사용하면 안되었는데 <br>connection.end()를 사용하여서현재 json으로 <br>값이 도출이 되지 않았습니다 그래서 <br>.end()를 주석처리 하고 진행하였다.|2022-03-21|
   </details>
