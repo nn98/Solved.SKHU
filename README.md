@@ -43,8 +43,11 @@
   |2번 문제 <br>pullrequest|새로운 브랜치를 만든 후(github상에 있지 않는) github remote를 하고, <br>필요파일을 만든다 그 후에 git pull origin main을 한다 그 이후에 vscode를 이용해서 <br>github pullrequest라는 플러그인을 이용하여 해결|2022-03-21|
   |3번 문제 <br>pullrequest|inflearn공부를 통하여 실습한 sql connect 풀 리퀘스트를 하려하였지만, <br>git pull에서부터 문제가 생겨서 <br>git pull origin main --allow-unrelated-histories로  연결하여서 해결하였다.|2022-03-22|
   |||2022-03-22|
+
+  </details>
   
 <details><summary>#16 Back/Crawling_Practice</summary><div markdown="1">
+  |문제점|해결방식|날짜|
   |--|--|--|
   |1번 문제 <br>크롤링 시 jsoup <br>사용 안될 때(Java)|mavenrepository.com 검색<br>
   -> org.jsoup 검색<br>
@@ -59,3 +62,5 @@
   </dependency><br>
     </dependencies><br>
     </details><br>|2022-03-23|
+
+    </details>
