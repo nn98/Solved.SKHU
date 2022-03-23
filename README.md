@@ -49,18 +49,5 @@
 <details><summary>#16 Back/Crawling_Practice</summary><div markdown="1">
   |문제점|해결방식|날짜|
   |--|--|--|
-  |1번 문제 <br>크롤링 시 jsoup <br>사용 안될 때(Java)|mavenrepository.com 검색<br>
-  -> org.jsoup 검색<br>
-  -> Jsoup Java HTML Parser의 jsoup<br>
-  -> 최신 버전 클릭<br>
-  -> Maven에 있는 것 복사한 후 pom.xml 파일에 아래 내용 삽입(아래 내용처럼 삽입)<br>
-  <dependencies><br>
-  <dependency><br>
-      <groupId>org.jsoup</groupId><br>
-      <artifactId>jsoup</artifactId><br>
-      <version>1.14.3(버전은 그 버전에 맞게 수정)</version><br>
-  </dependency><br>
-    </dependencies><br>
-    </details><br>|2022-03-23|
-
-    </details>
+  |1번 문제 <br>크롤링 Jsoup<br>안될 때(Java)|mavenrepository.com<br>-> org.jsoup 검색<br>-> Jsoup Java HTML Parser의 jsoup <br>-> 최신 버전 클릭<br>-> Maven에 있는 것 복사한 후 pom.xml 파일에 아래 내용 삽입<br>->  <dependencies><br><dependency><br><groupId>org.jsoup</groupId><br><artifactId>jsoup</artifactId><br><version>1.14.3(버전은 그 버전에 맞게 수정)</version><br></dependency><br></dependencies>|2022-03-21|
+  </details>
