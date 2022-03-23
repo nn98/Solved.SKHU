@@ -1,3 +1,10 @@
+.main-menu {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .main-menu table {
   margin: 1% 0 1% 5%;
   border-spacing: 40px 0;
@@ -13,6 +20,10 @@
 }
 
 .footer {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   position: relative;
   transform: translateY(-100%);
   background-color: #fff;
