@@ -3,7 +3,7 @@ import React from "react";
 const QnA = () => {
   return (
     <div>
-      <h1> 바보야 </h1>
+      <h1>질문 페이지</h1>
     </div>
   );
 };

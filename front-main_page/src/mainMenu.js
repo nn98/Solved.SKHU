@@ -23,18 +23,29 @@ const MainMenu = (props) => {
                 </Link>
               </td>
               <td>
-                <button>Menu</button>
-              </td>
-              <td>
-                <button>Menu</button>
-              </td>
-              <td>
-                <Link to="/QnA">
-                  <button>질문 게시판</button>
+                <Link to="/userPage">
+                  <button>User</button>
                 </Link>
               </td>
               <td>
-                <button>Menu</button>
+                <Link to="/algorithm">
+                  <button>Algorithm</button>
+                </Link>
+              </td>
+              <td>
+                <Link to="/QnA">
+                  <button>QnA</button>
+                </Link>
+              </td>
+              <td>
+                <Link to="/rank">
+                  <button>Rank</button>
+                </Link>
+              </td>
+              <td>
+                <Link to="/professor">
+                  <button>Professor</button>
+                </Link>
               </td>
             </tr>
           </thead>
