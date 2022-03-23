@@ -3,9 +3,12 @@
   border-spacing: 10px 0;
   width: 60%;
 }
-.main-menu td {
+.main-menu td button {
   font-size: x-large;
   color: #888;
+  border: 0;
+  outline: 0;
+  background-color: #fff;
 }
 
 .footer {
