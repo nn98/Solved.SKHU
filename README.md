@@ -54,8 +54,8 @@
   |||2022-03-22|
   
   </details>
-<details><summary>#16 Back/Crawling_Practice</summary><div markdown="1"> 
-  
+<details><summary>#16 Back/Crawling_Practice</summary><div markdown="1">
+  </details>  
 <details><summary>#X Static contents</summary>
   
   ### 개발 방향성
