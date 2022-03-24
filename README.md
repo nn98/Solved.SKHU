@@ -14,6 +14,7 @@
   |4. |화면 구상 기획, 레이아웃 작성|2022-03-18|
   |5. |작업 내용 공유/단체 스터디, 의견 교환|2022-03-21|
   |6. |지도교수 피드백, 개발 방향성 수정|2022-03-22|
+  |7. |백-프론트 협업 회의|2022-03-23|
   |. ||2022-03-00|
   - [JS 개발 환경 설정_기본](https://webnautes.tistory.com/1473)
   
@@ -54,8 +55,10 @@
   |||2022-03-22|
   
   </details>
+  
 <details><summary>#16 Back/Crawling_Practice</summary><div markdown="1">
   </details>  
+  
 <details><summary>#X Static contents</summary>
   
   ### 개발 방향성
