@@ -16,10 +16,10 @@
   |6. |지도교수 피드백, 개발 방향성 수정|2022-03-22|
   |7. |백-프론트 협업 회의|2022-03-23|
   |8. |프론트엔드 user페이지 화면 개발 회의|2022-03-25|
+  |9. ||2022-03-00|
   - [JS 개발 환경 설정_기본](https://webnautes.tistory.com/1473)
   - [React 기본 세팅](https://blog.ull.im/engineering/2018/11/30/using-react-in-vs-code.html)
   - [React 터미널 권한 세팅](https://hellcoding.tistory.com/entry/VSCode-%EC%98%A4%EB%A5%98-%EC%9D%B4-%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%97%90%EC%84%9C-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC-%EC%8B%A4%ED%96%89%ED%95%A0-%EC%88%98-%EC%97%86%EC%9C%BC%EB%AF%80%EB%A1%9C)
-  |9. ||2022-03-00|
   
   </details>
 
