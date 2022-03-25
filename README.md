@@ -72,6 +72,17 @@
   
   </details>  
   
+<details><summary>#17 Back/Crawling_Practice</summary><div markdown="1">
+  
+  |구현|구현 중점|담당자|
+  |--|--|--|
+  |익명|익명이되 비밀번호 설정 후 수정/작성자 확인 가능|이현복|
+  |문제점|해결방식|날짜|
+  |--|--|--|
+  ||||
+  
+  </details>  
+  
 <details><summary>#X Static contents</summary>
   
   ### 개발 방향성
