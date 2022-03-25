@@ -15,7 +15,7 @@
   |5. |작업 내용 공유/단체 스터디, 의견 교환|2022-03-21|
   |6. |지도교수 피드백, 개발 방향성 수정|2022-03-22|
   |7. |백-프론트 협업 회의|2022-03-23|
-  |. ||2022-03-00|
+  |8. |프론트엔드 user페이지 화면 개발 회의|2022-03-25|
   - [JS 개발 환경 설정_기본](https://webnautes.tistory.com/1473)
   
   </details>
@@ -24,7 +24,7 @@
   
   |문제점|해결방식|날짜|
   |--|--|--|
-  |react의 <br>페이지간 이동 기능을 <br>알지 못헸음|Route로 경로를 정하고 <br>Link로 경로로 이동시키면 된다는 것을 깨달음 |2022-03-21|
+  |react의 <br>페이지간 이동 기능을 <br>알지 못함|Route로 경로를 정하고 <br>Link로 경로로 이동시키면 된다는 것을 깨달음 |2022-03-21|
   |login, main, signup의 <br>css가 모든 컴포넌트에 <br>중첩 적용되어 문제|전역 css인 common2.css는 .scss로 변경 후 <br>app.js에 적용하고 각 컴포넌트에 적용할 각 css들은 <br>scss로 변경 후 최상위 태그에 적용|2022-03-21|
   - [React 기본 세팅](https://blog.ull.im/engineering/2018/11/30/using-react-in-vs-code.html)
   
@@ -32,9 +32,9 @@
 
 <details><summary>#3 Front-User Profile</summary>
   
-  |회의 No.|회의내용|날짜|
+  |문제점|해결방식|날짜|
   |--|--|--|
-  ||||
+  |iframe solved 연결 문제|solved의 유저페이지를 직접 연결하면 404 에러가 발생<br>solved의 유저페이지/history로 우회하여 문제 해결|2022-03-25|
   
   </details>
 
@@ -63,7 +63,7 @@
   
 <details><summary>#16 Back/Crawling_Practice</summary><div markdown="1">
   
-  |회의 No.|회의내용|날짜|
+  |문제점|해결방식|날짜|
   |--|--|--|
   |1번 문제 크롤링 시<br>Jsoup 사용안될 때|https://mavenrepository.com<br>->org.jsoup 검색<br>->Jsoup Java HTML Parser<br>jsoup 최신버전 클릭<br>->pom.xml파일에br->dependencies에 추가하기|2022-03-25|
   
