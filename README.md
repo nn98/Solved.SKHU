@@ -32,6 +32,10 @@
 
 <details><summary>#3 Front-User Profile</summary>
   
+  |회의 No.|회의내용|날짜|
+  |--|--|--|
+  ||||
+  
   </details>
 
 <details><summary>#4 Front-Algorithm/Problem Suggestion</summary>
@@ -61,7 +65,7 @@
   
   |회의 No.|회의내용|날짜|
   |--|--|--|
-  |1번 문제 크롤링 시<br>Jsoup 사용안될 때|https://mavenrepository.com<br>->org.jsoup 검색<br>->Jsoup Java HTML Parser<br>jsoup 최신버전 클릭<br>->pom.xml파일에br->dependencies에 추가하기|
+  |1번 문제 크롤링 시<br>Jsoup 사용안될 때|https://mavenrepository.com<br>->org.jsoup 검색<br>->Jsoup Java HTML Parser<br>jsoup 최신버전 클릭<br>->pom.xml파일에br->dependencies에 추가하기|2022-03-25|
   
   </details>  
   
