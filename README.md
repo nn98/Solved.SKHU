@@ -57,6 +57,11 @@
   </details>
   
 <details><summary>#16 Back/Crawling_Practice</summary><div markdown="1">
+  
+  |회의 No.|회의내용|날짜|
+  |--|--|--|
+  ||||
+  
   </details>  
   
 <details><summary>#X Static contents</summary>
