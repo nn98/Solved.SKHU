@@ -17,6 +17,9 @@
   |7. |백-프론트 협업 회의|2022-03-23|
   |8. |프론트엔드 user페이지 화면 개발 회의|2022-03-25|
   - [JS 개발 환경 설정_기본](https://webnautes.tistory.com/1473)
+  - [React 기본 세팅](https://blog.ull.im/engineering/2018/11/30/using-react-in-vs-code.html)
+  - [React 터미널 권한 세팅](https://hellcoding.tistory.com/entry/VSCode-%EC%98%A4%EB%A5%98-%EC%9D%B4-%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%97%90%EC%84%9C-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC-%EC%8B%A4%ED%96%89%ED%95%A0-%EC%88%98-%EC%97%86%EC%9C%BC%EB%AF%80%EB%A1%9C)
+  |9. ||2022-03-00|
   
   </details>
 
@@ -26,7 +29,6 @@
   |--|--|--|
   |react의 <br>페이지간 이동 기능을 <br>알지 못함|Route로 경로를 정하고 <br>Link로 경로로 이동시키면 된다는 것을 깨달음 |2022-03-21|
   |login, main, signup의 <br>css가 모든 컴포넌트에 <br>중첩 적용되어 문제|전역 css인 common2.css는 .scss로 변경 후 <br>app.js에 적용하고 각 컴포넌트에 적용할 각 css들은 <br>scss로 변경 후 최상위 태그에 적용|2022-03-21|
-  - [React 기본 세팅](https://blog.ull.im/engineering/2018/11/30/using-react-in-vs-code.html)
   
   </details>
 
