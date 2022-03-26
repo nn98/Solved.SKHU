@@ -1,5 +1,5 @@
 # 2022-1Software Capstonedesign
-##### prof. Lee
+##### prof. Lee 백준 프로그래밍 저지 문제 분류/추천 서비스
 * * *
 
 <details><summary>#1 Project Setting documentation</summary>
