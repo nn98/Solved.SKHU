@@ -1,6 +1,8 @@
 # 2022-1Software Capstonedesign
+
 ##### prof. Lee 백준 프로그래밍 저지 문제 분류/추천 서비스
-* * *
+
+---
 
 <details><summary>#1 Project Setting documentation</summary>
   
@@ -96,9 +98,8 @@
   
   </details>
 
-  
 ## 추가 구현 기능
-- 사용자간 의견 교류/질의응답용 게시판  
-- 게시판 기여 정도에 따른 리워드  
-- 코딩 테스트/과제 풀이  
-  
+
+- 사용자간 의견 교류/질의응답용 게시판
+- 게시판 기여 정도에 따른 리워드
+- 코딩 테스트/과제 풀이
