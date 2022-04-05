@@ -1,0 +1,21 @@
+.user {
+  text-align: center;
+}
+.user table {
+  border: 1px solid #000;
+  width: 40%;
+  margin: 0 5%;
+}
+.user .content {
+  width: 100%;
+}
+.user td {
+  border: 1px solid #000;
+}
+
+.user .problem {
+  text-align: left;
+  border: 1px solid #000;
+  width: 80%;
+  margin: 5% 10%;
+}

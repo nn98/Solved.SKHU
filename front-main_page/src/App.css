@@ -25,7 +25,7 @@
   -ms-user-select: none;
   user-select: none;
   position: relative;
-  transform: translateY(-100%);
+  /* transform: translateY(-100%); */
   background-color: #fff;
   font-size: 3%;
   color: #888;
