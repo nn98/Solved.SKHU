@@ -17,6 +17,7 @@ const UserPage = () => {
         <div className="problem">
           {save.user_problems.map((problem, index) => (
             <a
+              key={index}
               href={'https://www.acmicpc.net/problem/' + problem}
               style={{ textDecorationLine: 'none', color: '#000' }}
             >
