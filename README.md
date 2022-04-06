@@ -47,9 +47,9 @@
   ## Errors-#2
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |react의 <br>페이지간 이동 기능을 <br>알지 못함|Route로 경로를 정하고 <br>Link로 경로로 이동시키면 된다는 것을 깨달음 |2022-03-21||
-  |login, main, signup의 <br>css가 모든 컴포넌트에 <br>중첩 적용되어 문제|전역 css인 common2.css는 .scss로 변경 후 <br>app.js에 적용하고 각 컴포넌트에 적용할 각 css들은 <br>scss로 변경 후 최상위 태그에 적용|2022-03-21||
-  |react에서 table 안에 바로<br>tr 태그 사용 시 오류| table 안에 thead 태그 or tbody 태그를 쓰고 tr 태그를 사용해야 함<br>(이유 = React가 rerender를 진행할 때,<br>DOM tree가 예상과는 달리 진행될 수 있으므로)|2022-03-22||
+  |react의 <br>페이지간 이동 기능을 <br>알지 못함|Route로 경로를 정하고 <br>Link로 경로로 이동시키면 된다는 것을 깨달음 |2022-03-21|`S`|
+  |login, main, signup의 <br>css가 모든 컴포넌트에 <br>중첩 적용되어 문제|전역 css인 common2.css는 .scss로 변경 후 <br>app.js에 적용하고 각 컴포넌트에 적용할 각 css들은 <br>scss로 변경 후 최상위 태그에 적용|2022-03-21|`S`|
+  |react에서 table 안에 바로<br>tr 태그 사용 시 오류| table 안에 thead 태그 or tbody 태그를 쓰고 tr 태그를 사용해야 함<br>(이유 = React가 rerender를 진행할 때,<br>DOM tree가 예상과는 달리 진행될 수 있으므로)|2022-03-22|`L`|
   
   </details>
 
@@ -63,8 +63,10 @@
   ## Errors-#3
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |iframe solved 연결 문제|solved의 유저페이지를 직접 연결하면 404 에러가 발생<br>solved의 유저페이지/history로 우회하여 문제 해결|2022-03-25||
-  |iframe안의 크기를 페이지간 이동할<br>경우 일정하게 표시해야함|inline style의 height를 100vh로 설정하여 해결<br>vh = viewport height <br>현재 실행중인 스크린 크기에 맞춰 상대적 크기를 반환|2022-03-25||
+  |iframe solved 연결 문제|solved의 유저페이지를 직접 연결하면 404 에러가 발생<br>solved의 유저페이지/history로 우회하여 문제 해결|2022-03-25|`L`|
+  |iframe안의 크기를 페이지간 이동할<br>경우 일정하게 표시해야함|inline style의 height를 100vh로 설정하여 해결<br>vh = viewport height <br>현재 실행중인 스크린 크기에 맞춰 상대적 크기를 반환|2022-03-25|`S`|
+  |map 함수에서 key값 미사용 오류|react에서 map()메서드를 사용하기 위해서는 배열마다 독립적인 key값을 설정 해줘야 함<br>불필요한 리렌더링을 방지|2022-04-05|`L`|
+
   </details>
 
 <details><summary>#4 Front-Algorithm/Problem Suggestion</summary>
