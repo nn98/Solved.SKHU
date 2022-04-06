@@ -1,5 +1,27 @@
+.use {
+  width: 90%;
+  margin: 0 5%;
+}
+
+.user .tearTable {
+  width: 50%;
+  float: left;
+  margin-bottom: 5%;
+}
+
+.user .tagTable {
+  width: 50%;
+}
+
+.user .problem {
+  margin-right: 5%;
+  width: 40%;
+  float: right;
+  border: 1px solid #000;
+}
+
 .user {
-  text-align: left;
+  text-align: center;
 }
 .user h1 {
   margin-left: 5%;
@@ -8,27 +30,7 @@
   border: 1px solid #000;
 }
 
-.user .tearTable {
-  width: 30%;
-  margin: 5%;
-  float: left;
-}
-
-.user .tagTable {
-  width: 30%;
-  margin: 5%;
-  float: left;
-}
-
 .user td {
-  width: 8.5%;
+  width: 9%;
   border: 1px solid #000;
-}
-
-.user .problem {
-  float: none;
-  text-align: left;
-  border: 1px solid #000;
-  width: 30%;
-  margin: 5% 10%;
 }
