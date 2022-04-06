@@ -1,3 +1,4 @@
+
 import "./App.css";
 import Footer from "./footer";
 import MainMenu from "./mainMenu";
@@ -7,6 +8,7 @@ import UserPage from "./pages/userPage";
 import Algorithm from "./pages/algorithm";
 import Rank from "./pages/rank";
 import Professor from "./pages/professor";
+// import { QnA } from './pages'
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -26,4 +28,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
