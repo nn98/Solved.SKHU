@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import './qna.css'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 
 const userCreateStyle = {
@@ -18,18 +17,43 @@ const userCreateStyle = {
 }
 
 const QnA = () => {
+  const [createUserName, setCreateUserName] = useState('')
+  const [createUserPassword, setCreateUserPassword] = useState('')
+  const [users, setUser] = useState([])
+
   const [commentAddName, setCommentAddName] = useState('')
   const [commentAddPassword, setCommentAddPassword] = useState('')
   const [commentAddContent, setCommentAddContent] = useState('')
   const [comments, setComments] = useState([])
+
   const add = (props) => {
-    const body = {
-      addName: props.commentAddContent,
-      addPasseword: props.commentAddPassword,
-      addContent: props.commentAddContent,
+    try {
+      const body = {
+        addName: props.commentAddContent,
+        addPasseword: props.commentAddPassword,
+        addContent: props.commentAddContent,
+      }
+      console.log(comments[0])
+      setComments([...comments, body])
+    } catch (error) {
+      alert('실패하였습니다.')
+      console.error(error)
     }
-    // console.log(body)
-    setComments([...comments, body])
+  }
+
+  const createUser = (props) => {
+    try {
+      const body = {
+        name: props.createUserName,
+        Password: props.createUserPassword,
+      }
+      setCreateUserName('')
+      setCreateUserPassword('')
+      setUser([...users, body])
+    } catch (error) {
+      alert('실패하였습니다.')
+      console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -51,23 +75,25 @@ const QnA = () => {
           <Modal open={open} onClose={userHandleOpen}>
             <Box sx={userCreateStyle}>
               <input
-                // onChange={(e) => setCreateUserName(e.target.value)}
+                onChange={(e) => setCreateUserName(e.target.value)}
                 placeholder="Name"
                 type="text"
-                // value={createUserName}
+                value={createUserName}
               />
               <input
-                // onChange={(e) => setCreateUserPassword(e.target.value)}
+                onChange={(e) => setCreateUserPassword(e.target.value)}
                 placeholder="password"
                 type="password"
-                // value={createUserPassword}
+                value={createUserPassword}
               />
 
               <button
-                // disabled={!createUserName || !createUserPassword}
+                disabled={!createUserName || !createUserPassword}
                 name="commenting"
                 value="Signup"
-                // onClick={() => createUser({ createUserName, createUserPassword })}
+                onClick={() =>
+                  createUser({ createUserName, createUserPassword })
+                }
               >
                 Signup
               </button>
