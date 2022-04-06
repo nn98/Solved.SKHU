@@ -6,16 +6,18 @@
 }
 .user table {
   border: 1px solid #000;
-  width: 40%;
-  margin: 0 5%;
 }
 
 .user .tearTable {
-  display: inline-block;
+  width: 30%;
+  margin: 5%;
+  float: left;
 }
 
-.user .tag {
-  display: inline-block;
+.user .tagTable {
+  width: 30%;
+  margin: 5%;
+  float: left;
 }
 
 .user td {
@@ -27,6 +29,6 @@
   float: none;
   text-align: left;
   border: 1px solid #000;
-  width: 80%;
+  width: 30%;
   margin: 5% 10%;
 }

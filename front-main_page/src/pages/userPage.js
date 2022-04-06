@@ -11,11 +11,12 @@ const UserPage = () => {
         {save.Id} {save.class_level}
       </h1>
       <h1>{save.user_tear}</h1>
-      <div
-        dangerouslySetInnerHTML={{ __html: save.solved_tear_chart }}
-        style={{ width: "40%", display: "inline-block" }}
-      ></div>
+
       <div className="tearTable">
+        <div
+          dangerouslySetInnerHTML={{ __html: save.solved_tear_chart }}
+          style={{ width: "50%", float: "left" }}
+        ></div>
         <table>
           <thead></thead>
           {save.solved_tear.map((BigTears) => (
@@ -36,12 +37,12 @@ const UserPage = () => {
         </table>
       </div>
 
-      <div
-        dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
-        style={{ width: "40%", display: "inline-block" }}
-      ></div>
-      <div>
-        <table className="tag">
+      <div className="tagTable">
+        <div
+          dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
+          style={{ width: "40%", float: "left" }}
+        ></div>
+        <table>
           <thead></thead>
           <tbody>
             {save.solved_tag.map((tags) => (
