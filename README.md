@@ -156,7 +156,7 @@
   ## Errors-#17
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |||||
+  |setState 데이터 추가 시 기존 데이터에 덧붙이기|setState사용시 const [test, setTest] = useState([]) 인 경우 <br> setTest([...test, 추가 내용])이렇게 해 주어야 기존에 있던 test에 추가 내용을 덧붙이기 가능|2022-04-06|`L`|
   
   </details>  
   
@@ -165,8 +165,8 @@
   ## Implements-#21
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |setState 데이터 추가 시 기존 데이터에 덧붙이기|setState사용시 const [test, setTest] = useState([]) 인 경우 <br/>setTest([...test, 추가 내용])이렇게 해 주어야
-기존에 있던 test에 추가 내용을 덧붙이기 가능|2022-04-06|`L`|
+  |||||
+  
   
   ## Errors-#21
   |문제점|해결방식|날짜|Dev|
