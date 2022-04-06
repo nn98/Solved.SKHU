@@ -1,19 +1,26 @@
 .user {
-  text-align: center;
+  text-align: left;
+}
+.user h1 {
+  margin-left: 5%;
 }
 .user table {
   border: 1px solid #000;
   width: 40%;
   margin: 0 5%;
 }
-.user .content {
-  width: 100%;
+
+.user .tearTable {
+  display: inline-block;
 }
+
 .user td {
+  width: 8.5%;
   border: 1px solid #000;
 }
 
 .user .problem {
+  float: none;
   text-align: left;
   border: 1px solid #000;
   width: 80%;

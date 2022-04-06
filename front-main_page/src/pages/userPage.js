@@ -1,43 +1,23 @@
-import React from 'react'
-import './user.css'
-import usersJ from './users.json'
+import React from "react";
+import "./user.css";
+import usersJ from "./users.json";
 
 const UserPage = () => {
-  const save = usersJ
+  const save = usersJ;
 
   return (
     <div className="user">
-      <div>
-        <h1>{save.Id}</h1>
-      </div>
-      <div>
-        <h1>{save.user_tear}</h1>
-      </div>
-      <div>
-        <div className="problem">
-          {save.user_problems.map((problem, index) => (
-            <a
-              key={index}
-              href={'https://www.acmicpc.net/problem/' + problem}
-              style={{ textDecorationLine: 'none', color: '#000' }}
-            >
-              {problem} {''}
-            </a>
-          ))}
-        </div>
-        <table className="tear">
-          <thead>
-            <tr>
-              <th
-                colSpan="3"
-                dangerouslySetInnerHTML={{ __html: save.solved_tear_chart }}
-                style={{ width: '100%' }}
-              >
-                {/* 그냥 넣음 ㅂㄷㅂㄷ */}
-              </th>
-            </tr>
-          </thead>
-
+      <h1>
+        {save.Id} {save.class_level}
+      </h1>
+      <h1>{save.user_tear}</h1>
+      <div
+        dangerouslySetInnerHTML={{ __html: save.solved_tear_chart }}
+        style={{ width: "40%", display: "inline-block" }}
+      ></div>
+      <div className="tearTable">
+        <table>
+          <thead></thead>
           {save.solved_tear.map((BigTears) => (
             <tbody key={BigTears.big_tear}>
               <tr>
@@ -54,30 +34,41 @@ const UserPage = () => {
             </tbody>
           ))}
         </table>
+      </div>
 
-        <table className="tag">
-          <thead>
-            <tr>
-              <th
-                colSpan="3"
-                dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
-                style={{ width: '100%' }}
-              ></th>
+      <table className="tag">
+        <thead>
+          <tr>
+            <th
+              colSpan="3"
+              dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
+              style={{ width: "100%" }}
+            ></th>
+          </tr>
+        </thead>
+        <tbody>
+          {save.solved_tag.map((tags) => (
+            <tr key={tags.name}>
+              <td>{tags.name}</td>
+              <td>{tags.problem}</td>
+              <td>{tags.EXP}</td>
             </tr>
-          </thead>
-          <tbody>
-            {save.solved_tag.map((tags) => (
-              <tr key={tags.name}>
-                <td>{tags.name}</td>
-                <td>{tags.problem}</td>
-                <td>{tags.EXP}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </tbody>
+      </table>
+      <div className="problem">
+        {save.user_problems.map((problem, index) => (
+          <a
+            key={index}
+            href={"https://www.acmicpc.net/problem/" + problem}
+            style={{ textDecorationLine: "none", color: "#000" }}
+          >
+            {problem} {""}
+          </a>
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserPage
+export default UserPage;
