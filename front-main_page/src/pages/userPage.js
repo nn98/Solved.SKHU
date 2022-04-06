@@ -36,26 +36,25 @@ const UserPage = () => {
         </table>
       </div>
 
-      <table className="tag">
-        <thead>
-          <tr>
-            <th
-              colSpan="3"
-              dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
-              style={{ width: "100%" }}
-            ></th>
-          </tr>
-        </thead>
-        <tbody>
-          {save.solved_tag.map((tags) => (
-            <tr key={tags.name}>
-              <td>{tags.name}</td>
-              <td>{tags.problem}</td>
-              <td>{tags.EXP}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div
+        dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
+        style={{ width: "40%", display: "inline-block" }}
+      ></div>
+      <div>
+        <table className="tag">
+          <thead></thead>
+          <tbody>
+            {save.solved_tag.map((tags) => (
+              <tr key={tags.name}>
+                <td>{tags.name}</td>
+                <td>{tags.problem}</td>
+                <td>{tags.EXP}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <div className="problem">
         {save.user_problems.map((problem, index) => (
           <a
