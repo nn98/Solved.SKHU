@@ -15,7 +15,6 @@
 .user .tagTable {
   background-color: #f0f0f0;
   width: 50%;
-  /* display: flow-root; */
   overflow: hidden;
   padding: 1%;
   border-radius: 1%;
@@ -28,23 +27,48 @@
   border: 1px solid #000;
 }
 
-.user {
-  text-align: center;
-}
 .user h1 {
   margin-left: 5%;
 }
-.user table {
-  border: 1px solid #000;
+
+.user th {
+  width: 9%;
+  text-align: right;
+}
+.user th:nth-child(1) {
+  text-align: left;
+}
+.user th:nth-child(3) {
+  width: 30%;
 }
 
 .user td {
   width: 9%;
-  border: 1px solid #000;
+  text-align: right;
+}
+.user td:nth-child(1) {
+  text-align: left;
 }
 
 .user p {
   text-align: left;
   color: gray;
   padding-left: 2%;
+}
+
+.user .BigTears {
+  border: 0px;
+  text-align: left;
+  padding: 2% 2% 2% 0%;
+}
+
+.user .BigTears:hover {
+  cursor: pointer;
+}
+
+.user .tagTable th:nth-child(1) {
+  text-align: center;
+}
+.user .tagTable td:nth-child(1) {
+  text-align: center;
 }

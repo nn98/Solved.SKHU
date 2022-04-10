@@ -14,12 +14,17 @@ const UserPage = () => {
   ]);
 
   const onClickEnter = (tear) => {
-    let open = opens;
-    open[tear] = true;
+    let open = [false, false, false, false, false, false];
+
+    for (let i = 0; i < opens.length; i++) {
+      open[i] = opens[i];
+    }
+    open[tear] = !open[tear];
     setOpens(open);
   };
 
   useEffect(() => {}, [opens]);
+
   return (
     <div className="user">
       <h1>
@@ -38,14 +43,18 @@ const UserPage = () => {
             <thead>
               <tr>
                 <th>레벨</th>
-                <th>문제 수</th>
+                <th>문제</th>
                 <th>EXP</th>
               </tr>
             </thead>
             {save.solved_tear.map((BigTears, index) => (
               <tbody key={BigTears.big_tear}>
                 <tr>
-                  <td colSpan="3" onClick={() => onClickEnter(index)}>
+                  <td
+                    colSpan="3"
+                    onClick={() => onClickEnter(index)}
+                    className="BigTears"
+                  >
                     {BigTears.big_tear}
                   </td>
                 </tr>
@@ -92,7 +101,7 @@ const UserPage = () => {
             <thead>
               <tr>
                 <th>태그</th>
-                <th>문제 수</th>
+                <th>문제</th>
                 <th>EXP</th>
               </tr>
             </thead>
