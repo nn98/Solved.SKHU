@@ -17,38 +17,37 @@ const userCreateStyle = {
 }
 
 const QnA = () => {
+  // 유저를 위한 name password
   const [createUserName, setCreateUserName] = useState('')
   const [createUserPassword, setCreateUserPassword] = useState('')
+
+  // 유저 보관함
   const [users, setUser] = useState([])
 
-  const [commentAddName, setCommentAddName] = useState('')
-  const [commentAddPassword, setCommentAddPassword] = useState('')
-  const [commentAddContent, setCommentAddContent] = useState('')
-  const [comments, setComments] = useState([])
-
-  const add = (props) => {
-    try {
-      const body = {
-        addName: props.commentAddContent,
-        addPasseword: props.commentAddPassword,
-        addContent: props.commentAddContent,
-      }
-      console.log(comments[0])
-      setComments([...comments, body])
-    } catch (error) {
-      alert('실패하였습니다.')
-      console.error(error)
-    }
-  }
-
+  // 새 유저를 생성하기 위한 createUser 함수
   const createUser = (props) => {
     try {
+      // 유저 정보 body에 저장
       const body = {
         name: props.createUserName,
         Password: props.createUserPassword,
       }
+
+      if (users.length > 0) {
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].name === props.createUserName) {
+            setCreateUserName('')
+            setCreateUserPassword('')
+            return alert('현재 사용 중인 사용자가 있습니다.')
+          }
+        }
+      }
+      console.log('test')
+      // createUserName과 createUserPassword 빈칸으로 만들기
       setCreateUserName('')
       setCreateUserPassword('')
+
+      // 유저 보관함에 추가
       setUser([...users, body])
     } catch (error) {
       alert('실패하였습니다.')
@@ -56,12 +55,41 @@ const QnA = () => {
     }
   }
 
+  // 댓글 추가에 필요한 name password content
+  const [commentAddName, setCommentAddName] = useState('')
+  const [commentAddPassword, setCommentAddPassword] = useState('')
+  const [commentAddContent, setCommentAddContent] = useState('')
+
+  // 댓글 보관함
+  const [comments, setComments] = useState([])
+
+  // 컨텐츠를 댓글에 보관하기 위한 add 함수
+  const add = (props) => {
+    try {
+      // 먼저 댓글 받은 유저의 정보와 쓴 댓글 내용을 body에 저장
+      const body = {
+        addName: props.commentAddContent,
+        addPasseword: props.commentAddPassword,
+        addContent: props.commentAddContent,
+      }
+
+      console.log(comments[0])
+
+      // 댓글 보관함에 저장
+      setComments([...comments, body])
+    } catch (error) {
+      alert('실패하였습니다.')
+      console.error(error)
+    }
+  }
+
+  // 댓글보관함이 수정 될 때 마다 리로딩
   useEffect(() => {
-    console.log(comments)
-  }, [comments])
+    console.log('users: ' + users)
+    console.log('comments: ' + comments)
+  }, [comments, users])
 
-  // 댓글이 제대로 등록 될때 실행(사실 props.error의 내용이 변한때마다 실행)
-
+  // 회원가입 열고 닫기 창
   const [open, setOpen] = useState(false)
   const userHandleOpen = () => setOpen(!open)
 
