@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './qna.css'
-
+import Delete from './delete'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 
@@ -94,6 +94,37 @@ const QnA = () => {
 
       // 오류 메세지 출력
       return alert('사용자가 없습니다.')
+    } catch (error) {
+      alert('실패하였습니다.')
+      console.error(error)
+    }
+  }
+
+  // 삭제 기능
+  const commentDelete = async (props) => {
+    try {
+      // const body = {
+      //   deleteId: props.commentDeleteId,
+      //   deleteName: props.commentDeleteName,
+      //   deletePassword: props.commentDeletePassword,
+      // }
+
+      // 유저를 찾기 위한 반목문 실행
+      for (let i = 0; i < users.length; i++) {
+        // user의 이름과 입력받은 이름이 같으면
+        if (users[i].name === props.commentDeleteName) {
+          // 만약 비밀번호만 다르다면
+          if (users[i].password !== props.commentDeletePassword)
+            // 오류 출력
+            return alert('비밀번호가 같지 않습니다.')
+          // 댓글 보관함에 삭제 후 저장
+          setComments(comments.filter((value, index) => index !== i))
+          return
+        }
+
+        // 오류 메세지 출력
+        return alert('사용자가 없습니다.')
+      }
     } catch (error) {
       alert('실패하였습니다.')
       console.error(error)
@@ -197,6 +228,14 @@ const QnA = () => {
           <div className="comments_print_user">name = {comment.addName}</div>
           {/* 댓글 내용 */}
           <div className="comments_print_content">{comment.addContent}</div>
+
+          {/* 삭제 버튼 */}
+          <Delete
+            // 삭제할 id를 delete 컴포넌트에 전송
+            commentDeleteId={comment.id}
+            // commentDelete 함수를 delete 컴포넌트에 전송
+            commentDelete={commentDelete}
+          />
         </div>
       ))}
     </div>
