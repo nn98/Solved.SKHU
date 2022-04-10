@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./user.css";
 import usersJ from "./users.json";
 
 const UserPage = () => {
   const save = usersJ;
-  // const [opens, setOpens] = useState([
-  //   { BRONZE: "false" },
-  //   { SILVER: "false" },
-  //   { GOLD: "false" },
-  //   { PLATINUM: "false" },
-  //   { DIAMOND: "false" },
-  //   { RUBY: "false" },
-  // ]);
+  const [opens, setOpens] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
-  // const onClickEnter = (tear) => {
-  //   setOpens(
-  //     opens.map((open) =>
-  //       opens.tear === "false" ? { ...open, tear: !open.tear } : open
-  //     )
-  //   );
-  // };
+  const onClickEnter = (tear) => {
+    let open = opens;
+    open[tear] = true;
+    setOpens(open);
+  };
 
+  useEffect(() => {}, [opens]);
   return (
     <div className="user">
       <h1>
@@ -43,19 +42,21 @@ const UserPage = () => {
                 <th>EXP</th>
               </tr>
             </thead>
-            {save.solved_tear.map((BigTears) => (
+            {save.solved_tear.map((BigTears, index) => (
               <tbody key={BigTears.big_tear}>
                 <tr>
-                  <td
-                    colSpan="3"
-                    // onClick={onClickEnter(BigTears.big_tear)}
-                  >
+                  <td colSpan="3" onClick={() => onClickEnter(index)}>
                     {BigTears.big_tear}
                   </td>
                 </tr>
                 <>
                   {BigTears.type.map((tear) => (
-                    <tr key={tear.tear}>
+                    <tr
+                      key={tear.tear}
+                      style={{
+                        display: opens[index] === false ? "none" : "revert",
+                      }}
+                    >
                       <td>{tear.tear}</td>
                       <td>{tear.problem}</td>
                       <td>{tear.EXP}</td>
