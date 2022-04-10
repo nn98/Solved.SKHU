@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./user.css";
 import usersJ from "./users.json";
 
@@ -30,12 +30,19 @@ const UserPage = () => {
 
       <div className="use">
         <div className="tearTable">
+          <p>난이도 분포</p>
           <div
             dangerouslySetInnerHTML={{ __html: save.solved_tear_chart }}
             style={{ width: "50%", float: "left" }}
           ></div>
           <table>
-            <thead></thead>
+            <thead>
+              <tr>
+                <th>레벨</th>
+                <th>문제 수</th>
+                <th>EXP</th>
+              </tr>
+            </thead>
             {save.solved_tear.map((BigTears) => (
               <tbody key={BigTears.big_tear}>
                 <tr>
@@ -75,12 +82,19 @@ const UserPage = () => {
         </div>
 
         <div className="tagTable">
+          <p>태그 분포</p>
           <div
             dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
             style={{ width: "50%", float: "left" }}
           ></div>
           <table>
-            <thead></thead>
+            <thead>
+              <tr>
+                <th>태그</th>
+                <th>문제 수</th>
+                <th>EXP</th>
+              </tr>
+            </thead>
             <tbody>
               {save.solved_tag.map((tags) => (
                 <tr key={tags.name}>

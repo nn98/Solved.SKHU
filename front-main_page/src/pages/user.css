@@ -1,19 +1,20 @@
 .use {
   width: 90%;
-  margin: 0 5%;
+  margin: 0% 5%;
 }
 
 .user .tearTable {
   background-color: #f0f0f0;
   width: 50%;
   float: left;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   padding: 1%;
 }
 
 .user .tagTable {
   background-color: #f0f0f0;
   width: 50%;
+  display: flow-root;
   padding: 1%;
 }
 
@@ -37,4 +38,10 @@
 .user td {
   width: 9%;
   border: 1px solid #000;
+}
+
+.user p {
+  text-align: left;
+  color: gray;
+  padding-left: 2%;
 }
