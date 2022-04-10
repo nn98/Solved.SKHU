@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import "./user.css";
 import usersJ from "./users.json";
 
 const UserPage = () => {
   const save = usersJ;
+  // const [opens, setOpens] = useState([
+  //   { BRONZE: "false" },
+  //   { SILVER: "false" },
+  //   { GOLD: "false" },
+  //   { PLATINUM: "false" },
+  //   { DIAMOND: "false" },
+  //   { RUBY: "false" },
+  // ]);
+
+  // const onClickEnter = (tear) => {
+  //   setOpens(
+  //     opens.map((open) =>
+  //       opens.tear === "false" ? { ...open, tear: !open.tear } : open
+  //     )
+  //   );
+  // };
 
   return (
     <div className="user">
@@ -23,16 +39,22 @@ const UserPage = () => {
             {save.solved_tear.map((BigTears) => (
               <tbody key={BigTears.big_tear}>
                 <tr>
-                  <td colSpan="3">{BigTears.big_tear}</td>
+                  <td
+                    colSpan="3"
+                    // onClick={onClickEnter(BigTears.big_tear)}
+                  >
+                    {BigTears.big_tear}
+                  </td>
                 </tr>
-
-                {BigTears.type.map((tear) => (
-                  <tr key={tear.tear}>
-                    <td>{tear.tear}</td>
-                    <td>{tear.problem}</td>
-                    <td>{tear.EXP}</td>
-                  </tr>
-                ))}
+                <>
+                  {BigTears.type.map((tear) => (
+                    <tr key={tear.tear}>
+                      <td>{tear.tear}</td>
+                      <td>{tear.problem}</td>
+                      <td>{tear.EXP}</td>
+                    </tr>
+                  ))}
+                </>
               </tbody>
             ))}
           </table>
@@ -44,6 +66,8 @@ const UserPage = () => {
               key={index}
               href={"https://www.acmicpc.net/problem/" + problem}
               style={{ textDecorationLine: "none", color: "#000" }}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {problem} {""}
             </a>
