@@ -10,8 +10,6 @@ const Delete = (props) => {
   const [deleteButton, setDeleteButton] = useState(false)
   const deleteContainer = useRef(null)
 
-  const { commentDeleteId } = props
-
   const deletButtonClick = () => {
     setDeleteButton(!deleteButton)
   }
@@ -45,15 +43,15 @@ const Delete = (props) => {
                 name="commenting"
                 disabled={!commentDeleteName || !commentDeletePassword}
                 value="Signup"
-                onClick={() => (
+                onClick={() => {
+                  // 매개변수로 받아온 commentDelete 함수를 이용하여 이름, 비밀번호를 보낸다.
                   props.commentDelete({
-                    commentDeleteId,
                     commentDeleteName,
                     commentDeletePassword,
-                  }),
-                  setCommentDeleteName(''),
+                  })
+                  setCommentDeleteName('')
                   setCommentDeletePassword('')
-                )}
+                }}
               >
                 Signup
               </button>

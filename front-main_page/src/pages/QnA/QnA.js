@@ -3,6 +3,7 @@ import './qna.css'
 import Delete from './delete'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
+import CommentAdd from './commentAdd'
 
 const userCreateStyle = {
   position: 'absolute',
@@ -57,16 +58,11 @@ const QnA = () => {
     }
   }
 
-  // 댓글 추가에 필요한 name password content
-  const [commentAddName, setCommentAddName] = useState('')
-  const [commentAddPassword, setCommentAddPassword] = useState('')
-  const [commentAddContent, setCommentAddContent] = useState('')
-
   // 댓글 보관함
   const [comments, setComments] = useState([])
 
   // 컨텐츠를 댓글에 보관하기 위한 add 함수
-  const add = (props) => {
+  const commentAdd = (props) => {
     try {
       // 먼저 댓글 받은 유저의 정보와 쓴 댓글 내용을 body에 저장
       const body = {
@@ -177,51 +173,7 @@ const QnA = () => {
         </div>
       </div>
 
-      <div className="comments_input">
-        <div>
-          <input
-            onChange={(e) => setCommentAddName(e.target.value)}
-            placeholder="Name"
-            type="text"
-            value={commentAddName}
-          />
-          <input
-            onChange={(e) => setCommentAddPassword(e.target.value)}
-            placeholder="password"
-            type="password"
-            value={commentAddPassword}
-          />
-          <textarea
-            className="comment_input_area"
-            id="textarea"
-            onChange={(e) => setCommentAddContent(e.target.value)}
-            placeholder="content"
-            value={commentAddContent}
-          />
-
-          <button
-            className="comment_button"
-            // disabled={
-            //   !commentAddContent || !commentAddPassword || !commentAddName
-            // }
-            name="commenting"
-            value="댓글 작성"
-            onClick={() => {
-              add({
-                commentAddName,
-                commentAddContent,
-                commentAddPassword,
-              })
-              setCommentAddName('')
-              setCommentAddPassword('')
-              setCommentAddContent('')
-            }}
-          >
-            댓글 작성
-          </button>
-          {/* <span>{props.error}</span> */}
-        </div>
-      </div>
+      <CommentAdd commentAdd={commentAdd} />
 
       {comments.map((comment, index) => (
         <div key={index} className="comments_print">
