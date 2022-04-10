@@ -70,6 +70,7 @@
   |iframe안의 크기를 페이지간 이동할<br>경우 일정하게 표시해야함|inline style의 height를 100vh로 설정하여 해결<br>vh = viewport height <br>현재 실행중인 스크린 크기에 맞춰 상대적 크기를 반환|2022-03-25|`S`|
   |map 함수에서 key값 미사용 오류|react에서 map()메서드를 사용하기 위해서는 배열마다 독립적인 key값을 설정 해줘야 함<br>불필요한 리렌더링을 방지|2022-04-05|`L`|
   |table태그 안 2단 maping에 의한<br>리액트 구조 문제|이미지를 table태그 안에 넣을 경우 2단 maping과<br>thead와 tbody가 강제되는 리액트 특성이 존재해<br>그래프를 이미지로 테이블에 넣지않고 따로 분리|2022-04-06|`S`|
+  |a태그에서 target 속성 _blank의 보안 문제|a태그에 target을 _blank로 할 경우 오류메시지 출력됨<br>구글링을 통해 알아본 결과 피싱사이트 방지를 위함임을 확인<br>rel='noopener noreferrer'속성을 추가함으로 피싱방지 오류 해결|2022-04-10|`S`|
 
   </details>
 
