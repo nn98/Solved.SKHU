@@ -29,7 +29,9 @@
   |`10.` |*Off*|Full|정기 회의<br/>기획 보완/구현 계획 수립<br/>프레젠테이션 준비/계획서 작성|2022-03-30|
   |`11.` |*On*|Front|_기획안 PT/Other Team PT/Front-layout|2022-04-05|
   |`12.` |*Off*|Full|Front-User Page imp, QnA Page layout<br>Back-Crawling, MySql Peristalsis|2022-04-06|
-  |`13.`|**|||2022-04-00|
+  |`13.`|*On*|Full|_개발 진척 보고/개발 로드맵 보완|2022-04-12|
+  |`14.`|**|||2022-04-00|
+  |`15.`|**|||2022-04-00|
   ##### References
   - [JS 개발 환경 설정_기본](https://webnautes.tistory.com/1473)
   - [React 기본 세팅](https://blog.ull.im/engineering/2018/11/30/using-react-in-vs-code.html)
