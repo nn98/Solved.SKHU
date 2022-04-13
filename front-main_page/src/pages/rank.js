@@ -24,7 +24,7 @@ const rank = () => {
                 <td>{user.wordRank}</td>
                 <td>{user.skhuRank}</td>
                 <td>
-                  <strong>{user.Id}</strong>
+                  <strong><a href="https://solved.ac/profile/{user.Id}">{user.Id}</a></strong>
                 </td>
                 <td>{user.Rating}</td>
                 <td>{user.CLASS}</td>
