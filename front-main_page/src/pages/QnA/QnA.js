@@ -1,15 +1,62 @@
 import React, { useEffect, useState } from 'react'
 import './qna.css'
-
-import CommentContent from './commentcontent'
-import Create from './create'
 import Delete from './delete'
+import Box from '@mui/material/Box'
+import Modal from '@mui/material/Modal'
 import CommentAdd from './commentAdd'
-import InnerComment from './innerComment'
+
+const userCreateStyle = {
+  position: 'absolute',
+  top: '30%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+}
 
 const QnA = () => {
+  // 회원가입 열고 닫기 창
+  const [open, setOpen] = useState(false)
+  const userHandleOpen = () => setOpen(!open)
+
+  // 유저를 위한 name password
+  const [createUserName, setCreateUserName] = useState('')
+  const [createUserPassword, setCreateUserPassword] = useState('')
+
   // 유저 보관함
-  const [users, setUsers] = useState([])
+  const [users, setUser] = useState([])
+
+  // 새 유저를 생성하기 위한 createUser 함수
+  const createUser = (props) => {
+    try {
+      // 유저 정보 body에 저장
+      const body = {
+        name: props.createUserName,
+        password: props.createUserPassword,
+      }
+      // 유저가 1명 이상일때만
+      if (users.length > 0) {
+        // 유저의 아이디와 생성할 아이디가 같으면
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].name === props.createUserName) {
+            // 오류 메세지 출력
+            return alert('현재 사용 중인 사용자가 있습니다.')
+          }
+        }
+      }
+
+      // 유저 보관함에 추가
+      setUser([...users, body])
+      setOpen(!open)
+      return alert('어서오세요')
+    } catch (error) {
+      alert('실패하였습니다.')
+      console.error(error)
+    }
+  }
 
   // 댓글 보관함
   const [comments, setComments] = useState([])
@@ -19,10 +66,9 @@ const QnA = () => {
     try {
       // 먼저 댓글 받은 유저의 정보와 쓴 댓글 내용을 body에 저장
       const body = {
-        id: comments.length,
-        name: props.commentAddName,
-        passeword: props.commentAddPassword,
-        content: props.commentAddContent,
+        addName: props.commentAddName,
+        addPasseword: props.commentAddPassword,
+        addContent: props.commentAddContent,
       }
 
       // 유저가 하나도 없으면
@@ -89,24 +135,59 @@ const QnA = () => {
 
   return (
     <div className="comments">
-      {/* 회원가입 부분 */}
-      <Create users={users} setUsers={setUsers} />
+      <div>
+        <div>
+          <button className="comment_button" onClick={userHandleOpen}>
+            회원가입
+          </button>
+          <Modal open={open} onClose={userHandleOpen}>
+            <Box sx={userCreateStyle}>
+              <input
+                onChange={(e) => setCreateUserName(e.target.value)}
+                placeholder="Name"
+                type="text"
+                value={createUserName}
+              />
+              <input
+                onChange={(e) => setCreateUserPassword(e.target.value)}
+                placeholder="password"
+                type="password"
+                value={createUserPassword}
+              />
 
-      {/* 댓글 추가 부분 */}
+              <button
+                disabled={!createUserName || !createUserPassword}
+                name="commenting"
+                value="Signup"
+                onClick={() => {
+                  createUser({ createUserName, createUserPassword })
+                  // createUserName과 createUserPassword 빈칸으로 만들기
+                  setCreateUserName('')
+                  setCreateUserPassword('')
+                }}
+              >
+                Signup
+              </button>
+            </Box>
+          </Modal>
+        </div>
+      </div>
+
       <CommentAdd commentAdd={commentAdd} />
 
-      {/* 댓글 내용 출력 부분 */}
       {comments.map((comment, index) => (
         <div key={index} className="comments_print">
-          <CommentContent comment={comment} />
+          <div className="comments_print_user">name = {comment.addName}</div>
+          {/* 댓글 내용 */}
+          <div className="comments_print_content">{comment.addContent}</div>
 
           {/* 삭제 버튼 */}
           <Delete
+            // 삭제할 id를 delete 컴포넌트에 전송
+            commentDeleteId={comment.id}
             // commentDelete 함수를 delete 컴포넌트에 전송
             commentDelete={commentDelete}
           />
-
-          <InnerComment commentId={comment.id} users={users} />
         </div>
       ))}
     </div>
