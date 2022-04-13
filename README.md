@@ -30,7 +30,7 @@
   |`11.` |*On*|Front|_기획안 PT/Other Team PT/Front-layout|2022-04-05|
   |`12.` |*Off*|Full|Front-User Page imp, QnA Page layout<br>Back-Crawling, MySql Peristalsis|2022-04-06|
   |`13.`|*On*|Full|_개발 진척 보고/개발 로드맵 보완|2022-04-12|
-  |`14.`|**|||2022-04-00|
+  |`14.`|*Off*|Full|풀타임 회의-브랜치/이슈 정리, 프론트-백 연동|2022-04-13|
   |`15.`|**|||2022-04-00|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
