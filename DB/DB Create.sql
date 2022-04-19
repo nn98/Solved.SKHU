@@ -15,42 +15,49 @@ CREATE SCHEMA IF NOT EXISTS `SWP` DEFAULT CHARACTER SET utf8 ;
 USE `SWP` ;
 
 -- -----------------------------------------------------
--- Table `SWP`.`SOLVED_RANK`
+-- Table `SWP`.`Solvedrank`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SWP`.`SOLVED_RANK` (
+CREATE TABLE IF NOT EXISTS `SWP`.`Solvedrank` (
   `ID` INT NOT NULL AUTO_INCREMENT,
-  `Tier` VARCHAR(25) NULL,
+  `tier` VARCHAR(25) NULL,
   PRIMARY KEY (`ID`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SWP`.`USER`
+-- Table `SWP`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SWP`.`USER` (
+CREATE TABLE IF NOT EXISTS `SWP`.`User` (
   `ID` VARCHAR(20) NOT NULL,
-  `Problems` INT NOT NULL,
-  `SOLVED_RANK_ID` INT NOT NULL,
+  `problems` INT NOT NULL,
+  `solvedrank` INT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
-  INDEX `fk_USER_SOLVED.AC_RANK_idx` (`SOLVED_RANK_ID` ASC) VISIBLE,
+  INDEX `fk_USER_SOLVED.AC_RANK_idx` (`solvedrank` ASC) VISIBLE,
   CONSTRAINT `fk_USER_SOLVED.AC_RANK`
-    FOREIGN KEY (`SOLVED_RANK_ID`)
-    REFERENCES `SWP`.`SOLVED_RANK` (`ID`)
+    FOREIGN KEY (`solvedrank`)
+    REFERENCES `SWP`.`Solvedrank` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SWP`.`PROBLEM`
+-- Table `SWP`.`Problem`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SWP`.`PROBLEM` (
-  `ID` INT NOT NULL,
-  `Alg` VARCHAR(40) NULL,
-  `Rate` DECIMAL(10) NULL,
+CREATE TABLE IF NOT EXISTS `SWP`.`Problem` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `alg` VARCHAR(40) NULL,
+  `rate` DECIMAL(10) NULL,
+  `SOLVED_RANK` INT NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
+  INDEX `fk_PROBLEM_SOLVED_RANK1_idx` (`SOLVED_RANK` ASC) VISIBLE,
+  CONSTRAINT `fk_PROBLEM_SOLVED_RANK1`
+    FOREIGN KEY (`SOLVED_RANK`)
+    REFERENCES `SWP`.`Solvedrank` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -59,28 +66,31 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SWP`.`Algorithm` (
   `ID` VARCHAR(40) NOT NULL,
+  `algonamekr` VARCHAR(45) NULL,
+  `algonameen` VARCHAR(45) NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SWP`.`USER_has_PROBLEM`
+-- Table `SWP`.`Solve`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SWP`.`USER_has_PROBLEM` (
+CREATE TABLE IF NOT EXISTS `SWP`.`Solve` (
   `USER_ID` VARCHAR(20) NOT NULL,
   `PROBLEM_ID` INT NOT NULL,
-  PRIMARY KEY (`USER_ID`, `PROBLEM_ID`),
+  `try` INT NOT NULL,
+  PRIMARY KEY (`PROBLEM_ID`, `USER_ID`),
   INDEX `fk_USER_has_PROBLEM_PROBLEM1_idx` (`PROBLEM_ID` ASC) VISIBLE,
   INDEX `fk_USER_has_PROBLEM_USER1_idx` (`USER_ID` ASC) VISIBLE,
   CONSTRAINT `fk_USER_has_PROBLEM_USER1`
     FOREIGN KEY (`USER_ID`)
-    REFERENCES `SWP`.`USER` (`ID`)
+    REFERENCES `SWP`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_USER_has_PROBLEM_PROBLEM1`
     FOREIGN KEY (`PROBLEM_ID`)
-    REFERENCES `SWP`.`PROBLEM` (`ID`)
+    REFERENCES `SWP`.`Problem` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -90,19 +100,42 @@ ENGINE = InnoDB;
 -- Table `SWP`.`PROBLEM_has_Algorithm`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SWP`.`PROBLEM_has_Algorithm` (
-  `PROBLEM_ID` INT NOT NULL,
-  `Algorithm_ID` VARCHAR(40) NOT NULL,
-  PRIMARY KEY (`PROBLEM_ID`, `Algorithm_ID`),
-  INDEX `fk_PROBLEM_has_Algorithm_Algorithm1_idx` (`Algorithm_ID` ASC) VISIBLE,
-  INDEX `fk_PROBLEM_has_Algorithm_PROBLEM1_idx` (`PROBLEM_ID` ASC) VISIBLE,
+  `PRO_ID` INT NOT NULL,
+  `ALG_ID` VARCHAR(40) NOT NULL,
+  PRIMARY KEY (`PRO_ID`, `ALG_ID`),
+  INDEX `fk_PROBLEM_has_Algorithm_Algorithm1_idx` (`ALG_ID` ASC) VISIBLE,
+  INDEX `fk_PROBLEM_has_Algorithm_PROBLEM1_idx` (`PRO_ID` ASC) VISIBLE,
   CONSTRAINT `fk_PROBLEM_has_Algorithm_PROBLEM1`
-    FOREIGN KEY (`PROBLEM_ID`)
-    REFERENCES `SWP`.`PROBLEM` (`ID`)
+    FOREIGN KEY (`PRO_ID`)
+    REFERENCES `SWP`.`Problem` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_PROBLEM_has_Algorithm_Algorithm1`
-    FOREIGN KEY (`Algorithm_ID`)
+    FOREIGN KEY (`ALG_ID`)
     REFERENCES `SWP`.`Algorithm` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SWP`.`Ranking`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `SWP`.`Ranking` (
+  `User_ID` VARCHAR(20) NOT NULL,
+  `worldrank` VARCHAR(200) NULL,
+  `skhurank` INT UNSIGNED NULL,
+  `tier` VARCHAR(45) NULL,
+  `rating` INT UNSIGNED NULL,
+  `class` VARCHAR(45) NULL,
+  `pro` VARCHAR(45) NULL,
+  `correction` DECIMAL(30) UNSIGNED NULL,
+  PRIMARY KEY (`User_ID`),
+  INDEX `fk_Ranking_User1_idx` (`User_ID` ASC) VISIBLE,
+  UNIQUE INDEX `User_ID_UNIQUE` (`User_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_Ranking_User1`
+    FOREIGN KEY (`User_ID`)
+    REFERENCES `SWP`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
