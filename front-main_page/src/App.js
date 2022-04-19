@@ -6,7 +6,7 @@ import QnA from "./pages/QnA/QnA";
 import UserPage from "./pages/userPage";
 import Algorithm from "./pages/algorithm";
 import Rank from "./pages/rank";
-import Assignments from "./pages/assignments";
+import Assignments from "./pages/Assignments";
 // import { QnA } from './pages'
 import { Routes, Route } from "react-router-dom";
 

@@ -4,7 +4,7 @@
   margin: 0% 10%;
 }
 
-h1 {
+.assign h1 {
   text-align: center;
 }
 h3 {
@@ -40,7 +40,8 @@ h3 {
   display: block;
 }
 
-p {
+.assign p {
   display: inline;
-  font-size: medium;
+  font-size: x-large;
+  margin-bottom: 10px;
 }
