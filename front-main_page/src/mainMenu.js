@@ -33,18 +33,18 @@ const MainMenu = (props) => {
                 </Link>
               </td>
               <td>
-                <Link to="/QnA">
-                  <button>QnA</button>
-                </Link>
-              </td>
-              <td>
                 <Link to="/rank">
                   <button>Rank</button>
                 </Link>
               </td>
               <td>
-                <Link to="/professor">
-                  <button>Professor</button>
+                <Link to="/assignments">
+                  <button>Assignments</button>
+                </Link>
+              </td>
+              <td>
+                <Link to="/QnA">
+                  <button>QnA</button>
                 </Link>
               </td>
             </tr>
