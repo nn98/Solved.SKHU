@@ -1,0 +1,46 @@
+.assign {
+  width: 80%;
+  height: 100vh;
+  margin: 0% 10%;
+}
+
+.assign h1 {
+  text-align: center;
+}
+.assign h3 {
+  margin: 0% 0% 10% 0%;
+}
+.input textarea {
+  float: left;
+  width: 50%;
+  height: 90vh;
+  margin-left: 25%;
+}
+
+.input textarea::placeholder {
+  text-align: center;
+  font-size: xx-large;
+  line-height: 200%;
+}
+
+.buttonList {
+  float: left;
+  margin-left: 1%;
+}
+.buttonList input[type='text'] {
+  height: 3vh;
+  margin-bottom: 10%;
+}
+.buttonList input[type='date'] {
+  height: 3vh;
+  margin-bottom: 10%;
+}
+.buttonList button {
+  margin-bottom: 10%;
+  display: block;
+}
+
+p {
+  display: inline;
+  font-size: medium;
+}

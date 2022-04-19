@@ -1,22 +1,24 @@
-// import { Link } from 'react-router-dom'
-
-import Logo from "./image/logo.png";
-import Main_Top_Line from "./image/main_top_line.png";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react'
+import Logo from './image/logo.png'
+import Main_Top_Line from './image/main_top_line.png'
+import { Link } from 'react-router-dom'
+import Fade from '@mui/material/Fade'
 
 const MainMenu = (props) => {
+  const [mainHover, setMainHover] = useState(false)
+
   return (
     <>
       <div className="main-menu">
         <table>
           <thead>
             <tr>
-              <td>
+              <td className="main-log">
                 <Link to="/">
-                  <button style={{ cursor: "pointer" }}>
+                  <button style={{ cursor: 'pointer' }}>
                     <img
                       src={Logo}
-                      style={{ float: "left", marginLeft: "10%" }}
+                      style={{ float: 'left', marginLeft: '10%' }}
                       alt="profile"
                     />
                   </button>
@@ -28,8 +30,39 @@ const MainMenu = (props) => {
                 </Link>
               </td>
               <td>
-                <Link to="/algorithm">
-                  <button>Algorithm</button>
+                <Fade in={!mainHover} timeout={0}>
+                  <span
+                    onMouseOver={() => setMainHover(true)}
+                    style={{ display: mainHover ? 'none' : 'revert' }}
+                  >
+                    <button>Recommend</button>
+                  </span>
+                </Fade>
+                <Fade in={mainHover} timeout={500}>
+                  <span
+                    onMouseOver={() => setMainHover(true)}
+                    onMouseOut={() => setMainHover(false)}
+                    style={{ display: !mainHover ? 'none' : 'revert' }}
+                  >
+                    <Link to="/algorithm">
+                      <button className="main-hover">Algorithm</button>
+                    </Link>
+                    <button className="main-hover">|</button>
+                    <Link to="/rating">
+                      <button className="main-hover">Rating</button>
+                    </Link>
+                  </span>
+                </Fade>
+              </td>
+
+              <td>
+                <Link to="/rank">
+                  <button>Rank</button>
+                </Link>
+              </td>
+              <td>
+                <Link to="/assignments">
+                  <button>Assignments</button>
                 </Link>
               </td>
               <td>
@@ -37,27 +70,17 @@ const MainMenu = (props) => {
                   <button>QnA</button>
                 </Link>
               </td>
-              <td>
-                <Link to="/rank">
-                  <button>Rank</button>
-                </Link>
-              </td>
-              <td>
-                <Link to="/professor">
-                  <button>Professor</button>
-                </Link>
-              </td>
             </tr>
           </thead>
         </table>
         <img
           src={Main_Top_Line}
-          style={{ width: "90%", margin: "0 5%" }}
+          style={{ width: '90%', margin: '0 5%' }}
           alt="profile"
         />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default MainMenu;
+export default MainMenu
