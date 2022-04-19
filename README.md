@@ -178,6 +178,20 @@
   
   </details>
 
+  <details><summary>#27 Front-RankPage</summary>
+  
+  ## Implements-#27
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |구현|랭킹 페이지 UI 구현|2022-04-13|`S`|
+  
+  ## Errors-#27
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |||||
+  
+  </details>
+ 
 <details><summary>#32 Front-BaekJoon Assignments</summary>
   
   ## Implements-#32
