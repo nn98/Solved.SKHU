@@ -1,6 +1,6 @@
-import React from "react";
-import rankJ from "./rank.json";
-import "./rank.css";
+import React from 'react'
+import rankJ from './rank.json'
+import './rank.css'
 
 const rank = () => {
   return (
@@ -24,7 +24,14 @@ const rank = () => {
                 <td>{user.wordRank}</td>
                 <td>{user.skhuRank}</td>
                 <td>
-                  <strong><a href="https://solved.ac/profile/{user.Id}">{user.Id}</a></strong>
+                  <img
+                    src={'https://static.solved.ac/tier_small/' + 5 + '.svg'}
+                    alt="profile"
+                    style={{ width: '2%', margin: '0 1% 0 0' }}
+                  />{' '}
+                  <strong>
+                    <a href="https://solved.ac/profile/{user.Id}">{user.Id}</a>
+                  </strong>
                 </td>
                 <td>{user.Rating}</td>
                 <td>{user.CLASS}</td>
@@ -35,7 +42,7 @@ const rank = () => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default rank;
+export default rank

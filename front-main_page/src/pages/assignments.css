@@ -40,7 +40,7 @@
   display: block;
 }
 
-p {
+.assign p {
   display: inline;
   font-size: medium;
 }

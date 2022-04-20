@@ -1,0 +1,39 @@
+.rating {
+  text-align: center;
+  width: 80%;
+  margin: 0 10%;
+}
+.rating .problem {
+  width: auto;
+  height: 70vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  border: 1px solid #f0f0f0;
+  padding: 2% 0;
+  margin: 2% 0;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.rating .problem .p-head {
+  width: 90%;
+  margin: 0 5%;
+  padding: 1%;
+  transition: background-color 1s;
+}
+
+.rating .problem .p-head:hover {
+  background-color: gold;
+}
+
+.rating .problem .p-head span {
+  display: inline-block;
+  width: 20%;
+}
+.p-head:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+.rating .problem .p-head span:nth-child(2) {
+  width: 40%;
+}
