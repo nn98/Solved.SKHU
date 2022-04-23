@@ -4,7 +4,7 @@
 
 ---
 
-<details><summary>#1 Project Setting documentation</summary>
+<details><summary>#1 Project Setting/Documentation</summary>
   
   #### Contributors
   |No.|Student_ID|Dev_ID|GitHub_ID|Name|
@@ -31,7 +31,8 @@
   |`12.` |*Off*|Full|Front-User Page imp, QnA Page layout<br>Back-Crawling, MySql Peristalsis|2022-04-06|
   |`13.`|*On*|Full|_개발 진척 보고/개발 로드맵 보완|2022-04-12|
   |`14.`|*Off*|Full|풀타임 회의-브랜치/이슈 정리, 프론트-백 연동|2022-04-13|
-  |`15.`|**|||2022-04-00|
+  |`15.`|*Off*|Full|풀타임 회의-전체 페이지 구현, AWS 연동|2022-04-19|
+  |`16.`|**|||2022-04-00|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
@@ -120,7 +121,7 @@
   ## Implements-#7
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |||||
+  |테스트|MySql DB와 Node.js Server 연동.<br>서버에서 실행한 쿼리 결과를 json으로 파싱|2020-03-24|`A`|
   
   ## Errors-#7
   |문제점|해결방식|날짜|Dev|
@@ -148,7 +149,7 @@
   
   </details>  
   
-<details><summary>#17 QnA Board</summary><div markdown="1">
+<details><summary>#17 Front-QnA Board</summary><div markdown="1">
   
   ## Implements-#17
   |구현|구현 중점|날짜|Dev|
@@ -170,13 +171,29 @@
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |진행|설계대로 DB 구축/보완|2022-04-06|`N`|
-  |진행|AWS 서버 구축/Mysql DB 구축|2022-04-16|`N`|
+  |실패|Oracle Cloud 사용 시도<br>payment 카드 등록 모두 오류.<br>다른카드, 상담사 연결 시도-실패|2022-04-15|`N`|
+  |완료|AWS-서버 구축/Mysql DB 구축|2022-04-16|`N`|
   - [Forward Engineering](https://thisisprogrammingworld.tistory.com/124)
   - [LINUX 강의노트](https://o365skhu-my.sharepoint.com/personal/lsj_office_skhu_ac_kr/_layouts/15/onedrive.aspx?originalPath=aHR0cHM6Ly9vMzY1c2todS1teS5zaGFyZXBvaW50LmNvbS86ZjovZy9wZXJzb25hbC9sc2pfb2ZmaWNlX3NraHVfYWNfa3IvRWozazFqWE1jTnBPc1R5UWZ3VjllUVVCMG43NHZncmNjczhTQTdURlhyNG1JZz9ydGltZT1MclFHVTZqbzEwZw&id=%2Fpersonal%2Flsj%5Foffice%5Fskhu%5Fac%5Fkr%2FDocuments%2F%EC%88%98%EC%97%85%5F%EA%B3%B5%EC%9C%A0%2F%EC%A7%80%EB%82%9C%20%EA%B0%95%EC%9D%98%2Fserver%5F2021%5F2%ED%95%99%EA%B8%B0%2Flinux)
   
   ## Errors-#21
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
+  |Oracle Cloud 계정 생성 실패|Payment 인증을 위한 카드 등록 실패<br>AWS에선 정상적으로 인증되는 카드도 실패<br>오라클 고객센터를 통한 상담 시도<br>정상적 소통 불가. 문제 해결 실패<br>AWS 서버 구축으로 우회|2022-04-15|`A`|
+  
+  </details>
+
+<details><summary>#26 Back|DB-DB Connection</summary>
+  
+  ## Implements-#26
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |완료|Local Node.js-AWS Mysql 단순 연동(Get)|2022-04-16|`N`|
+  
+  ## Errors-#26
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |서버 외부<br>접속 불가|bind-adress 해제, User grant|2022-04-16|`N`|
   |||||
   
   </details>
@@ -195,7 +212,7 @@
   
   </details>
  
-<details><summary>#32 Front-BaekJoon Assignments</summary>
+<details><summary>#32 Front-AssignmentsPage</summary>
   
   ## Implements-#32
   |구현|구현 중점|날짜|Dev|
@@ -206,6 +223,20 @@
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |textarea태그의 placeholder에만 값 설정하기|사용자 입력 값과 다르게 힌트에만 css서식을 적용하고자 함<br>css시트에서 ::placeholder로 콜론(:)2개 선택자를 사용하면 됨|2022-04-19|`S`|
+  
+  </details>
+
+<details><summary>#34 Back-React-Nodejs connection</summary>
+  
+  ## Implements-#34
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |||||
+  
+  ## Errors-#34
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |||||
   
   </details>
 
