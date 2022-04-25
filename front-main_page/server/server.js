@@ -4,8 +4,6 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const port = process.env.PORT || 3001
 
-// const { response } = require('express')
-
 // cors 사용하여 정보 받는 것 우회하기
 app.use(cors())
 

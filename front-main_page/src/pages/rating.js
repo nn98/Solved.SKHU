@@ -36,20 +36,16 @@ const Rating = () => {
       return err
     }
   }
-
   // =======================test=================
   const [users, setUsers] = useState([])
   const componentDidMount = async () => {
     try {
-      const t = await new Promise((resolve, reject) => {
-        fetch('http://localhost:3001/get')
-        // setUsers(users)
-        // .then((data) => setUsers(data.json()))
-      })
-      t.then((resolvedData) => {
-        alert(resolvedData)
-        // setUsers(res)
-      })
+      await fetch('http://localhost:3001/get')
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+          setUsers(data)
+        })
     } catch (error) {
       console.error(error)
     }
@@ -91,6 +87,12 @@ const Rating = () => {
 
   return (
     <div className="rating">
+      {users.map((u, index) => (
+        <div key={index}>
+          <span>{u.email}</span>
+          <span>{u.nickName}</span>
+        </div>
+      ))}
       <button onClick={() => setUserOrRank(true)}>유저별</button>
       <button onClick={() => setUserOrRank(false)}>랭크별</button>
       {userOrRank ? (
