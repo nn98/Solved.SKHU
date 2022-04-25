@@ -15,7 +15,6 @@ const Rating = () => {
 
   // 각 랭크의 서브 랭크를 넣기 위한 변수
   const [rankArray, setRankArray] = useState()
-  
 
   // 유저 또는 랭크 별로 알고리즘을 받을지 결정하는 boolean 변수
   const [userOrRank, setUserOrRank] = useState(true)
@@ -127,7 +126,7 @@ const Rating = () => {
                     <span>{problem.User_ID}</span>
                     <span>helo</span>
                     <span>해결</span>
-                    <span>{index * problem}</span>
+                    <span>{index * problem.skhurank}</span>
                   </div>
                 ))}
               </>
