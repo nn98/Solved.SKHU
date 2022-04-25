@@ -37,6 +37,25 @@ const Rating = () => {
     }
   }
 
+  // =======================test=================
+  const [users, setUsers] = useState([])
+  const componentDidMount = async () => {
+    try {
+      const t = await new Promise((resolve, reject) => {
+        fetch('http://localhost:3001/get')
+        // setUsers(users)
+        // .then((data) => setUsers(data.json()))
+      })
+      t.then((resolvedData) => {
+        alert(resolvedData)
+        // setUsers(res)
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  //==============================================
+
   // 각 랭크의 서브 랭크의 버튼을 추가하기 위한 함수
   const rankSubAdd = (index) => {
     const result = []
@@ -115,7 +134,7 @@ const Rating = () => {
           <h1>랭크 페이지</h1>
           <span>
             <input type="text" />
-            <button>search</button>
+            <button onClick={() => componentDidMount()}>search</button>
           </span>
           <div className="rankProblem">
             <div className="rank">
