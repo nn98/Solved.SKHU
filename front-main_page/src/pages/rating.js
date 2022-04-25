@@ -15,6 +15,7 @@ const Rating = () => {
 
   // 각 랭크의 서브 랭크를 넣기 위한 변수
   const [rankArray, setRankArray] = useState()
+  
 
   // 유저 또는 랭크 별로 알고리즘을 받을지 결정하는 boolean 변수
   const [userOrRank, setUserOrRank] = useState(true)
@@ -26,14 +27,16 @@ const Rating = () => {
   const [rankProblems, setRankProblems] = useState([])
 
   // 유저별 문제 추천을 받기 위한 함수
-  const ratingAdd = () => {
+  const ratingAdd = async () => {
     try {
-      // 문제 저장
-      setRatingProblems(usersJ.user_problems)
-
-      // console.log(ratingProblems.user_problems.length)
-    } catch (err) {
-      return err
+      await fetch('http://localhost:3001/get')
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+          setRatingProblems(data)
+        })
+    } catch (error) {
+      console.error(error)
     }
   }
   // =======================test=================
@@ -89,8 +92,8 @@ const Rating = () => {
     <div className="rating">
       {users.map((u, index) => (
         <div key={index}>
-          <span>{u.email}</span>
-          <span>{u.nickName}</span>
+          <span>{u.test_key}</span>
+          <span>{u.test_body}</span>
         </div>
       ))}
       <button onClick={() => setUserOrRank(true)}>유저별</button>
@@ -121,8 +124,8 @@ const Rating = () => {
                 </div>
                 {ratingProblems.map((problem, index) => (
                   <div key={index} className="p-head">
-                    <span>{problem}</span>
-                    <span>제목</span>
+                    <span>{problem.User_ID}</span>
+                    <span>helo</span>
                     <span>해결</span>
                     <span>{index * problem}</span>
                   </div>

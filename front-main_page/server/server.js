@@ -17,10 +17,10 @@ app.listen(port, () => {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'gusqhr12@',
-  database: 'prisma',
+  host: '54.180.106.114',
+  user: 'Project',
+  password: 'testing00',
+  database: 'SWP',
 })
 
 connection.connect(() => {
@@ -28,7 +28,15 @@ connection.connect(() => {
 })
 
 app.get('/get', (req, res) => {
-  const sql = 'select * from users'
+  const sql = 'select * from Ranking'
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err
+    console.log(result)
+    res.send(result)
+  })
+})
+app.get('/ranking', (req, res) => {
+  const sql = 'select * from Ranking order by skhurank'
   connection.query(sql, function (err, result, fields) {
     if (err) throw err
     console.log(result)

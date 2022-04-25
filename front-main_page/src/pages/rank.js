@@ -1,8 +1,23 @@
-import React from 'react'
-import rankJ from './rank.json'
+import React, { useEffect, useState } from 'react'
+// import rankJ from './rank.json'
 import './rank.css'
 
-const rank = () => {
+const Rank = () => {
+  const [ratingProblems, setRatingProblems] = useState([])
+const ratingAdd = async () => {
+  try {
+    await fetch('http://localhost:3001/ranking')
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data)
+        setRatingProblems(data)
+      })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+useEffect(()=>(ratingAdd()),[])
   return (
     <div className="rank">
       <h1>성공회대학교 티어 랭킹</h1>
@@ -16,26 +31,28 @@ const rank = () => {
               <th>레이팅</th>
               <th>CLASS</th>
               <th>푼 문제</th>
+              <th>정답률</th>
             </tr>
           </thead>
           <tbody>
-            {rankJ.rank.map((user) => (
-              <tr key={user.Id}>
-                <td>{user.wordRank}</td>
-                <td>{user.skhuRank}</td>
+            {ratingProblems.map((user, index) => (
+              <tr key={index}>
+                <td>{user.worldrank}</td>
+                <td>{user.skhurank}</td>
                 <td>
                   <img
-                    src={'https://static.solved.ac/tier_small/' + 5 + '.svg'}
+                    src={'https://static.solved.ac/tier_small/' + user.tier + '.svg'}
                     alt="profile"
                     style={{ width: '2%', margin: '0 1% 0 0' }}
                   />{' '}
                   <strong>
-                    <a href="https://solved.ac/profile/{user.Id}">{user.Id}</a>
+                    <a href="https://solved.ac/profile/{user.Id}">{user.User_ID}</a>
                   </strong>
                 </td>
-                <td>{user.Rating}</td>
-                <td>{user.CLASS}</td>
+                <td>{user.rating}</td>
+                <td>{user.class}</td>
                 <td>{user.pro}</td>
+                <td>{user.correction}</td>
               </tr>
             ))}
           </tbody>
@@ -45,4 +62,4 @@ const rank = () => {
   )
 }
 
-export default rank
+export default Rank
