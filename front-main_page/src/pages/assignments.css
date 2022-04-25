@@ -27,11 +27,11 @@
   float: left;
   margin-left: 1%;
 }
-.buttonList input[type='text'] {
+.buttonList input[type="text"] {
   height: 3vh;
   margin-bottom: 10%;
 }
-.buttonList input[type='date'] {
+.buttonList input[type="date"] {
   height: 3vh;
   margin-bottom: 10%;
 }
@@ -42,5 +42,6 @@
 
 .assign p {
   display: inline;
-  font-size: medium;
+  font-size: x-large;
+  margin-bottom: 10px;
 }

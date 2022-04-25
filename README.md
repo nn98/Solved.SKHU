@@ -4,7 +4,7 @@
 
 ---
 
-<details><summary>#1 Project Setting documentation</summary>
+<details><summary>#1 Project Setting/Documentation</summary>
   
   #### Contributors
   |No.|Student_ID|Dev_ID|GitHub_ID|Name|
@@ -31,7 +31,8 @@
   |`12.` |*Off*|Full|Front-User Page imp, QnA Page layout<br>Back-Crawling, MySql Peristalsis|2022-04-06|
   |`13.`|*On*|Full|_개발 진척 보고/개발 로드맵 보완|2022-04-12|
   |`14.`|*Off*|Full|풀타임 회의-브랜치/이슈 정리, 프론트-백 연동|2022-04-13|
-  |`15.`|**|||2022-04-00|
+  |`15.`|*Off*|Full|풀타임 회의-전체 페이지 구현, AWS 연동|2022-04-19|
+  |`16.`|**|||2022-04-00|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
@@ -83,6 +84,7 @@
   |a태그에서 target 속성 _blank의 보안 문제|a태그에 target을 _blank로 할 경우 오류메시지 출력됨<br>구글링을 통해 알아본 결과 피싱사이트 방지를 위함임을 확인<br>rel='noopener noreferrer'속성을 추가함으로 피싱방지 오류 해결|2022-04-10|`S`|
   |난이도 분포와 태그 분포의 배경색을 위한 공간 나누기|기존 float방식으로 나누었을 때 아래의 태그 분포 div가 보이지 않게 난이도 분포까지 공간을 같이 사용함<br>배경색이 겹치는 문제 발생, 이를 해결하기 위해 'overflow=hidden'속성 사용, 겹치는 부분은 잘라버림|2022-04-10|`S`|
   |난이도 분포 테이블 열고 접기 기능구현을 위한<br>useState() 배열접근 공부|각 티어 이름을 클릭했을 경우 상세 정보 테이블이 열리도록 구현하고 싶음<br>티어 수 크기의 배열을 useState() false로 각 초기화하고 클릭할 때마다 !open 하도록 구현|2022-04-10|`S`|
+  |내부 스크롤 기능 활성화 하되 스크롤바 제거|내부 스크롤 있는 태그에  -ms-overflow-style: none;  적용 <br>내부 스크롤 태그 아래에 ::-webkit-scrollbar { display: none; } 적용|2022-04-20|`L`|
 
   </details>
 
@@ -94,20 +96,6 @@
   |||||
   
   ## Errors-#4
-  |문제점|해결방식|날짜|Dev|
-  |--|--|--|--|
-  |||||
-  
-  </details>
-
-<details><summary>#5 Front-BaekJoon Assignments</summary>
-  
-  ## Implements-#5
-  |구현|구현 중점|날짜|Dev|
-  |--|--|--|--|
-  |||||
-  
-  ## Errors-#5
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |||||
@@ -133,7 +121,7 @@
   ## Implements-#7
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |||||
+  |테스트|MySql DB와 Node.js Server 연동.<br>서버에서 실행한 쿼리 결과를 json으로 파싱|2020-03-24|`A`|
   
   ## Errors-#7
   |문제점|해결방식|날짜|Dev|
@@ -161,17 +149,19 @@
   
   </details>  
   
-<details><summary>#17 QnA Board</summary><div markdown="1">
+<details><summary>#17 Front-QnA Board</summary><div markdown="1">
   
   ## Implements-#17
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |*예정*|익명이되 비밀번호 설정 후<br>수정/작성자 확인 가능|2022-03-25|`L`|
+  |구현|익명이되 비밀번호 설정 후<br>수정/작성자 확인 가능|2022-03-25|`L`|
+  |예정|QnA 작성자 및 QnA 내용을 DB에 넣고 수정 가능하게 구현|2022-04-20|`L`|
   
   ## Errors-#17
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |setState 데이터 추가 시 기존 데이터에 덧붙이기|setState사용시 const [test, setTest] = useState([]) 인 경우 <br> setTest([...test, 추가 내용])이렇게 해 주어야 기존에 있던 test에 추가 내용을 덧붙이기 가능|2022-04-06|`L`|
+  |QnA의 답변 생성 시 생성 이후에 추가된 user는 QnA의 답변 작성 불가 오류|오류 원인 : QnA.js인 상위 컴포넌트에서 innerComment.js인 하위 컴포넌트로 user의 데이터를 생성시에만 전송하여 추가 불가<br>해결 방법 : QnA.js인 상위 컴포넌트에서 user의 존재 여부를 확인하는 compare 함수를 innerComment.js인 하위 컴포넌트로 전송하여 QnA의 답변 추가할때만 compare함수를 호출하여 작성 가능 여부 판별|2022-04-19|`L`|
   
   </details>  
   
@@ -181,11 +171,69 @@
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |진행|설계대로 DB 구축/보완|2022-04-06|`N`|
-  |진행|AWS 서버 구축/Mysql DB 구축|2022-04-16|`N`|
+  |실패|Oracle Cloud 사용 시도<br>payment 카드 등록 모두 오류.<br>다른카드, 상담사 연결 시도-실패|2022-04-15|`N`|
+  |완료|AWS-서버 구축/Mysql DB 구축|2022-04-16|`N`|
   - [Forward Engineering](https://thisisprogrammingworld.tistory.com/124)
   - [LINUX 강의노트](https://o365skhu-my.sharepoint.com/personal/lsj_office_skhu_ac_kr/_layouts/15/onedrive.aspx?originalPath=aHR0cHM6Ly9vMzY1c2todS1teS5zaGFyZXBvaW50LmNvbS86ZjovZy9wZXJzb25hbC9sc2pfb2ZmaWNlX3NraHVfYWNfa3IvRWozazFqWE1jTnBPc1R5UWZ3VjllUVVCMG43NHZncmNjczhTQTdURlhyNG1JZz9ydGltZT1MclFHVTZqbzEwZw&id=%2Fpersonal%2Flsj%5Foffice%5Fskhu%5Fac%5Fkr%2FDocuments%2F%EC%88%98%EC%97%85%5F%EA%B3%B5%EC%9C%A0%2F%EC%A7%80%EB%82%9C%20%EA%B0%95%EC%9D%98%2Fserver%5F2021%5F2%ED%95%99%EA%B8%B0%2Flinux)
   
   ## Errors-#21
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |Oracle Cloud 계정 생성 실패|Payment 인증을 위한 카드 등록 실패<br>AWS에선 정상적으로 인증되는 카드도 실패<br>오라클 고객센터를 통한 상담 시도<br>정상적 소통 불가. 문제 해결 실패<br>AWS 서버 구축으로 우회|2022-04-15|`A`|
+  
+  </details>
+
+<details><summary>#26 Back|DB-DB Connection</summary>
+  
+  ## Implements-#26
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |완료|Local Node.js-AWS Mysql 단순 연동(Get)|2022-04-16|`N`|
+  
+  ## Errors-#26
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |서버 외부<br>접속 불가|bind-adress 해제, User grant|2022-04-16|`N`|
+  |||||
+  
+  </details>
+
+  <details><summary>#27 Front-RankPage</summary>
+  
+  ## Implements-#27
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |구현|랭킹 페이지 UI 구현|2022-04-13|`S`|
+  
+  ## Errors-#27
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |||||
+  
+  </details>
+ 
+<details><summary>#32 Front-AssignmentsPage</summary>
+  
+  ## Implements-#32
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |구현|채점 페이지 UI 구현|2022-04-19|`S`|
+  
+  ## Errors-#32
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |textarea태그의 placeholder에만 값 설정하기|사용자 입력 값과 다르게 힌트에만 css서식을 적용하고자 함<br>css시트에서 ::placeholder로 콜론(:)2개 선택자를 사용하면 됨|2022-04-19|`S`|
+  
+  </details>
+
+<details><summary>#34 Back-React-Nodejs connection</summary>
+  
+  ## Implements-#34
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |||||
+  
+  ## Errors-#34
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |||||
