@@ -1,22 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import './user.css'
-import usersJ from './users.json'
+import React, { useEffect, useState } from "react";
+import "./user.css";
+import usersJ from "./users.json";
 
 const UserPage = () => {
-  const save = usersJ
-  const [opens, setOpens] = useState([false, false, false, false, false, false])
+  const save = usersJ;
+  const [opens, setOpens] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const onClickEnter = (tear) => {
-    let open = [false, false, false, false, false, false]
+    let open = [false, false, false, false, false, false];
 
     for (let i = 0; i < opens.length; i++) {
-      open[i] = opens[i]
+      open[i] = opens[i];
     }
-    open[tear] = !open[tear]
-    setOpens(open)
-  }
+    open[tear] = !open[tear];
+    setOpens(open);
+  };
 
-  useEffect(() => {}, [opens])
+  useEffect(() => {}, [opens]);
 
   return (
     <div className="user">
@@ -30,7 +37,7 @@ const UserPage = () => {
           <p>난이도 분포</p>
           <div
             dangerouslySetInnerHTML={{ __html: save.solved_tear_chart }}
-            style={{ width: '50%', float: 'left' }}
+            style={{ width: "50%", float: "left" }}
           ></div>
           <table>
             <thead>
@@ -56,7 +63,7 @@ const UserPage = () => {
                     <tr
                       key={tear.tear}
                       style={{
-                        display: opens[index] === false ? 'none' : 'revert',
+                        display: opens[index] === false ? "none" : "revert",
                       }}
                     >
                       <td>{tear.tear}</td>
@@ -71,36 +78,16 @@ const UserPage = () => {
         </div>
 
         <div className="problem">
-          <div
-            className="p-head"
-            style={{
-              backgroundColor: 'black',
-              color: 'white',
-              borderRadius: '5px 5px 0 0',
-              position: 'sticky',
-              top: '0px',
-            }}
-          >
-            <span>#</span>
-            <span>제목</span>
-            <span>해결</span>
-            <span>시도</span>
-          </div>
           {save.user_problems.map((problem, index) => (
-            <div key={index} className="p-head">
-              <a
-                key={index}
-                href={'https://www.acmicpc.net/problem/' + problem}
-                style={{ textDecorationLine: 'none', color: '#000' }}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>{problem}</span>
-                <span>제목</span>
-                <span>해결</span>
-                <span>{index * problem}</span>
-              </a>
-            </div>
+            <a
+              key={index}
+              href={"https://www.acmicpc.net/problem/" + problem}
+              style={{ textDecorationLine: "none", color: "#000" }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {problem} {""}
+            </a>
           ))}
         </div>
 
@@ -108,7 +95,7 @@ const UserPage = () => {
           <p>태그 분포</p>
           <div
             dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
-            style={{ width: '50%', float: 'left' }}
+            style={{ width: "50%", float: "left" }}
           ></div>
           <table>
             <thead>
@@ -131,7 +118,7 @@ const UserPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserPage
+export default UserPage;

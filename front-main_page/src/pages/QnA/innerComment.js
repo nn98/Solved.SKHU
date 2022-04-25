@@ -12,7 +12,7 @@ const InnerComment = (e) => {
   const [innerComments, setInnerComments] = useState([])
 
   // 매게변수로 받은 commentid 값
-  const { commentId } = e
+  const { commentId, users } = e
 
   // dropdown 박스용
   const [innerCommentButton, setInnerCommentButton] = useState(false)
@@ -22,25 +22,36 @@ const InnerComment = (e) => {
   }
 
   useEffect(() => {
-    // console.log(innerComments)
+    console.log(innerComments.length)
   }, [innerComments])
 
   // 대댓글 추가 기능
   const innerCommentAdd = async (props) => {
     try {
+      console.log('ineer ' + users.length)
       // 먼저 댓글 받은 유저의 정보와 쓴 댓글 내용을 body에 저장
       const body = {
-        commentId: commentId,
-        id: innerComments.length,
         name: props.commentAddName,
-        password: props.commentAddPassword,
+        passeword: props.commentAddPassword,
         content: props.commentAddContent,
       }
 
-      // user가 있는지 판별하는 함수 compare
-      if (e.compare(body) === true)
-        // 댓글 보관함에 저장
-        setInnerComments([...innerComments, body])
+      // 유저를 찾기 위한 반목문 실행
+      for (let i = 0; i < users.length; i++) {
+        // user의 이름과 입력받은 이름이 같으면
+        if (users[i].name === props.commentAddName) {
+          // 만약 비밀번호만 다르다면
+          if (users[i].password !== props.commentAddPassword)
+            // 오류 출력
+            return alert('비밀번호가 같지 않습니다.')
+          // 댓글 보관함에 저장
+          setInnerComments([body, ...innerComments])
+          return
+        }
+
+        // 오류 메세지 출력
+        return alert('사용자가 없습니다.')
+      }
     } catch (error) {
       console.error(error)
     }
@@ -49,31 +60,21 @@ const InnerComment = (e) => {
   // 삭제 기능
   const innerCommentDelete = async (props) => {
     try {
-      const body = {
-        // innercomment 의 id값을 받는다.
-        id: props.commentId,
-        name: props.commentDeleteName,
-        password: props.commentDeletePassword,
+      for (let i = 0; i < users.length; i++) {
+        // user의 이름과 입력받은 이름이 같으면
+        if (users[i].name === props.commentDeleteName) {
+          // 만약 비밀번호만 다르다면
+          if (users[i].password !== props.commentDeletePassword)
+            // 오류 출력
+            return alert('비밀번호가 같지 않습니다.')
+          // 댓글 보관함에 삭제 후 저장
+          setInnerComments(innerComments.filter((value, index) => index !== i))
+          return
+        }
       }
-      /****** comments 존재 비교문 ******/
 
-      // 만약 삭제할 comments 찾기
-      const commentsCompare = innerComments.find((c) => c.id === body.id)
-
-      console.log(commentsCompare)
-      // 만약 user가 다르다면
-      if (
-        commentsCompare.name !== body.name ||
-        commentsCompare.password !== body.password
-      ) {
-        // 오류 출력
-        return alert('사용자가 없습니다.')
-      }
-      // 댓글 보관함에 저장
-      setInnerComments(innerComments.filter((value) => value.id !== body.id))
-      return
-
-      /*******************************/
+      // 오류 메세지 출력
+      return alert('사용자가 없습니다.')
     } catch (error) {
       alert('실패하였습니다.')
       console.error(error)
@@ -99,10 +100,7 @@ const InnerComment = (e) => {
                   <CommentContent comment={innerComment} />
 
                   {/* 삭제 버튼 */}
-                  <Delete
-                    commentId={innerComment.id}
-                    commentDelete={innerCommentDelete}
-                  />
+                  <Delete commentDelete={innerCommentDelete} />
                 </div>
               ))}
               {/* 작성 부분 */}

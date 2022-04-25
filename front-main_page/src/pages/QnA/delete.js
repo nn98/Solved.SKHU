@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import Portal from '@mui/material/Portal'
 
 const Delete = (props) => {
-  const commentId = props.commentId
   const [commentDeleteName, setCommentDeleteName] = useState('')
   const [commentDeletePassword, setCommentDeletePassword] = useState('')
 
@@ -12,7 +11,6 @@ const Delete = (props) => {
   const deleteContainer = useRef(null)
 
   const deletButtonClick = () => {
-    console.log(commentId)
     setDeleteButton(!deleteButton)
   }
 
@@ -48,7 +46,6 @@ const Delete = (props) => {
                 onClick={() => {
                   // 매개변수로 받아온 commentDelete 함수를 이용하여 이름, 비밀번호를 보낸다.
                   props.commentDelete({
-                    commentId,
                     commentDeleteName,
                     commentDeletePassword,
                   })
