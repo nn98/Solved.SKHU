@@ -32,22 +32,25 @@ const Create = (e) => {
         name: props.createUserName,
         password: props.createUserPassword,
       }
-      // 유저가 1명 이상일때만
-      if (e.users.length > 0) {
-        // 유저의 아이디와 생성할 아이디가 같으면
-        for (let i = 0; i < e.users.length; i++) {
-          if (e.users[i].name === props.createUserName) {
-            // 오류 메세지 출력
-            return alert('현재 사용 중인 사용자가 있습니다.')
-          }
-        }
-      }
 
-      // 유저 보관함에 추가
-      e.setUsers([...e.users, body])
-      setOpen(!open)
-      return alert('어서오세요')
+      // 기존 유저의 name과 새로 추가할 body.name과 같은것이 있다면 t에 추가
+      const userCompare = e.users.find((p) => p.name === body.name)
+
+      /* users 비교문 */
+      // 만약 userCompar가 없다면
+      if (userCompare === undefined) {
+        // 유저 보관함에 추가
+        e.setUsers([...e.users, body])
+        setOpen(!open)
+        return alert('어서오세요')
+      }
+      // 이름이 동일한 유저가 있다면
+      else {
+        return alert('현재 사용 중인 사용자가 있습니다.')
+      }
+      /*******************************/
     } catch (error) {
+      // 위에서 오류가 걸린다면
       alert('실패하였습니다.')
       console.error(error)
     }

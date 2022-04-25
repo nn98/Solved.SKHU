@@ -21,10 +21,40 @@
 }
 
 .user .problem {
+  text-align: center;
   margin-right: 5%;
   width: 40%;
   float: right;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
+  height: 150vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+.user .problem .p-head {
+  width: 95%;
+  padding: 1%;
+  transition: background-color 1s;
+}
+
+.user .problem .p-head:hover {
+  background-color: gold;
+}
+
+.user .problem .p-head span {
+  display: inline-block;
+  width: 20%;
+}
+.p-head:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+.user .problem .p-head span:nth-child(2) {
+  width: 40%;
 }
 
 .user h1 {
