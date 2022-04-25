@@ -1,0 +1,34 @@
+.Algo {
+  width: 80%;
+  height: 100vh;
+  margin: 0% 10%;
+}
+
+.Algo .user {
+  float: left;
+  width: 50%;
+}
+
+.Algo .reco {
+  float: right;
+  width: 50%;
+}
+
+.Algo .userAlgo {
+  display: block;
+  width: 80%;
+  height: 5vh;
+  margin: 5% 0% 0% 10%;
+  background-color: #f0f0f0;
+  text-align: center;
+}
+
+.Algo .recoAlgo {
+  float: right;
+  display: block;
+  width: 80%;
+  height: 5vh;
+  margin: 5% 10% 0% 0%;
+  background-color: #f0f0f0;
+  text-align: center;
+}
