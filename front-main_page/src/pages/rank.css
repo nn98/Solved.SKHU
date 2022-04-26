@@ -15,7 +15,7 @@
 .rankTable th:nth-child(1) {
   border-radius: 5% 0% 0% 0%;
 }
-.rankTable th:nth-child(6) {
+.rankTable th:nth-child(7) {
   border-radius: 0% 5% 0% 0%;
 }
 
@@ -43,14 +43,9 @@
 .rankTable td:nth-child(6) {
   width: 10%;
 }
+.rankTable td:nth-child(7) {
+  width: 10%;
+}
 .rankTable tr:nth-child(odd) {
   background-color: #f0f0f0;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-a {
-  text-decoration: none;
-  color: #000;
 }
