@@ -35,6 +35,7 @@ const Algorithm = () => {
 
   return (
     <div className="Algo">
+      <h1>USER ID</h1>
       <div className="user">
         {json.solved_tag.map((data, index) =>
           index < 7 ? (
