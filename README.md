@@ -146,8 +146,8 @@
   ## Errors-#16
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |1번 문제 크롤링 시<br>Jsoup 사용안될 때|https://mavenrepository.com<br>->org.jsoup 검색<br>->Jsoup Java HTML Parser<br>jsoup 최신버전 클릭<br>->pom.xml파일에br->dependencies에 추가하기|2022-03-25|`A`|
-  |2번 문제 <br>백준 유저페이지<br>크롤링|맞은 문제, 시도했지만 맞추지 못한 문제,<br>번외 문제 등의 구분이<br>명확하지 않아서 헤매었지만,URL링크 자체를 변경하여 해결함|2022-03-27|`A`|
+  |크롤링 시<br>Jsoup 사용안될 때|https://mavenrepository.com<br>->org.jsoup 검색<br>->Jsoup Java HTML Parser<br>jsoup 최신버전 클릭<br>->pom.xml파일에br->dependencies에 추가하기|2022-03-25|`A`|
+  |백준 유저페이지<br>크롤링|맞은 문제, 시도했지만 맞추지 못한 문제,<br>번외 문제 등의 구분이<br>명확하지 않아서 헤매었지만,URL링크 자체를 변경하여 해결함|2022-03-27|`A`|
   |||||
   
   </details>  
@@ -235,7 +235,7 @@
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |진행|DB데이터 React에서 사용|2022-04-21|`A`|
-  |성공(진행 중)|DB데이터 React에서 사용|2022-04-25|`A`|
+  ||||`A`|
   
   
   ## Errors-#34
