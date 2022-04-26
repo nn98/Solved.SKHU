@@ -239,6 +239,7 @@
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |Port연결 문제|nodejs와 mysql연동까지는 localhost로 연결이되지만,<br> React로 값을 보내줄 때 127.0.0.1로 해주어야 함|2022-04-21|`A`|
+  |Node react 연동 시 fetch에서 then으로 data를 입력 받을때 promise 형태로만 전송됨|fetch 시 첫번째 then은 http 통신 요청과 응답에서 응답의 정보를 담고 있는 객체 Response Object이므로<br>두번째 then을 써서 첫번째 .then 함수에서 응답 body의 데이터를 받기 가능|2022-04-25| `L`
   
   
   </details>
