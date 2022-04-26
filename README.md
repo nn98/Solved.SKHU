@@ -39,10 +39,10 @@
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
-  |`1.`|`N`|D|Oracle Cloud|~2022-04-13|
-  |`1.`|`S`|F|Ranking Page|~2022-04-13|
-  |`1.`|`L`|F|QnA Page|~2022-04-13|
-  |`1.`|`A`|B|Crawling/Server|~2022-04-13|
+  |`1.`|`N`|D|Oracle Academy|~2022-04-29|
+  |`1.`|`S`|F|Front > Back Connection|~2022-04-30|
+  |`1.`|`L`|F|QnA Page/Database Connection|~2022-04-30|
+  |`1.`|`A`|B|Crawling upgrade/Expansion|~2022-04-30|
   ##### References
   - [JS 개발 환경 설정_기본](https://webnautes.tistory.com/1473)
   - [React 기본 세팅](https://blog.ull.im/engineering/2018/11/30/using-react-in-vs-code.html)
