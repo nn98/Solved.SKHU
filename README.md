@@ -257,7 +257,7 @@
   ## Errors-#38
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |이미 node_modules이 git에 올려져 있으면 .gitignore에 넣어도 사라지지 않음.|git의 모든 node_modules 삭제 후 gitignore 수정|2022-04-26|`L`|
+  |이미 node_modules이 git에 올려져 있으면<br>.gitignore에 넣어도 사라지지 않음.|git의 모든 node_modules 삭제<br>이후 gitignore 수정-업로드|2022-04-26|`L`|
   
   </details>
 
