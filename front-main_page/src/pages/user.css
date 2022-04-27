@@ -1,0 +1,104 @@
+.use {
+  width: 90%;
+  margin: 0% 5%;
+}
+
+.user .tearTable {
+  background-color: #f0f0f0;
+  width: 50%;
+  float: left;
+  margin-bottom: 5%;
+  padding: 1%;
+  border-radius: 1%;
+}
+
+.user .tagTable {
+  background-color: #f0f0f0;
+  width: 50%;
+  overflow: hidden;
+  padding: 1%;
+  border-radius: 1%;
+}
+
+.user .problem {
+  text-align: center;
+  margin-right: 5%;
+  width: 40%;
+  float: right;
+  /* border: 1px solid #000; */
+  height: 150vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+.user .problem .p-head {
+  width: 95%;
+  padding: 1%;
+  transition: background-color 1s;
+}
+
+.user .problem .p-head:hover {
+  background-color: gold;
+}
+
+.user .problem .p-head span {
+  display: inline-block;
+  width: 20%;
+}
+.p-head:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+.user .problem .p-head span:nth-child(2) {
+  width: 40%;
+}
+
+.user h1 {
+  margin-left: 5%;
+}
+
+.user th {
+  width: 9%;
+  text-align: right;
+}
+.user th:nth-child(1) {
+  text-align: left;
+}
+.user th:nth-child(3) {
+  width: 30%;
+}
+
+.user td {
+  width: 9%;
+  text-align: right;
+}
+.user td:nth-child(1) {
+  text-align: left;
+}
+
+.user p {
+  text-align: left;
+  color: gray;
+  padding-left: 2%;
+}
+
+.user .BigTears {
+  border: 0px;
+  text-align: left;
+  padding: 2% 2% 2% 0%;
+}
+
+.user .BigTears:hover {
+  cursor: pointer;
+}
+
+.user .tagTable th:nth-child(1) {
+  text-align: center;
+}
+.user .tagTable td:nth-child(1) {
+  text-align: center;
+}
