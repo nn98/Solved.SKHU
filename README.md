@@ -236,7 +236,7 @@
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |진행|DB데이터 React에서 사용|2022-04-21|`A`|
-  ||||`A`|
+  |진행|mainPage와 userPage연결 및 데이터 이동|2022-04-29|`S`|
   
   
   ## Errors-#34
@@ -244,6 +244,8 @@
   |--|--|--|--|
   |Port연결 문제|nodejs와 mysql연동까지는 localhost로 연결이되지만,<br> React로 값을 보내줄 때 127.0.0.1로 해주어야 함|2022-04-21|`A`|
   |Node react 연동 시 fetch로 data를 입력 받을때<br> promise 형태로만 전송됨|fetch 시 첫번째 then은 http 통신 요청과 응답에서 응답의 정보를 담고 있는 객체 Response Object이므로<br>두번째 then을 써서 첫번째 .then 함수에서 응답 body의 데이터를 받기 가능|2022-04-25|`L`|
+  |Link 태그로 url을 변경할 때 값도 같이 전달해야 함|useLocation이라는 hook을 이용하여 현재 머물고 있는 페이지의 정보 객체를 반환 받아 .state로 JSON형태의 값을 사용할 수 있음|2022-04-29|`S`|
+  |뒤로가기 버튼을 구현|useNavigate라는 hook을 이용하여 현재 라우트에 쌓인 브라우저 dom을 제어할 수 있는 객체를 반환 받아 객체(-1)로 한 페이지 뒤로 이동할 수 있음, '패스'를 매개변수로 주어서 패스로도 이동 가능|2022-04-29|`S`|
   
   
   </details>
@@ -259,6 +261,7 @@
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |이미 node_modules이 git에 올려져 있으면<br>.gitignore에 넣어도 사라지지 않음.|git의 모든 node_modules 삭제<br>이후 gitignore 수정-업로드|2022-04-26|`L`|
+  |git status 명령어를 입력하면 나오는 값|.gitignore에서 지정한 값은 git status 명령어의 반환 값으로 출력되어서는 안됨|2022-04-29|`S`|
   
   </details>
 
