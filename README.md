@@ -183,7 +183,7 @@
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |Oracle Cloud 계정 생성 실패|Payment 인증을 위한 카드 등록 실패<br>AWS에선 정상적으로 인증되는 카드도 실패<br>오라클 고객센터를 통한 상담 시도<br>정상적 소통 불가. 문제 해결 실패<br>AWS 서버 구축으로 우회|2022-04-15|`A`|
-    |DB AUTO_INCREMENT|필요한 값이 0부터 시작인데 테이블 수정 시<br>AUTO_INCREMENT = 0<br>을 넣어줘도 값이 변하지 않음<br>Set session SQL_MODE = “no_auto_value_on_zero”;<br>을 입력해 준 후 AUTO_INCREMENT값에도 0부터 값을 지정해주어야함|2022-04-29|`A`|
+  |DB AUTO_INCREMENT|필요한 값이 0부터 시작인데 테이블 수정 시<br>"AUTO_INCREMENT = 0"<br>을 넣어줘도 값이 변하지 않음<br>" Set session SQL_MODE = “no_auto_value_on_zero” "<br>을 입력해 준 후 AUTO_INCREMENT값에도 0부터 값을 지정해주어야함|2022-04-29|`A`|
   
   </details>
 
