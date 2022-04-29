@@ -59,4 +59,12 @@ app.post("/assignments", (req, res) => {
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
 });
 
+app.post("/userPage", (req, res) => {
+  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
+  console.log(req);
+  const b = req.body;
+  res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
+});
+
 // connection.end()
