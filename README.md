@@ -141,7 +141,7 @@
   ## Implements-#16
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |||||
+  |완료|크롤링 반복 시 과부하<br>[Thread.sleep()](https://www.delftstack.com/ko/howto/java/how-to-delay-few-seconds-in-java/)|2022-04-30|`A`|
   
   ## Errors-#16
   |문제점|해결방식|날짜|Dev|
