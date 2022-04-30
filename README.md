@@ -178,7 +178,6 @@
   |완료|AWS-서버 구축/Mysql DB 구축|2022-04-16|`N`|
   - [Forward Engineering](https://thisisprogrammingworld.tistory.com/124)
   - [LINUX 강의노트](https://o365skhu-my.sharepoint.com/personal/lsj_office_skhu_ac_kr/_layouts/15/onedrive.aspx?originalPath=aHR0cHM6Ly9vMzY1c2todS1teS5zaGFyZXBvaW50LmNvbS86ZjovZy9wZXJzb25hbC9sc2pfb2ZmaWNlX3NraHVfYWNfa3IvRWozazFqWE1jTnBPc1R5UWZ3VjllUVVCMG43NHZncmNjczhTQTdURlhyNG1JZz9ydGltZT1MclFHVTZqbzEwZw&id=%2Fpersonal%2Flsj%5Foffice%5Fskhu%5Fac%5Fkr%2FDocuments%2F%EC%88%98%EC%97%85%5F%EA%B3%B5%EC%9C%A0%2F%EC%A7%80%EB%82%9C%20%EA%B0%95%EC%9D%98%2Fserver%5F2021%5F2%ED%95%99%EA%B8%B0%2Flinux)
-  |완료|[MySQL auto increment 0부터 시작](https://firstboos.tistory.com/entry/MySQL-auto-increment-%EB%A5%BC-0-%EC%9C%BC%EB%A1%9C-%EC%84%A4%EC%A0%95%ED%95%A0%EB%95%8C-insert-%ED%95%98%EA%B8%B0)|2022-04-30|`N`|
   
   ## Errors-#21
   |문제점|해결방식|날짜|Dev|
