@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./user.css";
 import usersJ from "./users.json";
 import { useLocation } from "react-router-dom";
-import { NULL } from "mysql/lib/protocol/constants/types";
+// import { NULL } from "mysql/lib/protocol/constants/types";
 
 const UserPage = () => {
   const location = useLocation();
   const save = usersJ;
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState([]);
   const [opens, setOpens] = useState([
     false,
     false,
@@ -51,7 +51,7 @@ const UserPage = () => {
 
   useEffect(() => {
     if (location.state) userAdd();
-  }, []);
+  });
 
   return (
     <div className="user">

@@ -18,7 +18,7 @@ app.listen(port, () => {
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-  host: "13.209.7.182",
+  host: "54.180.149.202",
   user: "Project",
   password: "testing00",
   database: "SWP",
@@ -67,4 +67,15 @@ app.post("/userPage", (req, res) => {
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
 });
 
+app.get("/algorithm", (req, res) => {
+  const sql = ""; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  connection.query(sql, function (err, result, fields) {
+    // if문은 에러 출력을 위한 코드
+    if (err) throw err;
+    // result는 가져온 결과값
+    console.log(result);
+    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+    res.send(result);
+  });
+});
 // connection.end()

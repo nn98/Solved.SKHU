@@ -17,21 +17,34 @@ const Algorithm = () => {
     false,
   ]);
 
+  const algorithmAdd = async () => {
+    try {
+      await fetch("http://localhost:3001/algorithm")
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data)
+          setjson(data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const onClickEvente = (dataName, index) => {
     let open = [false, false, false, false, false, false, false];
 
     open[index] = !open[index];
     setOpens(open);
     setName(dataName);
-    // console.log(index);
-    // console.log(opens);
   };
 
   const onClickReco = () => {
     alert("백준으로 연결");
   };
 
-  useEffect(() => {}, [opens]);
+  useEffect(() => {
+    algorithmAdd();
+  }, []);
 
   return (
     <div className="Algo">
