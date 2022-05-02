@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './qna.css'
-
+import usersJ from '../users.json'
 import CommentContent from './commentcontent'
 import Create from './create'
 import Delete from './delete'
@@ -11,8 +11,14 @@ const QnA = () => {
   // 유저 보관함
   const [users, setUsers] = useState([])
 
+  // 문제 번호
+  const [problem, setProblem] = useState('1000')
+
   // 댓글 보관함
   const [comments, setComments] = useState([])
+
+  // 대댓글 보관함
+  const [innerComments, setInnerComments] = useState([])
 
   // 유저가 있는지 판별하는 compare
   const compare = (body) => {
@@ -35,9 +41,8 @@ const QnA = () => {
     else {
       return alert('사용자가 없습니다.')
     }
-
-    /*******************************/
   }
+  /*********************************************************/
 
   // 컨텐츠를 댓글에 보관하기 위한 add 함수
   const commentAdd = (props) => {
@@ -45,6 +50,7 @@ const QnA = () => {
       // 먼저 댓글 받은 유저의 정보와 쓴 댓글 내용을 body에 저장
       const body = {
         id: comments.length,
+        problemNum: problem,
         name: props.commentAddName,
         password: props.commentAddPassword,
         content: props.commentAddContent,
@@ -67,6 +73,7 @@ const QnA = () => {
     try {
       const body = {
         id: props.commentId,
+        problemNum: problem,
         name: props.commentDeleteName,
         password: props.commentDeletePassword,
       }
@@ -100,31 +107,50 @@ const QnA = () => {
   useEffect(() => {
     console.log('users: ' + users.length)
     console.log('comments: ' + comments.length)
-  }, [comments, users])
+    console.log('problem:' + problem)
+  }, [comments, users, problem])
 
   return (
     <div className="comments">
       {/* 회원가입 부분 */}
       <Create users={users} setUsers={setUsers} />
 
+      <select onChange={(e) => setProblem(e.target.value)}>
+        {usersJ.user_problems.map((p, index) => (
+          <option key={index} value={p}>
+            {p}
+          </option>
+        ))}
+      </select>
+      <hr />
+
       {/* 댓글 추가 부분 */}
       <CommentAdd commentAdd={commentAdd} />
 
       {/* 댓글 내용 출력 부분 */}
-      {comments.map((comment, index) => (
-        <div key={index} className="comments_print">
-          <CommentContent comment={comment} />
+      {comments.map((comment, index) =>
+        comment.problemNum === problem ? (
+          <div key={index} className="comments_print">
+            <CommentContent comment={comment} />
 
-          {/* 삭제 버튼 */}
-          <Delete
-            // commentDelete 함수를 delete 컴포넌트에 전송
-            commentId={comment.id}
-            commentDelete={commentDelete}
-          />
+            {/* 삭제 버튼 */}
+            <Delete
+              // commentDelete 함수를 delete 컴포넌트에 전송
+              commentId={comment.id}
+              commentDelete={commentDelete}
+            />
 
-          <InnerComment commentId={comment.id} compare={compare} />
-        </div>
-      ))}
+            <InnerComment
+              commentId={comment.id}
+              compare={compare}
+              innerComments={innerComments}
+              setInnerComments={setInnerComments}
+            />
+          </div>
+        ) : (
+          ''
+        )
+      )}
     </div>
   )
 }
