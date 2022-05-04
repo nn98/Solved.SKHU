@@ -3,49 +3,86 @@
   margin: 0% 5%;
 }
 
-.user .tearTable {
+.use .tearTable {
   background-color: #f0f0f0;
-  width: 50%;
+  width: 55%;
   float: left;
   margin-bottom: 5%;
   padding: 1%;
   border-radius: 1%;
+  box-shadow: 5px 5px 5px gray;
 }
 
-.user .tagTable {
-  background-color: #f0f0f0;
+.use .tearTable .teardata {
   width: 50%;
+  float: right;
+  display: block;
+  margin-right: 5%;
+}
+
+.use .tearTable .teardata .datahead {
+  width: 33%;
+  display: inline-block;
+  font-weight: 700;
+  text-align: right;
+  margin-bottom: 5%;
+}
+
+.use .tearTable .teardata .datahead:nth-child(1) {
+  text-align: left;
+}
+
+.use .tearTable .teardata .data {
+  width: 33%;
+  display: inline-block;
+  text-align: right;
+  margin-bottom: 2%;
+}
+
+.use .tearTable .teardata .data:nth-child(1) {
+  text-align: left;
+  padding-left: 1%;
+}
+
+.use .tagTable {
+  background-color: #f0f0f0;
+  width: 55%;
   overflow: hidden;
   padding: 1%;
   border-radius: 1%;
+  text-align: center;
+  box-shadow: 5px 5px 5px gray;
+  margin-bottom: 3%;
 }
 
-.user .problem {
+.use .problem {
   text-align: center;
-  margin-right: 5%;
   width: 40%;
   float: right;
   /* border: 1px solid #000; */
-  height: 150vh;
+  height: 185vh;
   overflow: overlay;
   overflow-x: hidden;
   -ms-overflow-style: none;
+  box-shadow: 5px 5px 5px gray;
+  border-radius: 0px 0px 5px 5px;
 }
 
 ::-webkit-scrollbar {
   display: none;
 }
-.user .problem .p-head {
+.use .p-head {
+  margin-left: 3%;
   width: 95%;
   padding: 1%;
   transition: background-color 1s;
 }
 
-.user .problem .p-head:hover {
+.use .p-head:hover {
   background-color: gold;
 }
 
-.user .problem .p-head span {
+.use .p-head span {
   display: inline-block;
   width: 20%;
 }
@@ -53,7 +90,22 @@
   background-color: #f0f0f0;
 }
 
-.user .problem .p-head span:nth-child(2) {
+.tagTable .p-head:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.tagTable .p-head:hover {
+  background-color: gold;
+}
+
+.tagTable .overScroll {
+  height: 50vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+
+.use .p-head span:nth-child(2) {
   width: 40%;
 }
 
@@ -61,44 +113,19 @@
   margin-left: 5%;
 }
 
-.user th {
-  width: 9%;
-  text-align: right;
-}
-.user th:nth-child(1) {
-  text-align: left;
-}
-.user th:nth-child(3) {
-  width: 30%;
-}
-
-.user td {
-  width: 9%;
-  text-align: right;
-}
-.user td:nth-child(1) {
-  text-align: left;
-}
-
-.user p {
+.use p {
   text-align: left;
   color: gray;
   padding-left: 2%;
 }
 
-.user .BigTears {
+.use .BigTears {
   border: 0px;
   text-align: left;
   padding: 2% 2% 2% 0%;
+  margin-bottom: 5%;
 }
 
-.user .BigTears:hover {
+.use .teardata .BigTears:hover {
   cursor: pointer;
-}
-
-.user .tagTable th:nth-child(1) {
-  text-align: center;
-}
-.user .tagTable td:nth-child(1) {
-  text-align: center;
 }

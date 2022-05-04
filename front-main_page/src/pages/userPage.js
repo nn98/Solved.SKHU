@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./user.css";
 import usersJ from "./users.json";
 import { useLocation } from "react-router-dom";
+import { Collapse } from "@mui/material";
 // import { NULL } from "mysql/lib/protocol/constants/types";
 
 const UserPage = () => {
@@ -65,44 +66,38 @@ const UserPage = () => {
           <p>난이도 분포</p>
           <div
             dangerouslySetInnerHTML={{ __html: save.solved_tear_chart }}
-            style={{ width: "50%", float: "left" }}
+            style={{ width: "45%", float: "left" }}
           ></div>
-          <table>
-            <thead>
-              <tr>
-                <th>레벨</th>
-                <th>문제</th>
-                <th>EXP</th>
-              </tr>
-            </thead>
+          <div className="teardata">
+            <div>
+              <div className="datahead">레벨</div>
+              <div className="datahead">문제</div>
+              <div className="datahead">EXP</div>
+            </div>
             {save.solved_tear.map((BigTears, index) => (
-              <tbody key={BigTears.big_tear}>
-                <tr>
-                  <td
-                    colSpan="3"
-                    onClick={() => onClickEnter(index)}
-                    className="BigTears"
-                  >
-                    {BigTears.big_tear}
-                  </td>
-                </tr>
+              <div key={BigTears.big_tear}>
+                <div onClick={() => onClickEnter(index)} className="BigTears">
+                  {BigTears.big_tear}
+                </div>
                 <>
-                  {BigTears.type.map((tear) => (
-                    <tr
-                      key={tear.tear}
-                      style={{
-                        display: opens[index] === false ? "none" : "revert",
-                      }}
-                    >
-                      <td>{tear.tear}</td>
-                      <td>{tear.problem}</td>
-                      <td>{tear.EXP}</td>
-                    </tr>
-                  ))}
+                  <Collapse in={opens[index]} sx={{}}>
+                    {BigTears.type.map((tear) => (
+                      <div
+                        key={tear.tear}
+                        style={{
+                          display: opens[index] === false ? "none" : "revert",
+                        }}
+                      >
+                        <div className="data">{tear.tear}</div>
+                        <div className="data">{tear.problem}</div>
+                        <div className="data">{tear.EXP}</div>
+                      </div>
+                    ))}
+                  </Collapse>
                 </>
-              </tbody>
+              </div>
             ))}
-          </table>
+          </div>
         </div>
 
         <div className="problem">
@@ -143,26 +138,32 @@ const UserPage = () => {
           <p>태그 분포</p>
           <div
             dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
-            style={{ width: "50%", float: "left" }}
+            style={{ width: "60%", margin: "0% 0% 5% 20%" }}
           ></div>
-          <table>
-            <thead>
-              <tr>
-                <th>태그</th>
-                <th>문제</th>
-                <th>EXP</th>
-              </tr>
-            </thead>
-            <tbody>
-              {save.solved_tag.map((tags) => (
-                <tr key={tags.name}>
-                  <td>{tags.name}</td>
-                  <td>{tags.problem}</td>
-                  <td>{tags.EXP}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div
+            className="p-head"
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              borderRadius: "5px 5px 0 0",
+              position: "sticky",
+              top: "0px",
+              textAlign: "center",
+            }}
+          >
+            <span>태그</span>
+            <span>문제</span>
+            <span>EXP</span>
+          </div>
+          <div className="overScroll">
+            {save.solved_tag.map((tags, index) => (
+              <div key={index} className="p-head">
+                <span>{tags.name}</span>
+                <span>{tags.problem}</span>
+                <span>{tags.EXP}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
