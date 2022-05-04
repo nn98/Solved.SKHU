@@ -16,11 +16,17 @@ app.listen(port, () => {
 })
 
 var mysql = require('mysql')
+// var connection = mysql.createConnection({
+//   host: '54.180.106.114',
+//   user: 'Project',
+//   password: 'testing00',
+//   database: 'SWP',
+// })
 var connection = mysql.createConnection({
-  host: '54.180.106.114',
-  user: 'Project',
-  password: 'testing00',
-  database: 'SWP',
+  host: '127.0.0.1',
+  user: 'root',
+  password: 'gusqhr12@',
+  database: 'prisma',
 })
 
 connection.connect(() => {
@@ -28,19 +34,33 @@ connection.connect(() => {
 })
 
 app.get('/get', (req, res) => {
-  const sql = 'select * from Ranking'
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+  const sql = 'SELECT * FROM commentusers'
   connection.query(sql, function (err, result, fields) {
     if (err) throw err
     console.log(result)
-    res.send(result)
+    // res.send(result)
   })
 })
+
 app.get('/ranking', (req, res) => {
   const sql = 'select * from Ranking order by skhurank'
   connection.query(sql, function (err, result, fields) {
     if (err) throw err
     console.log(result)
     res.send(result)
+  })
+})
+
+app.post('/QnAUser', (req, res) => {
+  const sql = 'INSERT INTO qnauser SET ?'
+  // const sql = 'SELECT * FROM qnauser'
+  connection.query(sql, req.body, function (err, result, fields) {
+    if (err) res.status(500).send({ error: err.toString() })
+    else {
+      console.log(result)
+      res.send(result)
+    }
   })
 })
 
