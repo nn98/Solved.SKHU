@@ -150,7 +150,7 @@
   |--|--|--|--|
   |크롤링 시<br>Jsoup 사용안될 때|https://mavenrepository.com<br>->org.jsoup 검색<br>->Jsoup Java HTML Parser<br>jsoup 최신버전 클릭<br>->pom.xml파일에br->dependencies에 추가하기|2022-03-25|`A`|
   |백준 유저페이지<br>크롤링|맞은 문제, 시도했지만 맞추지 못한 문제,<br>번외 문제 등의 구분이<br>명확하지 않아서 헤매었지만,URL링크 자체를 변경하여 해결함|2022-03-27|`A`|
-  |Solved <br>문제 크롤링||2022-05-01|`A`|
+  |Solved <br>문제 크롤링|정답률 크롤링 시 없어진 문제들이<br>존재하는데 그 문제들을 찾아내는 for문 안에<br> try-catch문을 넣어서<br> 건너뛰게 처리함|2022-05-01|`A`|
   |||||
   
   </details>  
