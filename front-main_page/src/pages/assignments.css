@@ -1,7 +1,7 @@
 .assign {
-  width: 80%;
+  width: 90%;
   height: 100vh;
-  margin: 0% 10%;
+  margin: 0% 5%;
 }
 
 .assign h1 {
@@ -10,11 +10,16 @@
 .assign h3 {
   margin: 0% 0% 10% 0%;
 }
-.input textarea {
-  float: left;
+
+.input {
   width: 50%;
+  margin: 0% 5%;
+  float: left;
+}
+
+.input textarea {
+  width: 100%;
   height: 90vh;
-  margin-left: 25%;
 }
 
 .input textarea::placeholder {
@@ -24,9 +29,10 @@
 }
 
 .buttonList {
-  float: left;
-  margin-left: 1%;
+  width: 20%;
+  float: right;
 }
+
 .buttonList input[type="text"] {
   height: 3vh;
   margin-bottom: 10%;
@@ -35,6 +41,7 @@
   height: 3vh;
   margin-bottom: 10%;
 }
+
 .buttonList button {
   margin-bottom: 10%;
   display: block;
