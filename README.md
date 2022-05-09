@@ -42,7 +42,7 @@
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
-  |`1.`|`N`|D|Oracle Academy|~2022-04-29|
+  |`1.`|`N`|B|Assignment_<br>채점 정보 UserId를 Key로<br>해당 유저의 문제 풀이 유무 확인,전송|~2022-05-16|
   |`1.`|`S`|F|Front > Back Connection|~2022-04-30|
   |`1.`|`L`|F|QnA Page/Database Connection|~2022-04-30|
   |`1.`|`A`|B|Crawling upgrade/Expansion|~2022-04-30|
