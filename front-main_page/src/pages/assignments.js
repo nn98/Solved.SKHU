@@ -4,6 +4,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import MediaCard from "./MediaCard";
 
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
@@ -51,7 +52,8 @@ const Assignments = () => {
 
   return (
     <div className="assign">
-      <h1>교수님 채점 페이지</h1>
+      <h1>채점 페이지</h1>
+      <MediaCard></MediaCard>
       <div className="input">
         <textarea
           placeholder=" Student ID&#13;&#10;
@@ -99,6 +101,7 @@ const Assignments = () => {
           loading={loading}
           loadingIndicator="실행중..."
           variant="contained"
+          sx={{ width: "67%" }}
         >
           <p>
             <PlayArrowIcon fontSize="small" />
