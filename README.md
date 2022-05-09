@@ -105,7 +105,7 @@
   ## Errors-#4
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |||||
+  |추천 목록이 나타날 때 transition을 사용하고 싶음|react mui인 <Grow>를 import<br>CSS가 충돌되지 않도록 주의|2022-05-09|`S`|
   
   </details>
 
