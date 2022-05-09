@@ -45,12 +45,15 @@ const Create = (e) => {
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
-          alert(data)
+          if (data.error) {
+            if (data.error === 1062) alert('이미 있는 사용자입니다.')
+          } else {
+            alert(data.data)
+          }
         })
     } catch (error) {
       // 위에서 오류가 걸린다면
-      console.log(JSON.stringify(error))
-      alert('실패하였습니다.')
+      alert('2실패하였습니다.')
       console.error(error)
     }
   }
