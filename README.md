@@ -37,7 +37,7 @@
   |`18.`|*Off*|Full|Git 버전 관리, gitignore 설정 및 브랜치 관리<br>크롤링 확장 및 보수, 프론트 페이지 추가 개발|2022-04-26|
   |`19.`|*Off*|Full|Front-Back 연동 및 데이터 전송|2022-05-02|
   |`20.`|*Off*|Full|Front-Back 연동, 레이아웃 수정, 데이터베이스 구조 수정|2022-05-04|
-  |`21.`|*Off*|Full||2022-05-02|
+  |`21.`|*Off*|Full|풀타임 회의-<br>Front_Layout update/QnA update<br>Back_Solved.ac Data Crawling+Assignment by Node.js|2022-05-09|
   |`22.`|*Off*|Full||2022-05-02|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
