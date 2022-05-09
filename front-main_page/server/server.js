@@ -16,6 +16,7 @@ app.listen(port, () => {
   console.log(`express is  ${port}`);
 });
 
+
 var mysql = require("mysql");
 var connection = mysql.createConnection({
   host: "54.180.149.202",
@@ -27,6 +28,60 @@ var connection = mysql.createConnection({
 connection.connect(() => {
   console.log("connecting");
 });
+
+
+
+
+app.post('/QnAUser', (req, res) => {
+  const sql = 'INSERT INTO qnauser SET ?'
+  connection.query(sql, req.body, function (err, result, fields) {
+    if (err) {
+      res.send({ error: err.errno })
+    } else {
+      console.log(result)
+      res.send({ data: '어서오세요' })
+    }
+  })
+})
+
+app.get('/QnA', (req, res) => {
+  const sql = 'SELECT qna.* FROM qna'
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err
+    res.send(result)
+  })
+})
+
+app.post('/QnAAdd', (req, res) => {
+  console.log(req.body)
+  const body = [
+    req.body.content,
+    req.body.userId,
+    req.body.userIP,
+    req.body.problem,
+    req.body.userId,
+    req.body.password,
+  ]
+  console.log(body)
+  // const sql =
+  //   'INSERT INTO qna(content, userIP, userId, problem) SELECT (?,?,?,?) FROM DUAL WHERE EXISTS(SELECT * FROM qnauser WHERE qnauser.name = (?) and qnauser.password = (?));'
+  // connection.query(sql, req.body, function (err, result, fields) {
+  //   if (err) {
+  //     res.send({ error: err.errno })
+  //   } else {
+  //     console.log('@@@@@@@@@@@@@@@')
+  //     console.log(result.insertId)
+  //   }
+  // })
+})
+
+// app.post('/post', (req, res) => {
+//   const sql = 'INSERT INTO users SET ?'
+//   con.query(sql, req.body, function (err, req, res) {
+//     console.log(req)
+//     res.send('등록 완료')
+//   })
+// })
 
 app.get("/get", (req, res) => {
   const sql = "select * from Ranking";
@@ -78,4 +133,5 @@ app.get("/algorithm", (req, res) => {
     res.send(result);
   });
 });
+
 // connection.end()

@@ -8,11 +8,8 @@ import Box from '@mui/material/Box'
 import Portal from '@mui/material/Portal'
 
 const InnerComment = (e) => {
-  // 대댓글 보관함
-  const [innerComments, setInnerComments] = useState([])
-
   // 매게변수로 받은 commentid 값
-  const { commentId } = e
+  const { commentId, innerComments, setInnerComments } = e
 
   // dropdown 박스용
   const [innerCommentButton, setInnerCommentButton] = useState(false)
@@ -22,7 +19,7 @@ const InnerComment = (e) => {
   }
 
   useEffect(() => {
-    // console.log(innerComments)
+    console.log('innerComments' + JSON.stringify(innerComments))
   }, [innerComments])
 
   // 대댓글 추가 기능
@@ -93,18 +90,22 @@ const InnerComment = (e) => {
         {innerCommentButton ? (
           <Portal container={innerCommentContainer.current}>
             <div className="innerComments_print">
-              {innerComments.map((innerComment, index) => (
-                <div key={index} className="comments_print">
-                  {/* 댓글 내용 */}
-                  <CommentContent comment={innerComment} />
+              {innerComments.map((innerComment, index) =>
+                innerComment.commentId === commentId ? (
+                  <div key={index} className="comments_print">
+                    {/* 댓글 내용 */}
+                    <CommentContent comment={innerComment} />
 
-                  {/* 삭제 버튼 */}
-                  <Delete
-                    commentId={innerComment.id}
-                    commentDelete={innerCommentDelete}
-                  />
-                </div>
-              ))}
+                    {/* 삭제 버튼 */}
+                    <Delete
+                      commentId={innerComment.id}
+                      commentDelete={innerCommentDelete}
+                    />
+                  </div>
+                ) : (
+                  ''
+                )
+              )}
               {/* 작성 부분 */}
               <CommentAdd commentAdd={innerCommentAdd} />
             </div>
