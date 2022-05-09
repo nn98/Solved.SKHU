@@ -32,14 +32,20 @@
   |`13.`|*On*|Full|_개발 진척 보고/개발 로드맵 보완|2022-04-12|
   |`14.`|*Off*|Full|풀타임 회의-브랜치/이슈 정리, 프론트-백 연동|2022-04-13|
   |`15.`|*Off*|Full|풀타임 회의-전체 페이지 구현, AWS 연동|2022-04-19|
-  |`16.`|**|||2022-04-00|
+  |`16.`|*On*|Back|_Node-React 연동 관련 버그리포팅|2022-04-24|
+  |`17.`|*Off*|Full|Node-React 연동, 브랜치 통합, 문서 관리<br>구현된 페이지 레이아웃 관리, 개발 방향성 수정|2022-04-25|
+  |`18.`|*Off*|Full|Git 버전 관리, gitignore 설정 및 브랜치 관리<br>크롤링 확장 및 보수, 프론트 페이지 추가 개발|2022-04-26|
+  |`19.`|*Off*|Full|Front-Back 연동 및 데이터 전송|2022-05-02|
+  |`20.`|*Off*|Full|Front-Back 연동, 레이아웃 수정, 데이터베이스 구조 수정|2022-05-04|
+  |`21.`|*Off*|Full|풀타임 회의-<br>Front_Layout update/QnA update<br>Back_Solved.ac Data Crawling+Assignment by Node.js|2022-05-09|
+  |`22.`|*Off*|Full||2022-05-02|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
-  |`1.`|`N`|D|Oracle Cloud|~2022-04-13|
-  |`1.`|`S`|F|Ranking Page|~2022-04-13|
-  |`1.`|`L`|F|QnA Page|~2022-04-13|
-  |`1.`|`A`|B|Crawling/Server|~2022-04-13|
+  |`1.`|`N`|B|Assignment_<br>채점 정보 UserId를 Key로<br>해당 유저의 문제 풀이 유무 확인,전송|~2022-05-16|
+  |`1.`|`S`|F|Front > Back Connection|~2022-04-30|
+  |`1.`|`L`|F|QnA Page/Database Connection|~2022-04-30|
+  |`1.`|`A`|B|Crawling upgrade/Expansion|~2022-04-30|
   ##### References
   - [JS 개발 환경 설정_기본](https://webnautes.tistory.com/1473)
   - [React 기본 세팅](https://blog.ull.im/engineering/2018/11/30/using-react-in-vs-code.html)
@@ -85,6 +91,7 @@
   |난이도 분포와 태그 분포의 배경색을 위한 공간 나누기|기존 float방식으로 나누었을 때 아래의 태그 분포 div가 보이지 않게 난이도 분포까지 공간을 같이 사용함<br>배경색이 겹치는 문제 발생, 이를 해결하기 위해 'overflow=hidden'속성 사용, 겹치는 부분은 잘라버림|2022-04-10|`S`|
   |난이도 분포 테이블 열고 접기 기능구현을 위한<br>useState() 배열접근 공부|각 티어 이름을 클릭했을 경우 상세 정보 테이블이 열리도록 구현하고 싶음<br>티어 수 크기의 배열을 useState() false로 각 초기화하고 클릭할 때마다 !open 하도록 구현|2022-04-10|`S`|
   |내부 스크롤 기능 활성화 하되 스크롤바 제거|내부 스크롤 있는 태그에  -ms-overflow-style: none;  적용 <br>내부 스크롤 태그 아래에 ::-webkit-scrollbar { display: none; } 적용|2022-04-20|`L`|
+  |테이블이 열릴 때 transition을 사용하고 싶음|react mui인 Collapse를 import sx={{}} 속성을 추가하여 크기 조절도 가능<br>안의 <div>를 만드는 원리이기 때문에 table안에서 사용할 경우 css가 충돌 됨<br>충돌 되지 않도록 css를 주의|2022-05-04|`S`|
 
   </details>
 
@@ -98,7 +105,7 @@
   ## Errors-#4
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |||||
+  |추천 목록이 나타날 때 transition을 사용하고 싶음|react mui인 Grow를 import<br>CSS가 충돌되지 않도록 주의|2022-05-09|`S`|
   
   </details>
 
@@ -138,13 +145,14 @@
   ## Implements-#16
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |||||
+  |완료|크롤링 반복 시 과부하<br>[Thread.sleep()](https://www.delftstack.com/ko/howto/java/how-to-delay-few-seconds-in-java/)|2022-04-30|`A`|
   
   ## Errors-#16
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |1번 문제 크롤링 시<br>Jsoup 사용안될 때|https://mavenrepository.com<br>->org.jsoup 검색<br>->Jsoup Java HTML Parser<br>jsoup 최신버전 클릭<br>->pom.xml파일에br->dependencies에 추가하기|2022-03-25|`A`|
-  |2번 문제 <br>백준 유저페이지<br>크롤링|맞은 문제, 시도했지만 맞추지 못한 문제,<br>번외 문제 등의 구분이<br>명확하지 않아서 헤매었지만,URL링크 자체를 변경하여 해결함|2022-03-27|`A`|
+  |크롤링 시<br>Jsoup 사용안될 때|https://mavenrepository.com<br>->org.jsoup 검색<br>->Jsoup Java HTML Parser<br>jsoup 최신버전 클릭<br>->pom.xml파일에br->dependencies에 추가하기|2022-03-25|`A`|
+  |백준 유저페이지<br>크롤링|맞은 문제, 시도했지만 맞추지 못한 문제,<br>번외 문제 등의 구분이<br>명확하지 않아서 헤매었지만,URL링크 자체를 변경하여 해결함|2022-03-27|`A`|
+  |Solved <br>문제 크롤링|정답률 크롤링 시 없어진 문제들이<br>존재하는데 그 문제들을 찾아내는 for문 안에<br> try-catch문을 넣어서<br> 건너뛰게 처리함|2022-05-01|`A`|
   |||||
   
   </details>  
@@ -180,6 +188,7 @@
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |Oracle Cloud 계정 생성 실패|Payment 인증을 위한 카드 등록 실패<br>AWS에선 정상적으로 인증되는 카드도 실패<br>오라클 고객센터를 통한 상담 시도<br>정상적 소통 불가. 문제 해결 실패<br>AWS 서버 구축으로 우회|2022-04-15|`A`|
+  |DB AUTO_INCREMENT|필요한 값이 0부터 시작인데 테이블 수정 시<br>"AUTO_INCREMENT = 0"<br>을 넣어줘도 값이 변하지 않음<br>" Set session SQL_MODE = “no_auto_value_on_zero” "<br>을 입력해 준 후 AUTO_INCREMENT값에도 0부터 값을 지정해주어야함|2022-04-29|`A`|
   
   </details>
 
@@ -223,6 +232,7 @@
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |textarea태그의 placeholder에만 값 설정하기|사용자 입력 값과 다르게 힌트에만 css서식을 적용하고자 함<br>css시트에서 ::placeholder로 콜론(:)2개 선택자를 사용하면 됨|2022-04-19|`S`|
+  |설명서를 보기좋게 추가하고 싶음|react mui인 mediacard를 import하고<br>드롭 다운 아이콘을 추가해 설명서가 나오도록 구현|2022-05-09|`S`|
   
   </details>
 
@@ -232,18 +242,50 @@
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |진행|DB데이터 React에서 사용|2022-04-21|`A`|
-  |성공(진행 중)|DB데이터 React에서 사용|2022-04-25|`A`|
-  
-  
+  |진행|mainPage와 userPage연결 및 데이터 이동|2022-04-29|`S`|
+ 
   ## Errors-#34
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |Port연결 문제|nodejs와 mysql연동까지는 localhost로 연결이되지만,<br> React로 값을 보내줄 때 127.0.0.1로 해주어야 함|2022-04-21|`A`|
-  |Node react 연동 시 fetch에서 then으로 data를 입력 받을때 promise 형태로만 전송됨|fetch 시 첫번째 then은 http 통신 요청과 응답에서 응답의 정보를 담고 있는 객체 Response Object이므로<br>두번째 then을 써서 첫번째 .then 함수에서 응답 body의 데이터를 받기 가능|2022-04-25| `L`
-  
+  |Node react 연동 시 fetch로 data를 입력 받을때<br> promise 형태로만 전송됨|fetch 시 첫번째 then은 http 통신 요청과 응답에서 응답의 정보를 담고 있는 객체 Response Object이므로<br>두번째 then을 써서 첫번째 .then 함수에서 응답 body의 데이터를 받기 가능|2022-04-25|`L`|
+  |Link 태그로 url을 변경할 때 값도 같이 전달해야 함|useLocation이라는 hook을 이용하여 현재 머물고 있는 페이지의 정보 객체를 반환 받아 .state로 JSON형태의 값을 사용할 수 있음|2022-04-29|`S`|
+  |뒤로가기 버튼을 구현|useNavigate라는 hook을 이용하여 현재 라우트에 쌓인 브라우저 dom을 제어할 수 있는 객체를 반환 받아 객체(-1)로 한 페이지 뒤로 이동할 수 있음, '패스'를 매개변수로 주어서 패스로도 이동 가능|2022-04-29|`S`|
   
   </details>
 
+  <details><summary>#38 Git Ignore</summary>
+  
+  ## Implements-#38
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |||||
+  
+  ## Errors-#38
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |이미 node_modules이 git에 올려져 있으면<br>.gitignore에 넣어도 사라지지 않음.|git의 모든 node_modules 삭제<br>이후 gitignore 수정-업로드|2022-04-26|`L`|
+  |git status 명령어를 입력하면 나오는 값|.gitignore에서 지정한 값은 git status 명령어의 반환 값으로 출력되어서는 안됨|2022-04-29|`S`|
+  
+  </details>
+
+<details><summary>#41 Back-Crawling_Python_Node.js</summary>
+  
+  ## Implements-#41
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |완료|Python Crawling Test|2022-05-09|`N`|
+  |완료|Node.js Crawling Test|2022-05-09|`N`|
+  |진행|Node.js<br>Crawling/Assiginment|2022-05-09|`N`|
+  
+  ## Errors-#41
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |403 response 발생|Header에 User-agent 설정.<br>다만 예시 코드가 'cheerio-httpcli'뿐이라 불완전 해결|2022-05-09|`N`|
+  |Async 불일치 발생|채점을 위해 반복문 실행 시<br>비동기 실행으로 인해 불일치.<br>async/then 콜백함수 사용해 해결|2022-05-09|`N`|
+  
+  </details>
+  
 <details><summary>#X Static contents</summary>
   
   ### 개발 방향성
