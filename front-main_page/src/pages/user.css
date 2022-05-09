@@ -10,7 +10,7 @@
   margin-bottom: 5%;
   padding: 1%;
   border-radius: 1%;
-  box-shadow: 5px 5px 5px gray;
+  box-shadow: 3px 3px 3px gray;
 }
 
 .use .tearTable .teardata {
@@ -51,7 +51,7 @@
   padding: 1%;
   border-radius: 1%;
   text-align: center;
-  box-shadow: 5px 5px 5px gray;
+  box-shadow: 3px 3px 3px gray;
   margin-bottom: 3%;
 }
 
@@ -64,7 +64,7 @@
   overflow: overlay;
   overflow-x: hidden;
   -ms-overflow-style: none;
-  box-shadow: 5px 5px 5px gray;
+  box-shadow: 3px 3px 3px gray;
   border-radius: 0px 0px 5px 5px;
 }
 

@@ -80,7 +80,7 @@ const UserPage = () => {
                   {BigTears.big_tear}
                 </div>
                 <>
-                  <Collapse in={opens[index]} sx={{}}>
+                  <Collapse in={opens[index]}>
                     {BigTears.type.map((tear) => (
                       <div
                         key={tear.tear}
