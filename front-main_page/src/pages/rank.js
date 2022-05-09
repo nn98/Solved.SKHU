@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 // import rankJ from './rank.json'
-import './rank.css'
+import "./rank.css";
 
 const Rank = () => {
-  const [ratingProblems, setRatingProblems] = useState([])
-const ratingAdd = async () => {
-  try {
-    await fetch('http://localhost:3001/ranking')
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data)
-        setRatingProblems(data)
-      })
-  } catch (error) {
-    console.error(error)
-  }
-}
+  const [ratingProblems, setRatingProblems] = useState([]);
+  const ratingAdd = async () => {
+    try {
+      await fetch("http://localhost:3001/ranking")
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data)
+          setRatingProblems(data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-useEffect(()=>(ratingAdd()),[])
+  useEffect(() => ratingAdd(), []);
   return (
     <div className="rank">
       <h1>성공회대학교 티어 랭킹</h1>
@@ -41,12 +41,22 @@ useEffect(()=>(ratingAdd()),[])
                 <td>{user.skhurank}</td>
                 <td>
                   <img
-                    src={'https://static.solved.ac/tier_small/' + user.tier + '.svg'}
+                    src={
+                      "https://static.solved.ac/tier_small/" +
+                      user.tier +
+                      ".svg"
+                    }
                     alt="profile"
-                    style={{ width: '2%', margin: '0 1% 0 0' }}
-                  />{' '}
+                    style={{ width: "3%", margin: "0 1% 0 0" }}
+                  />{" "}
                   <strong>
-                    <a href="https://solved.ac/profile/{user.Id}">{user.User_ID}</a>
+                    <a
+                      href={"https://solved.ac/profile/" + user.User_ID}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {user.User_ID}
+                    </a>
                   </strong>
                 </td>
                 <td>{user.rating}</td>
@@ -59,7 +69,7 @@ useEffect(()=>(ratingAdd()),[])
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Rank
+export default Rank;
