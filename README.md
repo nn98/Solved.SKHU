@@ -269,6 +269,23 @@
   
   </details>
 
+<details><summary>#41 Back-Crawling_Python_Node.js</summary>
+  
+  ## Implements-#41
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |완료|Python Crawling Test|2022-05-09|`N`|
+  |완료|Node.js Crawling Test|2022-05-09|`N`|
+  |진행|Node.js<br>Crawling/Assiginment|2022-05-09|`N`|
+  
+  ## Errors-#41
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |403 response 발생|Header에 User-agent 설정.<br>다만 예시 코드가 'cheerio-httpcli'뿐이라 불완전 해결|2022-05-09|`N`|
+  |Async 불일치 발생|채점을 위해 반복문 실행 시<br>비동기 실행으로 인해 불일치.<br>async/then 콜백함수 사용해 해결|2022-05-09|`N`|
+  
+  </details>
+  
 <details><summary>#X Static contents</summary>
   
   ### 개발 방향성
