@@ -40,7 +40,7 @@ const QnA = () => {
       // 먼저 댓글 받은 유저의 정보와 쓴 댓글 내용을 body에 저장
       const body = {
         content: props.commentAddContent,
-        userIP: 155,
+        userIP: '155',
         userId: props.commentAddName,
         problem: problem,
         password: props.commentAddPassword,
@@ -58,9 +58,9 @@ const QnA = () => {
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
           if (data.error) {
-            if (data.error === 1062) alert('이미 있는 사용자입니다.')
+            alert(data.error)
           } else {
-            alert(data.data)
+            setComments(data)
           }
         })
     } catch (error) {
