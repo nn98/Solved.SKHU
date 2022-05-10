@@ -34,6 +34,7 @@ connection.connect(() => {
   console.log('connecting')
 })
 
+// QnA api @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 app.post('/QnAUser', (req, res) => {
   const sql = 'INSERT INTO qnauser SET ?'
   connection.query(sql, req.body, function (err, result, fields) {
@@ -47,65 +48,131 @@ app.post('/QnAUser', (req, res) => {
 })
 
 app.get('/QnA', (req, res) => {
-  const sql = 'SELECT qna.* FROM qna'
+  const sql = 'SELECT * FROM qna'
   connection.query(sql, function (err, result, fields) {
     if (err) throw err
+    console.log('QnA 출력')
+    res.send(result)
+  })
+})
+
+app.get('/QnAInner', (req, res) => {
+  const sql = 'SELECT * FROM qnainner'
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err
+    console.log('QnA안에꺼 출력')
     res.send(result)
   })
 })
 
 app.post('/QnAAdd', (req, res) => {
-  const body = [
+  const insertBody = [
     req.body.content,
     req.body.userIP,
     req.body.userId,
     req.body.problem,
-    req.body.userId,
-    req.body.password,
   ]
-  const sql =
-    'INSERT INTO qna(content, userIP, userId, problem) SELECT ?,?,?,?' +
-    ' FROM DUAL WHERE EXISTS(SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?);'
-  connection.query(sql, body, function (err, result, fields) {
+  const userBody = [req.body.userId, req.body.password]
+  const userSql =
+    'SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?;'
+  connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err
-    if (result.insertId === 0)
+    if (result.length === 0) {
       res.send({ error: '사용자가 올바르지 않습니다.' })
-    else {
-      console.log(result)
-      res.redirect('/QnA')
+    } else {
+      const insertSql =
+        'INSERT INTO qna(content, userIP, userId, problem) value (?,?,?,?);'
+      connection.query(insertSql, insertBody, function (err, result, fields) {
+        if (err) throw err
+        console.log('QnA 더하기')
+        // console.log(result)
+        res.redirect('/QnA')
+      })
+    }
+  })
+})
+
+app.post('/QnAInnerAdd', (req, res) => {
+  const insertBody = [
+    req.body.content,
+    req.body.userIP,
+    req.body.userId,
+    req.body.qnaId,
+  ]
+  const userBody = [req.body.userId, req.body.password]
+  const userSql =
+    'SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?;'
+  connection.query(userSql, userBody, function (err, result, fields) {
+    if (err) throw err
+    if (result.length === 0) {
+      res.send({ error: '사용자가 올바르지 않습니다.' })
+    } else {
+      const insertSql =
+        'INSERT INTO qnainner(content, userIP, userId, qnaId) value (?,?,?,?);'
+      connection.query(insertSql, insertBody, function (err, result, fields) {
+        if (err) throw err
+        console.log('QnA안에꺼 더하기')
+        // console.log(result)
+        res.redirect('/QnAInner')
+      })
     }
   })
 })
 
 app.post('/QnADelete', (req, res) => {
-  console.log(req.body)
-  const body = [
-    req.body.ID,
-    req.body.userId,
-    req.body.password,
-    req.body.userId,
-  ]
-  console.log(body)
-  const sql =
-    'delete qna from qna JOIN qnauser on qna.ID = ? where qnauser.name = ? and qnauser.password = ? and qna.userId = ?;'
-  connection.query(sql, body, function (err, result, fields) {
+  const userBody = [req.body.userId, req.body.password]
+  const userSql =
+    'SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?;'
+  connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err
-    if (result.affectedRows === 0)
+    if (result.length === 0) {
       res.send({ error: '사용자가 올바르지 않습니다.' })
-    else {
-      console.log(result)
-      res.redirect('/QnA')
+    } else {
+      const deleteBody = [req.body.ID, req.body.userId]
+      const deleteSql = 'DELETE FROM qna WHERE qna.ID = ? and qna.userId = ?;'
+      connection.query(deleteSql, deleteBody, function (err, result, fields) {
+        if (result.affectedRows === 0) {
+          res.send({ error: '사용자가 올바르지 않습니다.' })
+        } else {
+          console.log('QnA 삭제')
+          res.redirect('/QnA')
+        }
+      })
     }
   })
 })
 
-// app.post('/post', (req, res) => {
-//   const sql = 'INSERT INTO users SET ?'
-//   con.query(sql, req.body, function (err, req, res) {
-//     console.log(req)
-//     res.send('등록 완료')
-//   })
-// })
+app.post('/QnAInnerDelete', (req, res) => {
+  const userBody = [req.body.userId, req.body.password]
+  const userSql =
+    'SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?;'
+  connection.query(userSql, userBody, function (err, result, fields) {
+    if (err) throw err
+    if (result.length === 0) {
+      res.send({ error: '사용자가 올바르지 않습니다.' })
+    } else {
+      const deleteBody = [req.body.ID, req.body.userId]
+      const deleteSql =
+        'DELETE FROM qnainner WHERE qnainner.ID = ? and qnainner.userId = ?;'
+      connection.query(deleteSql, deleteBody, function (err, result, fields) {
+        if (result.affectedRows === 0) {
+          res.send({ error: '사용자가 올바르지 않습니다.' })
+        } else {
+          console.log('QnA안에꺼 삭제')
+          res.redirect('/QnAInner')
+        }
+      })
+    }
+  })
+})
+
+//
+//
+//
+//
+//
+//
+// 기타 api @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 app.get('/get', (req, res) => {
   const sql = 'select * from Ranking'

@@ -14,9 +14,7 @@ const QnA = () => {
   // 댓글 보관함
   const [comments, setComments] = useState([])
 
-  // 대댓글 보관함
-  const [innerComments, setInnerComments] = useState([])
-
+  // 댓글 출력문
   const qnaFind = async () => {
     try {
       const res = await fetch('http://localhost:3001/QnA').then((res) =>
@@ -132,11 +130,7 @@ const QnA = () => {
               commentDelete={commentDelete}
             />
 
-            <InnerComment
-              commentId={comment.id}
-              innerComments={innerComments}
-              setInnerComments={setInnerComments}
-            />
+            <InnerComment commentId={comment.ID} />
           </div>
         ) : null
       )}

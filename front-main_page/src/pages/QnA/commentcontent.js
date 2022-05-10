@@ -1,7 +1,7 @@
 import React from 'react'
 
 const CommentContent = (props) => {
-  console.log(props)
+  // console.log(props)
   return (
     <div>
       <div className="comments_print_user">name = {props.comment.userId}</div>
