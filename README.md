@@ -38,7 +38,8 @@
   |`19.`|*Off*|Full|Front-Back 연동 및 데이터 전송|2022-05-02|
   |`20.`|*Off*|Full|Front-Back 연동, 레이아웃 수정, 데이터베이스 구조 수정|2022-05-04|
   |`21.`|*Off*|Full|풀타임 회의-<br>Front_Layout update/QnA update<br>Back_Solved.ac Data Crawling+Assignment by Node.js|2022-05-09|
-  |`22.`|*Off*|Full||2022-05-02|
+  |`22.`|*Off*|Full|풀타임 회의|2022-05-10|
+  |`23.`|*Off*|Full||2022-05-02|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
