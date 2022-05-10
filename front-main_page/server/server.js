@@ -64,10 +64,33 @@ app.post('/QnAAdd', (req, res) => {
     req.body.password,
   ]
   const sql =
-    'INSERT INTO qna(content, userIP, userId, problem) SELECT ?,?,?,? FROM DUAL WHERE EXISTS(SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?);'
+    'INSERT INTO qna(content, userIP, userId, problem) SELECT ?,?,?,?' +
+    ' FROM DUAL WHERE EXISTS(SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?);'
   connection.query(sql, body, function (err, result, fields) {
     if (err) throw err
     if (result.insertId === 0)
+      res.send({ error: '사용자가 올바르지 않습니다.' })
+    else {
+      console.log(result)
+      res.redirect('/QnA')
+    }
+  })
+})
+
+app.post('/QnADelete', (req, res) => {
+  console.log(req.body)
+  const body = [
+    req.body.ID,
+    req.body.userId,
+    req.body.password,
+    req.body.userId,
+  ]
+  console.log(body)
+  const sql =
+    'delete qna from qna JOIN qnauser on qna.ID = ? where qnauser.name = ? and qnauser.password = ? and qna.userId = ?;'
+  connection.query(sql, body, function (err, result, fields) {
+    if (err) throw err
+    if (result.affectedRows === 0)
       res.send({ error: '사용자가 올바르지 않습니다.' })
     else {
       console.log(result)

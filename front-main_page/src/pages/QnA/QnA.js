@@ -73,31 +73,29 @@ const QnA = () => {
   const commentDelete = async (props) => {
     try {
       const body = {
-        id: props.commentId,
-        problemNum: problem,
-        name: props.commentDeleteName,
+        ID: props.commentId,
+        userId: props.commentDeleteName,
         password: props.commentDeletePassword,
       }
-
-      /****** comments 존재 비교문 ******/
-
-      // 만약 삭제할 comments 찾기
-      const commentsCompare = comments.find((c) => c.id === body.id)
-
-      console.log(commentsCompare)
-      // 만약 user가 다르다면
-      if (
-        commentsCompare.name !== body.name ||
-        commentsCompare.password !== body.password
-      ) {
-        // 오류 출력
-        return alert('사용자가 없습니다.')
+      const requestOptions = {
+        // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
+        method: 'POST', // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
+        headers: {
+          'Content-Type': 'application/json',
+        }, // json형태의 데이터를 서버로 보냅니다.
+        body: JSON.stringify(body),
       }
-      // 댓글 보관함에 저장
-      setComments(comments.filter((value) => value.id !== body.id))
-      return
-
-      /*******************************/
+      await fetch('http://localhost:3001/QnADelete', requestOptions)
+        .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
+        .then((data) => {
+          // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
+          if (data.error) {
+            alert(data.error)
+          } else {
+            setComments(data)
+            // setComments(data)
+          }
+        })
     } catch (error) {
       alert('실패하였습니다.')
       console.error(error)
@@ -130,7 +128,7 @@ const QnA = () => {
             {/* 삭제 버튼 */}
             <Delete
               // commentDelete 함수를 delete 컴포넌트에 전송
-              commentId={comment.id}
+              commentId={comment.ID}
               commentDelete={commentDelete}
             />
 
