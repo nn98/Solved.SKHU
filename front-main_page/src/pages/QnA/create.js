@@ -25,7 +25,7 @@ const Create = (e) => {
   const [createUserPassword, setCreateUserPassword] = useState('')
 
   // 새 유저를 생성하기 위한 createUser 함수
-  const createUser = (props) => {
+  const createUser = async (props) => {
     try {
       // 유저 정보 body에 저장
       const body = {
@@ -33,28 +33,31 @@ const Create = (e) => {
         password: props.createUserPassword,
       }
 
-      // 기존 유저의 name과 새로 추가할 body.name과 같은것이 있다면 t에 추가
-      const userCompare = e.users.find((p) => p.name === body.name)
-
-      /* users 비교문 */
-      // 만약 userCompar가 없다면
-      if (userCompare === undefined) {
-        // 유저 보관함에 추가
-        e.setUsers([...e.users, body])
-        setOpen(!open)
-        return alert('어서오세요')
+      const requestOptions = {
+        // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
+        method: 'POST', // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
+        headers: {
+          'Content-Type': 'application/json',
+        }, // json형태의 데이터를 서버로 보냅니다.
+        body: JSON.stringify(body),
       }
-      // 이름이 동일한 유저가 있다면
-      else {
-        return alert('현재 사용 중인 사용자가 있습니다.')
-      }
-      /*******************************/
+      await fetch('http://localhost:3001/QnAUser', requestOptions)
+        .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
+        .then((data) => {
+          // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
+          if (data.error) {
+            if (data.error === 1062) alert('이미 있는 사용자입니다.')
+          } else {
+            alert(data.data)
+          }
+        })
     } catch (error) {
       // 위에서 오류가 걸린다면
-      alert('실패하였습니다.')
+      alert('2실패하였습니다.')
       console.error(error)
     }
   }
+
   return (
     <div>
       <button className="comment_button" onClick={userHandleOpen}>
