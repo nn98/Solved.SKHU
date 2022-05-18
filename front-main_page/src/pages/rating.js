@@ -31,27 +31,13 @@ const Rating = () => {
       await fetch('http://localhost:3001/get')
         .then((res) => res.json())
         .then((data) => {
+          console.log(data)
           setRatingProblems(data)
         })
     } catch (error) {
       console.error(error)
     }
   }
-  // =======================test=================
-  const [users, setUsers] = useState([])
-  const componentDidMount = async () => {
-    try {
-      await fetch('http://localhost:3001/get')
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data)
-          setUsers(data)
-        })
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  //==============================================
 
   // 각 랭크의 서브 랭크의 버튼을 추가하기 위한 함수
   const rankSubAdd = (index) => {
@@ -92,12 +78,6 @@ const Rating = () => {
 
   return (
     <div className="rating">
-      {users.map((u, index) => (
-        <div key={index}>
-          <span>{u.test_key}</span>
-          <span>{u.test_body}</span>
-        </div>
-      ))}
       <button onClick={() => setUserOrRank(true)}>유저별</button>
       <button onClick={() => setUserOrRank(false)}>랭크별</button>
       {userOrRank ? (
@@ -106,7 +86,9 @@ const Rating = () => {
 
           <div className="ratingProblem">
             <div className="mostProblem">
-              <strong>가장 많이 푼 문제</strong>
+              <strong>
+                <big>가장 많이 푼 문제</big>
+              </strong>
               <div className="mostProblemInner">
                 <div
                   className="p-head"
@@ -122,14 +104,16 @@ const Rating = () => {
                 </div>
                 {ratingProblems.map((problem, index) => (
                   <div key={index} className="p-head">
-                    <span>helo</span>
+                    <span>{problem.ID}</span>
                     <span>{problem.namekr}</span>
-                    <span>{index * problem.skhurank}</span>
+                    <span>{problem.rate}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <strong>가장 적게 푼 문제</strong>
+            <strong>
+              <big>가장 적게 푼 문제</big>
+            </strong>
             <div className="minProblem">
               <div
                 className="p-head"
@@ -141,15 +125,13 @@ const Rating = () => {
               >
                 <span>#</span>
                 <span>제목</span>
-                <span>해결</span>
                 <span>시도</span>
               </div>
               {ratingProblems.map((problem, index) => (
                 <div key={index} className="p-head">
-                  <span>{problem.User_ID}</span>
-                  <span>helo</span>
-                  <span>해결</span>
-                  <span>{index * problem.skhurank}</span>
+                  <span>{problem.ID}</span>
+                  <span>{problem.namekr}</span>
+                  <span>{problem.rate}</span>
                 </div>
               ))}
             </div>
@@ -160,7 +142,7 @@ const Rating = () => {
           <h1>랭크 페이지</h1>
           <span>
             <input type="text" />
-            <button onClick={() => componentDidMount()}>search</button>
+            <button>search</button>
           </span>
           <div className="rankProblem">
             <div className="rank">
@@ -202,7 +184,7 @@ const Rating = () => {
                       <span>{problem}</span>
                       <span>제목</span>
                       <span>해결</span>
-                      <span>{index * problem}</span>
+                      <span></span>
                     </div>
                   ))}
                 </>

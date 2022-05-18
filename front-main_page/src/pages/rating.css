@@ -5,7 +5,7 @@
 }
 .rating .ratingProblem {
   width: auto;
-  height: 70vh;
+  height: 50vh;
   border: 1px solid #f0f0f0;
   padding: 2% 0;
   margin: 2% 0;
@@ -57,9 +57,9 @@
   background-color: #f0f0f0;
 }
 .rating .p-head span:nth-child(2) {
-  width: 40%;
+  width: 60%;
 }
-
+/* ************************************* */
 /* rank 별 */
 .rating .rankProblem {
   width: auto;

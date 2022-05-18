@@ -175,10 +175,10 @@ app.post('/QnAInnerDelete', (req, res) => {
 // 기타 api @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 app.get('/get', (req, res) => {
-  const sql = 'select * from Problem'
+  const sql = 'select * from Problem LIMIT 0,10'
   connection.query(sql, function (err, result, fields) {
     if (err) throw err
-    // console.log(result)
+    console.log(result)
     res.send(result)
   })
 })
