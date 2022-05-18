@@ -12,9 +12,21 @@ export default function ControlledRadioButtonsGroup(props) {
   return (
     <FormControl>
       <RadioGroup value={props.classNum} onChange={handleChange}>
-        <FormControlLabel value={1} control={<Radio />} label="1개" />
-        <FormControlLabel value={2} control={<Radio />} label="2개" />
-        <FormControlLabel value={3} control={<Radio />} label="3개" />
+        <FormControlLabel
+          value={1}
+          control={<Radio color="default" />}
+          label="1개"
+        />
+        <FormControlLabel
+          value={2}
+          control={<Radio color="default" />}
+          label="2개"
+        />
+        <FormControlLabel
+          value={3}
+          control={<Radio color="default" />}
+          label="3개"
+        />
       </RadioGroup>
     </FormControl>
   );
