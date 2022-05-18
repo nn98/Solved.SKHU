@@ -9,11 +9,12 @@ import ToggleButtons from "./ToggleButtons";
 import usersJ from "./users.json";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
+// import Switch from "@mui/material/Switch";
 
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
   const [studentList, setStudentList] = useState(usersJ);
-  const [subject, setSubject] = useState("C");
+  const [subject, setSubject] = useState("");
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
 
@@ -26,7 +27,7 @@ const Assignments = () => {
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
-        sl: props.studentList.split(/[\t\n ,]+/),
+        sl: props.studentList,
         pn: props.pnumber,
         pd: props.pdate,
       };
@@ -111,29 +112,31 @@ const Assignments = () => {
           subject={subject}
           setSubject={setSubject}
         ></ToggleButtons>
-        <Paper
-          className="subPaper"
-          sx={{ display: "inline-block", width: "83%", marginBottom: "5%" }}
-        >
-          <h3>과목코드 : VI00001</h3>
-          <h3>교수 : 홍은지</h3>
-          <h3>분반 : 01</h3>
-          <Link to="/register">
-            <button
-              style={{
-                display: "inline-block",
-                fontSize: "15px",
-                borderRadius: "0%",
-                border: "0px",
-                padding: "6px 12px",
-                margin: "0% 0% 3% 3%",
-                cursor: "pointer",
-              }}
-            >
-              학생 등록하기
-            </button>
-          </Link>
-        </Paper>
+        {subject !== "" ? (
+          <Paper
+            className="subPaper"
+            sx={{ display: "inline-block", width: "83%", marginBottom: "5%" }}
+          >
+            <h3>과목코드 : VI00001</h3>
+            <h3>교수 : 홍은지</h3>
+            <h3>분반 : 01</h3>
+            <Link to="/studentRegister">
+              <button
+                style={{
+                  display: "inline-block",
+                  fontSize: "15px",
+                  borderRadius: "0%",
+                  border: "0px",
+                  padding: "6px 12px",
+                  margin: "0% 0% 3% 3%",
+                  cursor: "pointer",
+                }}
+              >
+                학생 등록하기
+              </button>
+            </Link>
+          </Paper>
+        ) : null}
         <h3>문제번호</h3>
         <input
           type="text"
@@ -168,6 +171,7 @@ const Assignments = () => {
             검사 실행
           </p>
         </LoadingButton>
+
         <Button
           size="small"
           color="inherit"
