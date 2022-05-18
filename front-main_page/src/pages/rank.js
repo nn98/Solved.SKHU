@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 // import rankJ from './rank.json'
-import "./rank.css";
+import './rank.css'
 
 const Rank = () => {
-  const [ratingProblems, setRatingProblems] = useState([]);
+  const [ratingProblems, setRatingProblems] = useState([])
   const ratingAdd = async () => {
     try {
-      await fetch("http://localhost:3001/ranking")
+      await fetch('http://localhost:3001/ranking')
         .then((res) => res.json())
         .then((data) => {
           // console.log(data)
-          setRatingProblems(data);
-        });
+          setRatingProblems(data)
+        })
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
-  useEffect(() => ratingAdd(), []);
+  useEffect(() => ratingAdd(), [])
   return (
     <div className="rank">
       <h1>성공회대학교 티어 랭킹</h1>
@@ -42,20 +42,20 @@ const Rank = () => {
                 <td>
                   <img
                     src={
-                      "https://static.solved.ac/tier_small/" +
+                      'https://static.solved.ac/tier_small/' +
                       user.tier +
-                      ".svg"
+                      '.svg'
                     }
                     alt="profile"
-                    style={{ width: "3%", margin: "0 1% 0 0" }}
-                  />{" "}
+                    style={{ width: '3%', margin: '0 1% 0 0' }}
+                  />{' '}
                   <strong>
                     <a
-                      href={"https://solved.ac/profile/" + user.User_ID}
+                      href={'https://solved.ac/profile/' + user.ID}
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {user.User_ID}
+                      {user.ID}
                     </a>
                   </strong>
                 </td>
@@ -69,7 +69,7 @@ const Rank = () => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Rank;
+export default Rank

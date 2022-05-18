@@ -17,18 +17,18 @@ app.listen(port, () => {
 })
 
 var mysql = require('mysql')
-// var connection = mysql.createConnection({
-//   host: '54.180.106.114',
-//   user: 'Project',
-//   password: 'testing00',
-//   database: 'SWP',
-// })
 var connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'gusqhr12@',
-  database: 'prisma',
+  host: '13.124.13.173',
+  user: 'Project',
+  password: 'testing00',
+  database: 'SWP',
 })
+// var connection = mysql.createConnection({
+//   host: '127.0.0.1',
+//   user: 'root',
+//   password: 'gusqhr12@',
+//   database: 'prisma',
+// })
 
 connection.connect(() => {
   console.log('connecting')
@@ -175,10 +175,10 @@ app.post('/QnAInnerDelete', (req, res) => {
 // 기타 api @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 app.get('/get', (req, res) => {
-  const sql = 'select * from Ranking'
+  const sql = 'select * from Problem'
   connection.query(sql, function (err, result, fields) {
     if (err) throw err
-    console.log(result)
+    // console.log(result)
     res.send(result)
   })
 })
@@ -186,7 +186,7 @@ app.get('/get', (req, res) => {
 // rank.js가 서버에게 요청한 데이터를 받을 코드
 // "/ranking" 서브스트링을 사용하는 방식이 하나밖에 없기 때문에 rank.js는 get방식을 생략할 수 있음
 app.get('/ranking', (req, res) => {
-  const sql = 'select * from Ranking order by skhurank' // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  const sql = 'select * from User order by skhurank' // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) throw err

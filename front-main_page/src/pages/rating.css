@@ -6,13 +6,35 @@
 .rating .ratingProblem {
   width: auto;
   height: 70vh;
-  overflow: overlay;
-  overflow-x: hidden;
-  -ms-overflow-style: none;
   border: 1px solid #f0f0f0;
   padding: 2% 0;
   margin: 2% 0;
 }
+
+.rating .ratingProblem .mostProblem {
+  width: 40%;
+  height: 100%;
+  margin: 0 5%;
+  float: left;
+}
+.rating .ratingProblem .mostProblemInner {
+  height: 80%;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  width: 100%;
+}
+
+.rating .ratingProblem .minProblem {
+  height: 80%;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  width: 40%;
+  margin: 0 5%;
+  float: left;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -46,7 +68,6 @@
   padding: 2% 0;
   margin: 2% 0;
 }
-
 .rating .rank {
   position: sticky;
   top: 0px;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import usersJ from './users.json'
 import './rating.css'
 
@@ -31,7 +31,6 @@ const Rating = () => {
       await fetch('http://localhost:3001/get')
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
           setRatingProblems(data)
         })
     } catch (error) {
@@ -87,6 +86,10 @@ const Rating = () => {
     }
   }
 
+  useEffect(() => {
+    ratingAdd()
+  }, [])
+
   return (
     <div className="rating">
       {users.map((u, index) => (
@@ -99,15 +102,12 @@ const Rating = () => {
       <button onClick={() => setUserOrRank(false)}>랭크별</button>
       {userOrRank ? (
         <div>
-          <h1>레이팅 페이지</h1>
-          <span>
-            <input type="text" />
-            <button onClick={() => ratingAdd()}>search</button>
-          </span>
+          <h1>문제 별 추천</h1>
 
           <div className="ratingProblem">
-            {ratingProblems.length !== 0 ? (
-              <>
+            <div className="mostProblem">
+              <strong>가장 많이 푼 문제</strong>
+              <div className="mostProblemInner">
                 <div
                   className="p-head"
                   style={{
@@ -118,19 +118,41 @@ const Rating = () => {
                 >
                   <span>#</span>
                   <span>제목</span>
-                  <span>해결</span>
                   <span>시도</span>
                 </div>
                 {ratingProblems.map((problem, index) => (
                   <div key={index} className="p-head">
-                    <span>{problem.User_ID}</span>
                     <span>helo</span>
-                    <span>해결</span>
+                    <span>{problem.namekr}</span>
                     <span>{index * problem.skhurank}</span>
                   </div>
                 ))}
-              </>
-            ) : null}
+              </div>
+            </div>
+            <strong>가장 적게 푼 문제</strong>
+            <div className="minProblem">
+              <div
+                className="p-head"
+                style={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  borderRadius: '5px 5px 0 0',
+                }}
+              >
+                <span>#</span>
+                <span>제목</span>
+                <span>해결</span>
+                <span>시도</span>
+              </div>
+              {ratingProblems.map((problem, index) => (
+                <div key={index} className="p-head">
+                  <span>{problem.User_ID}</span>
+                  <span>helo</span>
+                  <span>해결</span>
+                  <span>{index * problem.skhurank}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ) : (
