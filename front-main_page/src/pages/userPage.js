@@ -74,6 +74,7 @@ const UserPage = () => {
               <div className="datahead">문제</div>
               <div className="datahead">EXP</div>
             </div>
+            <hr></hr>
             {save.solved_tear.map((BigTears, index) => (
               <div key={BigTears.big_tear}>
                 <div onClick={() => onClickEnter(index)} className="BigTears">

@@ -25,6 +25,12 @@
   cursor: pointer;
 }
 
+.main-menu button {
+  color: #888;
+  outline: 0;
+  cursor: pointer;
+}
+
 .main-menu .main-hover {
   font-size: larger;
 }
@@ -49,5 +55,4 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }

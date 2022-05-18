@@ -6,6 +6,7 @@
 
 .assign h1 {
   text-align: center;
+  margin-left: 2%;
 }
 .assign h3 {
   margin: 0% 0% 10% 0%;
@@ -17,17 +18,6 @@
   float: left;
 }
 
-.input textarea {
-  width: 100%;
-  height: 90vh;
-}
-
-.input textarea::placeholder {
-  text-align: center;
-  font-size: xx-large;
-  line-height: 200%;
-}
-
 .buttonList {
   width: 20%;
   float: right;
@@ -35,10 +25,12 @@
 
 .buttonList input[type="text"] {
   height: 3vh;
+  width: 80%;
   margin-bottom: 10%;
 }
 .buttonList input[type="date"] {
   height: 3vh;
+  width: 82%;
   margin-bottom: 10%;
 }
 
@@ -51,4 +43,48 @@
   display: inline;
   font-size: x-large;
   margin-bottom: 10px;
+}
+
+.assign .p-head {
+  width: 95%;
+  margin-left: 1.5%;
+  padding: 1%;
+  transition: background-color 1s;
+}
+
+.assign .p-head:hover {
+  background-color: gold;
+}
+
+.assign .p-head span {
+  display: inline-block;
+  width: 20%;
+}
+.p-head:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+.assign .p-head:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.assign .p-head:hover {
+  background-color: gold;
+}
+
+.assign .overScroll {
+  text-align: center;
+  height: 80vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+
+.assign .p-head span:nth-child(2) {
+  width: 25%;
+}
+
+.subPaper h3 {
+  padding: 3%;
+  margin: 0%;
 }
