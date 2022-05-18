@@ -5,10 +5,15 @@ import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MediaCard from "./MediaCard";
+import ToggleButtons from "./ToggleButtons";
+import usersJ from "./users.json";
+import { Link } from "react-router-dom";
+import Paper from "@mui/material/Paper";
 
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
-  const [studentList, setStudentList] = useState();
+  const [studentList, setStudentList] = useState(usersJ);
+  const [subject, setSubject] = useState("C");
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
 
@@ -55,25 +60,80 @@ const Assignments = () => {
       <h1>채점 페이지</h1>
       <MediaCard></MediaCard>
       <div className="input">
-        <textarea
-          placeholder=" Student ID&#13;&#10;
-        Student ID&#13;&#10;
-        Student ID&#13;&#10;
-        Student ID&#13;&#10;
-        Student ID&#13;&#10;
-        Student ID&#13;&#10;
-        Student ID&#13;&#10;
-        .&#13;&#10;
-        .&#13;&#10;
-        .&#13;&#10;
-        Student ID&#13;&#10;
-        Student ID&#13;&#10;
-        Student ID&#13;&#10;"
-          onChange={(e) => setStudentList(e.target.value)}
-          value={studentList}
-        ></textarea>
+        <div
+          className="p-head"
+          style={{
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: "5px 5px 0 0",
+            position: "sticky",
+            top: "0px",
+            textAlign: "center",
+          }}
+        >
+          <span>{subject}</span>
+          <span>학번</span>
+          <span>이름</span>
+          {/* <span>아이디</span> */}
+          <span>결과</span>
+          {/* <span>제출시간</span> */}
+        </div>
+        <div className="overScroll">
+          {studentList.solved_tag.map((tags, index) => (
+            <div key={index} className="p-head">
+              <span>{subject}</span>
+              <span>{tags.name}</span>
+              <span>{tags.problem}</span>
+              <span>{tags.EXP}</span>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="buttonList">
+        <h3 style={{ display: "inline-block", margin: "0% 15% 10% 0%" }}>
+          강의 선택
+        </h3>
+        <Link to="/proRegister">
+          <button
+            style={{
+              display: "inline-block",
+              fontSize: "15px",
+              borderRadius: "0%",
+              border: "0",
+              padding: "6px 12px",
+              cursor: "pointer",
+            }}
+          >
+            강의 등록하기
+          </button>
+        </Link>
+        <ToggleButtons
+          subject={subject}
+          setSubject={setSubject}
+        ></ToggleButtons>
+        <Paper
+          className="subPaper"
+          sx={{ display: "inline-block", width: "83%", marginBottom: "5%" }}
+        >
+          <h3>과목코드 : VI00001</h3>
+          <h3>교수 : 홍은지</h3>
+          <h3>분반 : 01</h3>
+          <Link to="/register">
+            <button
+              style={{
+                display: "inline-block",
+                fontSize: "15px",
+                borderRadius: "0%",
+                border: "0px",
+                padding: "6px 12px",
+                margin: "0% 0% 3% 3%",
+                cursor: "pointer",
+              }}
+            >
+              학생 등록하기
+            </button>
+          </Link>
+        </Paper>
         <h3>문제번호</h3>
         <input
           type="text"
