@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import "./register.css";
+import Fade from "@mui/material/Fade";
+
 const Register = () => {
   const [userId, setUserId] = useState("");
   const [regiCode, setRegiCode] = useState("");
   const [gitId, setGitId] = useState("");
+
+  const [checked, setChecked] = React.useState(false);
 
   const onClickSubmit = async (props) => {
     try {
@@ -39,86 +43,98 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    setChecked(true);
+  }, []);
+
   return (
     <div className="registerPage">
-      <div className="regiBox">
-        <h2 style={{ margin: "0%", textAlign: "center" }}>등록하기</h2>
-        <h6 style={{ margin: "5% 0%", textAlign: "center", color: "#5D5D5D" }}>
-          백준 &lt;성공회대학교&gt; 그룹에 등록되지 않는 경우에 사용해주세요.
-        </h6>
-        {/* box 안에 있는 textfield를 사용하여 box로 겉이 둥근 모양의 상자를 만들고
+      <Fade
+        in={checked}
+        style={{ transformOrigin: "0 0 0" }}
+        {...(checked ? { timeout: 1000 } : {})}
+      >
+        <div className="regiBox">
+          <h2 style={{ margin: "0%", textAlign: "center" }}>등록하기</h2>
+          <h6
+            style={{ margin: "5% 0%", textAlign: "center", color: "#5D5D5D" }}
+          >
+            &lt;성공회대학교&gt; 그룹에 등록되지 않는 경우에 사용해주세요.
+          </h6>
+          {/* box 안에 있는 textfield를 사용하여 box로 겉이 둥근 모양의 상자를 만들고
             textfield에 padding 값 좌우 = 2.9, 상하 = 2 를 적용함
             그리고 searchIcon을 추가하여 왼쪽 끝에 적용 */}
-        <Box
-          sx={{
-            backgroundColor: "#F2F2F2",
-            borderRadius: 25,
-            textAlign: "center",
-            marginBottom: "5%",
-          }}
-        >
-          <TextField
-            variant="standard"
-            id="User_ID"
-            placeholder="Baekjoon ID"
+          <Box
             sx={{
-              width: "90%",
-              px: 2.9,
-              py: 2,
+              backgroundColor: "#F2F2F2",
+              borderRadius: 25,
+              textAlign: "center",
+              marginBottom: "5%",
             }}
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-          />
-        </Box>
-        <Box
-          sx={{
-            backgroundColor: "#F2F2F2",
-            borderRadius: 25,
-            textAlign: "center",
-            marginBottom: "5%",
-          }}
-        >
-          <TextField
-            variant="standard"
-            id="Register_CODE"
-            placeholder="REGISTER CODE"
+          >
+            <TextField
+              variant="standard"
+              id="User_ID"
+              placeholder="Baekjoon ID"
+              sx={{
+                width: "90%",
+                px: 2.9,
+                py: 2,
+              }}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+            />
+          </Box>
+          <Box
             sx={{
-              width: "90%",
-              px: 2.9,
-              py: 2,
+              backgroundColor: "#F2F2F2",
+              borderRadius: 25,
+              textAlign: "center",
+              marginBottom: "5%",
             }}
-            value={regiCode}
-            onChange={(e) => setRegiCode(e.target.value)}
-          />
-        </Box>
-        <Box
-          sx={{
-            backgroundColor: "#F2F2F2",
-            borderRadius: 25,
-            textAlign: "center",
-            marginBottom: "5%",
-          }}
-        >
-          <TextField
-            variant="standard"
-            id="Git_ID"
-            placeholder="*선택사항 : Github ID"
+          >
+            <TextField
+              variant="standard"
+              id="Register_CODE"
+              placeholder="REGISTER CODE"
+              sx={{
+                width: "90%",
+                px: 2.9,
+                py: 2,
+              }}
+              value={regiCode}
+              onChange={(e) => setRegiCode(e.target.value)}
+            />
+          </Box>
+          <Box
             sx={{
-              width: "90%",
-              px: 2.9,
-              py: 2,
+              backgroundColor: "#F2F2F2",
+              borderRadius: 25,
+              textAlign: "center",
+              marginBottom: "5%",
             }}
-            value={gitId}
-            onChange={(e) => setGitId(e.target.value)}
-          />
-        </Box>
-        <button
-          className="submitButton"
-          onClick={() => onClickSubmit({ userId, regiCode, gitId })}
-        >
-          등록
-        </button>
-      </div>
+          >
+            <TextField
+              variant="standard"
+              id="Git_ID"
+              placeholder="*선택사항 : Github ID"
+              sx={{
+                width: "90%",
+                px: 2.9,
+                py: 2,
+              }}
+              value={gitId}
+              onChange={(e) => setGitId(e.target.value)}
+            />
+          </Box>
+          <button
+            className="submitButton"
+            onClick={() => onClickSubmit({ userId, regiCode, gitId })}
+          >
+            등록
+          </button>
+        </div>
+      </Fade>
     </div>
   );
 };
