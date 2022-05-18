@@ -3,11 +3,11 @@ import Logo from "./image/logo.png";
 import Main_Top_Line from "./image/main_top_line.png";
 import { Link } from "react-router-dom";
 import Fade from "@mui/material/Fade";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 const MainMenu = (props) => {
   const [mainHover, setMainHover] = useState(false);
-  const location = useLocation();
+  // const location = useLocation();
 
   return (
     <>
@@ -74,25 +74,25 @@ const MainMenu = (props) => {
             </tr>
           </thead>
         </table>
-        {location.pathname !== "/register" ? (
+        {/* {location.pathname !== "/register" ? (
           <div>
             <Link to="/register">
               <button
                 style={{
                   position: "absolute",
                   top: "1%",
-                  right: "10%",
+                  right: "5%",
                   fontSize: "15px",
                   borderRadius: "0%",
                   border: "0px",
                   padding: "6px 12px",
                 }}
               >
-                등록하기
+                학생 등록하기
               </button>
             </Link>
           </div>
-        ) : null}
+        ) : null} */}
         <img
           src={Main_Top_Line}
           style={{ width: "90%", margin: "0 5%" }}
