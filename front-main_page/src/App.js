@@ -10,6 +10,7 @@ import Rank from "./pages/rank";
 import Assignments from "./pages/assignments";
 import AssignDetail from "./pages/assignDetail";
 import Register from "./pages/register";
+import ProRegister from "./pages/ProRegister";
 // import { QnA } from './pages'
 import { Routes, Route } from "react-router-dom";
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/rank" element={<Rank />} />
         <Route path="/assignments" element={<Assignments />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/proRegister" element={<ProRegister />} />
         <Route path="/assignDetail" element={<AssignDetail />} />
       </Routes>
       <Footer />
