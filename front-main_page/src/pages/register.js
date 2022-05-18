@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import "./register.css";
 import Fade from "@mui/material/Fade";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [userId, setUserId] = useState("");
@@ -127,12 +128,14 @@ const Register = () => {
               onChange={(e) => setGitId(e.target.value)}
             />
           </Box>
-          <button
-            className="submitButton"
-            onClick={() => onClickSubmit({ userId, regiCode, gitId })}
-          >
-            등록
-          </button>
+          <Link to="/userPage">
+            <button
+              className="submitButton"
+              onClick={() => onClickSubmit({ userId, regiCode, gitId })}
+            >
+              등록
+            </button>
+          </Link>
         </div>
       </Fade>
     </div>
