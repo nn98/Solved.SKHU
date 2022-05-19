@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./assignments.css";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
@@ -9,7 +9,7 @@ import ToggleButtons from "./ToggleButtons";
 import usersJ from "./users.json";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
-// import Switch from "@mui/material/Switch";
+import CopyRadioButtonsGroup from "./CopyRadioButtonsGroup";
 
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
@@ -17,9 +17,36 @@ const Assignments = () => {
   const [subject, setSubject] = useState("");
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
+  const [copy, setCopy] = useState("");
 
-  const onClickEvente = () => {
-    alert("클립보드에 복사되었습니다.");
+  const handleCopy = async () => {
+    if (copy === "resultCopy") {
+      let clipBoard = "";
+      for (let i = 0; i < studentList.solved_tag.length; ++i) {
+        clipBoard += studentList.solved_tag[i].EXP + "\n";
+      }
+      try {
+        await navigator.clipboard.writeText(clipBoard);
+        alert("클립보드에 복사 되었습니다!");
+      } catch {
+        alert("복사 실패!");
+      }
+    } else if (copy === "allCopy") {
+      let clipBoard = "";
+      for (let i = 0; i < studentList.solved_tag.length; ++i) {
+        clipBoard += studentList.solved_tag[i].name + " ";
+        clipBoard += studentList.solved_tag[i].problem + " ";
+        clipBoard += studentList.solved_tag[i].EXP + "\n";
+      }
+      try {
+        await navigator.clipboard.writeText(clipBoard);
+        alert("클립보드에 복사 되었습니다!");
+      } catch {
+        alert("복사 실패!");
+      }
+    } else {
+      alert("복사 옵션을 선택하세요.");
+    }
   };
 
   const onClickStart = async (props) => {
@@ -55,6 +82,8 @@ const Assignments = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {}, [copy]);
 
   return (
     <div className="assign">
@@ -171,11 +200,16 @@ const Assignments = () => {
             검사 실행
           </p>
         </LoadingButton>
-
+        <CopyRadioButtonsGroup
+          copy={copy}
+          setCopy={setCopy}
+        ></CopyRadioButtonsGroup>
         <Button
           size="small"
           color="inherit"
-          onClick={() => onClickEvente()}
+          onClick={() => {
+            handleCopy();
+          }}
           variant="contained"
         >
           <p>
