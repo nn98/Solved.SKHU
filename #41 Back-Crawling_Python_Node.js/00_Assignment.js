@@ -16,6 +16,7 @@ let ID_LIST = [
     "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
     "qmffmzpdl", "idotu", "yebinac", "dlak0011"
 ];
+let ID_LIS_REQ=[];
 let i = 0;
 async function run() {
     console.log('run');
