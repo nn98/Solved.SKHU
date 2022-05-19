@@ -260,7 +260,7 @@
   |Node react 연동 시 fetch로 data를 입력 받을때<br> promise 형태로만 전송됨|fetch 시 첫번째 then은 http 통신 요청과 응답에서 응답의 정보를 담고 있는 객체 Response Object이므로<br>두번째 then을 써서 첫번째 .then 함수에서 응답 body의 데이터를 받기 가능|2022-04-25|`L`|
   |Link 태그로 url을 변경할 때 값도 같이 전달해야 함|useLocation이라는 hook을 이용하여 현재 머물고 있는 페이지의 정보 객체를 반환 받아 .state로 JSON형태의 값을 사용할 수 있음|2022-04-29|`S`|
   |뒤로가기 버튼을 구현|useNavigate라는 hook을 이용하여 현재 라우트에 쌓인 브라우저 dom을 제어할 수 있는 객체를 반환 받아 객체(-1)로 한 페이지 뒤로 이동할 수 있음, '패스'를 매개변수로 주어서 패스로도 이동 가능|2022-04-29|`S`|
-  
+  |url 이동을 useNavigate를 navigate(to, { replace: true })의 형태로 사용 하였을때<br> 전달 인자값를 전달하고 싶었지만 useNavigate()로 전달 인자값 받기 오류|url 이동 hook인 useNavigate()를 통해 페이지 이동하면서 전달 인자값을 전달하고,<br> 이동한 url에서 전달 인자 값은 useLocation()을 통해 데이터를 전달 받는 것이다.|2022-05-19|`L`|
   </details>
 
   <details><summary>#38 Git Ignore</summary>
