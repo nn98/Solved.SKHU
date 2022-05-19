@@ -128,7 +128,7 @@ const Register = () => {
               onChange={(e) => setGitId(e.target.value)}
             />
           </Box>
-          <Link to="/userPage">
+          <Link to="/rank">
             <button
               className="submitButton"
               onClick={() => onClickSubmit({ userId, regiCode, gitId })}
