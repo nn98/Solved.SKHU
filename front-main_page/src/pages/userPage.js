@@ -16,17 +16,44 @@ const UserPage = () => {
   const userAdd = async () => {
     try {
       const t = location.state !== null ? location.state.userId : 'q9922000'
+      await fetch(
+        'https://solved.ac/api/v3/user/history?handle=' +
+          t +
+          '&topic=solvedCount'
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          let count = 1
+          let list = []
+          for (let i = 1; i <= data.length - 1; i++) {
+            if (
+              data[data.length - i].timestamp.substring(0, 10) ===
+              data[data.length - 1 - i].timestamp.substring(0, 10)
+            ) {
+              // console.log(data[i].timestamp.substring(0,10)+" "+count)
+              count++
+            } else {
+              list.push({
+                timestamp: data[data.length - i].timestamp.substring(0, 10),
+                value: count,
+              })
+              count = 1
+            }
+          }
+          list.push({ timestamp: data[0].timestamp.substring(0, 10), value: 1 })
+          console.log(JSON.stringify(list))
+        })
       await fetch('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           setUserTag(data)
-          console.log(data)
+          // console.log(data)
         })
       await fetch('https://solved.ac/api/v3/user/show?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           setUser(data)
-          console.log(data)
+          // console.log(data)
         })
       await fetch('https://solved.ac/api/v3/user/problem_stats?handle=' + t)
         .then((res) => res.json())
@@ -78,7 +105,7 @@ const UserPage = () => {
             tierData[num].eSum += data[i].exp
             tierData[num].type.push(data[i])
           }
-          console.log(tierData)
+          // console.log(tierData)
           setUserTier(tierData)
           // console.log(data)
         })
