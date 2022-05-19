@@ -55,7 +55,7 @@ const Rank = () => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {user.User_ID}
+                      {user.ID}
                     </a>
                   </strong>
                 </td>
