@@ -197,7 +197,7 @@ app.get('/ranking', (req, res) => {
     // if문은 에러 출력을 위한 코드
     if (err) throw err
     // result는 가져온 결과값
-    console.log(result)
+    // console.log(result)
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
     res.send(result)
   })

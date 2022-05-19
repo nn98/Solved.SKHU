@@ -1,23 +1,8 @@
-import React, { useEffect, useState } from 'react'
+// import React, { useEffect, useState } from 'react'
 // import rankJ from './rank.json'
 import './rank.css'
 
-const Rank = () => {
-  const [ratingProblems, setRatingProblems] = useState([])
-  const ratingAdd = async () => {
-    try {
-      await fetch('http://localhost:3001/ranking')
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data)
-          setRatingProblems(data)
-        })
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  useEffect(() => ratingAdd(), [])
+const Rank = (props) => {
   return (
     <div className="rank">
       <h1>성공회대학교 티어 랭킹</h1>
@@ -35,7 +20,7 @@ const Rank = () => {
             </tr>
           </thead>
           <tbody>
-            {ratingProblems.map((user, index) => (
+            {props.ranking.map((user, index) => (
               <tr key={index}>
                 <td>{user.worldrank}</td>
                 <td>{user.skhurank}</td>
