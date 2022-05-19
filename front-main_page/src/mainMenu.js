@@ -74,25 +74,6 @@ const MainMenu = (props) => {
             </tr>
           </thead>
         </table>
-        {/* {location.pathname !== "/register" ? (
-          <div>
-            <Link to="/register">
-              <button
-                style={{
-                  position: "absolute",
-                  top: "1%",
-                  right: "5%",
-                  fontSize: "15px",
-                  borderRadius: "0%",
-                  border: "0px",
-                  padding: "6px 12px",
-                }}
-              >
-                학생 등록하기
-              </button>
-            </Link>
-          </div>
-        ) : null} */}
         <img
           src={Main_Top_Line}
           style={{ width: "90%", margin: "0 5%" }}
