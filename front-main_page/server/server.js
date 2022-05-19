@@ -3,6 +3,10 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 3001;
+const WaitNotify = require('wait-notify');
+const waitNotify = new WaitNotify();
+const waitNotify2 = new WaitNotify();
+let AssignTaskExecute = false;
 
 // cors 사용하여 정보 받는 것 우회하기
 app.use(cors());
@@ -54,27 +58,24 @@ app.get("/ranking", (req, res) => {
 // req는 소스코드로부터 받은 서버로 보낼 JSON 파일이 담긴 요청, res는 서버가 보낸 응답정보를 저장한 객체이고 우리는 JSON 파일 형식을 사용할 것임
 app.post("/assignments", async (req, res) => {
   console.log("Assignments/post ", "is called");
-  console.log("Default ID_LIST", ID_LIST);
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
   const b = req.body;
   console.log(req.body);
-  // console.log(req.body.ID_LIST);
-  ID_LIST = req.body.ID_LIST;
-  console.log("ID_LIST is changed?", ID_LIST);
-  var isFin = 1;
-  await run().then(results => {
-    console.log("run is finish => then", results);
-    while (true) {
-      if (isFin > 0) {
-        console.log("run is finish => then", results);
-        res.send(results);
-        break;
-      }
-    }
-  });
+
+  console.log("Default\tID_LIST", ID_LIST);
+  console.log('Req\tID_LIST',req.body.ID_LIST);
+  console.log('Problem ID\t',req.body.pID);
+  ID_LIST=req.body.ID_LIST;
+  pID=req.body.pID;
+  // Assignment.pID=req.body.pID;
+  AssignTaskExecute=true;
+  run();
+  if(AssignTaskExecute)await waitNotify2.wait();
+
+  res.send(results);
+});
   // res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-});
 
 app.post("/userPage", (req, res) => {
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
@@ -111,78 +112,75 @@ app.get("/algorithm", (req, res) => {
     res.send(result);
   });
 });
+
 // connection.end()
+
+/* Assignment Part - 2022-05-19 */
 const puppeteer = require("puppeteer");
-process.setMaxListeners(25);
 const cheerio = require("cheerio");
-const WaitNotify = require('wait-notify');
-const { url } = require("inspector");
-const waitNotify = new WaitNotify();
+process.setMaxListeners(50);
 
-let testUrl = 'https://www.acmicpc.net/status?problem_id=1000&user_id=q9922000&language_id=-1&result_id=4&from_problem=1';
-let urls = ['https://www.acmicpc.net/status?problem_id=', '&user_id=', '&language_id=-1&result_id=4'];
-let pId = 2438, uId = 'q9922000';
-let count = Number(0);
+let pID = 1085;
+let processID;
 let results = [];
-// let ID_LIST = [
-//     "수정 실패!","neck392", "kshyun419", "asas6614", "djwls0843", "kwj9294",
-//     "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
-//     "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
-//     "qmffmzpdl", "idotu", "yebinac", "dlak0011"
-// ];
-var ID_LIST = [
-  "kshyun419", "asas6614", "kwj9294", "skhu1024", "rladnr128",
-  "yebinac", "idotu", "neck392", "qmffmzpdl", "skl0519"
-];
-let ID_LIS_REQ = [];
-let i = 0;
-async function run() {
-  await console.log('run');
-  for (; i < ID_LIST.length; i++) {
-    await next().then(rurl => {
-      console.log("for in",i);
-      puppeteer.launch({ headless: true }).then(async browser => {
+let mAsyncTaskExecute = false;
+let urls = ['https://www.acmicpc.net/status?problem_id=', '&user_id=', '&language_id=-1&result_id=4'];
 
-        console.log("launch in",i);
+/* Test Data => replace by Req */
+let ID_LIST = [
+    "kshyun419", "asas6614", "kwj9294", "skhu1024", "rladnr128",
+    // "yebinac", "idotu", "neck392", "qmffmzpdl", "skl0519"
+];
+/* */
+
+async function run() {
+    console.log('1. run');
+    console.log('ID_LIST', ID_LIST);
+    console.log('pID', pID);
+    processID = ID_LIST.shift();
+    let url = urls[0] + pID + urls[1] + processID + urls[2];
+    execute(url);
+};
+
+async function execute(url) {
+    console.log("2. execute");
+    puppeteer.launch({ headless: true }).then(async browser => {
+
+        if (mAsyncTaskExecute) {
+            await waitNotify.wait();
+        }
+
+        console.log("now process\t", processID);
+        mAsyncTaskExecute = true;
         const page = await browser.newPage();
 
-        await page.goto(rurl, { waitUntil: "networkidle2" });
+        await page.goto(url, { waitUntil: "networkidle2" });
 
         const html = await page.$eval("td.result", e => e.outerHTML);
 
-        await console.log(rurl, '\n', rurl.split('&user_id=')[1].split('&language_id')[0], html, pId);
-        await console.log("\n");
-
-        await results.push(rurl.split('&user_id=')[1].split('&language_id')[0], html.includes('맞았습니다!!'));
-        await count++;
+        results.push(processID, html.includes('맞았습니다!!'));
+        console.log("\t\t", processID, "is solve");
         isFinish();
 
-        const data = cheerio.load(html);
-
-      }).catch(error => {
-        console.log('error', i);
-        results.push(rurl.split('&user_id=')[1].split('&language_id')[0], false);
-        count++;
+    }).catch(error => {
+        console.log("\t\t", processID, "isn't solve");
+        results.push(processID, false);
         isFinish();
-      });
-    })
+    });
+}
 
-  };
-  return results;
-};
 async function isFinish() {
-  await console.log('isFinish');
-  if (count >= ID_LIST.length) {
-    await console.log(results);
-    console.log("isFin is 1");
-    isFin = 1;
-    // await process.exit(0);
-  }
+    console.log('3. isFinish');
+    waitNotify.notify();
+    mAsyncTaskExecute = false;
+    if (ID_LIST.length == 0) {
+        console.log(results);
+        AssignTaskExecute = false;
+        waitNotify2.notify();
+        // process.exit(0);
+    }
+    else {
+        console.log('-------------------------------------------------------------------------');
+        run();
+    }
 };
-async function next() {
-  await console.log('next', i);
-  let rurl = urls[0] + pId + urls[1] + ID_LIST[i] + urls[2];
-  return rurl;
-};
-
-// run();
