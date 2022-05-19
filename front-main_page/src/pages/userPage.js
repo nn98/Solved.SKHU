@@ -52,7 +52,7 @@ const UserPage = () => {
 
   useEffect(() => {
     if (location.state) userAdd();
-  });
+  },[]);
 
   return (
     <div className="user">
