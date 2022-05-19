@@ -18,7 +18,7 @@ app.listen(port, () => {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '13.124.13.173',
+  host: '15.164.216.23',
   user: 'Project',
   password: 'testing00',
   database: 'SWP',
@@ -36,7 +36,7 @@ connection.connect(() => {
 
 // QnA api @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 app.post('/QnAUser', (req, res) => {
-  const sql = 'INSERT INTO qnauser SET ?'
+  const sql = 'INSERT INTO Qnauser SET ?'
   connection.query(sql, req.body, function (err, result, fields) {
     if (err) {
       res.send({ error: err.errno })
@@ -47,8 +47,9 @@ app.post('/QnAUser', (req, res) => {
   })
 })
 
+// Qna 값 출력
 app.get('/QnA', (req, res) => {
-  const sql = 'SELECT * FROM qna'
+  const sql = 'SELECT * FROM Qna'
   connection.query(sql, function (err, result, fields) {
     if (err) throw err
     console.log('QnA 출력')
@@ -56,8 +57,9 @@ app.get('/QnA', (req, res) => {
   })
 })
 
+// QnaInner 값 출력
 app.get('/QnAInner', (req, res) => {
-  const sql = 'SELECT * FROM qnainner'
+  const sql = 'SELECT * FROM Qnainner'
   connection.query(sql, function (err, result, fields) {
     if (err) throw err
     console.log('QnA안에꺼 출력')
@@ -65,23 +67,24 @@ app.get('/QnAInner', (req, res) => {
   })
 })
 
+//Qna 추가
 app.post('/QnAAdd', (req, res) => {
-  const insertBody = [
-    req.body.content,
-    req.body.userIP,
-    req.body.userId,
-    req.body.problem,
-  ]
   const userBody = [req.body.userId, req.body.password]
   const userSql =
-    'SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?;'
+    'SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;'
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err
     if (result.length === 0) {
       res.send({ error: '사용자가 올바르지 않습니다.' })
     } else {
+      const insertBody = [
+        req.body.content,
+        req.body.userIP,
+        req.body.userId,
+        req.body.problem,
+      ]
       const insertSql =
-        'INSERT INTO qna(content, userIP, userId, problem) value (?,?,?,?);'
+        'INSERT INTO Qna(content, userip, USER_ID, problem) value (?,?,?,?);'
       connection.query(insertSql, insertBody, function (err, result, fields) {
         if (err) throw err
         console.log('QnA 더하기')
@@ -92,23 +95,24 @@ app.post('/QnAAdd', (req, res) => {
   })
 })
 
+// QnaInner 추가
 app.post('/QnAInnerAdd', (req, res) => {
-  const insertBody = [
-    req.body.content,
-    req.body.userIP,
-    req.body.userId,
-    req.body.qnaId,
-  ]
   const userBody = [req.body.userId, req.body.password]
   const userSql =
-    'SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?;'
+    'SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;'
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err
     if (result.length === 0) {
       res.send({ error: '사용자가 올바르지 않습니다.' })
     } else {
+      const insertBody = [
+        req.body.content,
+        req.body.userIP,
+        req.body.userId,
+        req.body.qnaId,
+      ]
       const insertSql =
-        'INSERT INTO qnainner(content, userIP, userId, qnaId) value (?,?,?,?);'
+        'INSERT INTO Qnainner(content, userip, USER_ID, QNA_ID) value (?,?,?,?);'
       connection.query(insertSql, insertBody, function (err, result, fields) {
         if (err) throw err
         console.log('QnA안에꺼 더하기')
@@ -119,17 +123,18 @@ app.post('/QnAInnerAdd', (req, res) => {
   })
 })
 
+// Qna 삭제
 app.post('/QnADelete', (req, res) => {
   const userBody = [req.body.userId, req.body.password]
   const userSql =
-    'SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?;'
+    'SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;'
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err
     if (result.length === 0) {
       res.send({ error: '사용자가 올바르지 않습니다.' })
     } else {
       const deleteBody = [req.body.ID, req.body.userId]
-      const deleteSql = 'DELETE FROM qna WHERE qna.ID = ? and qna.userId = ?;'
+      const deleteSql = 'DELETE FROM Qna WHERE Qna.ID = ? and Qna.USER_ID = ?;'
       connection.query(deleteSql, deleteBody, function (err, result, fields) {
         if (result.affectedRows === 0) {
           res.send({ error: '사용자가 올바르지 않습니다.' })
@@ -142,10 +147,11 @@ app.post('/QnADelete', (req, res) => {
   })
 })
 
+// QnaInner 삭제
 app.post('/QnAInnerDelete', (req, res) => {
   const userBody = [req.body.userId, req.body.password]
   const userSql =
-    'SELECT * FROM qnauser WHERE qnauser.name = ? and qnauser.password = ?;'
+    'SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;'
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err
     if (result.length === 0) {
@@ -153,7 +159,7 @@ app.post('/QnAInnerDelete', (req, res) => {
     } else {
       const deleteBody = [req.body.ID, req.body.userId]
       const deleteSql =
-        'DELETE FROM qnainner WHERE qnainner.ID = ? and qnainner.userId = ?;'
+        'DELETE FROM Qnainner WHERE Qnainner.ID = ? and Qnainner.USER_ID = ?;'
       connection.query(deleteSql, deleteBody, function (err, result, fields) {
         if (result.affectedRows === 0) {
           res.send({ error: '사용자가 올바르지 않습니다.' })

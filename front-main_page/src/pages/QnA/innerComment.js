@@ -121,7 +121,7 @@ const InnerComment = (e) => {
           <Portal container={innerCommentContainer.current}>
             <div className="innerComments_print">
               {innerComments.map((innerComment, index) =>
-                innerComment.qnaId === commentId ? (
+                innerComment.QNA_ID === commentId ? (
                   <div key={index} className="comments_print">
                     {/* 댓글 내용 */}
                     <CommentContent comment={innerComment} />
