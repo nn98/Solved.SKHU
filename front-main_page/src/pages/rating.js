@@ -81,6 +81,7 @@ const Rating = () => {
       <button onClick={() => setUserOrRank(true)}>유저별</button>
       <button onClick={() => setUserOrRank(false)}>랭크별</button>
       {userOrRank ? (
+        // 유저별 위치 =======================
         <div>
           <h1>문제 별 추천</h1>
 
@@ -138,6 +139,7 @@ const Rating = () => {
           </div>
         </div>
       ) : (
+        // 랭크별 위치 ================================================
         <div>
           <h1>랭크 페이지</h1>
           <span>
