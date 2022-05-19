@@ -56,11 +56,13 @@ export default function MediaCard() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>순서:</Typography>
-          <Typography paragraph>1번 ~</Typography>
-          <Typography paragraph>2번 ~</Typography>
-          <Typography paragraph>3번 ~</Typography>
-          <Typography>4번 ~</Typography>
+          <Typography paragraph>순서</Typography>
+          <br></br>
+          <br></br>1. 강의를 선택한다. (상세정보 확인가능)<br></br>
+          <br></br>2. 채점하고자 하는 백준 문제 번호를 입력한다.<br></br>
+          <br></br>3. 제출 기한을 입력한다.<br></br>
+          <br></br>4. 검사 실행 버튼을 누르고 기다린다.<br></br>
+          <br></br>5. 복사 옵션을 선택하고 결과를 클립보드로 복사한다.
         </CardContent>
       </Collapse>
     </Card>

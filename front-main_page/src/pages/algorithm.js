@@ -50,11 +50,11 @@ const Algorithm = () => {
   return (
     <div className="Algo">
       <h1>
-        USER ID<span className="subTitle"> 의 상위 7개 추천 알고리즘</span>
+        성공회대학교<span className="subTitle"> 의 카테고리 별 알고리즘</span>
       </h1>
       <div className="user">
         {json.solved_tag.map((data, index) =>
-          index < 7 ? (
+          index < 4 ? (
             <Button
               className="userAlgo"
               key={data.problem}

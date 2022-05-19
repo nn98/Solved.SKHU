@@ -37,17 +37,12 @@ const MainMenu = (props) => {
                 </Link>
               </td>
               <td>
-                <Link to="/rank">
-                  <button>Rank</button>
-                </Link>
-              </td>
-              <td>
                 <Fade in={!mainHover} timeout={0}>
                   <span
                     onMouseOver={() => setMainHover(true)}
                     style={{ display: mainHover ? "none" : "revert" }}
                   >
-                    <button>Recommend</button>
+                    <button>SKHU Ranking</button>
                   </span>
                 </Fade>
                 <Fade in={mainHover} timeout={500}>
@@ -56,15 +51,20 @@ const MainMenu = (props) => {
                     onMouseOut={() => setMainHover(false)}
                     style={{ display: !mainHover ? "none" : "revert" }}
                   >
-                    <Link to="/algorithm">
-                      <button className="main-hover">Algorithm</button>
+                    <Link to="/rank">
+                      <button className="main-hover">Ranking</button>
                     </Link>
                     <button className="main-hover">|</button>
-                    <Link to="/rating">
-                      <button className="main-hover">Rating</button>
+                    <Link to="/algorithm">
+                      <button className="main-hover">Problem</button>
                     </Link>
                   </span>
                 </Fade>
+              </td>
+              <td>
+                <Link to="/rating">
+                  <button>Recommend</button>
+                </Link>
               </td>
               <td>
                 <Link to="/QnA">
@@ -74,25 +74,6 @@ const MainMenu = (props) => {
             </tr>
           </thead>
         </table>
-        {/* {location.pathname !== "/register" ? (
-          <div>
-            <Link to="/register">
-              <button
-                style={{
-                  position: "absolute",
-                  top: "1%",
-                  right: "5%",
-                  fontSize: "15px",
-                  borderRadius: "0%",
-                  border: "0px",
-                  padding: "6px 12px",
-                }}
-              >
-                학생 등록하기
-              </button>
-            </Link>
-          </div>
-        ) : null} */}
         <img
           src={Main_Top_Line}
           style={{ width: "90%", margin: "0 5%" }}

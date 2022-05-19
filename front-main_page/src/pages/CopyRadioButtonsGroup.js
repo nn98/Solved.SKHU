@@ -4,28 +4,23 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 
-export default function ControlledRadioButtonsGroup(props) {
+export default function CopyRadioButtonsGroup(props) {
   const handleChange = (event) => {
-    props.setClassNum(event.target.value);
+    props.setCopy(event.target.value);
   };
 
   return (
     <FormControl>
-      <RadioGroup value={props.classNum} onChange={handleChange}>
+      <RadioGroup value={props.copy} onChange={handleChange}>
         <FormControlLabel
-          value={1}
+          value="resultCopy"
           control={<Radio color="default" />}
-          label="1개"
+          label="결과만 복사"
         />
         <FormControlLabel
-          value={2}
+          value="allCopy"
           control={<Radio color="default" />}
-          label="2개"
-        />
-        <FormControlLabel
-          value={3}
-          control={<Radio color="default" />}
-          label="3개"
+          label="전체 복사"
         />
       </RadioGroup>
     </FormControl>
