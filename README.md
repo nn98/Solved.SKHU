@@ -236,12 +236,14 @@
   |완료|채점 페이지 UI 구현|2022-04-19|`S`|
   |진행|등록한 강의 목록을 버튼으로 보이게 구현|2022-05-18|`S`|
   |진행|채점 결과 학생의 상세 페이지 구현|2022-05-18|`S`|
+  |완료|채점 결과 클립보드에 복사하는 기능 구현|2022-05-19|`S`|
   
   ## Errors-#32
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |textarea태그의 placeholder에만 값 설정하기|사용자 입력 값과 다르게 힌트에만 css서식을 적용하고자 함<br>css시트에서 ::placeholder로 콜론(:)2개 선택자를 사용하면 됨|2022-04-19|`S`|
   |설명서를 보기좋게 추가하고 싶음|react mui인 mediacard를 import하고<br>드롭 다운 아이콘을 추가해 설명서가 나오도록 구현|2022-05-09|`S`|
+  |클립보드에 복사하는 기능을 알지 못함|navigator.clipboard.writeText() 함수에 복사할 텍스트를 매개변수로 보내<br>비동기(async) 함수 내에서 호출한다.|2022-05-19|`S`|
   
   </details>
 
@@ -260,7 +262,7 @@
   |Node react 연동 시 fetch로 data를 입력 받을때<br> promise 형태로만 전송됨|fetch 시 첫번째 then은 http 통신 요청과 응답에서 응답의 정보를 담고 있는 객체 Response Object이므로<br>두번째 then을 써서 첫번째 .then 함수에서 응답 body의 데이터를 받기 가능|2022-04-25|`L`|
   |Link 태그로 url을 변경할 때 값도 같이 전달해야 함|useLocation이라는 hook을 이용하여 현재 머물고 있는 페이지의 정보 객체를 반환 받아 .state로 JSON형태의 값을 사용할 수 있음|2022-04-29|`S`|
   |뒤로가기 버튼을 구현|useNavigate라는 hook을 이용하여 현재 라우트에 쌓인 브라우저 dom을 제어할 수 있는 객체를 반환 받아 객체(-1)로 한 페이지 뒤로 이동할 수 있음, '패스'를 매개변수로 주어서 패스로도 이동 가능|2022-04-29|`S`|
-  
+  |url 이동을 useNavigate를 navigate(to, { replace: true })의 형태로 사용 하였을때<br> 전달 인자값를 전달하고 싶었지만 useNavigate()로 전달 인자값 받기 오류|url 이동 hook인 useNavigate()를 통해 페이지 이동하면서 전달 인자값을 전달하고,<br> 이동한 url에서 전달 인자 값은 useLocation()을 통해 데이터를 전달 받는 것이다.|2022-05-19|`L`|
   </details>
 
   <details><summary>#38 Git Ignore</summary>
