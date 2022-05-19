@@ -13,10 +13,10 @@ let results = [];
 let ID_LIST = [
     "neck392", "kshyun419", "asas6614", "djwls0843", "kwj9294",
     "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
-    "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
-    "qmffmzpdl", "idotu", "yebinac", "dlak0011"
+    // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
+    // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
 ];
-let ID_LIS_REQ=[];
+// let ID_LIS_REQ=[];
 let i = 0;
 async function run() {
     console.log('run');
