@@ -9,26 +9,34 @@ import ToggleButtons from "./ToggleButtons";
 import usersJ from "./users.json";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
-
+const ID_LIST_EX = [
+  "neck392", "kshyun419", "asas6614", "djwls0843", "kwj9294",
+  // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
+  // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
+  // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
+];
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
   const [studentList, setStudentList] = useState(usersJ);
   const [subject, setSubject] = useState("C");
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
+  const [ID_LIST, setIDLIST]=useState(ID_LIST_EX);
 
   const onClickEvente = () => {
+    console.log("Copy Clicked!");
     alert("클립보드에 복사되었습니다.");
   };
 
   const onClickStart = async (props) => {
+    console.log("Notify: ","LoadingButton Clicked!");
     try {
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
-        sl: props.studentList.split(/[\t\n ,]+/),
-        pn: props.pnumber,
-        pd: props.pdate,
+        ID_LIST: props.ID_LIST,
+        PID: props.pnumber,
+        DeadLine: props.pdate,
       };
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
@@ -43,12 +51,12 @@ const Assignments = () => {
       };
       // 이 URL은 exprees의 서버이기 때문에 3000번이 되어서는 안됨 충돌가능성이 있음, 뒤 서브스트링으로 구별
       await fetch("http://localhost:3001/assignments", requestOptions)
-        .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
-        .then((data) => {
+        .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
+        .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
-          console.log(data);
-          setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
-          setLoading(false);
+          await console.log("Data: ",data);
+          await setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
+          await setLoading(false);
         });
     } catch (error) {
       console.error(error);
@@ -72,19 +80,17 @@ const Assignments = () => {
           }}
         >
           <span>{subject}</span>
-          <span>학번</span>
-          <span>이름</span>
-          {/* <span>아이디</span> */}
+          {/* <span>학번</span> */}
+          {/* <span>이름</span> */}
+          <span>아이디</span>
           <span>결과</span>
           {/* <span>제출시간</span> */}
         </div>
         <div className="overScroll">
-          {studentList.solved_tag.map((tags, index) => (
-            <div key={index} className="p-head">
-              <span>{subject}</span>
-              <span>{tags.name}</span>
-              <span>{tags.problem}</span>
-              <span>{tags.EXP}</span>
+          {ID_LIST_EX.map((data,index) => (
+            <div id="ID_LIST">
+              {data}<br/>
+              {/* <input type="text" value={data} id={"ID"+index} ></input> */}
             </div>
           ))}
         </div>
@@ -153,7 +159,7 @@ const Assignments = () => {
           color="inherit"
           onClick={() =>
             onClickStart({
-              studentList,
+              ID_LIST,
               pnumber,
               pdate,
             })
