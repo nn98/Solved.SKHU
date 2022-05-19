@@ -9,6 +9,7 @@ import ToggleButtons from "./ToggleButtons";
 import usersJ from "./users.json";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
+
 const ID_LIST_EX = [
   "neck392", "kshyun419", "asas6614", "djwls0843", "kwj9294",
   // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
