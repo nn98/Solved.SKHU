@@ -39,11 +39,13 @@
   |`20.`|*Off*|Full|Front-Back 연동, 레이아웃 수정, 데이터베이스 구조 수정|2022-05-04|
   |`21.`|*Off*|Full|풀타임 회의-<br>Front_Layout update/QnA update<br>Back_Solved.ac Data Crawling+Assignment by Node.js|2022-05-09|
   |`22.`|*Off*|Full|풀타임 회의|2022-05-10|
-  |`23.`|*Off*|Full||2022-05-02|
+  |`23.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connecting/Data Crawling|2022-05-18|
+  |`24.`|*Off*|Full|풀타임 회의-<br>Front_additional Page Implement<br>Back_Client-Server Connecting<br>Solved.ac API testing|2022-05-19|
+  |`25.`|*Off*|Full||2022-05-19|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
-  |`1.`|`N`|B|Assignment_<br>Front-Back Data response|~2022-05-15|
+  |`1.`|`N`|B|Assignment_<br>submit Date comfirm|~2022-05-25|
   |`1.`|`S`|F|Front > Back Connection|~2022-04-30|
   |`1.`|`L`|F|QnA Page/Database Connection|~2022-04-30|
   |`1.`|`A`|B|Crawling upgrade/Expansion|~2022-04-30|
@@ -280,14 +282,14 @@
   
   </details>
 
-<details><summary>#41 Back-Crawling_Python_Node.js</summary>
+<details><summary>#41 Back-Assignment</summary>
   
   ## Implements-#41
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |완료|Python Crawling Test|2022-05-09|`N`|
   |완료|Node.js Crawling Test|2022-05-09|`N`|
-  |진행|Node.js<br>Crawling/Assiginment|2022-05-09|`N`|
+  |완료|Node.js<br>Crawling/Assiginment|2022-05-09|`N`|
   
   ## Errors-#41
   |문제점|해결방식|날짜|Dev|
