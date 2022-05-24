@@ -21,16 +21,6 @@ const ID_LIST_EX = [
   // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
   // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
 ];
-const ID_LIST_AS = [
-  "neck392",
-  "kshyun419",
-  "asas6614",
-  "djwls0843",
-  "kwj9294"
-  // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
-  // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
-  // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
-];
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
   const [studentList, setStudentList] = useState(usersJ);
@@ -96,9 +86,10 @@ const Assignments = () => {
         .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
-          await console.log("Data: ", data);
-          await setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
-          await setLoading(false);
+          console.log("Data: ", data);
+          setID_LIST(data)
+          // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
+          setLoading(false);
         });
     } catch (error) {
       console.error(error);
@@ -141,12 +132,12 @@ const Assignments = () => {
           ))}
         </div> */}
         <div className="overScroll">
-          {ID_LIST_EX.map((data, index) => (
+          {ID_LIST.map((data, index) => (
             <div key={index} id="ID_LIST" className="p-head">
               <span>{subject}</span>
               <span>{data.studentID}</span>
               <span>{data.userID}</span>
-              <span>{data.result}</span>
+              <span>{String(data.result)}</span>
               {/* <input type="text" value={data} id={"ID"+index} ></input> */}
             </div>
           ))}
