@@ -12,18 +12,17 @@ import Paper from "@mui/material/Paper";
 import CopyRadioButtonsGroup from "./MUI/CopyRadioButtonsGroup";
 
 const ID_LIST_EX = [
-  { userID: "neck392", studentID: "201732024", result: "" },
-  { userID: "kshyun419", studentID: "201732029", result: "" },
-  { userID: "asas6614", studentID: "201732025", result: "" },
-  { userID: "djwls0843", studentID: "201732014", result: "" },
-  { userID: "kwj9294", studentID: "201732012", result: "" },
+  { studentID: "201732024", name: "", userID: "neck392", result: "" },
+  { studentID: "201732029", name: "", userID: "kshyun419", result: "" },
+  { studentID: "201732025", name: "", userID: "asas6614", result: "" },
+  { studentID: "201732014", name: "", userID: "djwls0843", result: "" },
+  { studentID: "201732012", name: "", userID: "kwj9294", result: "" },
   // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
   // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
   // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
 ];
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
-  const [studentList, setStudentList] = useState(usersJ);
   const [subject, setSubject] = useState("");
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
@@ -34,8 +33,8 @@ const Assignments = () => {
   const handleCopy = async () => {
     if (copy === "resultCopy") {
       let clipBoard = "";
-      for (let i = 0; i < studentList.solved_tag.length; ++i) {
-        clipBoard += studentList.solved_tag[i].EXP + "\n";
+      for (let i = 0; i < ID_LIST.length; ++i) {
+        clipBoard += ID_LIST[i].result + "\n";
       }
       try {
         await navigator.clipboard.writeText(clipBoard);
@@ -45,10 +44,10 @@ const Assignments = () => {
       }
     } else if (copy === "allCopy") {
       let clipBoard = "";
-      for (let i = 0; i < studentList.solved_tag.length; ++i) {
-        clipBoard += studentList.solved_tag[i].name + " ";
-        clipBoard += studentList.solved_tag[i].problem + " ";
-        clipBoard += studentList.solved_tag[i].EXP + "\n";
+      for (let i = 0; i < ID_LIST.length; ++i) {
+        clipBoard += ID_LIST[i].studentID + " ";
+        clipBoard += ID_LIST[i].userID + " ";
+        clipBoard += ID_LIST[i].result + "\n";
       }
       try {
         await navigator.clipboard.writeText(clipBoard);
