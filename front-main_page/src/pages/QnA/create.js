@@ -49,6 +49,7 @@ const Create = (e) => {
             if (data.error === 1062) alert('이미 있는 사용자입니다.')
           } else {
             alert(data.data)
+            userHandleOpen()
           }
         })
     } catch (error) {
