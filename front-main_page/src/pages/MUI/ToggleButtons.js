@@ -15,7 +15,7 @@ export default function ToggleButtons(props) {
     >
       {props.lecture &&
         props.lecture.map((data, index) => (
-          <ToggleButton key={data.ID} value={data.name}>
+          <ToggleButton size="small" key={data.ID} value={data.ID}>
             <span>{data.name}</span>
           </ToggleButton>
         ))}
