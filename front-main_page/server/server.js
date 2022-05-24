@@ -227,7 +227,6 @@ app.post("/proRegister", (req, res) => {
   console.log(req);
   const b = req.body;
   console.log(b);
-  let response = '';
   if (b.pC == 'proskhuOp12#') {
     const sql = "insert into Lecture (professor, code, name, distribution) values("
       + "'" + b.pN + "', "
