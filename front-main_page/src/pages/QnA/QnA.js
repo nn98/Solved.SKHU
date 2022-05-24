@@ -121,14 +121,13 @@ const QnA = () => {
       {comments.map((comment, index) =>
         comment.problem === problem ? (
           <div key={index} className="comments_print">
-            <CommentContent comment={comment} />
-
+            <CommentContent comment={comment} commentDelete={commentDelete} />
             {/* 삭제 버튼 */}
-            <Delete
+            {/* <Delete
               // commentDelete 함수를 delete 컴포넌트에 전송
               commentId={comment.ID}
               commentDelete={commentDelete}
-            />
+            /> */}
 
             <InnerComment commentId={comment.ID} />
           </div>
