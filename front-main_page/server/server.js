@@ -97,6 +97,7 @@ app.post("/assignments", async (req, res) => {
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
   const b = req.body;
   console.log(req.body);
+  results=[];
 
   console.log("Default\tID_LIST", ID_LIST);
   console.log('Req\tID_LIST',req.body.ID_LIST);
