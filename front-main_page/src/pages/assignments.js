@@ -4,11 +4,12 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import MediaCard from "./MediaCard";
-import ToggleButtons from "./ToggleButtons";
+import MediaCard from "./MUI/MediaCard";
+import ToggleButtons from "./MUI/ToggleButtons";
+import usersJ from "./users.json";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
-import CopyRadioButtonsGroup from "./CopyRadioButtonsGroup";
+import CopyRadioButtonsGroup from "./MUI/CopyRadioButtonsGroup";
 
 const ID_LIST_EX = [
   { studentID: "201732024", name: "", userID: "neck392", result: "" },
@@ -27,6 +28,7 @@ const Assignments = () => {
   const [pdate, setPdate] = useState();
   const [copy, setCopy] = useState("");
   const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
+  const [lecture, setLecture] = useState();
 
   const handleCopy = async () => {
     if (copy === "resultCopy") {
@@ -85,7 +87,7 @@ const Assignments = () => {
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
           console.log("Data: ", data);
-          setID_LIST(data)
+          setID_LIST(data);
           // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
           setLoading(false);
         });
@@ -94,7 +96,22 @@ const Assignments = () => {
     }
   };
 
-  useEffect(() => { }, [copy]);
+  const subjectAdd = async () => {
+    try {
+      await fetch("http://localhost:3001/assignments")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setLecture(data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    subjectAdd();
+  }, [copy]);
 
   return (
     <div className="assign">
@@ -163,6 +180,7 @@ const Assignments = () => {
         <ToggleButtons
           subject={subject}
           setSubject={setSubject}
+          lecture={lecture}
         ></ToggleButtons>
         {subject !== "" ? (
           <Paper

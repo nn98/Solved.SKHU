@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./algorithm.css";
 import usersJ from "./users.json";
-import { Button } from "@material-ui/core";
 import Grow from "@mui/material/Grow";
 
 const Algorithm = () => {
@@ -55,32 +54,36 @@ const Algorithm = () => {
       <div className="user">
         {json.solved_tag.map((data, index) =>
           index < 4 ? (
-            <Button
+            <button
               className="userAlgo"
               key={data.problem}
               onClick={() => onClickEvente(data.name, index)}
             >
               {data.name}
-            </Button>
+            </button>
           ) : null
         )}
       </div>
       <div className="reco">
         {opens.map((value, index) => (
-          <Grow in={opens[index]} {...(opens[index] ? { timeout: 1000 } : {})}>
+          <Grow
+            in={opens[index]}
+            key={index}
+            {...(opens[index] ? { timeout: 1000 } : {})}
+          >
             <div
               key={index}
               style={{ display: opens[index] === false ? "none" : "revert" }}
             >
               {json.solved_tag.map((data, index) =>
                 index < 7 ? (
-                  <Button
+                  <button
                     className="recoAlgo"
                     key={data.problem}
                     onClick={() => onClickReco()}
                   >
                     {name} {index + 1}번째 추천된 알고리즘
-                  </Button>
+                  </button>
                 ) : null
               )}
             </div>
