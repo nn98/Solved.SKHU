@@ -13,18 +13,12 @@ export default function ToggleButtons(props) {
       exclusive
       onChange={handleAlignment}
     >
-      <ToggleButton value="C">
-        <span>C</span>
-      </ToggleButton>
-      <ToggleButton value="PYTHON">
-        <span>Python</span>
-      </ToggleButton>
-      <ToggleButton value="JAVA">
-        <span>Java</span>
-      </ToggleButton>
-      <ToggleButton value="JS">
-        <span>JS</span>
-      </ToggleButton>
+      {props.lecture &&
+        props.lecture.map((data, index) => (
+          <ToggleButton key={data.ID} value={data.name}>
+            <span>{data.name}</span>
+          </ToggleButton>
+        ))}
     </ToggleButtonGroup>
   );
 }

@@ -1,12 +1,13 @@
 // import React, { useEffect, useState } from 'react'
 // import rankJ from './rank.json'
-import './rank.css'
+import "./rank.css";
+import { Link } from "react-router-dom";
 
 const Rank = (props) => {
   return (
     <div className="rank">
       <h1>성공회대학교 랭킹</h1>
-      {/* <div style={{ display: "inline", marginLeft: "80.9%" }}>
+      <div style={{ display: "inline", marginLeft: "80.9%" }}>
         <h3 style={{ display: "inline-block" }}>명단에 없을 경우 : </h3>
         <Link to="/register">
           <button
@@ -23,7 +24,7 @@ const Rank = (props) => {
             등록하기
           </button>
         </Link>
-      </div> */}
+      </div>
       <div className="rankTable">
         <table>
           <thead>
@@ -45,16 +46,16 @@ const Rank = (props) => {
                 <td>
                   <img
                     src={
-                      'https://static.solved.ac/tier_small/' +
+                      "https://static.solved.ac/tier_small/" +
                       user.tier +
-                      '.svg'
+                      ".svg"
                     }
                     alt="profile"
-                    style={{ width: '3%', margin: '0 1% 0 0' }}
-                  />{' '}
+                    style={{ width: "3%", margin: "0 1% 0 0" }}
+                  />{" "}
                   <strong>
                     <a
-                      href={'https://solved.ac/profile/' + user.ID}
+                      href={"https://solved.ac/profile/" + user.ID}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -72,7 +73,7 @@ const Rank = (props) => {
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Rank
+export default Rank;

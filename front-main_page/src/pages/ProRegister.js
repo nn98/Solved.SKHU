@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import "./register.css";
 import Fade from "@mui/material/Fade";
-import ControlledRadioButtonsGroup from "./ControlledRadioButtonsGroup";
+import ControlledRadioButtonsGroup from "./MUI/ControlledRadioButtonsGroup";
 import { Link } from "react-router-dom";
 
 const ProRegister = () => {
