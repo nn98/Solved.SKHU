@@ -247,6 +247,18 @@ app.get("/algorithm", (req, res) => {
   });
 });
 
+app.get("/assignments", (req, res) => {
+  const sql = "select * from Lecture;"; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  connection.query(sql, function (err, result, fields) {
+    // if문은 에러 출력을 위한 코드
+    if (err) throw err;
+    // result는 가져온 결과값
+    console.log(result);
+    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+    res.send(result);
+  });
+});
+
 // req는 소스코드로부터 받은 서버로 보낼 JSON 파일이 담긴 요청, res는 서버가 보낸 응답정보를 저장한 객체이고 우리는 JSON 파일 형식을 사용할 것임
 app.post("/assignments", async (req, res) => {
   console.log("Assignments/post ", "is called");

@@ -29,6 +29,7 @@ const Assignments = () => {
   const [pdate, setPdate] = useState();
   const [copy, setCopy] = useState("");
   const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
+  const [lecture, setLecture] = useState();
 
   const handleCopy = async () => {
     if (copy === "resultCopy") {
@@ -96,7 +97,22 @@ const Assignments = () => {
     }
   };
 
-  useEffect(() => {}, [copy]);
+  const subjectAdd = async () => {
+    try {
+      await fetch("http://localhost:3001/assignments")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setLecture(data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    subjectAdd();
+  }, [copy]);
 
   return (
     <div className="assign">
@@ -165,6 +181,7 @@ const Assignments = () => {
         <ToggleButtons
           subject={subject}
           setSubject={setSubject}
+          lecture={lecture}
         ></ToggleButtons>
         {subject !== "" ? (
           <Paper
