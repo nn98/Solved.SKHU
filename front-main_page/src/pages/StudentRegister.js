@@ -4,11 +4,13 @@ import { TextField } from "@mui/material";
 import "./register.css";
 import Fade from "@mui/material/Fade";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const StudentRegister = () => {
   const [studentId, setStudentId] = useState("");
   const [studentName, setStudentName] = useState("");
   const [bojId, setBojId] = useState("");
+  const location = useLocation();
 
   const [checked, setChecked] = React.useState(false);
 
