@@ -1,13 +1,19 @@
 import React from 'react'
+import Delete from './delete'
 
 const CommentContent = (props) => {
   // console.log(props)
   return (
     <div>
-      <div className="comments_print_user">name = {props.comment.USER_ID}</div>
-      <div className="comments_print_user">
-        createAt = {props.comment.createdat}
-      </div>
+      <span className="comments_print_user">{props.comment.USER_ID} </span>
+      <span className="comments_print_date">
+        {props.comment.createdat.substring(0, 10)}
+      </span>
+      <Delete
+        // commentDelete 함수를 delete 컴포넌트에 전송
+        commentId={props.comment.ID}
+        commentDelete={props.commentDelete}
+      />
       {/* 댓글 내용 */}
       <div className="comments_print_content">{props.comment.content}</div>
     </div>

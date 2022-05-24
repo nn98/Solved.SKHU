@@ -25,31 +25,32 @@ const CommentAdd = (props) => {
           className="comment_input_area"
           id="textarea"
           onChange={(e) => setCommentAddContent(e.target.value)}
-          placeholder="content"
+          placeholder="댓글을 작성하세요"
           value={commentAddContent}
         />
-
-        <button
-          className="comment_button"
-          // disabled={
-          //   !commentAddContent || !commentAddPassword || !commentAddName
-          // }
-          name="commenting"
-          value="댓글 작성"
-          onClick={() => {
-            // 매개변수로 받아온 commentAdd 함수를 이용하여 이름, 내용, 비밀번호를 보낸다.
-            props.commentAdd({
-              commentAddName,
-              commentAddContent,
-              commentAddPassword,
-            })
-            setCommentAddContent('')
-            setCommentAddName('')
-            setCommentAddPassword('')
-          }}
-        >
-          댓글 작성
-        </button>
+        <div className="comment_input_button">
+          <button
+            className="comment_button_inner"
+            // disabled={
+            //   !commentAddContent || !commentAddPassword || !commentAddName
+            // }
+            name="commenting"
+            value="댓글 작성"
+            onClick={() => {
+              // 매개변수로 받아온 commentAdd 함수를 이용하여 이름, 내용, 비밀번호를 보낸다.
+              props.commentAdd({
+                commentAddName,
+                commentAddContent,
+                commentAddPassword,
+              })
+              setCommentAddContent('')
+              setCommentAddName('')
+              setCommentAddPassword('')
+            }}
+          >
+            댓글 작성
+          </button>
+        </div>
         {/* <span>{props.error}</span> */}
       </div>
     </div>
