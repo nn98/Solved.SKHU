@@ -136,16 +136,6 @@ const Assignments = () => {
           <span>결과</span>
           {/* <span>제출시간</span> */}
         </div>
-        {/* <div className="overScroll">
-          {studentList.solved_tag.map((tags, index) => (
-            <div key={index} className="p-head">
-              <span>{subject}</span>
-              <span>{tags.name}</span>
-              <span>{tags.problem}</span>
-              <span>{tags.EXP}</span>
-            </div>
-          ))}
-        </div> */}
         <div className="overScroll">
           {ID_LIST.map((data, index) => (
             <div key={index} id="ID_LIST" className="p-head">
@@ -182,31 +172,41 @@ const Assignments = () => {
           setSubject={setSubject}
           lecture={lecture}
         ></ToggleButtons>
-        {subject !== "" ? (
-          <Paper
-            className="subPaper"
-            sx={{ display: "inline-block", width: "83%", marginBottom: "5%" }}
-          >
-            <h3>과목코드 : VI00001</h3>
-            <h3>교수 : 홍은지</h3>
-            <h3>분반 : 01</h3>
-            <Link to="/studentRegister">
-              <button
-                style={{
-                  display: "inline-block",
-                  fontSize: "15px",
-                  borderRadius: "0%",
-                  border: "0px",
-                  padding: "6px 12px",
-                  margin: "0% 0% 3% 3%",
-                  cursor: "pointer",
-                }}
-              >
-                학생 등록하기
-              </button>
-            </Link>
-          </Paper>
-        ) : null}
+        {subject !== ""
+          ? lecture.map((data, index) =>
+              data.ID === subject ? (
+                <Paper
+                  className="subPaper"
+                  key={index}
+                  sx={{
+                    display: "inline-block",
+                    width: "83%",
+                    marginBottom: "5%",
+                  }}
+                >
+                  <h3>과목코드 : {data.code}</h3>
+                  <h3>교수명: {data.professor}</h3>
+                  <h3>강의명 : {data.name}</h3>
+                  <h3>분반 : {data.distribution}</h3>
+                  <Link to="/studentRegister" state={data.ID}>
+                    <button
+                      style={{
+                        display: "inline-block",
+                        fontSize: "15px",
+                        borderRadius: "0%",
+                        border: "0px",
+                        padding: "6px 12px",
+                        margin: "0% 0% 3% 3%",
+                        cursor: "pointer",
+                      }}
+                    >
+                      학생 등록하기
+                    </button>
+                  </Link>
+                </Paper>
+              ) : null
+            )
+          : null}
         <h3>문제번호</h3>
         <input
           type="text"
