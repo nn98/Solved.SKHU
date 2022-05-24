@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import "./algorithm.css";
-import usersJ from "./users.json";
-import { Button } from "@material-ui/core";
-import Grow from "@mui/material/Grow";
+import React, { useState, useEffect } from 'react'
+import './algorithm.css'
+import usersJ from './users.json'
+import { Button } from '@material-ui/core'
+import Grow from '@mui/material/Grow'
 
 const Algorithm = () => {
-  const [json, setjson] = useState(usersJ);
-  const [name, setName] = useState();
+  const [json, setjson] = useState(usersJ)
+  const [name, setName] = useState()
 
   const [opens, setOpens] = useState([
     false,
@@ -16,36 +16,36 @@ const Algorithm = () => {
     false,
     false,
     false,
-  ]);
+  ])
 
-  const algorithmAdd = async () => {
-    try {
-      await fetch("http://localhost:3001/algorithm")
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data)
-          setjson(data);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const algorithmAdd = async () => {
+  //   try {
+  //     await fetch('http://localhost:3001/')
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         // console.log(data)
+  //         setjson(data)
+  //       })
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
   const onClickEvente = (dataName, index) => {
-    let open = [false, false, false, false, false, false, false];
+    let open = [false, false, false, false, false, false, false]
 
-    open[index] = !open[index];
-    setOpens(open);
-    setName(dataName);
-  };
+    open[index] = !open[index]
+    setOpens(open)
+    setName(dataName)
+  }
 
   const onClickReco = () => {
-    alert("백준으로 연결");
-  };
+    alert('백준으로 연결')
+  }
 
   useEffect(() => {
-    algorithmAdd();
-  }, []);
+    // algorithmAdd()
+  }, [])
 
   return (
     <div className="Algo">
@@ -67,28 +67,33 @@ const Algorithm = () => {
       </div>
       <div className="reco">
         {opens.map((value, index) => (
-          <Grow in={opens[index]} {...(opens[index] ? { timeout: 1000 } : {})}>
-            <div
-              key={index}
-              style={{ display: opens[index] === false ? "none" : "revert" }}
+          <div key={index}>
+            <Grow
+              in={opens[index]}
+              {...(opens[index] ? { timeout: 1000 } : {})}
             >
-              {json.solved_tag.map((data, index) =>
-                index < 7 ? (
-                  <Button
-                    className="recoAlgo"
-                    key={data.problem}
-                    onClick={() => onClickReco()}
-                  >
-                    {name} {index + 1}번째 추천된 알고리즘
-                  </Button>
-                ) : null
-              )}
-            </div>
-          </Grow>
+              <div
+                style={{ display: opens[index] === false ? 'none' : 'revert' }}
+              >
+                {json.solved_tag.map((data, index) =>
+                  index < 7 ? (
+                    <div key={data.problem}>
+                      <Button
+                        className="recoAlgo"
+                        onClick={() => onClickReco()}
+                      >
+                        {name} {index + 1}번째 추천된 알고리즘
+                      </Button>
+                    </div>
+                  ) : null
+                )}
+              </div>
+            </Grow>
+          </div>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Algorithm;
+export default Algorithm

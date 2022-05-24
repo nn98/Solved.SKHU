@@ -31,12 +31,15 @@
 }
 
 .comments_print_user {
-  font-size: smaller;
+  font-size: large;
   font-weight: bold;
+  float: inline;
 }
 
 .comments_print_date {
   font-size: smaller;
+  float: inline;
+  color: #808080;
 }
 
 .comments_print_content {
