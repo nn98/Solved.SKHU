@@ -35,7 +35,7 @@ const MainPage = () => {
         <TextField
           variant="standard"
           id="User_ID"
-          placeholder="User ID / Problem ID"
+          placeholder="User ID"
           sx={{
             width: '90%',
             px: 2.9,

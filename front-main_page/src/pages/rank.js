@@ -5,7 +5,25 @@ import './rank.css'
 const Rank = (props) => {
   return (
     <div className="rank">
-      <h1>성공회대학교 티어 랭킹</h1>
+      <h1>성공회대학교 랭킹</h1>
+      {/* <div style={{ display: "inline", marginLeft: "80.9%" }}>
+        <h3 style={{ display: "inline-block" }}>명단에 없을 경우 : </h3>
+        <Link to="/register">
+          <button
+            style={{
+              display: "inline-block",
+              fontSize: "15px",
+              borderRadius: "0%",
+              border: "0",
+              padding: "6px 12px",
+              marginLeft: "1%",
+              cursor: "pointer",
+            }}
+          >
+            등록하기
+          </button>
+        </Link>
+      </div> */}
       <div className="rankTable">
         <table>
           <thead>

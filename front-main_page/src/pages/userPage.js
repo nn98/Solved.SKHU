@@ -156,6 +156,7 @@ const UserPage = () => {
             </div>
             <hr />
             {userTier.map((BigTears, index) => (
+
               <div key={BigTears.big_tear}>
                 <div onClick={() => onClickEnter(index)}>
                   <div className="BigTears">{BigTears.big_tear}</div>

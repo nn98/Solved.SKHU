@@ -38,11 +38,14 @@
   |`19.`|*Off*|Full|Front-Back 연동 및 데이터 전송|2022-05-02|
   |`20.`|*Off*|Full|Front-Back 연동, 레이아웃 수정, 데이터베이스 구조 수정|2022-05-04|
   |`21.`|*Off*|Full|풀타임 회의-<br>Front_Layout update/QnA update<br>Back_Solved.ac Data Crawling+Assignment by Node.js|2022-05-09|
-  |`22.`|*Off*|Full||2022-05-02|
+  |`22.`|*Off*|Full|풀타임 회의|2022-05-10|
+  |`23.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connecting/Data Crawling|2022-05-18|
+  |`24.`|*Off*|Full|풀타임 회의-<br>Front_additional Page Implement<br>Back_Client-Server Connecting<br>Solved.ac API testing|2022-05-19|
+  |`25.`|*Off*|Full||2022-05-19|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
-  |`1.`|`N`|B|Assignment_<br>채점 정보 UserId를 Key로<br>해당 유저의 문제 풀이 유무 확인,전송|~2022-05-16|
+  |`1.`|`N`|B|Assignment_<br>submit Date comfirm|~2022-05-25|
   |`1.`|`S`|F|Front > Back Connection|~2022-04-30|
   |`1.`|`L`|F|QnA Page/Database Connection|~2022-04-30|
   |`1.`|`A`|B|Crawling upgrade/Expansion|~2022-04-30|
@@ -129,6 +132,7 @@
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |테스트|MySql DB와 Node.js Server 연동.<br>서버에서 실행한 쿼리 결과를 json으로 파싱|2020-03-24|`A`|
+  |구현|QnA페이지 간의 삭제, 등록, 답변 기능 구현|2022-05-10|`L`|
   
   ## Errors-#7
   |문제점|해결방식|날짜|Dev|
@@ -137,6 +141,7 @@
   |2번 문제 <br>pullrequest|새로운 브랜치를 만든 후(github상에 있지 않는) github remote를 하고, <br>필요파일을 만든다 그 후에 git pull origin main을 한다 그 이후에 vscode를 이용해서<br>github pullrequest라는 플러그인을 이용하여 해결|2022-03-21|`A`|
   |3번 문제 <br>pullrequest|inflearn공부를 통하여 실습한 sql connect 풀 리퀘스트를 하려하였지만, <br>git pull에서부터 문제가 생겨서 <br>git pull origin main --allow-unrelated-histories로  연결하여서 해결하였다.|2022-03-22|`A`|
   |||2022-03-22|`A`|
+  |QnA의 컨텐츠와 그의 답변을 QnA와 QnAInner 테이블에서 select join으로 한번에 불러오려고 하였으나 <br> 중복이 많이 select되고 QnA 안에 있는 답변들이 객체 값 안으로 출력 불가| QnA와 QnAInner 테이블에서 select join 시 자동적으로 불러오지 QnA객체 안에 답변들이 들어오지 않는다.<br>그래서, QnA QnAInner 따로 불러온 뒤 QnA의 ID값에 따라 답변들을 출력함|2022-05-10|`L`|
   
   </details>
   
@@ -146,6 +151,7 @@
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |완료|크롤링 반복 시 과부하<br>[Thread.sleep()](https://www.delftstack.com/ko/howto/java/how-to-delay-few-seconds-in-java/)|2022-04-30|`A`|
+  |완료|현재 기준 데이터베이스 값 전부 삽입 완료|2022-05-18|`A`|
   
   ## Errors-#16
   |문제점|해결방식|날짜|Dev|
@@ -155,6 +161,7 @@
   |Solved <br>문제 크롤링|정답률 크롤링 시 없어진 문제들이<br>존재하는데 그 문제들을 찾아내는 for문 안에<br>try-catch문을 넣어서<br> 건너뛰게 처리함|2022-05-01|`A`|
   |Solved User<br> 크롤링|유저페이지에 난이도 분포, 태그분포<br>값들이 보이지 않아서 유저가 푼 전체 문제<br>크롤링을 하였음|2022-05-07|`A`|
   |Solved User<br> 푼 문제 크롤링|전체 문제 크롤링 시 없어진 문제들을<br>제외하고 데이터베이스에 적재한 상태인데<br>없어진 문제를 푼 유저들이 존재함<br>그래서 그 부분에 try-catch문을 넣어서<br>건너뛰게 처리함|2022-05-08|`A`|
+  |Solved User<br>푼 문제<br>날짜 및 시간|문제 처리 시 맞았습니다가 아닌 점수로 된 것들 중에서 0점도 정답 처리로 되어 있어서 정규식을 이용하여 문제 해결|2022-05-18|`A`|
   
   </details>  
   
@@ -163,14 +170,15 @@
   ## Implements-#17
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |구현|익명이되 비밀번호 설정 후<br>수정/작성자 확인 가능|2022-03-25|`L`|
-  |예정|QnA 작성자 및 QnA 내용을 DB에 넣고 수정 가능하게 구현|2022-04-20|`L`|
+  |완료|익명이되 비밀번호 설정 후<br>작성자 확인 가능|2022-03-25|`L`|
+  |완료|QnA 작성자 및 QnA 내용을 DB에 넣고 등록 가능하게 구현|2022-05-10|`L`|
   
   ## Errors-#17
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |setState 데이터 추가 시 기존 데이터에 덧붙이기|setState사용시 const [test, setTest] = useState([]) 인 경우 <br> setTest([...test, 추가 내용])이렇게 해 주어야 기존에 있던 test에 추가 내용을 덧붙이기 가능|2022-04-06|`L`|
   |QnA의 답변 생성 시 생성 이후에 추가된 user는 QnA의 답변 작성 불가 오류|오류 원인 : QnA.js인 상위 컴포넌트에서 innerComment.js인 하위 컴포넌트로 user의 데이터를 생성시에만 전송하여 추가 불가<br>해결 방법 : QnA.js인 상위 컴포넌트에서 user의 존재 여부를 확인하는 compare 함수를 innerComment.js인 하위 컴포넌트로 전송하여 QnA의 답변 추가할때만 compare함수를 호출하여 작성 가능 여부 판별|2022-04-19|`L`|
+  |QnA테이블의 값을 불러올 때 불러오는 비동기 함수 뒤에 함수 결과값을<br>react의 변수에 추가 후 출력하였더니<br>변수에 바로 추가가 안되고 출력되는 오류|비동기 함수가 완료 되기 전에 변수에 추가하는 코드가 먼저 실행하여 결과값이 변수에 추가가 안됨<br>비동기 함수 완료되면 추가를 하도록 변경|2022-05-10|`L`|
   
   </details>  
   
@@ -213,7 +221,7 @@
   ## Implements-#27
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |구현|랭킹 페이지 UI 구현|2022-04-13|`S`|
+  |완료|랭킹 페이지 UI 구현|2022-04-13|`S`|
   
   ## Errors-#27
   |문제점|해결방식|날짜|Dev|
@@ -227,13 +235,17 @@
   ## Implements-#32
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |구현|채점 페이지 UI 구현|2022-04-19|`S`|
+  |완료|채점 페이지 UI 구현|2022-04-19|`S`|
+  |진행|등록한 강의 목록을 버튼으로 보이게 구현|2022-05-18|`S`|
+  |진행|채점 결과 학생의 상세 페이지 구현|2022-05-18|`S`|
+  |완료|채점 결과 클립보드에 복사하는 기능 구현|2022-05-19|`S`|
   
   ## Errors-#32
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |textarea태그의 placeholder에만 값 설정하기|사용자 입력 값과 다르게 힌트에만 css서식을 적용하고자 함<br>css시트에서 ::placeholder로 콜론(:)2개 선택자를 사용하면 됨|2022-04-19|`S`|
   |설명서를 보기좋게 추가하고 싶음|react mui인 mediacard를 import하고<br>드롭 다운 아이콘을 추가해 설명서가 나오도록 구현|2022-05-09|`S`|
+  |클립보드에 복사하는 기능을 알지 못함|navigator.clipboard.writeText() 함수에 복사할 텍스트를 매개변수로 보내<br>비동기(async) 함수 내에서 호출한다.|2022-05-19|`S`|
   
   </details>
 
@@ -252,7 +264,7 @@
   |Node react 연동 시 fetch로 data를 입력 받을때<br> promise 형태로만 전송됨|fetch 시 첫번째 then은 http 통신 요청과 응답에서 응답의 정보를 담고 있는 객체 Response Object이므로<br>두번째 then을 써서 첫번째 .then 함수에서 응답 body의 데이터를 받기 가능|2022-04-25|`L`|
   |Link 태그로 url을 변경할 때 값도 같이 전달해야 함|useLocation이라는 hook을 이용하여 현재 머물고 있는 페이지의 정보 객체를 반환 받아 .state로 JSON형태의 값을 사용할 수 있음|2022-04-29|`S`|
   |뒤로가기 버튼을 구현|useNavigate라는 hook을 이용하여 현재 라우트에 쌓인 브라우저 dom을 제어할 수 있는 객체를 반환 받아 객체(-1)로 한 페이지 뒤로 이동할 수 있음, '패스'를 매개변수로 주어서 패스로도 이동 가능|2022-04-29|`S`|
-  
+  |url 이동을 useNavigate를 navigate(to, { replace: true })의 형태로 사용 하였을때<br> 전달 인자값를 전달하고 싶었지만 useNavigate()로 전달 인자값 받기 오류|url 이동 hook인 useNavigate()를 통해 페이지 이동하면서 전달 인자값을 전달하고,<br> 이동한 url에서 전달 인자 값은 useLocation()을 통해 데이터를 전달 받는 것이다.|2022-05-19|`L`|
   </details>
 
   <details><summary>#38 Git Ignore</summary>
@@ -270,20 +282,35 @@
   
   </details>
 
-<details><summary>#41 Back-Crawling_Python_Node.js</summary>
+<details><summary>#41 Back-Assignment</summary>
   
   ## Implements-#41
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |완료|Python Crawling Test|2022-05-09|`N`|
   |완료|Node.js Crawling Test|2022-05-09|`N`|
-  |진행|Node.js<br>Crawling/Assiginment|2022-05-09|`N`|
+  |완료|Node.js<br>Crawling/Assiginment|2022-05-09|`N`|
   
   ## Errors-#41
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
   |403 response 발생|Header에 User-agent 설정.<br>다만 예시 코드가 'cheerio-httpcli'뿐이라 불완전 해결|2022-05-09|`N`|
   |Async 불일치 발생|채점을 위해 반복문 실행 시<br>비동기 실행으로 인해 불일치.<br>async/then 콜백함수 사용해 해결|2022-05-09|`N`|
+  |프론트 연동시 동기화|프론트 리액트 페이지와 연동 및 데이터 전송 시<br>비동기 실행으로 인해 결과값 리턴 불가<br>[npm wait-notify](https://www.npmjs.com/package/wait-notify)활용해 해결|2022-05-19|`N`|
+  
+  </details>
+  
+<details><summary>#44 Front-Register</summary>
+  
+  ## Implements-#44
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |완료|교수님의 강의 등록 페이지 구현|2022-05-18|`S`|
+  |완료|학생의 등록 페이지 구현|2022-05-18|`S`|
+  
+  ## Errors-#44
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
   
   </details>
   

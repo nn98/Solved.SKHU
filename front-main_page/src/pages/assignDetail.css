@@ -1,0 +1,56 @@
+.assignDetail {
+  width: 90%;
+  margin: 0% 5%;
+}
+
+.assignDetail .leftSide {
+  display: inline-block;
+  width: 45%;
+  margin: 0% 2.5%;
+}
+
+.assignDetail .rightSide {
+  display: inline;
+  float: right;
+  width: 45%;
+  margin: 0% 2.5%;
+}
+
+.assignDetail .p-head {
+  width: 95%;
+  margin-left: 1.5%;
+  padding: 1%;
+  transition: background-color 1s;
+}
+
+.assignDetail .p-head:hover {
+  background-color: gold;
+}
+
+.assignDetail .p-head span {
+  display: inline-block;
+  width: 20%;
+}
+.p-head:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+.assignDetail .p-head:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.assignDetail .p-head:hover {
+  background-color: gold;
+}
+
+.assignDetail .overScroll {
+  text-align: center;
+  height: 80vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+
+.assignDetail .p-head span:nth-child(2) {
+  width: 40%;
+}

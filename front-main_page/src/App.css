@@ -16,6 +16,14 @@
   width: 14%;
 }
 
+.main-menu td:nth-child(2) {
+  width: 6%;
+}
+
+.main-menu td:nth-child(6) {
+  width: 6%;
+}
+
 .main-menu td button {
   font-size: x-large;
   color: #888;
@@ -49,5 +57,4 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
