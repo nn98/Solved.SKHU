@@ -4,12 +4,12 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import MediaCard from "./MediaCard";
-import ToggleButtons from "./ToggleButtons";
+import MediaCard from "./MUI/MediaCard";
+import ToggleButtons from "./MUI/ToggleButtons";
 import usersJ from "./users.json";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
-import CopyRadioButtonsGroup from "./CopyRadioButtonsGroup";
+import CopyRadioButtonsGroup from "./MUI/CopyRadioButtonsGroup";
 
 const ID_LIST_EX = [
   { userID: "neck392", studentID: "201732024", result: "" },
@@ -87,7 +87,7 @@ const Assignments = () => {
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
           console.log("Data: ", data);
-          setID_LIST(data)
+          setID_LIST(data);
           // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
           setLoading(false);
         });
@@ -96,7 +96,7 @@ const Assignments = () => {
     }
   };
 
-  useEffect(() => { }, [copy]);
+  useEffect(() => {}, [copy]);
 
   return (
     <div className="assign">
