@@ -22,7 +22,7 @@ app.listen(port, () => {
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-  host: "15.164.216.23",
+  host: "15.165.159.248",
   user: "Project",
   password: "testing00",
   database: "SWP",
@@ -55,28 +55,6 @@ app.get("/ranking", (req, res) => {
   });
 });
 
-// req는 소스코드로부터 받은 서버로 보낼 JSON 파일이 담긴 요청, res는 서버가 보낸 응답정보를 저장한 객체이고 우리는 JSON 파일 형식을 사용할 것임
-app.post("/assignments", async (req, res) => {
-  console.log("Assignments/post ", "is called");
-  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  const b = req.body;
-  console.log(req.body);
-
-  console.log("Default\tID_LIST", ID_LIST);
-  console.log('Req\tID_LIST',req.body.ID_LIST);
-  console.log('Problem ID\t',req.body.pID);
-  ID_LIST=req.body.ID_LIST;
-  pID=req.body.pID;
-  // Assignment.pID=req.body.pID;
-  AssignTaskExecute=true;
-  run();
-  if(AssignTaskExecute)await waitNotify2.wait();
-
-  res.send(results);
-});
-  // res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-
 app.post("/userPage", (req, res) => {
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
   console.log(req);
@@ -101,16 +79,8 @@ app.post("/proRegister", (req, res) => {
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
 });
 
-app.post("/studentRegister", (req, res) => {
-  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  console.log(req);
-  const b = req.body;
-  res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-});
-
 app.get("/algorithm", (req, res) => {
-  const sql = ""; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  const sql = "select * from User"; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) throw err;
@@ -120,6 +90,30 @@ app.get("/algorithm", (req, res) => {
     res.send(result);
   });
 });
+ 
+// req는 소스코드로부터 받은 서버로 보낼 JSON 파일이 담긴 요청, res는 서버가 보낸 응답정보를 저장한 객체이고 우리는 JSON 파일 형식을 사용할 것임
+app.post("/assignments", async (req, res) => {
+  console.log("Assignments/post ", "is called");
+  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
+  const b = req.body;
+  console.log(req.body);
+
+  console.log("Default\tID_LIST", ID_LIST);
+  console.log('Req\tID_LIST',req.body.ID_LIST);
+  console.log('Problem ID\t',req.body.PID);
+  Student_LIST=req.body.ID_LIST;
+
+  ID_LIST=req.body.ID_LIST;
+  pID=req.body.PID;
+  // Assignment.pID=req.body.pID;
+  AssignTaskExecute=true;
+  run();
+  if(AssignTaskExecute)await waitNotify2.wait();
+
+  res.send(results);
+});
+  // res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
 
 // connection.end()
 
@@ -145,7 +139,7 @@ async function run() {
     console.log('1. run');
     console.log('ID_LIST', ID_LIST);
     console.log('pID', pID);
-    processID = ID_LIST.shift();
+    processID = ID_LIST.shift().userID;
     let url = urls[0] + pID + urls[1] + processID + urls[2];
     execute(url);
 };

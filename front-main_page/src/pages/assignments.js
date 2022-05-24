@@ -12,7 +12,21 @@ import Paper from "@mui/material/Paper";
 import CopyRadioButtonsGroup from "./CopyRadioButtonsGroup";
 
 const ID_LIST_EX = [
-  "neck392", "kshyun419", "asas6614", "djwls0843", "kwj9294",
+  { userID: "neck392", studentID: "201732024", result: "" },
+  { userID: "kshyun419", studentID: "201732029", result: "" },
+  { userID: "asas6614", studentID: "201732025", result: "" },
+  { userID: "djwls0843", studentID: "201732014", result: "" },
+  { userID: "kwj9294", studentID: "201732012", result: "" },
+  // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
+  // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
+  // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
+];
+const ID_LIST_AS = [
+  "neck392",
+  "kshyun419",
+  "asas6614",
+  "djwls0843",
+  "kwj9294"
   // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
   // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
   // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
@@ -24,6 +38,7 @@ const Assignments = () => {
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
   const [copy, setCopy] = useState("");
+  const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
 
   const handleCopy = async () => {
     if (copy === "resultCopy") {
@@ -56,12 +71,12 @@ const Assignments = () => {
   };
 
   const onClickStart = async (props) => {
-    console.log("Notify: ","LoadingButton Clicked!");
+    console.log("Notify: ", "LoadingButton Clicked!");
     try {
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
-        ID_LIST: props.ID_LIST,
+        ID_LIST: props.ID_LIST_EX,
         PID: props.pnumber,
         DeadLine: props.pdate,
       };
@@ -81,7 +96,7 @@ const Assignments = () => {
         .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
-          await console.log("Data: ",data);
+          await console.log("Data: ", data);
           await setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
           await setLoading(false);
         });
@@ -90,7 +105,7 @@ const Assignments = () => {
     }
   };
 
-  useEffect(() => {}, [copy]);
+  useEffect(() => { }, [copy]);
 
   return (
     <div className="assign">
@@ -109,13 +124,13 @@ const Assignments = () => {
           }}
         >
           <span>{subject}</span>
-          {/* <span>학번</span> */}
+          <span>학번</span>
           {/* <span>이름</span> */}
           <span>아이디</span>
           <span>결과</span>
           {/* <span>제출시간</span> */}
         </div>
-        <div className="overScroll">
+        {/* <div className="overScroll">
           {studentList.solved_tag.map((tags, index) => (
             <div key={index} className="p-head">
               <span>{subject}</span>
@@ -124,18 +139,20 @@ const Assignments = () => {
               <span>{tags.EXP}</span>
             </div>
           ))}
-        </div>
-/*
+        </div> */}
         <div className="overScroll">
-          {ID_LIST_EX.map((data,index) => (
-            <div id="ID_LIST">
-              {data}<br/>
+          {ID_LIST_EX.map((data, index) => (
+            <div key={index} id="ID_LIST" className="p-head">
+              <span>{subject}</span>
+              <span>{data.studentID}</span>
+              <span>{data.userID}</span>
+              <span>{data.result}</span>
               {/* <input type="text" value={data} id={"ID"+index} ></input> */}
             </div>
           ))}
         </div>
       </div>
-*/
+
       <div className="buttonList">
         <h3 style={{ display: "inline-block", margin: "0% 15% 10% 0%" }}>
           강의 선택
@@ -202,7 +219,7 @@ const Assignments = () => {
           color="inherit"
           onClick={() =>
             onClickStart({
-              ID_LIST,
+              ID_LIST_EX,
               pnumber,
               pdate,
             })
