@@ -225,26 +225,36 @@ app.post("/proRegister", (req, res) => {
   console.log(req);
   const b = req.body;
   console.log(b);
-  if (b.pC == 'proskhuOp12#') {
-    const sql = "insert into Lecture (professor, code, name, distribution) values("
-      + "'" + b.pN + "', "
-      + "'" + b.sC + "', "
-      + "'" + b.sN + "', "
-      + b.cN + ");"
+  if (b.pC === "proskhuOp12#") {
+    const sql =
+      "insert into Lecture (professor, code, name, distribution) values(" +
+      "'" +
+      b.pN +
+      "', " +
+      "'" +
+      b.sC +
+      "', " +
+      "'" +
+      b.sN +
+      "', " +
+      b.cN +
+      ");";
     console.log(sql);
     connection.query(sql, function (err, result, fields) {
       // if문은 에러 출력을 위한 코드
       if (err) {
-        res.status(406).json({ message: '에러가 발생했습니다. 입력 내용을 확인해주세요' });
+        res
+          .status(406)
+          .json({ message: "에러가 발생했습니다. 입력 내용을 확인해주세요" });
       }
       // result는 가져온 결과값
       console.log(result);
       // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
       // res.send(result);
-      res.status(100).json({ message: '강의 등록이 완료되었습니다' });
+      res.status(100).json({ message: "강의 등록이 완료되었습니다" });
     });
   } else {
-    res.status(406).json({ message: '교수 승인코드가 틀렸습니다' });
+    res.status(406).json({ message: "교수 승인코드가 틀렸습니다" });
   }
   // res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
@@ -291,8 +301,8 @@ app.post("/assignments", async (req, res) => {
   results = [];
 
   console.log("Default\tID_LIST", ID_LIST);
-  console.log('Req\tID_LIST', req.body.ID_LIST);
-  console.log('Problem ID\t', req.body.PID);
+  console.log("Req\tID_LIST", req.body.ID_LIST);
+  console.log("Problem ID\t", req.body.PID);
 
   ID_LIST = req.body.ID_LIST;
   pID = req.body.PID;
