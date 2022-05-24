@@ -17,7 +17,7 @@ const UserPage = () => {
   const userAdd = async () => {
     try {
       const t = location.state !== null ? location.state.userId : 'q9922000'
-      const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
+      // const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
       // 잔디 
       await fetch(
         'https://solved.ac/api/v3/user/history?handle=' +
