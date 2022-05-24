@@ -20,7 +20,7 @@ const Algorithm = () => {
 
   const algorithmAdd = async () => {
     try {
-      await fetch("http://localhost:3001/algorithm")
+      await fetch("http://localhost:3001/")
         .then((res) => res.json())
         .then((data) => {
           // console.log(data)
