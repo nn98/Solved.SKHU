@@ -12,10 +12,13 @@ const UserPage = () => {
   const [userTag, setUserTag] = useState({})
   const [userTier, setUserTier] = useState([])
   const [opens, setOpens] = useState([false, false, false, false, false, false])
+  const [userPro, setUserPro] = useState({})
 
   const userAdd = async () => {
     try {
       const t = location.state !== null ? location.state.userId : 'q9922000'
+      // const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
+      // 잔디 
       await fetch(
         'https://solved.ac/api/v3/user/history?handle=' +
           t +
@@ -55,41 +58,53 @@ const UserPage = () => {
           setUser(data)
           // console.log(data)
         })
+      await fetch('https://solved.ac/api/v3/search/problem?query=solved_by%3A'+t+'&sort=level&direction=desc')
+      .then((res)=>res.json())
+      .then((data)=>{
+        setUserPro(data)
+        
+      })
       await fetch('https://solved.ac/api/v3/user/problem_stats?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           var tierData = [
             {
+              style:"rgb(163,92,33)",
               big_tear: 'BRONZE',
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
+              style:"rgb(74,94,120)",
               big_tear: 'SILVER',
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
+              style:"rgb(225,161,62)",
               big_tear: 'GOLD',
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
+              style:"rgb(112,223,170)",
               big_tear: 'PLATINUM',
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
+              style:"rgb(85,179,246)",
               big_tear: 'DIAMOND',
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
+              style:"rgb(235,56,104)",
               big_tear: 'RUBY',
               pSum: 0,
               eSum: 0,
@@ -126,7 +141,7 @@ const UserPage = () => {
 
   useEffect(() => {
     userAdd()
-  }, [])
+  },[])
 
   return (
     <div className="user">
@@ -159,9 +174,9 @@ const UserPage = () => {
 
               <div key={BigTears.big_tear}>
                 <div onClick={() => onClickEnter(index)}>
-                  <div className="BigTears">{BigTears.big_tear}</div>
-                  <div className="BigTears">{BigTears.pSum}</div>
-                  <div className="BigTears">{BigTears.eSum}</div>
+                  <div className="BigTears" style={{color: BigTears.style, fontWeight : 'bold'}}>{BigTears.big_tear}</div>
+                  <div className="BigTears" id="pro-color">{BigTears.pSum}</div>
+                  <div className="BigTears" id ="user-color">{BigTears.eSum}</div>
                 </div>
                 <>
                   <Collapse in={opens[index]}>
@@ -172,12 +187,12 @@ const UserPage = () => {
                           display: opens[index] === false ? 'none' : 'revert',
                         }}
                       >
-                        <div className="data">
-                          {BigTears.big_tear.substr(0, 1)}
+                        <div className="data" style={{color: BigTears.style, fontWeight : 'bold'}}>
+                          {BigTears.big_tear.substr(0, 1) }
                           {5 - index2}
                         </div>
-                        <div className="data">{tear.solved}</div>
-                        <div className="data">{tear.exp}</div>
+                        <div className="data" id="pro-color">{tear.solved}</div>
+                        <div className="data" id="user-color">{tear.exp}</div>
                       </div>
                     ))}
                   </Collapse>
@@ -189,7 +204,7 @@ const UserPage = () => {
 
         <div className="problem">
           <div
-            className="p-head"
+            className="pr-head"
             style={{
               backgroundColor: 'black',
               color: 'white',
@@ -198,24 +213,27 @@ const UserPage = () => {
               top: '0px',
             }}
           >
+            <span></span>
             <span>#</span>
             <span>제목</span>
             <span>해결</span>
-            <span>시도</span>
+            <span>평균 시도</span>
           </div>
-          {save.user_problems.map((problem, index) => (
-            <div key={index} className="p-head">
+          {
+          userPro.items && userPro.items.map((problem, index) => (
+            <div key={problem.problemId} className="pr-head">
               <a
                 key={index}
-                href={'https://www.acmicpc.net/problem/' + problem}
+                href={'https://www.acmicpc.net/problem/' + problem.problemId}
                 style={{ textDecorationLine: 'none', color: '#000' }}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span>{problem}</span>
-                <span>제목</span>
-                <span>해결</span>
-                <span>{index * problem}</span>
+                <span><img src={'https://static.solved.ac/tier_small/'+(problem.level)+'.svg'} alt="profile" style= {{width : "1rem"}}/></span>
+                <span id="user-color">{problem.problemId}</span>
+                <span id="user-color">{problem.titleKo}</span>
+                <span id="user-color">{problem.acceptedUserCount}</span>
+                <span id="user-color">{problem.averageTries.toFixed(2)}</span>
               </a>
             </div>
           ))}
@@ -247,9 +265,9 @@ const UserPage = () => {
               userTag.items.map((t, index) =>
                 t.solved === 0 ? null : (
                   <div key={index} className="p-head">
-                    <span>{t.tag.displayNames[0].name}</span>
-                    <span>{t.solved}</span>
-                    <span>{t.exp}</span>
+                    <span style={{fontWeight : 'bold'}}>{t.tag.displayNames[0].name}</span>
+                    <i><span id="user-color">{t.solved}</span></i>
+                    <span id="user-color">{t.exp}</span>
                   </div>
                 )
               )}
@@ -261,3 +279,4 @@ const UserPage = () => {
 }
 
 export default UserPage
+
