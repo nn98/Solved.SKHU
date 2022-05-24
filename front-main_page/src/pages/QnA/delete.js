@@ -12,7 +12,6 @@ const Delete = (props) => {
   const deleteContainer = useRef(null)
 
   const deletButtonClick = () => {
-    console.log(commentId)
     setDeleteButton(!deleteButton)
   }
 

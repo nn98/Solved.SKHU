@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import "./App.css";
 import Footer from "./footer";
 import MainMenu from "./mainMenu";
@@ -13,9 +14,28 @@ import Register from "./pages/register";
 import ProRegister from "./pages/ProRegister";
 import StudentRegister from "./pages/StudentRegister";
 // import { QnA } from './pages'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
+  // 랭킹 페이지 변수
+  const [ranking, setRanking] = useState([])
+  // 각 페이지 에서 필요한 정보 추가
+  const add = async () => {
+    try {
+      await fetch('http://localhost:3001/ranking')
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data)
+          setRanking(data)
+        })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    add()
+  }, [])
   return (
     <>
       <MainMenu />
@@ -25,7 +45,7 @@ function App() {
         <Route path="/algorithm" element={<Algorithm />} />
         <Route path="/rating" element={<Rating />} />
         <Route path="/QnA" element={<QnA />} />
-        <Route path="/rank" element={<Rank />} />
+        <Route path="/rank" element={<Rank ranking={ranking} />} />
         <Route path="/assignments" element={<Assignments />} />
         <Route path="/register" element={<Register />} />
         <Route path="/proRegister" element={<ProRegister />} />
@@ -34,7 +54,7 @@ function App() {
       </Routes>
       <Footer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

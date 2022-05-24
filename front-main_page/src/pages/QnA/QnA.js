@@ -14,9 +14,7 @@ const QnA = () => {
   // 댓글 보관함
   const [comments, setComments] = useState([])
 
-  // 대댓글 보관함
-  const [innerComments, setInnerComments] = useState([])
-
+  // 댓글 출력문
   const qnaFind = async () => {
     try {
       const res = await fetch('http://localhost:3001/QnA').then((res) =>
@@ -40,7 +38,7 @@ const QnA = () => {
       // 먼저 댓글 받은 유저의 정보와 쓴 댓글 내용을 body에 저장
       const body = {
         content: props.commentAddContent,
-        userIP: 155,
+        userIP: '155',
         userId: props.commentAddName,
         problem: problem,
         password: props.commentAddPassword,
@@ -58,9 +56,9 @@ const QnA = () => {
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
           if (data.error) {
-            if (data.error === 1062) alert('이미 있는 사용자입니다.')
+            alert(data.error)
           } else {
-            alert(data.data)
+            setComments(data)
           }
         })
     } catch (error) {
@@ -73,31 +71,29 @@ const QnA = () => {
   const commentDelete = async (props) => {
     try {
       const body = {
-        id: props.commentId,
-        problemNum: problem,
-        name: props.commentDeleteName,
+        ID: props.commentId,
+        userId: props.commentDeleteName,
         password: props.commentDeletePassword,
       }
-
-      /****** comments 존재 비교문 ******/
-
-      // 만약 삭제할 comments 찾기
-      const commentsCompare = comments.find((c) => c.id === body.id)
-
-      console.log(commentsCompare)
-      // 만약 user가 다르다면
-      if (
-        commentsCompare.name !== body.name ||
-        commentsCompare.password !== body.password
-      ) {
-        // 오류 출력
-        return alert('사용자가 없습니다.')
+      const requestOptions = {
+        // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
+        method: 'POST', // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
+        headers: {
+          'Content-Type': 'application/json',
+        }, // json형태의 데이터를 서버로 보냅니다.
+        body: JSON.stringify(body),
       }
-      // 댓글 보관함에 저장
-      setComments(comments.filter((value) => value.id !== body.id))
-      return
-
-      /*******************************/
+      await fetch('http://localhost:3001/QnADelete', requestOptions)
+        .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
+        .then((data) => {
+          // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
+          if (data.error) {
+            alert(data.error)
+          } else {
+            setComments(data)
+            // setComments(data)
+          }
+        })
     } catch (error) {
       alert('실패하였습니다.')
       console.error(error)
@@ -130,15 +126,11 @@ const QnA = () => {
             {/* 삭제 버튼 */}
             <Delete
               // commentDelete 함수를 delete 컴포넌트에 전송
-              commentId={comment.id}
+              commentId={comment.ID}
               commentDelete={commentDelete}
             />
 
-            <InnerComment
-              commentId={comment.id}
-              innerComments={innerComments}
-              setInnerComments={setInnerComments}
-            />
+            <InnerComment commentId={comment.ID} />
           </div>
         ) : null
       )}
