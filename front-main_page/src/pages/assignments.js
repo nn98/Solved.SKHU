@@ -190,7 +190,10 @@ const Assignments = () => {
                   <h3>교수명: {data.professor}</h3>
                   <h3>강의명 : {data.name}</h3>
                   <h3>분반 : {data.distribution}</h3>
-                  <Link to="/studentRegister" state={data.ID}>
+                  <Link
+                    to="/studentRegister"
+                    state={[{ dataID: data.ID }, { lectureName: lectureName }]}
+                  >
                     <button
                       style={{
                         display: "inline-block",
