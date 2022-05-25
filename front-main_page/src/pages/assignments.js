@@ -132,19 +132,23 @@ const Assignments = () => {
         >
           <span>{lectureName}</span>
           <span>학번</span>
-          {/* <span>이름</span> */}
+          <span>이름</span>
           <span>아이디</span>
           <span>결과</span>
-          {/* <span>제출시간</span> */}
         </div>
         <div className="overScroll">
           {ID_LIST.map((data, index) => (
-            <div key={index} id="ID_LIST" className="p-head">
-              <span>{lectureName}</span>
-              <span>{data.studentID}</span>
-              <span>{data.userID}</span>
-              <span>{String(data.result)}</span>
-              {/* <input type="text" value={data} id={"ID"+index} ></input> */}
+            <div key={data.userID}>
+              {data.userID === "neck392" ? (
+                <div id="ID_LIST" className="p-head">
+                  <span>{lectureName}</span>
+                  <span>{data.studentID}</span>
+                  <span>name</span>
+                  <span>{data.userID}</span>
+                  <span>{String(data.result)}</span>
+                  {/* <input type="text" value={data} id={"ID"+index} ></input> */}
+                </div>
+              ) : null}
             </div>
           ))}
         </div>
@@ -175,42 +179,47 @@ const Assignments = () => {
           setLectureName={setLectureName}
         ></MultipleSelect>
         {subject !== ""
-          ? lecture.map((data, index) =>
-              data.ID === subject ? (
-                <Paper
-                  className="subPaper"
-                  key={index}
-                  sx={{
-                    display: "inline-block",
-                    width: "83%",
-                    marginBottom: "5%",
-                  }}
-                >
-                  <h3>과목코드 : {data.code}</h3>
-                  <h3>교수명: {data.professor}</h3>
-                  <h3>강의명 : {data.name}</h3>
-                  <h3>분반 : {data.distribution}</h3>
-                  <Link
-                    to="/studentRegister"
-                    state={[{ dataID: data.ID }, { lectureName: lectureName }]}
+          ? lecture.map((data, index) => (
+              <div key={data.ID}>
+                {data.ID === subject ? (
+                  <Paper
+                    className="subPaper"
+                    key={data.ID}
+                    sx={{
+                      display: "inline-block",
+                      width: "83%",
+                      marginBottom: "5%",
+                    }}
                   >
-                    <button
-                      style={{
-                        display: "inline-block",
-                        fontSize: "15px",
-                        borderRadius: "0%",
-                        border: "0px",
-                        padding: "6px 12px",
-                        margin: "0% 0% 3% 3%",
-                        cursor: "pointer",
-                      }}
+                    <h3>과목코드 : {data.code}</h3>
+                    <h3>교수명: {data.professor}</h3>
+                    <h3>강의명 : {data.name}</h3>
+                    <h3>분반 : {data.distribution}</h3>
+                    <Link
+                      to="/studentRegister"
+                      state={[
+                        { dataID: data.ID },
+                        { lectureName: lectureName },
+                      ]}
                     >
-                      학생 등록하기
-                    </button>
-                  </Link>
-                </Paper>
-              ) : null
-            )
+                      <button
+                        style={{
+                          display: "inline-block",
+                          fontSize: "15px",
+                          borderRadius: "0%",
+                          border: "0px",
+                          padding: "6px 12px",
+                          margin: "0% 0% 3% 3%",
+                          cursor: "pointer",
+                        }}
+                      >
+                        학생 등록하기
+                      </button>
+                    </Link>
+                  </Paper>
+                ) : null}
+              </div>
+            ))
           : null}
         <h3>문제번호</h3>
         <input
