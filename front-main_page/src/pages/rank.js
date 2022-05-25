@@ -7,8 +7,10 @@ const Rank = (props) => {
   return (
     <div className="rank">
       <h1>성공회대학교 랭킹</h1>
-      <div style={{ display: "inline", marginLeft: "80.9%" }}>
-        <h3 style={{ display: "inline-block" }}>명단에 없을 경우 : </h3>
+      <div style={{ display: "inline", float: "right" }}>
+        <h3 style={{ display: "inline-block", paddingRight: "10px" }}>
+          명단에 없을 경우 :{" "}
+        </h3>
         <Link to="/register">
           <button
             style={{
@@ -17,7 +19,6 @@ const Rank = (props) => {
               borderRadius: "0%",
               border: "0",
               padding: "6px 12px",
-              marginLeft: "1%",
               cursor: "pointer",
             }}
           >

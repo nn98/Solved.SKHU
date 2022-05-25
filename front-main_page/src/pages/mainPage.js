@@ -16,7 +16,7 @@ const MainPage = () => {
           navigate("/userPage", { state: { userId } });
         });
     } catch (error) {
-      alert("실패");
+      alert("입력하신 ID는 Solve.ac에 등록되지 않았습니다.");
     }
   };
   return (
