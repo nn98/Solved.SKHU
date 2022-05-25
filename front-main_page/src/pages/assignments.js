@@ -1,118 +1,118 @@
-import React, { useState, useEffect } from 'react'
-import './assignments.css'
-import LoadingButton from '@mui/lab/LoadingButton'
-import Button from '@mui/material/Button'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import MediaCard from './MUI/MediaCard'
-import ToggleButtons from './MUI/ToggleButtons'
-import usersJ from './users.json'
-import { Link } from 'react-router-dom'
-import Paper from '@mui/material/Paper'
-import CopyRadioButtonsGroup from './MUI/CopyRadioButtonsGroup'
+import React, { useState, useEffect } from "react";
+import "./assignments.css";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import MediaCard from "./MUI/MediaCard";
+import { Link } from "react-router-dom";
+import Paper from "@mui/material/Paper";
+import CopyRadioButtonsGroup from "./MUI/CopyRadioButtonsGroup";
+import MultipleSelect from "./MUI/MultipleSelect";
 
 const ID_LIST_EX = [
-  { studentID: '201732024', name: '', userID: 'neck392', result: '' },
-  { studentID: '201732029', name: '', userID: 'kshyun419', result: '' },
-  { studentID: '201732025', name: '', userID: 'asas6614', result: '' },
-  { studentID: '201732014', name: '', userID: 'djwls0843', result: '' },
-  { studentID: '201732012', name: '', userID: 'kwj9294', result: '' },
+  { studentID: "201732024", name: "", userID: "neck392", result: "" },
+  { studentID: "201732029", name: "", userID: "kshyun419", result: "" },
+  { studentID: "201732025", name: "", userID: "asas6614", result: "" },
+  { studentID: "201732014", name: "", userID: "djwls0843", result: "" },
+  { studentID: "201732012", name: "", userID: "kwj9294", result: "" },
   // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
   // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
   // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
-]
+];
 const Assignments = () => {
-  const [loading, setLoading] = useState(false)
-  const [subject, setSubject] = useState('')
-  const [pnumber, setPnumber] = useState()
-  const [pdate, setPdate] = useState()
-  const [copy, setCopy] = useState('')
-  const [ID_LIST, setID_LIST] = useState(ID_LIST_EX)
-  const [lecture, setLecture] = useState()
+  const [loading, setLoading] = useState(false);
+  const [subject, setSubject] = useState("");
+  const [pnumber, setPnumber] = useState();
+  const [pdate, setPdate] = useState();
+  const [copy, setCopy] = useState("");
+  const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
+  const [lecture, setLecture] = useState();
+  const [lectureName, setLectureName] = useState();
 
   const handleCopy = async () => {
-    if (copy === 'resultCopy') {
-      let clipBoard = ''
+    if (copy === "resultCopy") {
+      let clipBoard = "";
       for (let i = 0; i < ID_LIST.length; ++i) {
-        clipBoard += ID_LIST[i].result + '\n'
+        clipBoard += ID_LIST[i].result + "\n";
       }
       try {
-        await navigator.clipboard.writeText(clipBoard)
-        alert('클립보드에 복사 되었습니다!')
+        await navigator.clipboard.writeText(clipBoard);
+        alert("클립보드에 복사 되었습니다!");
       } catch {
-        alert('복사 실패!')
+        alert("복사 실패!");
       }
-    } else if (copy === 'allCopy') {
-      let clipBoard = ''
+    } else if (copy === "allCopy") {
+      let clipBoard = "";
       for (let i = 0; i < ID_LIST.length; ++i) {
-        clipBoard += ID_LIST[i].studentID + ' '
-        clipBoard += ID_LIST[i].userID + ' '
-        clipBoard += ID_LIST[i].result + '\n'
+        clipBoard += ID_LIST[i].studentID + " ";
+        clipBoard += ID_LIST[i].userID + " ";
+        clipBoard += ID_LIST[i].result + "\n";
       }
       try {
-        await navigator.clipboard.writeText(clipBoard)
-        alert('클립보드에 복사 되었습니다!')
+        await navigator.clipboard.writeText(clipBoard);
+        alert("클립보드에 복사 되었습니다!");
       } catch {
-        alert('복사 실패!')
+        alert("복사 실패!");
       }
     } else {
-      alert('복사 옵션을 선택하세요.')
+      alert("복사 옵션을 선택하세요.");
     }
-  }
+  };
 
   const onClickStart = async (props) => {
-    console.log('Notify: ', 'LoadingButton Clicked!')
+    console.log("Notify: ", "LoadingButton Clicked!");
     try {
-      setLoading(true)
+      setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
         ID_LIST: props.ID_LIST_EX,
         PID: props.pnumber,
         DeadLine: props.pdate,
-      }
+      };
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
-        method: 'POST', // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
+        method: "POST", // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(
           // 이 body에 해당하는 데이터를 서버가 받아서 처리합니다.
           sbody
         ),
-      }
+      };
       // 이 URL은 exprees의 서버이기 때문에 3000번이 되어서는 안됨 충돌가능성이 있음, 뒤 서브스트링으로 구별
-      await fetch('http://localhost:3001/assignments', requestOptions)
+      await fetch("http://localhost:3001/assignments", requestOptions)
         .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
 
-          console.log('Data: ', data)
-          setID_LIST(data)
+          console.log("Data: ", data);
+          setID_LIST(data);
           // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
-          setLoading(false)
-        })
+          setLoading(false);
+        });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const subjectAdd = async () => {
     try {
-      await fetch('http://localhost:3001/assignments')
+      await fetch("http://localhost:3001/assignments")
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
-          setLecture(data)
-        })
+          console.log(data);
+          setLecture(data);
+        });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
-    subjectAdd()
-  }, [copy])
+    subjectAdd();
+  }, [copy]);
 
   return (
     <div className="assign">
@@ -122,15 +122,15 @@ const Assignments = () => {
         <div
           className="p-head"
           style={{
-            backgroundColor: 'black',
-            color: 'white',
-            borderRadius: '5px 5px 0 0',
-            position: 'sticky',
-            top: '0px',
-            textAlign: 'center',
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: "5px 5px 0 0",
+            position: "sticky",
+            top: "0px",
+            textAlign: "center",
           }}
         >
-          <span>{subject}</span>
+          <span>{lectureName}</span>
           <span>학번</span>
           {/* <span>이름</span> */}
           <span>아이디</span>
@@ -140,7 +140,7 @@ const Assignments = () => {
         <div className="overScroll">
           {ID_LIST.map((data, index) => (
             <div key={index} id="ID_LIST" className="p-head">
-              <span>{subject}</span>
+              <span>{lectureName}</span>
               <span>{data.studentID}</span>
               <span>{data.userID}</span>
               <span>{String(data.result)}</span>
@@ -151,28 +151,29 @@ const Assignments = () => {
       </div>
 
       <div className="buttonList">
-        <h3 style={{ display: 'inline-block', margin: '0% 15% 10% 0%' }}>
+        <h3 style={{ display: "inline-block", margin: "0% 15% 10% 0%" }}>
           강의 선택
         </h3>
         <Link to="/proRegister">
           <button
             style={{
-              display: 'inline-block',
-              fontSize: '15px',
-              borderRadius: '0%',
-              border: '0',
-              padding: '6px 12px',
-              cursor: 'pointer',
+              display: "inline-block",
+              fontSize: "15px",
+              borderRadius: "0%",
+              border: "0",
+              padding: "6px 12px",
+              cursor: "pointer",
             }}
           >
             강의 등록하기
           </button>
         </Link>
-        <ToggleButtons
+        <MultipleSelect
           subject={subject}
           setSubject={setSubject}
           lecture={lecture}
-        ></ToggleButtons>
+          setLectureName={setLectureName}
+        ></MultipleSelect>
         {subject !== ""
           ? lecture.map((data, index) =>
               data.ID === subject ? (
@@ -213,13 +214,13 @@ const Assignments = () => {
           type="text"
           placeholder="문제번호"
           onChange={(e) => setPnumber(e.target.value)}
-          value={pnumber || ''}
+          value={pnumber || ""}
         ></input>
         <h3>제출기한</h3>
         <input
           type="date"
           onChange={(e) => setPdate(e.target.value)}
-          value={pdate || ''}
+          value={pdate || ""}
         ></input>
 
         <LoadingButton
@@ -235,7 +236,7 @@ const Assignments = () => {
           loading={loading}
           loadingIndicator="실행중..."
           variant="contained"
-          sx={{ width: '67%' }}
+          sx={{ width: "67%" }}
         >
           <p>
             <PlayArrowIcon fontSize="small" />
@@ -250,7 +251,7 @@ const Assignments = () => {
           size="small"
           color="inherit"
           onClick={() => {
-            handleCopy()
+            handleCopy();
           }}
           variant="contained"
         >
@@ -261,7 +262,7 @@ const Assignments = () => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Assignments
+export default Assignments;
