@@ -1,3 +1,47 @@
+.use {
+  width: 90%;
+  margin: 0% 5%;
+}
+.use .problem {
+  text-align: center;
+  width: 42%;
+  float: right;
+  /* border: 1px solid #000; */
+  height: 185vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  box-shadow: 3px 3px 3px gray;
+  border-radius: 0px 0px 5px 5px;
+}
+.use .pr-head {
+  margin-left: 3%;
+  width: 97%;
+  transition: background-color 1s;
+  font-size: 1.7vh;
+}
+.use .pr-head span {
+  display: inline-block;
+  width: 20%;
+}
+.pr-head:nth-child(odd){
+  background-color: #f0f0f0;
+}
+.use .pr-head span:nth-child(1) {
+  text-align: left;
+  width: 5%;
+  vertical-align: top;
+}
+.use .pr-head span:nth-child(2) {
+  text-align: left;
+  width: 15%;
+  padding: 1% 0;
+}
+.use .pr-head span:nth-child(3) {
+  width: 40%;
+  padding: 1% 0;
+  vertical-align: middle;
+}
 .Algo {
   width: 90%;
   height: 80vh;
