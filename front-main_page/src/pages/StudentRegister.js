@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 const StudentRegister = () => {
   const [studentId, setStudentId] = useState("");
   const [studentName, setStudentName] = useState("");
+  const [studentCode, setStudentCode] = useState("");
   const [bojId, setBojId] = useState("");
   const location = useLocation();
 
@@ -20,6 +21,7 @@ const StudentRegister = () => {
       const sbody = {
         sI: props.studentId,
         sN: props.studentName,
+        sC: props.studentCode,
         bI: props.bojId,
       };
       const requestOptions = {
@@ -120,6 +122,27 @@ const StudentRegister = () => {
           >
             <TextField
               variant="standard"
+              id="STUDENT_CODE"
+              placeholder="*STUDENT CODE"
+              sx={{
+                width: "90%",
+                px: 2.9,
+                py: 2,
+              }}
+              value={studentCode}
+              onChange={(e) => setStudentCode(e.target.value)}
+            />
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: "#F2F2F2",
+              borderRadius: 25,
+              textAlign: "center",
+              marginBottom: "5%",
+            }}
+          >
+            <TextField
+              variant="standard"
               id="BOJ_ID"
               placeholder="백준(Baekjoon) ID"
               sx={{
@@ -134,7 +157,9 @@ const StudentRegister = () => {
           <Link to="/assignments">
             <button
               className="submitButton"
-              onClick={() => onClickSubmit({ studentId, studentName, bojId })}
+              onClick={() =>
+                onClickSubmit({ studentId, studentName, studentCode, bojId })
+              }
             >
               등록
             </button>

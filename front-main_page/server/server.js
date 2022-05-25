@@ -266,12 +266,85 @@ app.post("/proRegister", (req, res) => {
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
 });
 
-app.post("/studentRegister", (req, res) => {
+app.get("/studentRegister", (req, res) => {
+  console.log("studentRegister/get ", "is called");
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  console.log(req);
+  // console.log(req);
   const b = req.body;
-  res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  console.log("body", b);
+  res.send(b);
+  // //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
+  // if (b.pC == "stuSK#") {
+  //   console.log("Student code is correct");
+  //   const sql =
+  //     "insert into Student (ID, name, bojid) values(" +
+  //     Number(b.sI) +
+  //     ", " +
+  //     "'" +
+  //     b.sN +
+  //     "', " +
+  //     "'" +
+  //     b.bI +
+  //     "');";
+  //   console.log(sql);
+  //   connection.query(sql, function (err, result, fields) {
+  //     // if문은 에러 출력을 위한 코드
+  //     if (err) {
+  //       res
+  //         .status(406)
+  //         .json({ message: "에러가 발생했습니다. 입력 내용을 확인해주세요" });
+  //     }
+  //   });
+
+    // result는 가져온 결과값
+    // console.log(result);
+    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  //   res.status(100).json({ message: "강의 등록이 완료되었습니다" });
+  // } else {
+  //   res.status(406).json({ message: "교수 승인코드가 틀렸습니다" });
+  // }
+});
+
+app.post("/studentRegister", (req, res) => {
+  console.log("studentRegister/post ", "is called");
+  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
+  const b = req.body;
+  console.log("body", b);
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
+  if (b.sC == 'stuSK#') {
+    console.log("Student code is correct");
+    const sql =
+      "insert into Student (ID, name, bojid) values(" +
+      Number(b.sI) +
+      ", " +
+      "'" +
+      b.sN +
+      "', " +
+      "'" +
+      b.bI +
+      "');";
+    console.log(sql);
+    connection.query(sql, function (err, result, fields) {
+      // if문은 에러 출력을 위한 코드
+      if (err) {
+        console.log("res","쿼리 실행이 실패했습니다");
+        res
+          .status(406)
+          .json({ message: "에러가 발생했습니다. 입력 내용을 확인해주세요" });
+      }
+    });
+
+    // result는 가져온 결과값
+    // console.log(result);
+    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+    // res.send(result);
+    console.log("res","학생 등록이 완료되었습니다");
+    res.status(100).json({ message: "학생 등록이 완료되었습니다" });
+  } else {
+    console.log("Student code isnt correct");
+    console.log("res","학생 승인코드가 틀렸습니다");
+    res.status(406).json({ message: "교수 승인코드가 틀렸습니다" });
+  }
 });
 
 app.get("/algorithm", (req, res) => {
