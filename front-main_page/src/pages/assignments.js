@@ -27,7 +27,8 @@ const Assignments = () => {
   const [pdate, setPdate] = useState();
   const [copy, setCopy] = useState("");
   const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
-  const [lecture, setLecture] = useState();
+  const [lecture, setLecture] = useState([]);
+  const [student, setStudent] = useState([]);
   const [lectureName, setLectureName] = useState();
 
   const handleCopy = async () => {
@@ -102,9 +103,10 @@ const Assignments = () => {
       await fetch("http://localhost:3001/assignments")
         .then((res) => res.json())
         .then((data) => {
-          console.log(data[0]);
-          console.log(data[1]);
+          console.log("Lec:", data[0]);
+          console.log("Stu:", data[1]);
           setLecture(data[0]);
+          setStudent(data[1]);
         });
     } catch (error) {
       console.error(error);
@@ -138,20 +140,21 @@ const Assignments = () => {
           <span>결과</span>
         </div>
         <div className="overScroll">
-          {ID_LIST.map((data, index) => (
-            <div key={data.userID}>
-              {data.userID === "neck392" ? (
-                <div id="ID_LIST" className="p-head">
-                  <span>{lectureName}</span>
-                  <span>{data.studentID}</span>
-                  <span>name</span>
-                  <span>{data.userID}</span>
-                  <span>{String(data.result)}</span>
-                  {/* <input type="text" value={data} id={"ID"+index} ></input> */}
-                </div>
-              ) : null}
-            </div>
-          ))}
+          {student &&
+            student.map((data, index) => (
+              <div key={data.ID}>
+                {subject === data.Lecture_ID ? (
+                  <div id="ID_LIST" className="p-head">
+                    <span>{lectureName}</span>
+                    <span>{data.ID}</span>
+                    <span>{data.name}</span>
+                    <span>{data.bojid}</span>
+                    <span>{String(data.result)}</span>
+                    {/* <input type="text" value={data} id={"ID"+index} ></input> */}
+                  </div>
+                ) : null}
+              </div>
+            ))}
         </div>
       </div>
 
