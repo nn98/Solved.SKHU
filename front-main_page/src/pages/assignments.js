@@ -102,8 +102,9 @@ const Assignments = () => {
       await fetch("http://localhost:3001/assignments")
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-          setLecture(data);
+          console.log(data[0]);
+          console.log(data[1]);
+          setLecture(data[0]);
         });
     } catch (error) {
       console.error(error);

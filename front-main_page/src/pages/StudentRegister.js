@@ -12,6 +12,7 @@ const StudentRegister = () => {
   const [studentCode, setStudentCode] = useState("");
   const [bojId, setBojId] = useState("");
   const location = useLocation();
+  const lecID=location.state[0].dataID;
 
   const [checked, setChecked] = React.useState(false);
 
@@ -23,6 +24,7 @@ const StudentRegister = () => {
         sN: props.studentName,
         sC: props.studentCode,
         bI: props.bojId,
+        lI: props.lecID,
       };
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
@@ -158,7 +160,7 @@ const StudentRegister = () => {
             <button
               className="submitButton"
               onClick={() =>
-                onClickSubmit({ studentId, studentName, studentCode, bojId })
+                onClickSubmit({ studentId, studentName, studentCode, bojId, lecID})
               }
             >
               등록
