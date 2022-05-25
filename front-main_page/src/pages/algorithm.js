@@ -94,7 +94,7 @@ const TopAlgorithm = async () => {
                     key={index2}
                     onClick={() => onClickReco()}
                   >
-                    <span style={{textAlign : "left"}}><img src={'https://static.solved.ac/tier_small/'+(data.SOLVED_RANK)+'.svg'} alt="profile" style= {{width : "1rem"}}/></span>
+                    <span><img src={'https://static.solved.ac/tier_small/'+(data.SOLVED_RANK)+'.svg'} alt="profile" style= {{width : "1rem"}}/></span>
                     <span>{data.ID}</span>
                     <span>{data.namekr}</span>
                     <span>{data.rate}</span>
