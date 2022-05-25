@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./algorithm.css";
 import Grow from "@mui/material/Grow";
-
+import userJ from "./users.json";
 const Algorithm = () => {
-  const [json, setjson] = useState();
+  const [json, setjson] = useState(userJ);
   const [name, setName] = useState();
 
   const [opens, setOpens] = useState([
@@ -18,7 +18,7 @@ const Algorithm = () => {
 
   const algorithmAdd = async () => {
     try {
-      await fetch("http://localhost:3001/algorithm")
+      await fetch("http://localhost:3001/")
         .then((res) => res.json())
         .then((data) => {
           // console.log(data)
@@ -42,7 +42,7 @@ const Algorithm = () => {
   };
 
   useEffect(() => {
-    algorithmAdd();
+    // algorithmAdd();
   }, []);
 
   return (
