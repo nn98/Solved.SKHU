@@ -101,8 +101,9 @@ const TopAlgorithm = async () => {
                       target="_blank"
                       rel="noopener noreferrer">
                     <span style={{float : 'left'}}><img src={'https://static.solved.ac/tier_small/'+(data.SOLVED_RANK)+'.svg'} alt="profile" style= {{width : "1.3rem"}}/></span>
-                    <span>{data.ID} {data.namekr}</span>
-                    {/* <span>{data.namekr}</span> */}
+                    {/* <span>{data.ID} {data.namekr}</span> */}
+                    <span>{data.ID}</span>
+                    <span>{data.namekr}</span>
                     {/* <span>{data.rate}</span> */}
                     {/* <span>{data.sum}</span> */}
                      </a>
