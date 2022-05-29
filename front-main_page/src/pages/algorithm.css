@@ -14,6 +14,13 @@
   box-shadow: 3px 3px 3px gray;
   border-radius: 0px 0px 5px 5px;
 }
+button span{
+  display: table-cell;
+  padding-left: 10px;
+  text-align: left;
+  vertical-align: middle;
+  /* background-color: red; */
+}
 .use .pr-head {
   margin-left: 3%;
   width: 97%;

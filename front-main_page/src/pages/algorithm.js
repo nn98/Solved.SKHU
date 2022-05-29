@@ -12,7 +12,7 @@ const Algorithm = () => {
     },{
       name:"가장 적게 푼 문제"
     },{
-      name:" 성공륭 상위 10"
+      name:" 성공률 상위 10"
     },{
       name:"성공률 하위 10"
     }
@@ -88,18 +88,24 @@ const TopAlgorithm = async () => {
               style={{ display: opens[index] === false ? 'none' : 'revert' }}
             >
               {recommend[index] && recommend[index].map((data, index2) =>
-                index2 < 10 ? (
+                index2 < 7 ? (
                   <button
                     className="recoAlgo"
                     key={index2}
                     onClick={() => onClickReco()}
                   >
-                    <span><img src={'https://static.solved.ac/tier_small/'+(data.SOLVED_RANK)+'.svg'} alt="profile" style= {{width : "1rem"}}/></span>
-                    <span>{data.ID}</span>
-                    <span>{data.namekr}</span>
-                    <span>{data.rate}</span>
-                    <span>{data.sum}</span>
-                     {/* {data.ID} {data.namekr} {data.rate}  */}
+                    <a
+                      key={data.ID} 
+                      href={'https://www.acmicpc.net/problem/'+data.ID}
+                      style={{ textDecorationLine: 'none', color: '#000' }}
+                      target="_blank"
+                      rel="noopener noreferrer">
+                    <span style={{float : 'left'}}><img src={'https://static.solved.ac/tier_small/'+(data.SOLVED_RANK)+'.svg'} alt="profile" style= {{width : "1.3rem"}}/></span>
+                    <span>{data.ID} {data.namekr}</span>
+                    {/* <span>{data.namekr}</span> */}
+                    {/* <span>{data.rate}</span> */}
+                    {/* <span>{data.sum}</span> */}
+                     </a>
                   </button>
                 ) : null
               )}
@@ -111,5 +117,4 @@ const TopAlgorithm = async () => {
   )
   
 }
-
 export default Algorithm
