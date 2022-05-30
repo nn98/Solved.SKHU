@@ -30,6 +30,7 @@ const Assignments = () => {
   const [lecture, setLecture] = useState([]);
   const [student, setStudent] = useState([]);
   const [lectureName, setLectureName] = useState();
+  const [flag, setFlag] = useState(false);
 
   const handleCopy = async () => {
     if (copy === "resultCopy") {
@@ -134,7 +135,7 @@ const Assignments = () => {
             top: "0px",
             textAlign: "center",
           }}
-         >
+        >
           <span>{lectureName}</span>
           <span>학번</span>
           <span>이름</span>
@@ -142,16 +143,20 @@ const Assignments = () => {
           <span>결과</span>
         </div>
         <div className="overScroll">
-          {student &&
+          {subject &&
             student.map((data, index) => (
-              <div key={data.ID}>
+              <div key={data.ID} className="p-head">
                 {subject === data.Lecture_ID ? (
-                  <div id="ID_LIST" className="p-head">
+                  <div id="ID_LIST">
                     <span>{lectureName}</span>
                     <span>{data.ID}</span>
                     <span>{data.name}</span>
                     <span>{data.bojid}</span>
-                    <span>{String(data.result)}</span>
+                    <span>
+                      {String(data.result) !== "undefined"
+                        ? String(data.result)
+                        : ""}
+                    </span>
                     {/* <input type="text" value={data} id={"ID"+index} ></input> */}
                   </div>
                 ) : null}

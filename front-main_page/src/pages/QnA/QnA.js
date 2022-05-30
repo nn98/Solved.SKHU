@@ -3,13 +3,16 @@ import './qna.css'
 import usersJ from '../users.json'
 import CommentContent from './commentcontent'
 import Create from './create'
-import Delete from './delete'
 import CommentAdd from './commentAdd'
 import InnerComment from './innerComment'
 
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
+
 const QnA = () => {
   // 문제 번호
-  const [problem, setProblem] = useState('1000')
+  const [problem, setProblem] = useState('')
+  const [problems, setProblems] = useState([])
 
   // 댓글 보관함
   const [comments, setComments] = useState([])
@@ -27,8 +30,21 @@ const QnA = () => {
     }
   }
 
+  const problemAdd = async () => {
+    try {
+      const res = await fetch('http://localhost:3001/QnAProblem').then((res) =>
+        res.json()
+      )
+      setProblems(res)
+    } catch (error) {
+      alert('실패하였습니다.')
+      console.error(error)
+    }
+  }
+
   // 댓글보관함이 수정 될 때 마다 리로딩
   useEffect(() => {
+    problemAdd()
     qnaFind()
   }, [])
 
@@ -36,6 +52,9 @@ const QnA = () => {
   const commentAdd = async (props) => {
     try {
       // 먼저 댓글 받은 유저의 정보와 쓴 댓글 내용을 body에 저장
+      if (problem === '' || problem === 'null') {
+        return alert('문제 선택')
+      }
       const body = {
         content: props.commentAddContent,
         userIP: '155',
@@ -43,6 +62,8 @@ const QnA = () => {
         problem: problem,
         password: props.commentAddPassword,
       }
+      console.log(body)
+
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
         method: 'POST', // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
@@ -102,16 +123,22 @@ const QnA = () => {
 
   return (
     <div className="comments">
+      <h1>성공회대학교 QnA</h1>
       {/* 회원가입 부분 */}
-      <Create />
 
-      <select onChange={(e) => setProblem(e.target.value)}>
-        {usersJ.user_problems.map((p, index) => (
-          <option key={index} value={p}>
-            {p}
-          </option>
-        ))}
-      </select>
+      <Create />
+      <Autocomplete
+        onChange={(event, newValue) => {
+          setProblem(String(newValue))
+        }}
+        sx={{ width: '50%' }}
+        freeSolo
+        options={
+          problems && problems.map((option) => String(option.PROBLEM_ID))
+        }
+        renderInput={(params) => <TextField {...params} label="문제 번호" />}
+      />
+
       <hr />
 
       {/* 댓글 추가 부분 */}
@@ -119,15 +146,10 @@ const QnA = () => {
 
       {/* 댓글 내용 출력 부분 */}
       {comments.map((comment, index) =>
-        comment.problem === problem ? (
+        problem === '' || problem === 'null' || comment.problem === problem ? (
           <div key={index} className="comments_print">
             <CommentContent comment={comment} commentDelete={commentDelete} />
             {/* 삭제 버튼 */}
-            {/* <Delete
-              // commentDelete 함수를 delete 컴포넌트에 전송
-              commentId={comment.ID}
-              commentDelete={commentDelete}
-            /> */}
 
             <InnerComment commentId={comment.ID} />
           </div>

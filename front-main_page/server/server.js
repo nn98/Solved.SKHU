@@ -48,10 +48,20 @@ app.post("/QnAUser", (req, res) => {
 
 // Qna 값 출력
 app.get("/QnA", (req, res) => {
-  const sql = "SELECT * FROM Qna";
+  const sql = "SELECT * FROM Qna  ORDER BY createdat DESC";
+
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log("QnA 출력");
+    res.send(result);
+  });
+});
+
+app.get("/QnAProblem", (req, res) => {
+  const sql = "select distinct PROBLEM_ID from Solve;";
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err;
+    console.log("QnA문제 출력");
     res.send(result);
   });
 });
@@ -199,6 +209,67 @@ app.get("/ranking", (req, res) => {
     if (err) throw err;
     // result는 가져온 결과값
     // console.log(result)
+    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+
+    res.send(result);
+  });
+});
+// 알고리즘(많이 푼 문제 10개)
+app.get("/MaxAlgorithm", (req, res) => {
+  // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  const sql =
+    "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) desc limit 0,10;";
+  connection.query(sql, function (err, result, fields) {
+    // if문은 에러 출력을 위한 코드
+    if (err) throw err;
+    // result는 가져온 결과값
+    console.log(result);
+    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+
+    res.send(result);
+  });
+});
+
+// 알고리즘(적게 푼 문제 10개)
+app.get("/MinAlgorithm", (req, res) => {
+  // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  const sql =
+    "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) asc limit 0,10;";
+  connection.query(sql, function (err, result, fields) {
+    // if문은 에러 출력을 위한 코드
+    if (err) throw err;
+    // result는 가져온 결과값
+    console.log(result);
+    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+
+    res.send(result);
+  });
+});
+
+// 알고리즘(성공률 상위 10개)
+app.get("/BestAlgorithm", (req, res) => {
+  const sql =
+    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) desc limit 0,10; "; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  connection.query(sql, function (err, result, fields) {
+    // if문은 에러 출력을 위한 코드
+    if (err) throw err;
+    // result는 가져온 결과값
+    console.log(result);
+    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+
+    res.send(result);
+  });
+});
+
+// 알고리즘(성공률 하위 10개)
+app.get("/WorstAlgorithm", (req, res) => {
+  const sql =
+    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) limit 0,10; "; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  connection.query(sql, function (err, result, fields) {
+    // if문은 에러 출력을 위한 코드
+    if (err) throw err;
+    // result는 가져온 결과값
+    console.log(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
 
     res.send(result);
@@ -363,17 +434,17 @@ app.post("/studentRegister", (req, res) => {
   }
 });
 
-app.get("/algorithm", (req, res) => {
-  const sql = "select * from User"; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
-  connection.query(sql, function (err, result, fields) {
-    // if문은 에러 출력을 위한 코드
-    if (err) throw err;
-    // result는 가져온 결과값
-    console.log(result);
-    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-    res.send(result);
-  });
-});
+// app.get("/algorithm", (req, res) => {
+//   const sql = "select * from User"; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+//   connection.query(sql, function (err, result, fields) {
+//     // if문은 에러 출력을 위한 코드
+//     if (err) throw err;
+//     // result는 가져온 결과값
+//     console.log(result);
+//     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+//     res.send(result);
+//   });
+// });
 
 app.get("/assignments", (req, res) => {
   console.log("Assignments/get ", "is called");
