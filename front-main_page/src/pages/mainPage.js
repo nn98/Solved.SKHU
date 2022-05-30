@@ -2,11 +2,23 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
   const [userId, setUserId] = useState("");
+  const navigate = useNavigate();
 
+  const add = async () => {
+    try {
+      await fetch("https://solved.ac/api/v3/user/show?handle=" + userId)
+        .then((res) => res.json())
+        .then((data) => {
+          navigate("/userPage", { state: { userId } });
+        });
+    } catch (error) {
+      alert("입력하신 ID는 Solve.ac에 등록되지 않았습니다.");
+    }
+  };
   return (
     <div className="mainPage">
       {/* box 안에 있는 textfield를 사용하여 box로 겉이 둥근 모양의 상자를 만들고
@@ -34,9 +46,9 @@ const MainPage = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <Link to="/userPage" state={{ userId }}>
-                  <SearchIcon />
-                </Link>
+                {/* <Link to="/userPage" state={{ userId }}> */}
+                <SearchIcon onClick={add} />
+                {/* </Link> */}
               </InputAdornment>
             ),
           }}

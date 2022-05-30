@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from 'react'
 // import rankJ from './rank.json'
 import "./rank.css";
+import { Link } from "react-router-dom";
 
-const Rank = () => {
-  const [ratingProblems, setRatingProblems] = useState([]);
-  const ratingAdd = async () => {
-    try {
-      await fetch("http://localhost:3001/ranking")
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data)
-          setRatingProblems(data);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => ratingAdd(), []);
+const Rank = (props) => {
   return (
     <div className="rank">
       <h1>성공회대학교 랭킹</h1>
-      {/* <div style={{ display: "inline", marginLeft: "80.9%" }}>
-        <h3 style={{ display: "inline-block" }}>명단에 없을 경우 : </h3>
+      <div style={{ display: "inline", float: "right" }}>
+        <h3 style={{ display: "inline-block", paddingRight: "10px" }}>
+          명단에 없을 경우 :{" "}
+        </h3>
         <Link to="/register">
           <button
             style={{
@@ -31,14 +19,13 @@ const Rank = () => {
               borderRadius: "0%",
               border: "0",
               padding: "6px 12px",
-              marginLeft: "1%",
               cursor: "pointer",
             }}
           >
             등록하기
           </button>
         </Link>
-      </div> */}
+      </div>
       <div className="rankTable">
         <table>
           <thead>
@@ -53,7 +40,7 @@ const Rank = () => {
             </tr>
           </thead>
           <tbody>
-            {ratingProblems.map((user, index) => (
+            {props.ranking.map((user, index) => (
               <tr key={index}>
                 <td>{user.worldrank}</td>
                 <td>{user.skhurank}</td>
@@ -69,7 +56,7 @@ const Rank = () => {
                   />{" "}
                   <strong>
                     <a
-                      href={"https://solved.ac/profile/" + user.User_ID}
+                      href={"https://solved.ac/profile/" + user.ID}
                       target="_blank"
                       rel="noreferrer"
                     >

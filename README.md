@@ -133,6 +133,7 @@
   |--|--|--|--|
   |테스트|MySql DB와 Node.js Server 연동.<br>서버에서 실행한 쿼리 결과를 json으로 파싱|2020-03-24|`A`|
   |구현|QnA페이지 간의 삭제, 등록, 답변 기능 구현|2022-05-10|`L`|
+  |구현|User페이지 유저가 푼 문제<br>Solved API 활용 값 삽입|2022-05-24|`A`|
   
   ## Errors-#7
   |문제점|해결방식|날짜|Dev|
@@ -246,6 +247,7 @@
   |textarea태그의 placeholder에만 값 설정하기|사용자 입력 값과 다르게 힌트에만 css서식을 적용하고자 함<br>css시트에서 ::placeholder로 콜론(:)2개 선택자를 사용하면 됨|2022-04-19|`S`|
   |설명서를 보기좋게 추가하고 싶음|react mui인 mediacard를 import하고<br>드롭 다운 아이콘을 추가해 설명서가 나오도록 구현|2022-05-09|`S`|
   |클립보드에 복사하는 기능을 알지 못함|navigator.clipboard.writeText() 함수에 복사할 텍스트를 매개변수로 보내<br>비동기(async) 함수 내에서 호출한다.|2022-05-19|`S`|
+  |algorithm 페이지를 갔다 오면 MUI Button 태그에 문제 발생|algorithm 페이지에 MUI Button을 일반 html button으로 변경|2022-05-24|`S`|
   
   </details>
 
@@ -297,6 +299,7 @@
   |403 response 발생|Header에 User-agent 설정.<br>다만 예시 코드가 'cheerio-httpcli'뿐이라 불완전 해결|2022-05-09|`N`|
   |Async 불일치 발생|채점을 위해 반복문 실행 시<br>비동기 실행으로 인해 불일치.<br>async/then 콜백함수 사용해 해결|2022-05-09|`N`|
   |프론트 연동시 동기화|프론트 리액트 페이지와 연동 및 데이터 전송 시<br>비동기 실행으로 인해 결과값 리턴 불가<br>[npm wait-notify](https://www.npmjs.com/package/wait-notify)활용해 해결|2022-05-19|`N`|
+  |query result 여러개 전달 불가|[다중 쿼리](https://intrepidgeeks.com/tutorial/nodejs-mysql-runs-multiple-sql-statements)|2020-05-25|`N`|
   
   </details>
   

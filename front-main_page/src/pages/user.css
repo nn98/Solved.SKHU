@@ -11,6 +11,7 @@
   padding: 1%;
   border-radius: 1%;
   box-shadow: 3px 3px 3px gray;
+  font-size: 2.2vh;
 }
 
 .use .tearTable .teardata {
@@ -53,11 +54,12 @@
   text-align: center;
   box-shadow: 3px 3px 3px gray;
   margin-bottom: 3%;
+  font-size: 2.2vh;
 }
 
 .use .problem {
   text-align: center;
-  width: 40%;
+  width: 42%;
   float: right;
   /* border: 1px solid #000; */
   height: 185vh;
@@ -70,6 +72,42 @@
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.use .pr-head {
+  margin-left: 3%;
+  width: 97%;
+  transition: background-color 1s;
+  font-size: 1.7vh;
+}
+.use .pr-head span {
+  display: inline-block;
+  width: 20%;
+}
+.pr-head:nth-child(odd){
+  background-color: #f0f0f0;
+}
+.use .pr-head span:nth-child(1) {
+  text-align: left;
+  width: 5%;
+  vertical-align: top;
+}
+.use .pr-head span:nth-child(2) {
+  text-align: left;
+  width: 15%;
+  padding: 1% 0;
+}
+.use .pr-head span:nth-child(3) {
+  width: 40%;
+  padding: 1% 0;
+  vertical-align: middle;
+}
+#user-color {
+  color : #555;
+}
+#pro-color {
+  color : #555;
+  font-weight: bold;
 }
 .use .p-head {
   margin-left: 3%;
@@ -89,9 +127,12 @@
 .p-head:nth-child(odd) {
   background-color: #f0f0f0;
 }
-
 .tagTable .p-head:nth-child(even) {
   background-color: #ffffff;
+}
+.tagTable .p-head span:nth-child(1) {
+  text-align: center;
+  width: 40%;
 }
 
 .tagTable .p-head:hover {
@@ -105,11 +146,10 @@
   -ms-overflow-style: none;
 }
 
-.use .p-head span:nth-child(2) {
+.use .p-head span:nth-child(2){
   width: 40%;
 }
-
-.user h1 {
+.user .head {
   margin-left: 5%;
 }
 
@@ -120,12 +160,19 @@
 }
 
 .use .BigTears {
+  width: 33%;
   border: 0px;
-  text-align: left;
-  padding: 2% 2% 2% 0%;
+  display: inline-block;
+  text-align: right;
+  /* padding: 2% 0% 2% 0%; */
   margin-bottom: 5%;
+}
+.use .tearTable .teardata .BigTears:nth-child(1) {
+  text-align: left;
+  padding-left: 1%;
 }
 
 .use .teardata .BigTears:hover {
   cursor: pointer;
 }
+

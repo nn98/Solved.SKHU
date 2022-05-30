@@ -1,20 +1,12 @@
 import React, { useState } from 'react'
 
-import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import Slide from '@mui/material/Slide'
 
-const userCreateStyle = {
-  position: 'absolute',
-  top: '30%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-}
-
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />
+})
 const Create = (e) => {
   // 회원가입 열고 닫기 창
   const [open, setOpen] = useState(false)
@@ -49,6 +41,7 @@ const Create = (e) => {
             if (data.error === 1062) alert('이미 있는 사용자입니다.')
           } else {
             alert(data.data)
+            userHandleOpen()
           }
         })
     } catch (error) {
@@ -63,8 +56,13 @@ const Create = (e) => {
       <button className="comment_button" onClick={userHandleOpen}>
         회원가입
       </button>
-      <Modal open={open} onClose={userHandleOpen}>
-        <Box sx={userCreateStyle}>
+      <Dialog
+        open={open}
+        onClose={userHandleOpen}
+        TransitionComponent={Transition}
+        keepMounted
+      >
+        <DialogContent>
           <input
             onChange={(e) => setCreateUserName(e.target.value)}
             placeholder="Name"
@@ -91,8 +89,8 @@ const Create = (e) => {
           >
             Signup
           </button>
-        </Box>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

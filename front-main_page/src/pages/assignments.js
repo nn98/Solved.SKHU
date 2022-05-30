@@ -4,32 +4,38 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import MediaCard from "./MediaCard";
-import ToggleButtons from "./ToggleButtons";
-import usersJ from "./users.json";
+import MediaCard from "./MUI/MediaCard";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
-import CopyRadioButtonsGroup from "./CopyRadioButtonsGroup";
+import CopyRadioButtonsGroup from "./MUI/CopyRadioButtonsGroup";
+import MultipleSelect from "./MUI/MultipleSelect";
 
 const ID_LIST_EX = [
-  "neck392", "kshyun419", "asas6614", "djwls0843", "kwj9294",
+  { studentID: "201732024", name: "", userID: "neck392", result: "" },
+  { studentID: "201732029", name: "", userID: "kshyun419", result: "" },
+  { studentID: "201732025", name: "", userID: "asas6614", result: "" },
+  { studentID: "201732014", name: "", userID: "djwls0843", result: "" },
+  { studentID: "201732012", name: "", userID: "kwj9294", result: "" },
   // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
   // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
   // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
 ];
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
-  const [studentList, setStudentList] = useState(usersJ);
   const [subject, setSubject] = useState("");
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
   const [copy, setCopy] = useState("");
+  const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
+  const [lecture, setLecture] = useState();
+  const [student, setStudent] = useState();
+  const [lectureName, setLectureName] = useState();
 
   const handleCopy = async () => {
     if (copy === "resultCopy") {
       let clipBoard = "";
-      for (let i = 0; i < studentList.solved_tag.length; ++i) {
-        clipBoard += studentList.solved_tag[i].EXP + "\n";
+      for (let i = 0; i < ID_LIST.length; ++i) {
+        clipBoard += ID_LIST[i].result + "\n";
       }
       try {
         await navigator.clipboard.writeText(clipBoard);
@@ -39,10 +45,10 @@ const Assignments = () => {
       }
     } else if (copy === "allCopy") {
       let clipBoard = "";
-      for (let i = 0; i < studentList.solved_tag.length; ++i) {
-        clipBoard += studentList.solved_tag[i].name + " ";
-        clipBoard += studentList.solved_tag[i].problem + " ";
-        clipBoard += studentList.solved_tag[i].EXP + "\n";
+      for (let i = 0; i < ID_LIST.length; ++i) {
+        clipBoard += ID_LIST[i].studentID + " ";
+        clipBoard += ID_LIST[i].userID + " ";
+        clipBoard += ID_LIST[i].result + "\n";
       }
       try {
         await navigator.clipboard.writeText(clipBoard);
@@ -56,12 +62,12 @@ const Assignments = () => {
   };
 
   const onClickStart = async (props) => {
-    console.log("Notify: ","LoadingButton Clicked!");
+    console.log("Notify: ", "LoadingButton Clicked!");
     try {
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
-        ID_LIST: props.ID_LIST,
+        ID_LIST: props.ID_LIST_EX,
         PID: props.pnumber,
         DeadLine: props.pdate,
       };
@@ -81,16 +87,37 @@ const Assignments = () => {
         .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
-          await console.log("Data: ",data);
-          await setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
-          await setLoading(false);
+
+          console.log("Data: ", data);
+          setID_LIST(data);
+          // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
+          setLoading(false);
         });
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {}, [copy]);
+  const subjectAdd = async () => {
+    try {
+      await fetch("http://localhost:3001/assignments")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Lec:", data[0]);
+          console.log("Stu:", data[1]);
+          setLecture(data[0]);
+          setStudent(data[1]);
+          console.log("setLec:", lecture);
+          console.log("setStu:", student);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    subjectAdd();
+  }, [copy]);
 
   return (
     <div className="assign">
@@ -107,35 +134,16 @@ const Assignments = () => {
             top: "0px",
             textAlign: "center",
           }}
-        >
-          <span>{subject}</span>
-          {/* <span>학번</span> */}
-          {/* <span>이름</span> */}
+         >
+          <span>{lectureName}</span>
+          <span>학번</span>
+          <span>이름</span>
           <span>아이디</span>
           <span>결과</span>
-          {/* <span>제출시간</span> */}
         </div>
-        <div className="overScroll">
-          {studentList.solved_tag.map((tags, index) => (
-            <div key={index} className="p-head">
-              <span>{subject}</span>
-              <span>{tags.name}</span>
-              <span>{tags.problem}</span>
-              <span>{tags.EXP}</span>
-            </div>
-          ))}
-        </div>
-/*
-        <div className="overScroll">
-          {ID_LIST_EX.map((data,index) => (
-            <div id="ID_LIST">
-              {data}<br/>
-              {/* <input type="text" value={data} id={"ID"+index} ></input> */}
-            </div>
-          ))}
-        </div>
+        
       </div>
-*/
+
       <div className="buttonList">
         <h3 style={{ display: "inline-block", margin: "0% 15% 10% 0%" }}>
           강의 선택
@@ -154,35 +162,55 @@ const Assignments = () => {
             강의 등록하기
           </button>
         </Link>
-        <ToggleButtons
+        <MultipleSelect
           subject={subject}
           setSubject={setSubject}
-        ></ToggleButtons>
-        {subject !== "" ? (
-          <Paper
-            className="subPaper"
-            sx={{ display: "inline-block", width: "83%", marginBottom: "5%" }}
-          >
-            <h3>과목코드 : VI00001</h3>
-            <h3>교수 : 홍은지</h3>
-            <h3>분반 : 01</h3>
-            <Link to="/studentRegister">
-              <button
-                style={{
-                  display: "inline-block",
-                  fontSize: "15px",
-                  borderRadius: "0%",
-                  border: "0px",
-                  padding: "6px 12px",
-                  margin: "0% 0% 3% 3%",
-                  cursor: "pointer",
-                }}
-              >
-                학생 등록하기
-              </button>
-            </Link>
-          </Paper>
-        ) : null}
+          lecture={lecture}
+          setLectureName={setLectureName}
+        ></MultipleSelect>
+        {subject !== ""
+          ? lecture.map((data, index) => (
+              <div key={data.ID}>
+                {data.ID === subject ? (
+                  <Paper
+                    className="subPaper"
+                    key={data.ID}
+                    sx={{
+                      display: "inline-block",
+                      width: "83%",
+                      marginBottom: "5%",
+                    }}
+                  >
+                    <h3>과목코드 : {data.code}</h3>
+                    <h3>교수명: {data.professor}</h3>
+                    <h3>강의명 : {data.name}</h3>
+                    <h3>분반 : {data.distribution}</h3>
+                    <Link
+                      to="/studentRegister"
+                      state={[
+                        { dataID: data.ID },
+                        { lectureName: lectureName },
+                      ]}
+                    >
+                      <button
+                        style={{
+                          display: "inline-block",
+                          fontSize: "15px",
+                          borderRadius: "0%",
+                          border: "0px",
+                          padding: "6px 12px",
+                          margin: "0% 0% 3% 3%",
+                          cursor: "pointer",
+                        }}
+                      >
+                        학생 등록하기
+                      </button>
+                    </Link>
+                  </Paper>
+                ) : null}
+              </div>
+            ))
+          : null}
         <h3>문제번호</h3>
         <input
           type="text"
@@ -202,7 +230,7 @@ const Assignments = () => {
           color="inherit"
           onClick={() =>
             onClickStart({
-              ID_LIST,
+              ID_LIST_EX,
               pnumber,
               pdate,
             })
