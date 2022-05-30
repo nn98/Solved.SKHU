@@ -27,8 +27,8 @@ const Assignments = () => {
   const [pdate, setPdate] = useState();
   const [copy, setCopy] = useState("");
   const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
-  const [lecture, setLecture] = useState();
-  const [student, setStudent] = useState();
+  const [lecture, setLecture] = useState([]);
+  const [student, setStudent] = useState([]);
   const [lectureName, setLectureName] = useState();
 
   const handleCopy = async () => {
@@ -141,7 +141,23 @@ const Assignments = () => {
           <span>아이디</span>
           <span>결과</span>
         </div>
-        
+        <div className="overScroll">
+          {student &&
+            student.map((data, index) => (
+              <div key={data.ID}>
+                {subject === data.Lecture_ID ? (
+                  <div id="ID_LIST" className="p-head">
+                    <span>{lectureName}</span>
+                    <span>{data.ID}</span>
+                    <span>{data.name}</span>
+                    <span>{data.bojid}</span>
+                    <span>{String(data.result)}</span>
+                    {/* <input type="text" value={data} id={"ID"+index} ></input> */}
+                  </div>
+                ) : null}
+              </div>
+            ))}
+        </div>
       </div>
 
       <div className="buttonList">
