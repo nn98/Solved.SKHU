@@ -28,6 +28,7 @@ const Assignments = () => {
   const [copy, setCopy] = useState("");
   const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
   const [lecture, setLecture] = useState();
+  const [student, setStudent] = useState();
   const [lectureName, setLectureName] = useState();
 
   const handleCopy = async () => {
@@ -102,9 +103,12 @@ const Assignments = () => {
       await fetch("http://localhost:3001/assignments")
         .then((res) => res.json())
         .then((data) => {
-          console.log(data[0]);
-          console.log(data[1]);
+          console.log("Lec:", data[0]);
+          console.log("Stu:", data[1]);
           setLecture(data[0]);
+          setStudent(data[1]);
+          console.log("setLec:", lecture);
+          console.log("setStu:", student);
         });
     } catch (error) {
       console.error(error);
@@ -130,29 +134,14 @@ const Assignments = () => {
             top: "0px",
             textAlign: "center",
           }}
-        >
+         >
           <span>{lectureName}</span>
           <span>학번</span>
           <span>이름</span>
           <span>아이디</span>
           <span>결과</span>
         </div>
-        <div className="overScroll">
-          {ID_LIST.map((data, index) => (
-            <div key={data.userID}>
-              {data.userID === "neck392" ? (
-                <div id="ID_LIST" className="p-head">
-                  <span>{lectureName}</span>
-                  <span>{data.studentID}</span>
-                  <span>name</span>
-                  <span>{data.userID}</span>
-                  <span>{String(data.result)}</span>
-                  {/* <input type="text" value={data} id={"ID"+index} ></input> */}
-                </div>
-              ) : null}
-            </div>
-          ))}
-        </div>
+        
       </div>
 
       <div className="buttonList">
