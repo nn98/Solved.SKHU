@@ -39,10 +39,12 @@ public class SolvedRank {
 			// database 선택
 			st.executeUpdate("use SWP;");
 		Document doc = Jsoup.connect("https://solved.ac/ranking/o/309").get();
-		Elements rank = doc.select("div[class=\"StickyTable__Cell-sc-45ty5n-1 bqklaG sticky-table-cell\"]");
-		Elements tier = doc.select("img[class=\"TierBadge__TierBadgeStyle-sc-hiokan-0 puOTB\"]");
+		Elements rank = doc.select("div.css-qijqp5 td");
+		Elements tier = doc.select("div.css-qijqp5 td img");
 		String[][] str = new String[rank.size()/6][7];
 		int k = 6;
+		//tier 2씩 증가 계산
+		int t = 0;
 		// str.length / str[0].length 대신에 rank.size()/6 / 7로 해도 무관
 		for(int i = 0;i<str.length;i++) {
 			if(k>= rank.size()) break;
@@ -57,10 +59,11 @@ public class SolvedRank {
 				}
 			}
 			// 티어 삽입(svg 파일로 되어 있어서 혼자 다른 값을 참조하여 가져옴)
-			ti = tier.get(i).attr("src").replaceAll("[^0-9]*", "");
+			// ID / problems / solvedrank / worldrank / skhurank / tier / rating / class / pro / correction
+			ti = tier.get(t).attr("src").replaceAll("[^0-9]*", "");
 			sql = "insert into Ranking(User_ID,worldrank,skhurank, tier, rating, class, pro ) values (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pst = con.prepareStatement(sql);
-			// id / worldrank / skhurank / tier / rating / class / pro / correction
+//			// id / worldrank / skhurank / tier / rating / class / pro / correction
 			pst.setString(1, id);
 			pst.setString(2, worldrank);
 			pst.setInt(3, skhurank);
@@ -70,20 +73,21 @@ public class SolvedRank {
 			pst.setString(7, pro);
 			pst.execute();
 			pst.close();
+			t+=2;
 		}
-
+//
 		rs = st.executeQuery("select * from Ranking;");
-		// 현재 데이터베이스에 들어간 값 출력하기
-		// id / worldrank / skhurank / tier / rating / class / pro / correction
+//		// 현재 데이터베이스에 들어간 값 출력하기
+//		// id / worldrank / skhurank / tier / rating / class / pro / correction
 		while(rs.next()) {
 		String idx = rs.getString("User_ID");
 		String wr = rs.getString("worldrank");
 		int sr = rs.getInt("skhurank");
-		String t = rs.getString("tier");
+		String tie = rs.getString("tier");
 		int ra = rs.getInt("rating");
 		String c = rs.getString("class");
 		String pr = rs.getString("pro");
-		System.out.println(idx+" "+wr+" "+sr+" "+t+" "+ra+" "+c+" "+pr);
+		System.out.println(idx+" "+wr+" "+sr+" "+tie+" "+ra+" "+c+" "+pr);
 		}
 		}catch(Exception e) {
 			e.printStackTrace();

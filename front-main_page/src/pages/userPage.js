@@ -150,12 +150,14 @@ const UserPage = () => {
     <div className="user">
       <div className="head">
         <h1>
-          {location.state ? location.state.userId : 'q9922000'}
-          {/* <img
-            style={{ width: '1.5%' }}
+        <a href={'https://solved.ac/problems/level/'+user.tier}>
+        <img
+            style={{ width: '1.4rem', padding:'0 10px 0 0'}}
             src={'https://static.solved.ac/tier_small/' + user.tier + '.svg'}
             alt="profile"
-          /> */}
+          />
+          </a>
+          {location.state ? location.state.userId : 'q9922000'}
         </h1>
         <h3>{user.solvedCount}문제 해결</h3>
       </div>
