@@ -1,7 +1,13 @@
 .comments {
-  width: 80%;
+  width: 60%;
   text-align: center;
   margin: auto;
+}
+
+.comments_create {
+  float: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .comments_input {
@@ -12,11 +18,37 @@
   height: auto;
 }
 
+.comments_input_name {
+  border: none;
+  border: 1px solid #f5f6f8;
+  text-align: left;
+  height: auto;
+  padding: 0.7rem 0.5rem 0.3rem 0.5rem;
+  border-radius: 5px;
+  margin: 0 0.5rem 0.5rem 0;
+}
+.comments_input_name:focus {
+  outline: none;
+  border-bottom: 1px solid #bdbdbd;
+}
+.comments_input_password {
+  border: none;
+  border: 1px solid #f5f6f8;
+  text-align: left;
+  height: auto;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 0 0.5rem 0.5rem 0;
+}
+.comments_input_password:focus {
+  outline: none;
+  border-bottom: 1px solid #bdbdbd;
+}
 .comment_input_area {
   resize: none;
   padding: 1rem 1rem 1.5rem;
   outline: none;
-  border: 1px solid #bdbdbd;
+  border: 1px solid #f5f6f8;
   margin-bottom: 1.5rem;
   width: 97%;
   border-radius: 4px;
@@ -25,6 +57,9 @@
   color: #212529;
   line-height: 1.75;
   background-color: #fff;
+}
+.comment_input_area:focus {
+  border: 1px solid #bdbdbd;
 }
 .comment_input_button {
   display: flex;
@@ -68,14 +103,13 @@
 }
 
 .comments_print_user {
-  font-size: large;
+  font-size: x-large;
   font-weight: bold;
-  float: inline;
+  margin-bottom: 1rem;
 }
 
 .comments_print_date {
-  font-size: smaller;
-  float: inline;
+  font-size: large;
   margin-right: 1%;
   color: #868e96;
 }
@@ -130,10 +164,10 @@
   cursor: pointer;
   outline: none;
   border: none;
-  background: #ff0364;
+  background: #fff;
   color: #ffffff;
   border-radius: 4px;
-  padding: 0.5% 0.8%;
+  padding: 0.8% 0.8%;
   /* height: 2rem; */
   font-size: 1%;
   /*  display: inline-block;
@@ -142,4 +176,55 @@
   margin-top: 2rem;
   margin: 0 0 0.5% 0;
   border-radius: 4px; */
+  /* vertical-align: text-top; */
+  float: right;
+  margin-top: 0.5rem;
+}
+.input_name {
+  display: block;
+  width: 20rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #212529;
+  padding: 1rem;
+  border: 1px solid #f5f6f8;
+  background-color: #fff;
+  outline: none;
+  margin-top: 1.5rem;
+}
+.input_name:focus {
+  border: 1px solid #bdbdbd;
+}
+.input_password {
+  display: block;
+  width: 20rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #212529;
+  border: 1px solid #f5f6f8;
+  padding: 1rem;
+  outline: none;
+  background-color: #fff;
+  margin-top: 1.5rem;
+}
+.input_password:focus {
+  border: 1px solid #bdbdbd;
+}
+.input_button {
+  /* width: 230px; */
+  margin-top: 1.5rem;
+  width: 22rem;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  background: #0adea1;
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 0px 1.25rem;
+  height: 2rem;
+  font-size: 1rem;
 }
