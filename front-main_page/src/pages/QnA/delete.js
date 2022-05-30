@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 
 import Logo from '../../image/logo.png'
 
-import DeleteIcon from '../../image/deleteIcon_2.png'
+import DeleteIcon2 from '../../image/deleteIcon_2.png'
 
-import ClearIcon from '@mui/icons-material/Clear'
+import DeleteIcon1 from '../../image/deleteIcon.png'
 
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
@@ -21,6 +21,8 @@ const Delete = (props) => {
 
   const [deleteButton, setDeleteButton] = useState(false)
 
+  const [deleteIcon, setDeleteIcon] = useState(false)
+
   const deletButtonClick = () => {
     setDeleteButton(!deleteButton)
   }
@@ -31,8 +33,14 @@ const Delete = (props) => {
         type="button"
         onClick={deletButtonClick}
         className="comment_delete_button"
+        onMouseOver={() => setDeleteIcon(true)}
+        onMouseOut={() => setDeleteIcon(false)}
       >
-        <img src={DeleteIcon} style={{ width: '0.5rem' }} alt="profile" />
+        <img
+          src={deleteIcon ? DeleteIcon1 : DeleteIcon2}
+          style={{ width: '0.5rem' }}
+          alt="profile"
+        />
       </button>
       <Dialog
         open={deleteButton}
