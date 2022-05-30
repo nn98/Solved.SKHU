@@ -107,6 +107,8 @@ const Assignments = () => {
           console.log("Stu:", data[1]);
           setLecture(data[0]);
           setStudent(data[1]);
+          console.log("setLec:", lecture);
+          console.log("setStu:", student);
         });
     } catch (error) {
       console.error(error);
@@ -132,7 +134,7 @@ const Assignments = () => {
             top: "0px",
             textAlign: "center",
           }}
-        >
+         >
           <span>{lectureName}</span>
           <span>학번</span>
           <span>이름</span>
