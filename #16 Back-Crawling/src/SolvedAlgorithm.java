@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,42 +27,33 @@ public class SolvedAlgorithm {
 			st.executeUpdate("use SWP;");
 		// 페이지 수 계산 - 7
 		Document doc = Jsoup.connect("https://solved.ac/problems/tags").get();
-		Elements e2 = doc.select("div[class=\"Paginationstyles__PageIndicator-sc-bdna5c-0 fiXRLB\"]");
+		Elements e2 = doc.select("div.css-18lc7iz a");
 		String[] str = e2.text().split(" ");
 		int i = 1;
-		// 페이지 수에 있는 영문 이름 출력
+		// page 수만큼 반복
 		while(i<=Integer.parseInt(str[str.length-1])) {
-		int k = 2;
-		int n = 0;
 		doc = Jsoup.connect("https://solved.ac/problems/tags?page="+i).get();
-		Elements e = doc.select("div.sticky-table-cell");
-		Elements idd = doc.select("div.sticky-table-cell a");
-		for(int j = 0;j<(e.size()-1)/2;j++) {
-			String[] stt = e.get(k).text().split(" ");
-			// 알고리즘 한글 이름
-			name = stt[0].replaceAll("#| [^가-힣a-zA-Z0-9]", "");
-			for(int a = 0;a<stt.length-1;a++) {
-				if(a+1==stt.length-1) {
-					break;
-				}
-				name +=" "+stt[a+1];
+		Elements e = doc.select("div.css-qijqp5 td");
+		String[] stt = null;
+		for(int j = 0;j<=e.size()-2;j+=2) {
+			stt = e.get(j).text().split(" ");
+			String kr = stt[0].replaceAll("#","");
+			for(int k = 1;k<stt.length-1;k++) {
+				kr += " "+stt[k];
 			}
-			if(k>=e.size()-1) {
-				break;
-			}else {
-				// 알고리즘 영어 이름(ID)
-				String[] s = idd.get(n).attr("href").split("/");
-				id = s[s.length-1];
-				k+=2;
-				n+=2;
-				}
-//			update Ranking set pro = 848 where User_ID = 'shg9411';
+			// nameen / ID
+			id = stt[stt.length-1];
+			// namekr
+			name = kr;
 			sql = "insert into Algorithm(ID, algonamekr) values(?, ?)";
 			PreparedStatement pst = con.prepareStatement(sql);
 			pst.setString(1,id);
 			pst.setString(2, name);
 			pst.execute();
 			pst.close();
+			System.out.println(kr+" "+stt[stt.length-1]);
+//			update Ranking set pro = 848 where User_ID = 'shg9411';
+
 			}
 		i++;
 		}
