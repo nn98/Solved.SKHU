@@ -299,6 +299,7 @@
   |403 response 발생|Header에 User-agent 설정.<br>다만 예시 코드가 'cheerio-httpcli'뿐이라 불완전 해결|2022-05-09|`N`|
   |Async 불일치 발생|채점을 위해 반복문 실행 시<br>비동기 실행으로 인해 불일치.<br>async/then 콜백함수 사용해 해결|2022-05-09|`N`|
   |프론트 연동시 동기화|프론트 리액트 페이지와 연동 및 데이터 전송 시<br>비동기 실행으로 인해 결과값 리턴 불가<br>[npm wait-notify](https://www.npmjs.com/package/wait-notify)활용해 해결|2022-05-19|`N`|
+  |query result 여러개 전달 불가|[다중 쿼리](https://intrepidgeeks.com/tutorial/nodejs-mysql-runs-multiple-sql-statements)|2020-05-25|`|
   
   </details>
   
