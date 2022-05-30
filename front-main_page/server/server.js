@@ -22,7 +22,7 @@ app.listen(port, () => {
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-  host: "13.209.73.205",
+  host: "54.180.2.70",
   user: "Project",
   password: "testing00",
   database: "SWP",
@@ -312,7 +312,7 @@ app.post("/studentRegister", (req, res) => {
   const b = req.body;
   console.log("body", b);
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-  if (b.sC == 'stuSK#') {
+  if (b.sC == "stuSK#") {
     console.log("Student code is correct");
     let sql =
       "insert into Student (ID, name, bojid) values(" +
@@ -337,10 +337,7 @@ app.post("/studentRegister", (req, res) => {
         console.log("res", "쿼리 실행이 성공했습니다");
       }
     });
-    sql =
-      "insert into Learn values("
-      + Number(b.sI) + ","
-      + b.lI + ");";
+    sql = "insert into Learn values(" + Number(b.sI) + "," + b.lI + ");";
     console.log("수강 등록 쿼리", sql);
     connection.query(sql, function (err, result, fields) {
       // if문은 에러 출력을 위한 코드
@@ -381,10 +378,12 @@ app.get("/algorithm", (req, res) => {
 app.get("/assignments", (req, res) => {
   console.log("Assignments/get ", "is called");
   let returnStates;
-  let sql = "select * from Lecture;"+'select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID;';
+  let sql =
+    "select * from Lecture;" +
+    "select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID;";
   // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
-  console.log('get Lectures', sql);
-  
+  console.log("get Lectures", sql);
+
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) {
@@ -393,12 +392,12 @@ app.get("/assignments", (req, res) => {
     }
     // result는 가져온 결과값
     console.log("result:", result);
-    console.log('+result to states');
+    console.log("+result to states");
     res.json(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
     // res.send(result);
   });
-  // sql = 
+  // sql =
   // console.log('get Student+Learn', sql);
   // connection.query(sql, function (err, result, fields) {
   //   // if문은 에러 출력을 위한 코드
