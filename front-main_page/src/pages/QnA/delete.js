@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import Logo from '../../image/logo.png'
 
-import DeleteIcon from '../../image/deleteIcon.png'
+import DeleteIcon from '../../image/deleteIcon_2.png'
 
 import ClearIcon from '@mui/icons-material/Clear'
 

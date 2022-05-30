@@ -5,6 +5,7 @@
 }
 
 .comments_create {
+  float: right;
   display: flex;
   justify-content: flex-end;
 }
@@ -163,7 +164,7 @@
   cursor: pointer;
   outline: none;
   border: none;
-  background: #e75928;
+  background: #fff;
   color: #ffffff;
   border-radius: 4px;
   padding: 0.8% 0.8%;

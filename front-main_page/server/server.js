@@ -22,7 +22,7 @@ app.listen(port, () => {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '13.209.73.205',
+  host: '54.180.2.70',
   user: 'Project',
   password: 'testing00',
   database: 'SWP',
