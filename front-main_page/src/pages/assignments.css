@@ -1,6 +1,6 @@
 .assign {
   width: 90%;
-  height: 100vh;
+  height: 110vh;
   margin: 0% 5%;
 }
 
@@ -80,9 +80,9 @@
   -ms-overflow-style: none;
 }
 
-.assign .p-head span:nth-child(2) {
-  width: 25%;
-}
+/* .assign .p-head span:nth-child(2) {
+  width: 20%;
+} */
 
 .subPaper h3 {
   padding: 3%;

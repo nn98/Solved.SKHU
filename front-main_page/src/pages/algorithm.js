@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react'
 import './algorithm.css'
 // import usersJ from './users.json'
@@ -25,7 +26,7 @@ const Algorithm = () => {
     false,
   ])
 
-const TopAlgorithm = async () => {
+const topAlgorithm = async () => {
   try {
     const best = await fetch('http://localhost:3001/BestAlgorithm')
       .then((res) => res.json())
@@ -49,13 +50,12 @@ const TopAlgorithm = async () => {
     console.log(open);
     setOpens(open)
   }
-
   const onClickReco = () => {
-    alert('백준으로 연결')
-  }
+    alert("백준으로 연결");
+  };
 
   useEffect(() => {
-    TopAlgorithm()
+    topAlgorithm()
   }, [])
 
   return (
@@ -85,7 +85,7 @@ const TopAlgorithm = async () => {
           >
             <div
               key={index}
-              style={{ display: opens[index] === false ? 'none' : 'revert' }}
+              style={{ display: opens[index] === false ? "none" : "revert" }}
             >
               {recommend[index] && recommend[index].map((data, index2) =>
                 index2 < 7 ? (
@@ -117,4 +117,4 @@ const TopAlgorithm = async () => {
   )
   
 }
-export default Algorithm
+export default Algorithm;

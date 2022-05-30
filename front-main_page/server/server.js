@@ -26,6 +26,7 @@ var connection = mysql.createConnection({
   user: "Project",
   password: "testing00",
   database: "SWP",
+  multipleStatements: true,
 });
 
 connection.connect(() => {
@@ -323,12 +324,103 @@ app.post("/proRegister", (req, res) => {
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
 });
 
-app.post("/studentRegister", (req, res) => {
+app.get("/studentRegister", (req, res) => {
+  console.log("studentRegister/get ", "is called");
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  console.log(req);
+  // console.log(req);
   const b = req.body;
-  res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  console.log("body", b);
+  res.send(b);
+  // //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
+  // if (b.pC == "stuSK#") {
+  //   console.log("Student code is correct");
+  //   const sql =
+  //     "insert into Student (ID, name, bojid) values(" +
+  //     Number(b.sI) +
+  //     ", " +
+  //     "'" +
+  //     b.sN +
+  //     "', " +
+  //     "'" +
+  //     b.bI +
+  //     "');";
+  //   console.log(sql);
+  //   connection.query(sql, function (err, result, fields) {
+  //     // if문은 에러 출력을 위한 코드
+  //     if (err) {
+  //       res
+  //         .status(406)
+  //         .json({ message: "에러가 발생했습니다. 입력 내용을 확인해주세요" });
+  //     }
+  //   });
+
+  // result는 가져온 결과값
+  // console.log(result);
+  // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  //   res.status(100).json({ message: "강의 등록이 완료되었습니다" });
+  // } else {
+  //   res.status(406).json({ message: "교수 승인코드가 틀렸습니다" });
+  // }
+});
+
+app.post("/studentRegister", (req, res) => {
+  console.log("studentRegister/post ", "is called");
+  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
+  const b = req.body;
+  console.log("body", b);
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
+  if (b.sC == 'stuSK#') {
+    console.log("Student code is correct");
+    let sql =
+      "insert into Student (ID, name, bojid) values(" +
+      Number(b.sI) +
+      ", " +
+      "'" +
+      b.sN +
+      "', " +
+      "'" +
+      b.bI +
+      "');";
+    console.log("학생 등록 쿼리", sql);
+    connection.query(sql, function (err, result, fields) {
+      // if문은 에러 출력을 위한 코드
+      console.log("학생 등록");
+      if (err) {
+        console.log("res", "쿼리 실행이 실패했습니다");
+        res
+          .status(406)
+          .json({ message: "에러가 발생했습니다. 입력 내용을 확인해주세요" });
+      } else {
+        console.log("res", "쿼리 실행이 성공했습니다");
+      }
+    });
+    sql =
+      "insert into Learn values("
+      + Number(b.sI) + ","
+      + b.lI + ");";
+    console.log("수강 등록 쿼리", sql);
+    connection.query(sql, function (err, result, fields) {
+      // if문은 에러 출력을 위한 코드
+      console.log("수강 등록");
+      if (err) {
+        console.log("res", "쿼리 실행이 실패했습니다");
+        res
+          .status(406)
+          .json({ message: "에러가 발생했습니다. 입력 내용을 확인해주세요" });
+      } else {
+        console.log("res", "쿼리 실행이 성공했습니다");
+      }
+    });
+    res.status(100).json({ message: "학생 등록이 완료되었습니다" });
+    // result는 가져온 결과값
+    // console.log(result);
+    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+    // res.send(result);
+  } else {
+    console.log("Student code isnt correct");
+    console.log("res", "학생 승인코드가 틀렸습니다");
+    res.status(406).json({ message: "교수 승인코드가 틀렸습니다" });
+  }
 });
 
 // app.get("/algorithm", (req, res) => {
@@ -344,15 +436,44 @@ app.post("/studentRegister", (req, res) => {
 // });
 
 app.get("/assignments", (req, res) => {
-  const sql = "select * from Lecture;"; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  console.log("Assignments/get ", "is called");
+  let returnStates;
+  let sql = "select * from Lecture;"+'select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID;';
+  // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  console.log('get Lectures', sql);
+  
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
-    if (err) throw err;
+    if (err) {
+      console.log("error", err);
+      throw err;
+    }
     // result는 가져온 결과값
-    console.log(result);
+    console.log("result:", result);
+    console.log('+result to states');
+    res.json(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-    res.send(result);
+    // res.send(result);
   });
+  // sql = 
+  // console.log('get Student+Learn', sql);
+  // connection.query(sql, function (err, result, fields) {
+  //   // if문은 에러 출력을 위한 코드
+  //   if (err) {
+  //     console.log("get error", err);
+  //     throw err;
+  //   }
+  //   // result는 가져온 결과값
+  //   console.log("result:", result);
+  //   console.log('+result to states');
+  //   returnStates += result;
+  //   // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  //   // res.send(result);
+  //   console.log("res-json", returnStates);
+  //   var resultArray = Object.values(JSON.parse(JSON.stringify(returnStates)));
+  //   console.log(resultArray);
+  //   res.json(returnStates);
+  // });
 });
 
 // req는 소스코드로부터 받은 서버로 보낼 JSON 파일이 담긴 요청, res는 서버가 보낸 응답정보를 저장한 객체이고 우리는 JSON 파일 형식을 사용할 것임

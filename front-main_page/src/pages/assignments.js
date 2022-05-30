@@ -27,7 +27,8 @@ const Assignments = () => {
   const [pdate, setPdate] = useState();
   const [copy, setCopy] = useState("");
   const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
-  const [lecture, setLecture] = useState();
+  const [lecture, setLecture] = useState([]);
+  const [student, setStudent] = useState([]);
   const [lectureName, setLectureName] = useState();
 
   const handleCopy = async () => {
@@ -102,8 +103,12 @@ const Assignments = () => {
       await fetch("http://localhost:3001/assignments")
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-          setLecture(data);
+          console.log("Lec:", data[0]);
+          console.log("Stu:", data[1]);
+          setLecture(data[0]);
+          setStudent(data[1]);
+          console.log("setLec:", lecture);
+          console.log("setStu:", student);
         });
     } catch (error) {
       console.error(error);
@@ -129,24 +134,29 @@ const Assignments = () => {
             top: "0px",
             textAlign: "center",
           }}
-        >
+         >
           <span>{lectureName}</span>
           <span>학번</span>
-          {/* <span>이름</span> */}
+          <span>이름</span>
           <span>아이디</span>
           <span>결과</span>
-          {/* <span>제출시간</span> */}
         </div>
         <div className="overScroll">
-          {ID_LIST.map((data, index) => (
-            <div key={index} id="ID_LIST" className="p-head">
-              <span>{lectureName}</span>
-              <span>{data.studentID}</span>
-              <span>{data.userID}</span>
-              <span>{String(data.result)}</span>
-              {/* <input type="text" value={data} id={"ID"+index} ></input> */}
-            </div>
-          ))}
+          {student &&
+            student.map((data, index) => (
+              <div key={data.ID}>
+                {subject === data.Lecture_ID ? (
+                  <div id="ID_LIST" className="p-head">
+                    <span>{lectureName}</span>
+                    <span>{data.ID}</span>
+                    <span>{data.name}</span>
+                    <span>{data.bojid}</span>
+                    <span>{String(data.result)}</span>
+                    {/* <input type="text" value={data} id={"ID"+index} ></input> */}
+                  </div>
+                ) : null}
+              </div>
+            ))}
         </div>
       </div>
 
@@ -175,39 +185,47 @@ const Assignments = () => {
           setLectureName={setLectureName}
         ></MultipleSelect>
         {subject !== ""
-          ? lecture.map((data, index) =>
-              data.ID === subject ? (
-                <Paper
-                  className="subPaper"
-                  key={index}
-                  sx={{
-                    display: "inline-block",
-                    width: "83%",
-                    marginBottom: "5%",
-                  }}
-                >
-                  <h3>과목코드 : {data.code}</h3>
-                  <h3>교수명: {data.professor}</h3>
-                  <h3>강의명 : {data.name}</h3>
-                  <h3>분반 : {data.distribution}</h3>
-                  <Link to="/studentRegister" state={data.ID}>
-                    <button
-                      style={{
-                        display: "inline-block",
-                        fontSize: "15px",
-                        borderRadius: "0%",
-                        border: "0px",
-                        padding: "6px 12px",
-                        margin: "0% 0% 3% 3%",
-                        cursor: "pointer",
-                      }}
+          ? lecture.map((data, index) => (
+              <div key={data.ID}>
+                {data.ID === subject ? (
+                  <Paper
+                    className="subPaper"
+                    key={data.ID}
+                    sx={{
+                      display: "inline-block",
+                      width: "83%",
+                      marginBottom: "5%",
+                    }}
+                  >
+                    <h3>과목코드 : {data.code}</h3>
+                    <h3>교수명: {data.professor}</h3>
+                    <h3>강의명 : {data.name}</h3>
+                    <h3>분반 : {data.distribution}</h3>
+                    <Link
+                      to="/studentRegister"
+                      state={[
+                        { dataID: data.ID },
+                        { lectureName: lectureName },
+                      ]}
                     >
-                      학생 등록하기
-                    </button>
-                  </Link>
-                </Paper>
-              ) : null
-            )
+                      <button
+                        style={{
+                          display: "inline-block",
+                          fontSize: "15px",
+                          borderRadius: "0%",
+                          border: "0px",
+                          padding: "6px 12px",
+                          margin: "0% 0% 3% 3%",
+                          cursor: "pointer",
+                        }}
+                      >
+                        학생 등록하기
+                      </button>
+                    </Link>
+                  </Paper>
+                ) : null}
+              </div>
+            ))
           : null}
         <h3>문제번호</h3>
         <input
