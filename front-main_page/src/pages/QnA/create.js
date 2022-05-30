@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 
+import Logo from '../../image/logo.png'
+
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import Slide from '@mui/material/Slide'
+import { VerticalAlignCenter } from '@mui/icons-material'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
@@ -52,7 +55,7 @@ const Create = (e) => {
   }
 
   return (
-    <div>
+    <div className="comments_create">
       <button className="comment_button" onClick={userHandleOpen}>
         회원가입
       </button>
@@ -62,21 +65,29 @@ const Create = (e) => {
         TransitionComponent={Transition}
         keepMounted
       >
-        <DialogContent>
+        <DialogContent sx={{ width: '500%' }}>
+          <img
+            src={Logo}
+            style={{ marginTop: '1%', width: '3rem' }}
+            alt="profile"
+          />
+          {/* <spna>Sign Up</spna> */}
           <input
+            className="input_name"
             onChange={(e) => setCreateUserName(e.target.value)}
             placeholder="Name"
             type="text"
             value={createUserName}
           />
           <input
+            className="input_password"
             onChange={(e) => setCreateUserPassword(e.target.value)}
             placeholder="password"
             type="password"
             value={createUserPassword}
           />
-
           <button
+            className="input_button"
             disabled={!createUserName || !createUserPassword}
             name="commenting"
             value="Signup"

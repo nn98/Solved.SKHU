@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
 
+import Logo from '../../image/logo.png'
+
+import DeleteIcon from '../../image/deleteIcon.png'
+
+import ClearIcon from '@mui/icons-material/Clear'
+
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import Slide from '@mui/material/Slide'
@@ -26,7 +32,7 @@ const Delete = (props) => {
         onClick={deletButtonClick}
         className="comment_delete_button"
       >
-        X
+        <img src={DeleteIcon} style={{ width: '0.5rem' }} alt="profile" />
       </button>
       <Dialog
         open={deleteButton}
@@ -35,38 +41,44 @@ const Delete = (props) => {
         keepMounted
       >
         <DialogContent>
-          <div>
-            <input
-              onChange={(e) => setCommentDeleteName(e.target.value)}
-              placeholder="Name"
-              type="text"
-              value={commentDeleteName}
-            />
-            <input
-              onChange={(e) => setCommentDeletePassword(e.target.value)}
-              placeholder="password"
-              type="password"
-              value={commentDeletePassword}
-            />
-            <button
-              name="commenting"
-              disabled={!commentDeleteName || !commentDeletePassword}
-              value="Signup"
-              onClick={() => {
-                // 매개변수로 받아온 commentDelete 함수를 이용하여 이름, 비밀번호를 보낸다.
-                props.commentDelete({
-                  commentId,
-                  commentDeleteName,
-                  commentDeletePassword,
-                })
-                setCommentDeleteName('')
-                setCommentDeletePassword('')
-                deletButtonClick()
-              }}
-            >
-              Signup
-            </button>
-          </div>
+          <img
+            src={Logo}
+            style={{ marginTop: '1%', width: '3rem' }}
+            alt="profile"
+          />
+          <input
+            className="input_name"
+            onChange={(e) => setCommentDeleteName(e.target.value)}
+            placeholder="Name"
+            type="text"
+            value={commentDeleteName}
+          />
+          <input
+            className="input_password"
+            onChange={(e) => setCommentDeletePassword(e.target.value)}
+            placeholder="password"
+            type="password"
+            value={commentDeletePassword}
+          />
+          <button
+            className="input_button"
+            name="commenting"
+            disabled={!commentDeleteName || !commentDeletePassword}
+            value="Signup"
+            onClick={() => {
+              // 매개변수로 받아온 commentDelete 함수를 이용하여 이름, 비밀번호를 보낸다.
+              props.commentDelete({
+                commentId,
+                commentDeleteName,
+                commentDeletePassword,
+              })
+              setCommentDeleteName('')
+              setCommentDeletePassword('')
+              deletButtonClick()
+            }}
+          >
+            Signup
+          </button>
         </DialogContent>
       </Dialog>
     </>

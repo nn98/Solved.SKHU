@@ -10,12 +10,14 @@ const CommentAdd = (props) => {
     <div className="comments_input">
       <div>
         <input
+          className="comments_input_name"
           onChange={(e) => setCommentAddName(e.target.value)}
           placeholder="Name"
           type="text"
           value={commentAddName}
         />
         <input
+          className="comments_input_password"
           onChange={(e) => setCommentAddPassword(e.target.value)}
           placeholder="password"
           type="password"

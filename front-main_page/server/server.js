@@ -22,7 +22,7 @@ app.listen(port, () => {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '15.165.159.248',
+  host: '13.209.73.205',
   user: 'Project',
   password: 'testing00',
   database: 'SWP',
@@ -47,10 +47,19 @@ app.post('/QnAUser', (req, res) => {
 
 // Qna 값 출력
 app.get('/QnA', (req, res) => {
-  const sql = 'SELECT * FROM Qna'
+  const sql = 'SELECT * FROM Qna  ORDER BY createdat DESC'
   connection.query(sql, function (err, result, fields) {
     if (err) throw err
     console.log('QnA 출력')
+    res.send(result)
+  })
+})
+
+app.get('/QnAProblem', (req, res) => {
+  const sql = 'select distinct PROBLEM_ID from Solve;'
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err
+    console.log('QnA문제 출력')
     res.send(result)
   })
 })
@@ -72,6 +81,7 @@ app.post('/QnAAdd', (req, res) => {
     'SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;'
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err
+    console.log('test@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     if (result.length === 0) {
       res.send({ error: '사용자가 올바르지 않습니다.' })
     } else {
