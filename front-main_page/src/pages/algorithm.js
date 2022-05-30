@@ -89,25 +89,24 @@ const TopAlgorithm = async () => {
             >
               {recommend[index] && recommend[index].map((data, index2) =>
                 index2 < 7 ? (
-                  <button
-                    className="recoAlgo"
-                    key={index2}
-                    onClick={() => onClickReco()}
-                  >
-                    <a
+                  <a
                       key={data.ID} 
                       href={'https://www.acmicpc.net/problem/'+data.ID}
                       style={{ textDecorationLine: 'none', color: '#000' }}
                       target="_blank"
                       rel="noopener noreferrer">
-                    <span style={{float : 'left'}}><img src={'https://static.solved.ac/tier_small/'+(data.SOLVED_RANK)+'.svg'} alt="profile" style= {{width : "1.3rem"}}/></span>
+                  <button
+                    className="recoAlgo"
+                    key={index2}
+                  >
+                    <span style={{width : '20%'}}><img src={'https://static.solved.ac/tier_small/'+(data.SOLVED_RANK)+'.svg'} alt="profile" style= {{width : "1.3rem"}}/></span>
                     {/* <span>{data.ID} {data.namekr}</span> */}
-                    <span>{data.ID}</span>
-                    <span>{data.namekr}</span>
-                    {/* <span>{data.rate}</span> */}
-                    {/* <span>{data.sum}</span> */}
-                     </a>
+                    <span style={{width : '25%'}}>{data.ID}</span>
+                    <span style={{width : '40%'}}>{data.namekr}</span>
+                    <span style={{width : '25%'}}>{data.rate}</span>
+                    <span style={{width : '25%'}}>{data.sum}</span>
                   </button>
+                  </a>
                 ) : null
               )}
             </div>
