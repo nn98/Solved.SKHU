@@ -3,6 +3,26 @@
   margin: 0% 5%;
 }
 
+.react-calendar-heatmap .color-beammp-1 {
+  fill: #d6e685;
+}
+.react-calendar-heatmap .color-beammp-2 {
+  fill: #8cc665;
+}
+.react-calendar-heatmap .color-beammp-3 {
+  fill: #44a340;
+}
+.react-calendar-heatmap .color-beammp-4 {
+  fill: #1e6823;
+}
+
+.use .zandi {
+  width: 100%;
+  height: 100%;
+  -ms-overflow-style: none;
+  margin-bottom: 2%;
+  box-shadow: 3px 3px 3px gray;
+}
 .use .tearTable {
   background-color: #f0f0f0;
   width: 55%;

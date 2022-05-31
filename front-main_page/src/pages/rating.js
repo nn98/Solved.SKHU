@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import usersJ from './users.json'
-import './rating.css'
+import React, { useState, useEffect } from "react";
+import usersJ from "./users.json";
+import "./rating.css";
 
-
-const Rating = () => {
+const Rating = (props) => {
   // 랭크의 image를 출력하기 위한 번호
   const rank = [
     [1, 2, 3, 4, 5],
@@ -12,70 +11,70 @@ const Rating = () => {
     [16, 17, 18, 19, 20],
     [21, 22, 23, 24, 25],
     [26, 27, 28, 29, 30],
-  ]
+  ];
 
   // 각 랭크의 서브 랭크를 넣기 위한 변수
-  const [rankArray, setRankArray] = useState()
+  const [rankArray, setRankArray] = useState();
 
   // 유저 또는 랭크 별로 알고리즘을 받을지 결정하는 boolean 변수
-  const [userOrRank, setUserOrRank] = useState(true)
+  const [userOrRank, setUserOrRank] = useState(true);
 
   // 유저별 문제들을 저장하기 위한 변수
-  const [ratingProblems, setRatingProblems] = useState([])
+  const [ratingProblems, setRatingProblems] = useState([]);
 
   // 랭크별 문제들을 저장하기 위한 변수
-  const [rankProblems, setRankProblems] = useState([])
+  const [rankProblems, setRankProblems] = useState([]);
 
   // 유저별 문제 추천을 받기 위한 함수
   const ratingAdd = async () => {
     try {
-      await fetch('http://localhost:3001/get')
+      await fetch("http://localhost:3001/get")
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
-          setRatingProblems(data)
-        })
+          console.log(data);
+          setRatingProblems(data);
+        });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   // 각 랭크의 서브 랭크의 버튼을 추가하기 위한 함수
   const rankSubAdd = (index) => {
-    const result = []
+    const result = [];
     for (let i = 0; i < rank[index].length; i++) {
       result.push(
         <div key={i} className="rankButton">
           <button onClick={() => rankAdd(rank[index][i])}>
             <img
               src={
-                'https://static.solved.ac/tier_small/' + rank[index][i] + '.svg'
+                "https://static.solved.ac/tier_small/" + rank[index][i] + ".svg"
               }
               alt="profile"
             />
           </button>
         </div>
-      )
+      );
     }
-    setRankArray(result)
-  }
+    setRankArray(result);
+  };
 
   // 랭크별 문제 추천을 받기 위한 함수
   const rankAdd = (index) => {
     try {
       let t = usersJ.user_problems.filter(
         (e, i) => i >= index * 10 && i <= index * 20
-      )
-      setRankProblems(t)
-      console.log(rankProblems)
+      );
+      setRankProblems(t);
+      console.log(rankProblems);
     } catch (err) {
-      return err
+      return err;
     }
-  }
+  };
 
   useEffect(() => {
-    ratingAdd()
-  }, [])
+    ratingAdd();
+  }, []);
 
   return (
     <div className="rating">
@@ -88,41 +87,72 @@ const Rating = () => {
 
           <div className="ratingProblem">
             <div className="mostProblem">
-              <strong>
-                <big>가장 많이 푼 문제</big>
-              </strong>
+              <div style={{ paddingBottom: "2%" }}>
+                <strong>
+                  <big>나랑 비슷한 수준의 학생</big>
+                </strong>
+              </div>
               <div className="mostProblemInner">
                 <div
                   className="p-head"
                   style={{
-                    backgroundColor: 'black',
-                    color: 'white',
-                    borderRadius: '5px 5px 0 0',
+                    backgroundColor: "black",
+                    color: "white",
+                    borderRadius: "5px 5px 0 0",
                   }}
                 >
-                  <span>#</span>
-                  <span>제목</span>
-                  <span>시도</span>
+                  <span>전체 랭킹</span>
+                  <span>랭킹</span>
+                  <span>아이디</span>
+                  <span>레이팅</span>
+                  <span>CLASS</span>
+                  <span>푼 문제</span>
+                  <span>정답률</span>
                 </div>
-                {ratingProblems.map((problem, index) => (
+                {props.ranking.map((user, index) => (
                   <div key={index} className="p-head">
-                    <span>{problem.ID}</span>
-                    <span>{problem.namekr}</span>
-                    <span>{problem.rate}</span>
+                    <span>{user.worldrank}</span>
+                    <span>{user.skhurank}</span>
+                    <span>
+                      <img
+                        src={
+                          "https://static.solved.ac/tier_small/" +
+                          user.tier +
+                          ".svg"
+                        }
+                        alt="profile"
+                        style={{ width: "7%", margin: "0 1% 0 0" }}
+                      />{" "}
+                      <strong>
+                        <a
+                          href={"https://solved.ac/profile/" + user.ID}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {user.ID}
+                        </a>
+                      </strong>
+                    </span>
+                    <span>{user.rating}</span>
+                    <span>{user.class}</span>
+                    <span>{user.pro}</span>
+                    <span>{user.correction}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <strong>
-              <big>가장 적게 푼 문제</big>
-            </strong>
+            <div style={{ paddingBottom: "1%" }}>
+              <strong>
+                <big>가장 적게 푼 문제</big>
+              </strong>
+            </div>
             <div className="minProblem">
               <div
                 className="p-head"
                 style={{
-                  backgroundColor: 'black',
-                  color: 'white',
-                  borderRadius: '5px 5px 0 0',
+                  backgroundColor: "black",
+                  color: "white",
+                  borderRadius: "5px 5px 0 0",
                 }}
               >
                 <span>#</span>
@@ -154,9 +184,9 @@ const Rating = () => {
                   <button onClick={() => rankSubAdd(index)}>
                     <img
                       src={
-                        'https://static.solved.ac/tier_small/' +
+                        "https://static.solved.ac/tier_small/" +
                         (index + 1) * 5 +
-                        '.svg'
+                        ".svg"
                       }
                       alt="profile"
                     />
@@ -172,9 +202,9 @@ const Rating = () => {
                   <div
                     className="p-head"
                     style={{
-                      backgroundColor: 'black',
-                      color: 'white',
-                      borderRadius: '5px 5px 0 0',
+                      backgroundColor: "black",
+                      color: "white",
+                      borderRadius: "5px 5px 0 0",
                     }}
                   >
                     <span>#</span>
@@ -197,7 +227,7 @@ const Rating = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Rating
+export default Rating;

@@ -1,7 +1,7 @@
 .rating {
   text-align: center;
-  width: 80%;
-  margin: 0 10%;
+  width: 90%;
+  margin: 0 5%;
 }
 .rating .ratingProblem {
   width: auto;
@@ -12,13 +12,14 @@
 }
 
 .rating .ratingProblem .mostProblem {
-  width: 40%;
+  padding-top: 4%;
+  width: 50%;
   height: 100%;
-  margin: 0 5%;
+  margin: 0 2.5%;
   float: left;
 }
 .rating .ratingProblem .mostProblemInner {
-  height: 80%;
+  height: 100%;
   overflow: overlay;
   overflow-x: hidden;
   -ms-overflow-style: none;
@@ -31,7 +32,7 @@
   overflow-x: hidden;
   -ms-overflow-style: none;
   width: 40%;
-  margin: 0 5%;
+  margin: 0% 2.5%;
   float: left;
 }
 
@@ -39,23 +40,42 @@
   width: 90%;
   margin: 0 5%;
   padding: 1%;
-  transition: background-color 1s;
+  /* transition: background-color 1s; */
 }
 
-.rating .p-head:hover {
+/* .rating .p-head:hover {
   background-color: gold;
-}
-
-.rating .p-head span {
-  display: inline-block;
-  width: 20%;
-}
+} */
 .p-head:nth-child(odd) {
   background-color: #f0f0f0;
 }
-.rating .p-head span:nth-child(2) {
+
+/* 가장 적게 푼 문제 테이블의 너비 */
+.rating .ratingProblem .minProblem .p-head span {
+  display: inline-block;
+  width: 20%;
+}
+.rating .ratingProblem .minProblem .p-head span:nth-child(2) {
   width: 60%;
 }
+
+/* 학생 랭킹 테이블의 너비 */
+.rating .ratingProblem .mostProblem .p-head span {
+  display: inline-block;
+  width: 12%;
+}
+.rating .ratingProblem .mostProblem .p-head span:nth-child(3) {
+  width: 28%;
+}
+
+.rating a {
+  text-decoration: none;
+  color: black;
+}
+.rating a:hover {
+  text-decoration: underline;
+}
+
 /* ************************************* */
 /* rank 별 */
 .rating .rankProblem {

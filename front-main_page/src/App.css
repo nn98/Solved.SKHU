@@ -9,7 +9,6 @@
   .root {
     width: 100vw;
     overflow-y: hidden;
-    white-space: nowrap;
   }
 }
 

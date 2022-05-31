@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import { TextField, InputAdornment } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useNavigate } from 'react-router-dom'
 
-const MainPage = () => {
+const MainPage = (props) => {
   const [userId, setUserId] = useState('')
   const navigate = useNavigate()
 
@@ -14,12 +14,13 @@ const MainPage = () => {
         .then((res) => res.json())
         .then((data) => {
           navigate('/userPage', { state: { userId } })
+          props.setGlobalID(userId)
         })
     } catch (error) {
-
-      alert("입력하신 ID는 Solve.ac에 등록되지 않았습니다.");
+      alert('입력하신 ID는 Solve.ac에 등록되지 않았습니다.')
     }
   }
+  useEffect(() => console.log(props), [])
   return (
     <div className="mainPage">
       {/* box 안에 있는 textfield를 사용하여 box로 겉이 둥근 모양의 상자를 만들고
