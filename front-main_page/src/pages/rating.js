@@ -173,10 +173,10 @@ const Rating = (props) => {
         // 랭크별 위치 ================================================
         <div>
           <h1>랭크 페이지</h1>
-          <span>
+          {/* <span>
             <input type="text" />
             <button>search</button>
-          </span>
+          </span> */}
           <div className="rankProblem">
             <div className="rank">
               {rank.map((n, index) => (

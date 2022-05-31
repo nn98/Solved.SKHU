@@ -1,3 +1,4 @@
+// npm i wait-notify puppeteer cheerio
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -46,6 +47,7 @@ app.post("/QnAUser", (req, res) => {
   });
 });
 
+
 // Qna 값 출력
 app.get("/QnA", (req, res) => {
   const sql = "SELECT * FROM Qna  ORDER BY createdat DESC";
@@ -82,6 +84,7 @@ app.post("/QnAAdd", (req, res) => {
   const userSql =
     "SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;";
   connection.query(userSql, userBody, function (err, result, fields) {
+
     if (err) throw err;
     if (result.length === 0) {
       res.send({ error: "사용자가 올바르지 않습니다." });
@@ -199,6 +202,73 @@ app.get("/get", (req, res) => {
   });
 });
 
+// Recommend - User
+app.post("/rating", (req, res) => {
+  const sqls1 = [[""],[" "],
+  ["select * from User where skhurank = (select skhurank from User where ID=?)-2 union"],
+  ["select * from User where skhurank = (select skhurank from User where ID=?)-1 union"]
+  ["select * from User where skhurank = (select skhurank from User where ID=?)+1 union"],
+  ["select * from User where skhurank = (select skhurank from User where ID=?)+2)"],
+  [""]];
+  const query1 = "select max(skhurank) from User;";
+  const sqls = [["select skhurank from User where ID = ?;"],
+  ["select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID"
+  +"join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in ("],
+  ["select ID from User where skhurank = (select skhurank from User where ID=?)-2 union"],
+  ["select ID from User where skhurank = (select skhurank from User where ID=?)-1 union"]
+  ["select ID from User where skhurank = (select skhurank from User where ID=?)+1 union"],
+  ["select ID from User where skhurank = (select skhurank from User where ID=?)+2)"],
+  ["and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = ?)"
+  +"group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;"]];
+  
+  connection.query(sqls[0], req.body,function(err, result,fields){
+    let i = result;
+  })
+  connection.query(query1, req.body,function(err, result,fields){
+    let j = result;
+  })
+  // 사용해야 함
+  // let k = 5-i < 2 ? 2 : 5-i;
+  // let problems;
+  // let users;
+  // for(k;k <= j-i+3&k<6;k++){
+  //   problems += sqls[k];
+  //   users += sqls1[k];
+  // }
+  // problems += sqls[sqls.length-1];
+  // users += sqls1[sqls.length-1];
+  // connection.query(problems+users, req.body, function (err, result, fields) {
+  //   if (err) {
+  //     res.send({ error: err.errno });
+  //   } else {
+  //     console.log(result);
+  //     res.send(result);
+  //   }
+  // });
+});
+// app.post("/rating", (req, res) => {
+//   const sql = "select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID"
+//   +"join Problem on Solve.PROBLEM_ID = Problem.ID"
+//   +"where User.ID in ("
+//   +"select ID from User where skhurank = (select skhurank from User where ID=?)+2"
+//   +"union"
+//   +"select ID from User where skhurank = (select skhurank from User where ID=?)+1"
+//   +"union"
+//   +"select ID from User where skhurank = (select skhurank from User where ID=?)-1"
+//   +"union"
+//   +"select ID from User where skhurank = (select skhurank from User where ID=?)-2)"
+//   +"and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = ?)"
+//   +"group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;";
+//   connection.query(sql, req.body, function (err, result, fields) {
+//     if (err) {
+//       res.send({ error: err.errno });
+//     } else {
+//       console.log(result);
+//       res.send(result);
+//     }
+//   });
+// });
+
 // rank.js가 서버에게 요청한 데이터를 받을 코드
 // "/ranking" 서브스트링을 사용하는 방식이 하나밖에 없기 때문에 rank.js는 get방식을 생략할 수 있음
 
@@ -219,6 +289,7 @@ app.get("/MaxAlgorithm", (req, res) => {
   // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
   const sql =
     "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) desc limit 0,10;";
+
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) throw err;
@@ -254,8 +325,7 @@ app.get("/BestAlgorithm", (req, res) => {
     // if문은 에러 출력을 위한 코드
     if (err) throw err;
     // result는 가져온 결과값
-    console.log(result);
-    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+    console.log(result);    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
 
     res.send(result);
   });
