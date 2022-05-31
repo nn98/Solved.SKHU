@@ -546,7 +546,7 @@ async function run() {
   console.log("1. run");
   console.log("ID_LIST", ID_LIST);
   console.log("pID", pID);
-  processID = ID_LIST[0].userID;
+  processID = ID_LIST[0].bojid;
   let url = urls[0] + pID + urls[1] + processID + urls[2];
   execute(url);
 }
