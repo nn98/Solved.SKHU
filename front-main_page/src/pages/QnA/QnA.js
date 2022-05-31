@@ -148,6 +148,11 @@ const QnA = () => {
       {comments.map((comment, index) =>
         problem === '' || problem === 'null' || comment.problem === problem ? (
           <div key={index} className="comments_print">
+            <h3>
+              {problem === '' || problem === 'null'
+                ? comment.problem + '번'
+                : ''}
+            </h3>
             <CommentContent comment={comment} commentDelete={commentDelete} />
             {/* 삭제 버튼 */}
 

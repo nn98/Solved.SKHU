@@ -35,9 +35,6 @@
   float: left;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
 .rating .p-head {
   width: 90%;
   margin: 0 5%;
