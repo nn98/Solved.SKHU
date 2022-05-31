@@ -18,7 +18,9 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   // 랭킹 페이지 변수
-  const [ranking, setRanking] = useState([]);
+  const [globalID, setGlobalID] = useState('')
+  const [ranking, setRanking] = useState([])
+
   // 각 페이지 에서 필요한 정보 추가
   const add = async () => {
     try {
@@ -40,10 +42,20 @@ function App() {
     <div className="root">
       <MainMenu />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/userPage" element={<UserPage />} />
+        <Route
+          path="/"
+          element={<MainPage globalID={globalID} setGlobalID={setGlobalID} />}
+        />
+        <Route
+          path="/userPage"
+          element={<UserPage globalID={globalID} setGlobalID={setGlobalID} />}
+        />
         <Route path="/algorithm" element={<Algorithm />} />
-        <Route path="/rating" element={<Rating ranking={ranking}/>} />
+        <Route
+          path="/rating"
+          element={<Rating globalID={globalID} setGlobalID={setGlobalID} />}
+        />
+
         <Route path="/QnA" element={<QnA />} />
         <Route path="/rank" element={<Rank ranking={ranking} />} />
         <Route path="/assignments" element={<Assignments />} />
