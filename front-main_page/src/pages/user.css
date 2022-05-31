@@ -59,7 +59,7 @@
 
 .use .problem {
   text-align: center;
-  width: 42%;
+  width: 41%;
   float: right;
   /* border: 1px solid #000; */
   height: 185vh;
@@ -68,23 +68,36 @@
   -ms-overflow-style: none;
   box-shadow: 3px 3px 3px gray;
   border-radius: 0px 0px 5px 5px;
+
+  font-size: 130%;
 }
 
-::-webkit-scrollbar {
-  display: none;
+@media (max-width: 1300px) {
+  .use .problem {
+    text-align: center;
+    width: 41%;
+    float: right;
+    /* border: 1px solid #000; */
+    height: 120vh;
+    overflow: overlay;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    box-shadow: 3px 3px 3px gray;
+    border-radius: 0px 0px 5px 5px;
+    font-size: 130%;
+  }
 }
 
 .use .pr-head {
-  margin-left: 3%;
-  width: 97%;
+  /* margin-left: 3%; */
+  width: 100%;
   transition: background-color 1s;
-  font-size: 1.7vh;
 }
 .use .pr-head span {
   display: inline-block;
   width: 20%;
 }
-.pr-head:nth-child(odd){
+.pr-head:nth-child(odd) {
   background-color: #f0f0f0;
 }
 .use .pr-head span:nth-child(1) {
@@ -103,10 +116,10 @@
   vertical-align: middle;
 }
 #user-color {
-  color : #555;
+  color: #555;
 }
 #pro-color {
-  color : #555;
+  color: #555;
   font-weight: bold;
 }
 .use .p-head {
@@ -146,7 +159,7 @@
   -ms-overflow-style: none;
 }
 
-.use .p-head span:nth-child(2){
+.use .p-head span:nth-child(2) {
   width: 40%;
 }
 .user .head {
@@ -175,4 +188,3 @@
 .use .teardata .BigTears:hover {
   cursor: pointer;
 }
-

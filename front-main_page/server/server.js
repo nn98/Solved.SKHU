@@ -1,3 +1,4 @@
+// npm i wait-notify puppeteer cheerio
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -82,6 +83,7 @@ app.post("/QnAAdd", (req, res) => {
   const userSql =
     "SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;";
   connection.query(userSql, userBody, function (err, result, fields) {
+
     if (err) throw err;
     if (result.length === 0) {
       res.send({ error: "사용자가 올바르지 않습니다." });
@@ -219,6 +221,7 @@ app.get("/MaxAlgorithm", (req, res) => {
   // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
   const sql =
     "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) desc limit 0,10;";
+
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) throw err;
@@ -254,8 +257,7 @@ app.get("/BestAlgorithm", (req, res) => {
     // if문은 에러 출력을 위한 코드
     if (err) throw err;
     // result는 가져온 결과값
-    console.log(result);
-    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+    console.log(result);    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
 
     res.send(result);
   });
