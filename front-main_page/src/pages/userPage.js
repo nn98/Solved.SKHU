@@ -5,6 +5,10 @@ import { useLocation } from 'react-router-dom'
 import { Collapse } from '@mui/material'
 // import { NULL } from "mysql/lib/protocol/constants/types";
 
+import CalendarHeatmap from 'react-calendar-heatmap'
+import 'react-calendar-heatmap/dist/styles.css'
+import ReactTooltip from 'react-tooltip'
+
 const UserPage = () => {
   const location = useLocation()
   const save = usersJ
@@ -13,7 +17,21 @@ const UserPage = () => {
   const [userTier, setUserTier] = useState([])
   const [opens, setOpens] = useState([false, false, false, false, false, false])
   const [userPro, setUserPro] = useState({})
-
+  const [userZandi, setUserZandi] = useState([])
+  const month = [
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12',
+  ]
   const userAdd = async () => {
     try {
       const t = location.state !== null ? location.state.userId : 'q9922000'
@@ -37,14 +55,16 @@ const UserPage = () => {
               count++
             } else {
               list.push({
-                timestamp: data[data.length - i].timestamp.substring(0, 10),
-                value: count,
+                date: data[data.length - i].timestamp.slice(0, 10),
+                count: count,
               })
               count = 1
             }
           }
-          list.push({ timestamp: data[0].timestamp.substring(0, 10), value: 1 })
-          console.log(JSON.stringify(list))
+          list.push({ timestamp: data[0].timestamp.slice(0, 10), value: 1 })
+          // console.log(JSON.stringify(list))
+          console.log(list)
+          setUserZandi(list)
         })
       await fetch('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + t)
         .then((res) => res.json())
@@ -184,6 +204,64 @@ const UserPage = () => {
         <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>문제 해결</span>
       </div>
       <div className="use">
+        <div className="zandi">
+          <div className="zandi-in">
+            <CalendarHeatmap
+              startDate={new Date('2022-01-01')}
+              endDate={new Date('2022-12-31')}
+              values={userZandi}
+              monthLabels={month}
+              showWeekdayLabels={true}
+              classForValue={(value) => {
+                let c = 0
+                if (!value) {
+                  return 'color-empty'
+                } else {
+                  if (value.count >= 1 && value.count <= 4) c = 1
+                  else if (value.count >= 5 && value.count <= 9) c = 2
+                  else if (value.count >= 10 && value.count <= 14) c = 3
+                  else if (value.count >= 15) c = 4
+                }
+                return `color-beammp-${c}`
+              }}
+              tooltipDataAttrs={(value) => {
+                return { 'data-tip': `${value.date} ${value.count}문제` }
+              }}
+            />
+            <ReactTooltip />
+            {/* <CalendarHeatmap
+              startDate={new Date('2022-01-01')}
+              endDate={new Date('2022-12-31')}
+              values={userZandi}
+              // color
+              monthLabels={month}
+              showWeekdayLabels={true}
+              classForValue={(value) => {
+                let c = 0
+                if (!value) {
+                  return 'color-empty'
+                } else {
+                  if (value.count >= 1 && value.count <= 4) c = 1
+                  else if (value.count >= 5 && value.count <= 9) c = 2
+                  else if (value.count >= 10 && value.count <= 14) c = 3
+                  else if (value.count >= 15) c = 4
+                }
+                return `color-scale-${c}`
+              }}
+              tooltipDataAttrs={(value) => {
+                if (!value || !value.date) {
+                  return null
+                }
+                return {
+                  'data-tip': `${value.date.slice(0, 10)} has count: ${
+                    value.count
+                  }`,
+                }
+              }}
+            />
+            <ReactTooltip /> */}
+          </div>
+        </div>
         <div className="tearTable">
           <p>난이도 분포</p>
           <div
