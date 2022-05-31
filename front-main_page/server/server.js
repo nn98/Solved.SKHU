@@ -23,7 +23,6 @@ app.listen(port, () => {
 
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-
   host: "54.180.2.70",
   user: "Project",
   password: "testing00",
@@ -49,8 +48,8 @@ app.post("/QnAUser", (req, res) => {
 });
 
 // Qna 값 출력
-app.get('/QnA', (req, res) => {
-  const sql = 'SELECT * FROM Qna  ORDER BY createdat DESC'
+app.get("/QnA", (req, res) => {
+  const sql = "SELECT * FROM Qna  ORDER BY createdat DESC";
 
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
@@ -59,14 +58,14 @@ app.get('/QnA', (req, res) => {
   });
 });
 
-app.get('/QnAProblem', (req, res) => {
-  const sql = 'select distinct PROBLEM_ID from Solve;'
+app.get("/QnAProblem", (req, res) => {
+  const sql = "select distinct PROBLEM_ID from Solve;";
   connection.query(sql, function (err, result, fields) {
-    if (err) throw err
-    console.log('QnA문제 출력')
-    res.send(result)
-  })
-})
+    if (err) throw err;
+    console.log("QnA문제 출력");
+    res.send(result);
+  });
+});
 
 // QnaInner 값 출력
 app.get("/QnAInner", (req, res) => {
@@ -220,12 +219,14 @@ app.get("/ranking", (req, res) => {
 // 알고리즘(많이 푼 문제 10개)
 app.get("/MaxAlgorithm", (req, res) => {
   // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
-  const sql = "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) desc limit 0,10;"; 
+  const sql =
+    "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) desc limit 0,10;";
+
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) throw err;
     // result는 가져온 결과값
-    console.log(result)
+    console.log(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
 
     res.send(result);
@@ -235,12 +236,13 @@ app.get("/MaxAlgorithm", (req, res) => {
 // 알고리즘(적게 푼 문제 10개)
 app.get("/MinAlgorithm", (req, res) => {
   // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
-  const sql = "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) asc limit 0,10;"; 
+  const sql =
+    "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) asc limit 0,10;";
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) throw err;
     // result는 가져온 결과값
-    console.log(result)
+    console.log(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
 
     res.send(result);
@@ -249,13 +251,13 @@ app.get("/MinAlgorithm", (req, res) => {
 
 // 알고리즘(성공률 상위 10개)
 app.get("/BestAlgorithm", (req, res) => {
-  const sql = "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) desc limit 0,10; "; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  const sql =
+    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) desc limit 0,10; "; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) throw err;
     // result는 가져온 결과값
-    console.log(result)
-    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+    console.log(result);    // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
 
     res.send(result);
   });
@@ -263,12 +265,13 @@ app.get("/BestAlgorithm", (req, res) => {
 
 // 알고리즘(성공률 하위 10개)
 app.get("/WorstAlgorithm", (req, res) => {
-  const sql = "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) limit 0,10; "; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+  const sql =
+    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) limit 0,10; "; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) throw err;
     // result는 가져온 결과값
-    console.log(result)
+    console.log(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
 
     res.send(result);
@@ -382,7 +385,7 @@ app.post("/studentRegister", (req, res) => {
   const b = req.body;
   console.log("body", b);
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-  if (b.sC == 'stuSK#') {
+  if (b.sC == "stuSK#") {
     console.log("Student code is correct");
     let sql =
       "insert into Student (ID, name, bojid) values(" +
@@ -407,10 +410,7 @@ app.post("/studentRegister", (req, res) => {
         console.log("res", "쿼리 실행이 성공했습니다");
       }
     });
-    sql =
-      "insert into Learn values("
-      + Number(b.sI) + ","
-      + b.lI + ");";
+    sql = "insert into Learn values(" + Number(b.sI) + "," + b.lI + ");";
     console.log("수강 등록 쿼리", sql);
     connection.query(sql, function (err, result, fields) {
       // if문은 에러 출력을 위한 코드
@@ -451,10 +451,12 @@ app.post("/studentRegister", (req, res) => {
 app.get("/assignments", (req, res) => {
   console.log("Assignments/get ", "is called");
   let returnStates;
-  let sql = "select * from Lecture;"+'select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID;';
+  let sql =
+    "select * from Lecture;" +
+    "select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID;";
   // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
-  console.log('get Lectures', sql);
-  
+  console.log("get Lectures", sql);
+
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) {
@@ -463,12 +465,12 @@ app.get("/assignments", (req, res) => {
     }
     // result는 가져온 결과값
     console.log("result:", result);
-    console.log('+result to states');
+    console.log("+result to states");
     res.json(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
     // res.send(result);
   });
-  // sql = 
+  // sql =
   // console.log('get Student+Learn', sql);
   // connection.query(sql, function (err, result, fields) {
   //   // if문은 에러 출력을 위한 코드
@@ -546,7 +548,7 @@ async function run() {
   console.log("1. run");
   console.log("ID_LIST", ID_LIST);
   console.log("pID", pID);
-  processID = ID_LIST[0].userID;
+  processID = ID_LIST[0].bojid;
   let url = urls[0] + pID + urls[1] + processID + urls[2];
   execute(url);
 }
