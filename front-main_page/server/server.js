@@ -215,7 +215,7 @@ app.post('/rating', (req, res) => {
     [
       'select * from User where skhurank = (select skhurank from User where ID=?)-1 union',
     ][
-      'select * from User where skhurank = (select skhurank from User where ID=?)+1 union'
+    'select * from User where skhurank = (select skhurank from User where ID=?)+1 union'
     ],
     [
       'select * from User where skhurank = (select skhurank from User where ID=?)+2)',
@@ -227,7 +227,7 @@ app.post('/rating', (req, res) => {
     ['select skhurank from User where ID = ?;'],
     [
       'select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID' +
-        'join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in (',
+      'join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in (',
     ],
     [
       'select ID from User where skhurank = (select skhurank from User where ID=?)-2 union',
@@ -235,14 +235,14 @@ app.post('/rating', (req, res) => {
     [
       'select ID from User where skhurank = (select skhurank from User where ID=?)-1 union',
     ][
-      'select ID from User where skhurank = (select skhurank from User where ID=?)+1 union'
+    'select ID from User where skhurank = (select skhurank from User where ID=?)+1 union'
     ],
     [
       'select ID from User where skhurank = (select skhurank from User where ID=?)+2)',
     ],
     [
       'and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = ?)' +
-        'group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;',
+      'group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;',
     ],
   ]
 
@@ -389,6 +389,7 @@ app.post('/register', (req, res) => {
 })
 
 app.post('/proRegister', (req, res) => {
+  let suc = false;
   console.log('proRegister/post ', 'is called')
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
   console.log(req)
@@ -417,8 +418,10 @@ app.post('/proRegister', (req, res) => {
         if (err) {
           res
             .status(406)
-            .json({ message: '에러가 발생했습니다. 입력 내용을 확인해주세요' })
-        }
+            .json('에러가 발생했습니다. 입력 내용을 확인해주세요')
+          waitNotify.notify();
+          return;
+        } else suc = true;
       })
 
       // result는 가져온 결과값
@@ -426,9 +429,10 @@ app.post('/proRegister', (req, res) => {
       // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
       // res.send(result);
     }
-    res.status(100).json({ message: '강의 등록이 완료되었습니다' })
+    waitNotify.wait();
+    if (suc) res.status(100).json('강의 등록이 완료되었습니다')
   } else {
-    res.status(406).json({ message: '교수 승인코드가 틀렸습니다' })
+    res.status(406).json("교수 승인코드가 틀렸습니다")
   }
   // res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
@@ -474,6 +478,7 @@ app.get('/studentRegister', (req, res) => {
 })
 
 app.post('/studentRegister', (req, res) => {
+  let stuSuc = false, learnSuc = false;
   console.log('studentRegister/post ', 'is called')
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
   const b = req.body
@@ -499,8 +504,10 @@ app.post('/studentRegister', (req, res) => {
         console.log('res', '쿼리 실행이 실패했습니다')
         res
           .status(406)
-          .json({ message: '에러가 발생했습니다. 입력 내용을 확인해주세요' })
+          .json('에러가 발생했습니다. 중복된 학번인지 확인해주세요')
+        return;
       } else {
+        stuSuc = true;
         console.log('res', '쿼리 실행이 성공했습니다')
       }
     })
@@ -511,14 +518,21 @@ app.post('/studentRegister', (req, res) => {
       console.log('수강 등록')
       if (err) {
         console.log('res', '쿼리 실행이 실패했습니다')
-        res
-          .status(406)
-          .json({ message: '에러가 발생했습니다. 입력 내용을 확인해주세요' })
+        if (stuSuc) {
+          res
+            .status(406)
+            .json('에러가 발생했습니다. 입력 내용을 확인해주세요');
+        }
+        waitNotify.notify();
+        return;
       } else {
+        learnSuc = true;
         console.log('res', '쿼리 실행이 성공했습니다')
       }
     })
-    res.status(100).json({ message: '학생 등록이 완료되었습니다' })
+
+    waitNotify.wait();
+    if (stuSuc&learnSuc) res.status(100).json('강의 등록이 완료되었습니다')
     // result는 가져온 결과값
     // console.log(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
@@ -526,7 +540,7 @@ app.post('/studentRegister', (req, res) => {
   } else {
     console.log('Student code isnt correct')
     console.log('res', '학생 승인코드가 틀렸습니다')
-    res.status(406).json({ message: '교수 승인코드가 틀렸습니다' })
+    res.status(406).json('학생 승인코드가 틀렸습니다')
   }
 })
 
@@ -555,6 +569,7 @@ app.get('/assignments', (req, res) => {
     // if문은 에러 출력을 위한 코드
     if (err) {
       console.log('error', err)
+      return;
       throw err
     }
     // result는 가져온 결과값
