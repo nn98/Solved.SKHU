@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import usersJ from './users.json'
 import './rating.css'
 
+
 const Rating = () => {
   // 랭크의 image를 출력하기 위한 번호
   const rank = [
@@ -142,10 +143,10 @@ const Rating = () => {
         // 랭크별 위치 ================================================
         <div>
           <h1>랭크 페이지</h1>
-          <span>
+          {/* <span>
             <input type="text" />
             <button>search</button>
-          </span>
+          </span> */}
           <div className="rankProblem">
             <div className="rank">
               {rank.map((n, index) => (
