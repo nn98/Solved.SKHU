@@ -57,11 +57,18 @@ const Assignments = () => {
 
   const onClickStart = async (props) => {
     console.log("Notify: ", "LoadingButton Clicked!");
+    let LIST = [];
+    let cnt = 0;
+    for (let i = 0; i < props.ID_LIST.length; ++i) {
+      if (props.ID_LIST[i].Lecture_ID === subject)
+        LIST[cnt++] = props.ID_LIST[i];
+    }
+    console.log(LIST);
     try {
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
-        ID_LIST: props.ID_LIST,
+        ID_LIST: LIST,
         PID: props.pnumber,
         DeadLine: props.pdate,
       };
@@ -83,8 +90,22 @@ const Assignments = () => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
 
           console.log("Data: ", data);
-          setStudent(data);
-          setID_LIST(data);
+          let compare = student;
+          console.log(compare);
+          for (let i = 0; i < compare.length; ++i) {
+            for (let j = 0; j < data.length; ++j) {
+              if (
+                data[j].Lecture_ID === compare[i].Lecture_ID &&
+                data[j].ID === compare[i].ID
+              ) {
+                compare[i].result = data[i].result;
+                break;
+              }
+            }
+          }
+          console.log(compare);
+          setStudent(compare);
+          setID_LIST(compare);
           // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
           setLoading(false);
         });
@@ -140,9 +161,9 @@ const Assignments = () => {
         <div className="overScroll">
           {subject &&
             student.map((data, index) => (
-              <>
+              <React.Fragment key={data.ID}>
                 {subject === data.Lecture_ID ? (
-                  <div key={data.ID} className="p-head">
+                  <div className="p-head">
                     <span>{lectureName}</span>
                     <span>{data.ID}</span>
                     <span>{data.name}</span>
@@ -155,7 +176,7 @@ const Assignments = () => {
                     {/* <input type="text" value={data} id={"ID"+index} ></input> */}
                   </div>
                 ) : null}
-              </>
+              </React.Fragment>
             ))}
         </div>
       </div>
