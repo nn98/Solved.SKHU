@@ -248,6 +248,7 @@
   |설명서를 보기좋게 추가하고 싶음|react mui인 mediacard를 import하고<br>드롭 다운 아이콘을 추가해 설명서가 나오도록 구현|2022-05-09|`S`|
   |클립보드에 복사하는 기능을 알지 못함|navigator.clipboard.writeText() 함수에 복사할 텍스트를 매개변수로 보내<br>비동기(async) 함수 내에서 호출한다.|2022-05-19|`S`|
   |algorithm 페이지를 갔다 오면 MUI Button 태그에 문제 발생|algorithm 페이지에 MUI Button을 일반 html button으로 변경|2022-05-24|`S`|
+  |React에서 map 시에 key값은 꼭 최상위 태그에 있어야 하지만<br> 삼항연산자 안에 있으면 최상위가 되지 않아 빈 태그로 묶어 놓으면 빈 태그에는 key 속성 사용 불가함|빈 태그에 <React.Fragment></React.Fragment>형식으로 만드면 key 속성 사용 가능|2022-05-31|`L`|
   
   </details>
 
