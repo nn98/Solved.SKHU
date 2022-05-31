@@ -204,6 +204,7 @@ app.get("/get", (req, res) => {
 
 // Recommend - User
 app.post("/rating", (req, res) => {
+  let i,j;
   const sqls1 = [[""],[" "],
   ["select * from User where skhurank = (select skhurank from User where ID=?)-2 union"],
   ["select * from User where skhurank = (select skhurank from User where ID=?)-1 union"]
@@ -222,29 +223,29 @@ app.post("/rating", (req, res) => {
   +"group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;"]];
   
   connection.query(sqls[0], req.body,function(err, result,fields){
-    let i = result;
+    i = result;
   })
   connection.query(query1, req.body,function(err, result,fields){
-    let j = result;
+    j = result;
   })
   // 사용해야 함
-  // let k = 5-i < 2 ? 2 : 5-i;
-  // let problems;
-  // let users;
-  // for(k;k <= j-i+3&k<6;k++){
-  //   problems += sqls[k];
-  //   users += sqls1[k];
-  // }
-  // problems += sqls[sqls.length-1];
-  // users += sqls1[sqls.length-1];
-  // connection.query(problems+users, req.body, function (err, result, fields) {
-  //   if (err) {
-  //     res.send({ error: err.errno });
-  //   } else {
-  //     console.log(result);
-  //     res.send(result);
-  //   }
-  // });
+  let k = 5-i < 2 ? 2 : 5-i;
+  let problems;
+  let users;
+  for(k;k <= j-i+3&k<6;k++){
+    problems += sqls[k];
+    users += sqls1[k];
+  }
+  problems += sqls[sqls.length-1];
+  users += sqls1[sqls.length-1];
+  connection.query(problems+users, req.body, function (err, result, fields) {
+    if (err) {
+      res.send({ error: err.errno });
+    } else {
+      console.log(result);
+      res.send(result);
+    }
+  });
 });
 // app.post("/rating", (req, res) => {
 //   const sql = "select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID"
