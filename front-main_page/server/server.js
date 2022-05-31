@@ -9,6 +9,7 @@ const waitNotify = new WaitNotify()
 const waitNotify2 = new WaitNotify()
 let AssignTaskExecute = false
 
+
 // cors 사용하여 정보 받는 것 우회하기
 app.use(cors())
 
@@ -84,6 +85,7 @@ app.post('/QnAAdd', (req, res) => {
     'SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;'
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err
+
     if (result.length === 0) {
       res.send({ error: '사용자가 올바르지 않습니다.' })
     } else {
@@ -348,6 +350,7 @@ app.get('/BestAlgorithm', (req, res) => {
     if (err) throw err
     // result는 가져온 결과값
     console.log(result) // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+
 
     res.send(result)
   })
