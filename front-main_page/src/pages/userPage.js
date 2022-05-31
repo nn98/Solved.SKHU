@@ -149,17 +149,39 @@ const UserPage = () => {
   return (
     <div className="user">
       <div className="head">
-        <h1>
-        <a href={'https://solved.ac/problems/level/'+user.tier}>
-        <img
-            style={{ width: '1.4rem', padding:'0 10px 0 0'}}
-            src={'https://static.solved.ac/tier_small/' + user.tier + '.svg'}
-            alt="profile"
-          />
+        <span style={{ width: '10vh', margin: '1%' }}>
+          <a
+            href={
+              'https://solved.ac/problems/level/' + (user.tier ? user.tier : 0)
+            }
+          >
+            <img
+              style={{ width: '1.7rem', padding: '0 10px 0 0' }}
+              src={
+                'https://static.solved.ac/tier_small/' +
+                (user.tier ? user.tier : 0) +
+                '.svg'
+              }
+              alt="profile"
+            />
           </a>
+        </span>
+        <span style={{ fontSize: '2em', fontWeight: 'bold' }}>
           {location.state ? location.state.userId : 'q9922000'}
-        </h1>
-        <h3>{user.solvedCount}문제 해결</h3>
+        </span>
+        <br />
+
+        <span
+          style={{
+            width: '10%',
+            margin: user.solvedCount ? '1%' : '2.1%',
+            fontSize: '1.5em',
+            fontWeight: 'bold',
+          }}
+        >
+          {user.solvedCount}
+        </span>
+        <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>문제 해결</span>
       </div>
       <div className="use">
         <div className="tearTable">
