@@ -1,3 +1,4 @@
+// npm i wait-notify puppeteer cheerio
 const express = require("express");
 const app = express();
 const cors = require("cors");
