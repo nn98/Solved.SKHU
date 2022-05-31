@@ -10,23 +10,13 @@ import Paper from "@mui/material/Paper";
 import CopyRadioButtonsGroup from "./MUI/CopyRadioButtonsGroup";
 import MultipleSelect from "./MUI/MultipleSelect";
 
-const ID_LIST_EX = [
-  { ID: "201732024", name: "", bojid: "neck392", result: "" },
-  { ID: "201732029", name: "", bojid: "kshyun419", result: "" },
-  { ID: "201732025", name: "", bojid: "asas6614", result: "" },
-  { ID: "201732014", name: "", bojid: "djwls0843", result: "" },
-  { ID: "201732012", name: "", bojid: "kwj9294", result: "" },
-  // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
-  // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
-  // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
-];
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
   const [subject, setSubject] = useState("");
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
   const [copy, setCopy] = useState("");
-  const [ID_LIST, setID_LIST] = useState([]);
+  const [ID_LIST, setID_LIST] = useState();
   const [lecture, setLecture] = useState([]);
   const [student, setStudent] = useState([]);
   const [lectureName, setLectureName] = useState();
@@ -35,7 +25,8 @@ const Assignments = () => {
     if (copy === "resultCopy") {
       let clipBoard = "";
       for (let i = 0; i < ID_LIST.length; ++i) {
-        clipBoard += ID_LIST[i].result + "\n";
+        if (ID_LIST[i].Lecture_ID === subject)
+          clipBoard += ID_LIST[i].result + "\n";
       }
       try {
         await navigator.clipboard.writeText(clipBoard);
@@ -46,9 +37,12 @@ const Assignments = () => {
     } else if (copy === "allCopy") {
       let clipBoard = "";
       for (let i = 0; i < ID_LIST.length; ++i) {
-        clipBoard += ID_LIST[i].studentID + " ";
-        clipBoard += ID_LIST[i].userID + " ";
-        clipBoard += ID_LIST[i].result + "\n";
+        if (ID_LIST[i].Lecture_ID === subject) {
+          clipBoard += ID_LIST[i].ID + " ";
+          clipBoard += ID_LIST[i].name + " ";
+          clipBoard += ID_LIST[i].bojid + " ";
+          clipBoard += ID_LIST[i].result + "\n";
+        }
       }
       try {
         await navigator.clipboard.writeText(clipBoard);
@@ -89,6 +83,7 @@ const Assignments = () => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
 
           console.log("Data: ", data);
+          setStudent(data);
           setID_LIST(data);
           // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
           setLoading(false);
@@ -110,7 +105,6 @@ const Assignments = () => {
           setID_LIST(data[1]);
           console.log("setLec:", lecture);
           console.log("setStu:", student);
-          console.log("setIDLIST:",ID_LIST);
         });
     } catch (error) {
       console.error(error);
@@ -119,7 +113,7 @@ const Assignments = () => {
 
   useEffect(() => {
     subjectAdd();
-  }, [copy]);
+  }, []);
 
   return (
     <div className="assign">
@@ -136,7 +130,7 @@ const Assignments = () => {
             top: "0px",
             textAlign: "center",
           }}
-         >
+        >
           <span>{lectureName}</span>
           <span>학번</span>
           <span>이름</span>
@@ -144,20 +138,24 @@ const Assignments = () => {
           <span>결과</span>
         </div>
         <div className="overScroll">
-          {student &&
+          {subject &&
             student.map((data, index) => (
-              <div key={data.ID}>
+              <>
                 {subject === data.Lecture_ID ? (
-                  <div id="ID_LIST" className="p-head">
+                  <div key={data.ID} className="p-head">
                     <span>{lectureName}</span>
                     <span>{data.ID}</span>
                     <span>{data.name}</span>
                     <span>{data.bojid}</span>
-                    <span>{String(data.result)}</span>
+                    <span>
+                      {String(data.result) === "undefined"
+                        ? ""
+                        : String(data.result)}
+                    </span>
                     {/* <input type="text" value={data} id={"ID"+index} ></input> */}
                   </div>
                 ) : null}
-              </div>
+              </>
             ))}
         </div>
       </div>
@@ -248,7 +246,7 @@ const Assignments = () => {
           color="inherit"
           onClick={() =>
             onClickStart({
-              ID_LIST_EX,
+              ID_LIST,
               pnumber,
               pdate,
             })
