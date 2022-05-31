@@ -9,7 +9,7 @@ import CalendarHeatmap from 'react-calendar-heatmap'
 import 'react-calendar-heatmap/dist/styles.css'
 import ReactTooltip from 'react-tooltip'
 
-const UserPage = () => {
+const UserPage = (props) => {
   const location = useLocation()
   const save = usersJ
   const [user, setUser] = useState({})
@@ -34,7 +34,12 @@ const UserPage = () => {
   ]
   const userAdd = async () => {
     try {
-      const t = location.state !== null ? location.state.userId : 'q9922000'
+      const t =
+        props.globalID === ''
+          ? location.state !== null
+            ? location.state.userId
+            : 'q9922000'
+          : props.globalID
       // const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
       // 잔디
       await fetch(
@@ -163,8 +168,9 @@ const UserPage = () => {
   }
 
   useEffect(() => {
+    console.log(props.globalID)
     userAdd()
-  }, [location.state])
+  }, [location.state, props.globalID])
 
   return (
     <div className="user">
@@ -187,7 +193,11 @@ const UserPage = () => {
           </a>
         </span>
         <span style={{ fontSize: '2em', fontWeight: 'bold' }}>
-          {location.state ? location.state.userId : 'q9922000'}
+          {props.globalID === ''
+            ? location.state !== null
+              ? location.state.userId
+              : 'q9922000'
+            : props.globalID}
         </span>
         <br />
 
