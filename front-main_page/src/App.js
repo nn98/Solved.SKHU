@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Footer from "./footer";
 import MainMenu from "./mainMenu";
@@ -14,28 +14,28 @@ import Register from "./pages/register";
 import ProRegister from "./pages/ProRegister";
 import StudentRegister from "./pages/StudentRegister";
 // import { QnA } from './pages'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   // 랭킹 페이지 변수
-  const [ranking, setRanking] = useState([])
+  const [ranking, setRanking] = useState([]);
   // 각 페이지 에서 필요한 정보 추가
   const add = async () => {
     try {
-      await fetch('http://localhost:3001/ranking')
+      await fetch("http://localhost:3001/ranking")
         .then((res) => res.json())
         .then((data) => {
           // console.log(data)
-          setRanking(data)
-        })
+          setRanking(data);
+        });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
-    add()
-  }, [])
+    add();
+  }, []);
   return (
     <>
       <MainMenu />
@@ -54,7 +54,7 @@ function App() {
       </Routes>
       <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
