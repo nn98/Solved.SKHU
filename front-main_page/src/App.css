@@ -1,3 +1,18 @@
+.root {
+  width: 1300px;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1300px) {
+  .root {
+    width: 100vw;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+}
+
 .main-menu {
   -webkit-user-select: none;
   -moz-user-select: none;

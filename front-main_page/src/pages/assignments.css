@@ -60,7 +60,7 @@
   display: inline-block;
   width: 20%;
 }
-.p-head:nth-child(odd) {
+.assign .p-head:nth-child(odd) {
   background-color: #f0f0f0;
 }
 

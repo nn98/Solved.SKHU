@@ -384,6 +384,10 @@ app.post("/studentRegister", (req, res) => {
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
   if (b.sC == 'stuSK#') {
     console.log("Student code is correct");
+    let sql0 =
+      "select * from Student where id =" +
+      Number(b.sI) +
+      ");";
     let sql =
       "insert into Student (ID, name, bojid) values(" +
       Number(b.sI) +
@@ -519,7 +523,7 @@ app.post("/assignments", async (req, res) => {
 /* Assignment Part - 2022-05-19 */
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
-process.setMaxListeners(50);
+process.setMaxListeners(60);
 
 let pID = 1085;
 let processID;

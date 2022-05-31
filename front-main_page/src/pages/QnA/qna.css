@@ -180,6 +180,10 @@
   float: right;
   margin-top: 0.5rem;
 }
+.comment_delete_button:hover {
+  background: #ff4949;
+}
+
 .input_name {
   display: block;
   width: 20rem;

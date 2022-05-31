@@ -11,11 +11,11 @@ import CopyRadioButtonsGroup from "./MUI/CopyRadioButtonsGroup";
 import MultipleSelect from "./MUI/MultipleSelect";
 
 const ID_LIST_EX = [
-  { studentID: "201732024", name: "", userID: "neck392", result: "" },
-  { studentID: "201732029", name: "", userID: "kshyun419", result: "" },
-  { studentID: "201732025", name: "", userID: "asas6614", result: "" },
-  { studentID: "201732014", name: "", userID: "djwls0843", result: "" },
-  { studentID: "201732012", name: "", userID: "kwj9294", result: "" },
+  { ID: "201732024", name: "", bojid: "neck392", result: "" },
+  { ID: "201732029", name: "", bojid: "kshyun419", result: "" },
+  { ID: "201732025", name: "", bojid: "asas6614", result: "" },
+  { ID: "201732014", name: "", bojid: "djwls0843", result: "" },
+  { ID: "201732012", name: "", bojid: "kwj9294", result: "" },
   // "rladnr128", "skhu1024", "haeunkim0807", "jwnamid", "hpsd417",
   // "parkjh6275", "ssb1870", "ssj2012sms", "lsy1210", "skl0519",
   // "qmffmzpdl", "idotu", "yebinac", "dlak0011"
@@ -26,7 +26,7 @@ const Assignments = () => {
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
   const [copy, setCopy] = useState("");
-  const [ID_LIST, setID_LIST] = useState(ID_LIST_EX);
+  const [ID_LIST, setID_LIST] = useState([]);
   const [lecture, setLecture] = useState([]);
   const [student, setStudent] = useState([]);
   const [lectureName, setLectureName] = useState();
@@ -67,7 +67,7 @@ const Assignments = () => {
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
-        ID_LIST: props.ID_LIST_EX,
+        ID_LIST: props.ID_LIST,
         PID: props.pnumber,
         DeadLine: props.pdate,
       };
@@ -107,8 +107,10 @@ const Assignments = () => {
           console.log("Stu:", data[1]);
           setLecture(data[0]);
           setStudent(data[1]);
+          setID_LIST(data[1]);
           console.log("setLec:", lecture);
           console.log("setStu:", student);
+          console.log("setIDLIST:",ID_LIST);
         });
     } catch (error) {
       console.error(error);
