@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,8 +19,6 @@ public class Problem {
 		int solved = 0;
 		// tier별 페이지
 		int x = 0;
-		// 문제 이름을 담을 배열(문제 이름 뒤에 STANDARD를 제거하기 위함)
-		String[] str;
 		// tier별 페이지(0 ~ 30)
 		while(x<=30) {
 		try {
@@ -37,29 +33,22 @@ public class Problem {
 			st.executeUpdate("use SWP;");
 			// 각 티어별 페이지 수 계산
 		Document doc = Jsoup.connect("https://solved.ac/problems/level/"+x).get();
-		Elements page = doc.select("div[class=\"Paginationstyles__PaginationWrapper-sc-bdna5c-2 gFzrWw\"]");
+		Elements page = doc.select("div.css-18lc7iz a");
 		// 각 티어별 페이지 수 계산할 배열
 		String[] s = page.text().split(" ");
 		System.out.println(s[s.length-1]);
 		// 페이지 수만큼 반복
-		for(int i = 0;i<Integer.parseInt(s[s.length-1]);i++) {
-			doc = Jsoup.connect("https://solved.ac/problems/level/"+x+"?page="+(i+1)).get();
-			page = doc.select("div.sticky-table-cell");
-			int z = 4;
-			int y = 5;
-			for(int j = 0;j<(page.size()/4)-1;j++) {
-				id = Integer.parseInt(page.get(z).text());
-				str = page.get(y).text().split(" ");
-				if(str[str.length-1].equals("STANDARD")) {
-					namekr = page.get(y).text().substring(0, page.get(y).text().length()-9);
-				}else {
-					namekr = page.get(y).text();
-				}
-
-//				System.out.println(page.get(z).text()+" "+page.get(y).text());
-				z+=4;
-				y+=4;
+		for(int i = 1;i<=Integer.parseInt(s[s.length-1]);i++) {
+			doc = Jsoup.connect("https://solved.ac/problems/level/"+x+"?page="+i).get();
+			Elements d = doc.select("div.css-qijqp5 a");
+			for(int k = 0;k<d.size();k+=2) {
+				id = Integer.parseInt(d.get(k).text());
+				namekr = d.get(k+1).text();
 				solved = x;
+//				System.out.println(d.get(k).text()+" "+d.get(k+1).text()+" "+x);
+					}
+				}
+				x++;
 				sql = "insert into Problem(ID, namekr, SOLVED_RANK) values(?, ?, ?)";
 				PreparedStatement pst = con.prepareStatement(sql);
 				pst.setInt(1, id);
@@ -67,9 +56,6 @@ public class Problem {
 				pst.setInt(3, solved);
 				pst.execute();
 				pst.close();
-				}
-		}
-		x++;
 		rs = st.executeQuery("select * from Problem;");
 		 // 현재 데이터베이스에 들어간 값 출력하기
 		 while(rs.next()) {
