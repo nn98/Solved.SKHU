@@ -205,62 +205,29 @@ const UserPage = () => {
       </div>
       <div className="use">
         <div className="zandi">
-          <div className="zandi-in">
-            <CalendarHeatmap
-              startDate={new Date('2022-01-01')}
-              endDate={new Date('2022-12-31')}
-              values={userZandi}
-              monthLabels={month}
-              showWeekdayLabels={true}
-              classForValue={(value) => {
-                let c = 0
-                if (!value) {
-                  return 'color-empty'
-                } else {
-                  if (value.count >= 1 && value.count <= 4) c = 1
-                  else if (value.count >= 5 && value.count <= 9) c = 2
-                  else if (value.count >= 10 && value.count <= 14) c = 3
-                  else if (value.count >= 15) c = 4
-                }
-                return `color-beammp-${c}`
-              }}
-              tooltipDataAttrs={(value) => {
-                return { 'data-tip': `${value.date} ${value.count}문제` }
-              }}
-            />
-            <ReactTooltip />
-            {/* <CalendarHeatmap
-              startDate={new Date('2022-01-01')}
-              endDate={new Date('2022-12-31')}
-              values={userZandi}
-              // color
-              monthLabels={month}
-              showWeekdayLabels={true}
-              classForValue={(value) => {
-                let c = 0
-                if (!value) {
-                  return 'color-empty'
-                } else {
-                  if (value.count >= 1 && value.count <= 4) c = 1
-                  else if (value.count >= 5 && value.count <= 9) c = 2
-                  else if (value.count >= 10 && value.count <= 14) c = 3
-                  else if (value.count >= 15) c = 4
-                }
-                return `color-scale-${c}`
-              }}
-              tooltipDataAttrs={(value) => {
-                if (!value || !value.date) {
-                  return null
-                }
-                return {
-                  'data-tip': `${value.date.slice(0, 10)} has count: ${
-                    value.count
-                  }`,
-                }
-              }}
-            />
-            <ReactTooltip /> */}
-          </div>
+          <CalendarHeatmap
+            startDate={new Date('2022-01-01')}
+            endDate={new Date('2022-12-31')}
+            values={userZandi}
+            monthLabels={month}
+            showWeekdayLabels={false}
+            classForValue={(value) => {
+              let c = 0
+              if (!value) {
+                return 'color-empty'
+              } else {
+                if (value.count >= 1 && value.count <= 4) c = 1
+                else if (value.count >= 5 && value.count <= 9) c = 2
+                else if (value.count >= 10 && value.count <= 14) c = 3
+                else if (value.count >= 15) c = 4
+              }
+              return `color-beammp-${c}`
+            }}
+            tooltipDataAttrs={(value) => {
+              return { 'data-tip': `${value.date} ${value.count}문제` }
+            }}
+          />
+          <ReactTooltip />
         </div>
         <div className="tearTable">
           <p>난이도 분포</p>
