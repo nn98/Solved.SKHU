@@ -133,16 +133,18 @@
   |--|--|--|--|
   |테스트|MySql DB와 Node.js Server 연동.<br>서버에서 실행한 쿼리 결과를 json으로 파싱|2020-03-24|`A`|
   |구현|QnA페이지 간의 삭제, 등록, 답변 기능 구현|2022-05-10|`L`|
-  |구현|User페이지 유저가 푼 문제<br>Solved API 활용 값 삽입|2022-05-24|`A`|
+  |완료|User페이지 유저가 푼 문제<br>Solved API 활용 값 삽입|2022-05-28|`A`|
+  |완료|Recommend Page<br>DB연동 후 값 삽입|2022-06-01|`A`|
   
   ## Errors-#7
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |1번 문제 <br>mysql 연동 문제|검색을 해보니 connection.end()를 사용하면 안되었는데 <br>connection.end()를 사용하여서현재 json으로 <br>값이 도출이 되지 않았습니다 그래서 <br>.end()를 주석처리 하고 진행하였다.|2022-03-21|`A`|
-  |2번 문제 <br>pullrequest|새로운 브랜치를 만든 후(github상에 있지 않는) github remote를 하고, <br>필요파일을 만든다 그 후에 git pull origin main을 한다 그 이후에 vscode를 이용해서<br>github pullrequest라는 플러그인을 이용하여 해결|2022-03-21|`A`|
-  |3번 문제 <br>pullrequest|inflearn공부를 통하여 실습한 sql connect 풀 리퀘스트를 하려하였지만, <br>git pull에서부터 문제가 생겨서 <br>git pull origin main --allow-unrelated-histories로  연결하여서 해결하였다.|2022-03-22|`A`|
-  |||2022-03-22|`A`|
-  |QnA의 컨텐츠와 그의 답변을 QnA와 QnAInner 테이블에서 select join으로 한번에 불러오려고 하였으나 <br> 중복이 많이 select되고 QnA 안에 있는 답변들이 객체 값 안으로 출력 불가| QnA와 QnAInner 테이블에서 select join 시 자동적으로 불러오지 QnA객체 안에 답변들이 들어오지 않는다.<br>그래서, QnA QnAInner 따로 불러온 뒤 QnA의 ID값에 따라 답변들을 출력함|2022-05-10|`L`|
+  |mysql 연동 문제|검색을 해보니 connection.end()를 사용하면 안되었는데 <br>connection.end()를 사용하여서현재 json으로 <br>값이 도출이 되지 않았습니다 그래서 <br>.end()를 주석처리 하고 진행하였다.|2022-03-21|`A`|
+  |pullrequest|새로운 브랜치를 만든 후(github상에 있지 않는) github remote를 하고, <br>필요파일을 만든다 그 후에 git pull origin main을 한다 그 이후에 vscode를 이용해서<br>github pullrequest라는 플러그인을 이용하여 해결|2022-03-21|`A`|
+  |pullrequest|inflearn공부를 통하여 실습한 sql connect 풀 리퀘스트를 하려하였지만, <br>git pull에서부터 문제가 생겨서 <br>git pull origin main --allow-unrelated-histories로  연결하여서 해결하였다.|2022-03-22|`A`|
+  |QnA의 컨텐츠와 그의 답변을 QnA와 QnAInner 테이블에서 select join으로 한번에 불러오려고 하였으나 <br> 중복이 많이 select되고 QnA 안에 있는 답변들이 객체 값 안으로 출력 불가| QnA와 
+  QnAInner 테이블에서 select join 시 자동적으로 불러오지 QnA객체 안에 답변들이 들어오지 않는다.<br>그래서, QnA QnAInner 따로 불러온 뒤 QnA의 ID값에 따라 답변들을 출력함|2022-05-10|`L`|
+  |문제 추천 페이지|해당 유저 기준 위 아래 2명씩<br>해당 유저는 풀지 않았지만, 다른 유저는 푼<br>문제리스트를 출력해줄 때 위가 존재하지 않는 1등<br>아래가 존재하지 않는 꼴등이 존재 그래서<br>점화식을 이용하여 해결|2022-06-01|`A`|
   
   </details>
   
