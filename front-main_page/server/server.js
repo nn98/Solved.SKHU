@@ -192,16 +192,6 @@ app.post('/QnAInnerDelete', (req, res) => {
 //
 // 기타 api @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-app.get('/get', (req, res) => {
-  const sql = 'select * from Problem LIMIT 0,10'
-
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err
-    console.log(result)
-    res.send(result)
-  })
-})
-
 // Recommend - User
 
 app.post('/rating', async (req, res) => {
@@ -385,13 +375,6 @@ app.post('/userPage', (req, res) => {
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
 })
 
-app.post('/register', (req, res) => {
-  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  console.log(req)
-  const b = req.body
-  res.send(b) // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-})
 
 app.post('/proRegister', (req, res) => {
   console.log('proRegister/post ', 'is called')
@@ -559,7 +542,7 @@ app.get('/assignments', (req, res) => {
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) {
-      console.log('error', err)
+      console.log('error in assignments-get', err)
       throw err
     }
     // result는 가져온 결과값
@@ -589,28 +572,102 @@ app.get('/assignments', (req, res) => {
   //   res.json(returnStates);
   // });
 })
+const puppeteer = require('puppeteer')
+const cheerio = require('cheerio')
+process.setMaxListeners(50)
+app.get('/get', (req, res) => {
+  const sql = 'select * from Problem LIMIT 0,10'
 
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err
+    console.log(result)
+    res.send(result)
+  })
+})
+app.get('/register', (req, res) => {
+  const b = req.body;
+  const url = 'https://solved.ac/ranking/o/309'
+  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
+  // ID, problems, solvedrank, worldrank, skhurank,tier, rating,class,pro,correction
+  addRegister('q9922000',url)
+  console.log(b)
+  res.send(b) // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
+})
+app.post('/register', (req, res) => {
+  const b = req.body;
+  const url = 'https://solved.ac/ranking/o/309'
+  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
+  // ID, problems, solvedrank, worldrank, skhurank,tier, rating,class,pro,correction
+  const sql = 'insert into User values(?,?,?,?,?,?,?,?,?)'
+  addRegister('q9922000',url)
+  console.log(b)
+  res.send(b) // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
+})
+async function addRegister(pID,url) {
+  
+  puppeteer
+    .launch({ headless: true })
+    .then(async (browser) => {
+      if (mAsyncTaskExecute) {
+        await waitNotify.wait()
+      }
+      mAsyncTaskExecute = true
+      const page = await browser.newPage()
+
+      
+      await page.goto(url, { waitUntil: 'networkidle2' })
+      const content = await page.content();
+        // $에 cheerio를 로드한다.
+        const $ = cheerio.load(content);
+        let status=[];
+        // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
+        const lists = $("tr");
+        // console.log(lists);
+        // 모든 리스트를 순환한다.
+        lists.each((index, list) => {
+            const name = $(list).find("td").toString();
+            // const name0 = $(list).find("td").text();
+            console.log(index);
+            console.log(name);
+            status.push(name);
+            // console.log(name0);
+            // 인덱스와 함께 로그를 찍는다.
+            // console.log({
+            //     index, name
+            // });
+        });
+
+      // const html = await page.$eval('td.result', (e) => e.outerHTML)
+
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
 // req는 소스코드로부터 받은 서버로 보낼 JSON 파일이 담긴 요청, res는 서버가 보낸 응답정보를 저장한 객체이고 우리는 JSON 파일 형식을 사용할 것임
 app.post('/assignments', async (req, res) => {
   console.log('Assignments/post ', 'is called')
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  const b = req.body
+  // const b = req.body
   console.log(req.body)
-  results = []
 
-  console.log('Default\tID_LIST', ID_LIST)
+  // console.log('Default\tID_LIST', ID_LIST)
   console.log('Req\tID_LIST', req.body.ID_LIST)
   console.log('Problem ID\t', req.body.PID)
 
-  ID_LIST = req.body.ID_LIST
-  pID = req.body.PID
+  let ID_LIST = req.body.ID_LIST
+  let pID = req.body.PID
   // Assignment.pID=req.body.pID;
   AssignTaskExecute = true
-  run()
+  let fuck=[]
+  console.log('rere at post:',fuck);
+  run(ID_LIST,pID,fuck)
   if (AssignTaskExecute) await waitNotify2.wait()
 
-  console.log('send response: ', results)
-  res.send(results)
+  console.log('send response: ', fuck)
+  res.send(fuck)
 })
 // res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
 //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
@@ -618,42 +675,41 @@ app.post('/assignments', async (req, res) => {
 // connection.end()
 
 /* Assignment Part - 2022-05-19 */
-const puppeteer = require('puppeteer')
-const cheerio = require('cheerio')
-process.setMaxListeners(50)
 
-let pID = 1085
-let processID
-let results = []
+// let pID = 1085
+// let processID
+// let results = []
 let mAsyncTaskExecute = false
 let urls = [
   'https://www.acmicpc.net/status?problem_id=',
   '&user_id=',
-  '&language_id=-1&result_id=4',
+  '&language_id=-1&result_id=-1',
 ]
 
 /* Test Data => replace by Req */
-let ID_LIST = [
-  'kshyun419',
-  'asas6614',
-  'kwj9294',
-  'skhu1024',
-  'rladnr128',
-  // "yebinac", "idotu", "neck392", "qmffmzpdl", "skl0519"
-]
+// let ID_LIST = [
+//   'kshyun419',
+//   'asas6614',
+//   'kwj9294',
+//   'skhu1024',
+//   'rladnr128',
+//   // "yebinac", "idotu", "neck392", "qmffmzpdl", "skl0519"
+// ]
 /* */
 
-async function run() {
-  console.log('1. run')
+async function run(ID_LIST,pID,fuck) {
+  console.log('1. run',fuck)
   console.log('ID_LIST', ID_LIST)
   console.log('pID', pID)
-  processID = ID_LIST[0].bojid
+  let processID = ID_LIST[0].bojid
   let url = urls[0] + pID + urls[1] + processID + urls[2]
-  execute(url)
+  console.log('rere at run:',fuck);
+  execute(ID_LIST,pID,processID,url,fuck)
 }
 
-async function execute(url) {
+async function execute(ID_LIST,pID,processID,url,fuck) {
   console.log('2. execute')
+  console.log('rere at execute:',fuck);
   puppeteer
     .launch({ headless: true })
     .then(async (browser) => {
@@ -665,30 +721,59 @@ async function execute(url) {
       mAsyncTaskExecute = true
       const page = await browser.newPage()
 
+      console.log('rere at puppet:',fuck);
       await page.goto(url, { waitUntil: 'networkidle2' })
+      const content = await page.content();
+        // $에 cheerio를 로드한다.
+        const $ = cheerio.load(content);
+        let status=[];
+        let solve=false;
+        // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
+        const lists = $("tr");
+        // console.log(lists);
+        // 모든 리스트를 순환한다.
+        lists.each((index, list) => {
+            const name = $(list).find("td").toString();
+            // const name0 = $(list).find("td").text();
+            console.log(index);
+            // console.log(name);
+            status.push(name);
+            // console.log(name0);
+            // 인덱스와 함께 로그를 찍는다.
+            // console.log({
+            //     index, name
+            // });
+        });
 
       const html = await page.$eval('td.result', (e) => e.outerHTML)
 
-      ID_LIST[0].result = html.includes('맞았습니다!!')
-      results.push(ID_LIST.shift())
+      ID_LIST[0].result = html.includes('맞았습니다!!')?20:(html.includes('틀렸습니다')?10:0);
+      ID_LIST[0].status=status;
+      // ID_LIST[0].status = status;
+      // status good
+      // console.log("!status : ",status);
+      console.log('rere at result:',fuck);
+      fuck.push(ID_LIST.shift())
+      // fuck.push(status);
       console.log('\t\t', processID, 'is solve')
-      isFinish()
+      isFinish(ID_LIST,pID,fuck)
     })
     .catch((error) => {
       console.log('\t\t', processID, "isn't solve")
-      ID_LIST[0].result = false
-      results.push(ID_LIST.shift())
-      isFinish()
+      ID_LIST[0].result = 0;
+      ID_LIST[0].status='';
+      fuck.push(ID_LIST.shift())
+      isFinish(ID_LIST,pID,fuck)
     })
 }
 
-async function isFinish() {
+async function isFinish(ID_LIST,pID,fuck) {
   console.log('3. isFinish')
-
+  console.log('rere at isFin:',fuck);
   waitNotify.notify()
   mAsyncTaskExecute = false
   if (ID_LIST.length == 0) {
-    console.log('result: ', results)
+    console.log('result: ', fuck)
     AssignTaskExecute = false
     waitNotify2.notify()
     // process.exit(0);
@@ -696,9 +781,7 @@ async function isFinish() {
     console.log(
       '-------------------------------------------------------------------------'
     )
-    run()
+    console.log('isFin > run',fuck);
+    run(ID_LIST,pID,fuck)
   }
 }
-
-
-
