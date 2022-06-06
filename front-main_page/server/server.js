@@ -7,6 +7,7 @@ const port = process.env.PORT || 3001;
 const WaitNotify = require("wait-notify");
 const waitNotify = new WaitNotify();
 const waitNotify2 = new WaitNotify();
+const waitNotify3 = new WaitNotify();
 let AssignTaskExecute = false;
 
 // cors 사용하여 정보 받는 것 우회하기
@@ -191,6 +192,9 @@ app.post("/QnAInnerDelete", (req, res) => {
 //
 // 기타 api @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+app.post("/addRegister", (req, res) => {
+  const sql = "";
+});
 app.get("/get", (req, res) => {
   const sql = "select * from Problem LIMIT 0,10";
 
@@ -203,95 +207,102 @@ app.get("/get", (req, res) => {
 
 // Recommend - User
 
-app.post("/rating", (req, res) => {
+app.post("/rating", async (req, res) => {
   let i, j;
+  console.log("rating" + req.body.ID);
   const sqls1 = [
-    [""],
-    [" "],
-    [
-      "select * from User where skhurank = (select skhurank from User where ID=?)-2 union",
-    ],
-    [
-      "select * from User where skhurank = (select skhurank from User where ID=?)-1 union",
-    ][
-      "select * from User where skhurank = (select skhurank from User where ID=?)+1 union"
-    ],
-    [
-      "select * from User where skhurank = (select skhurank from User where ID=?)+2)",
-    ],
-    [""],
-  ];
-  const query1 = "select max(skhurank) from User;";
-  const sqls = [
-    ["select skhurank from User where ID = ?;"],
-    [
-      "select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID" +
-        "join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in (",
-    ],
-    [
-      "select ID from User where skhurank = (select skhurank from User where ID=?)-2 union",
-    ],
-    [
-      "select ID from User where skhurank = (select skhurank from User where ID=?)-1 union",
-    ][
-      "select ID from User where skhurank = (select skhurank from User where ID=?)+1 union"
-    ],
-    [
-      "select ID from User where skhurank = (select skhurank from User where ID=?)+2)",
-    ],
-    [
-      "and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = ?)" +
-        "group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;",
-    ],
-  ];
+    "",
+    "",
 
-  connection.query(sqls[0], req.body, function (err, result, fields) {
-    i = result;
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")-2 union ',
+
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")-1 union ',
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '") union ',
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")+1 union ',
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")+2 ',
+
+    ";",
+  ];
+  const query1 = "select max(skhurank) as mSkhurank from User;";
+  const sqls = [
+    'select skhurank from User where ID ="' + req.body.ID + '";',
+    "select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID" +
+      " join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in (",
+
+    'select ID from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")-2 union ',
+
+    'select ID from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")-1 union ',
+
+    'select ID from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")+1 union ',
+    'select ID from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")+2) ',
+
+    'and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = "' +
+      req.body.ID +
+      '")' +
+      "group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;",
+  ];
+  connection.query(sqls[0], function (err, result, fields) {
+    if (err) console.log("@@@@@" + err);
+    for (let data of result) {
+      i = data.skhurank;
+    }
+    console.log("i", i);
   });
   connection.query(query1, req.body, function (err, result, fields) {
-    j = result;
+    if (err) console.log(err);
+    for (let data of result) {
+      j = data.mSkhurank;
+    }
+    console.log("j", j);
+    mAsyncTaskExecute = false;
+    waitNotify3.notify();
   });
+  AssignTaskExecute = true;
+  if (AssignTaskExecute) await waitNotify3.wait();
   // 사용해야 함
-  let k = 5 - i < 2 ? 2 : 5 - i;
-  let problems;
-  let users;
+  let k = Number(Number(5) - i < Number(2) ? Number(2) : Number(5) - i);
+  console.log("k: ", k);
+  let problems = sqls[1];
+  let users = sqls1[1];
   for (k; (k <= j - i + 3) & (k < 6); k++) {
+    // console.log('sqls: ', sqls[k])
     problems += sqls[k];
     users += sqls1[k];
   }
   problems += sqls[sqls.length - 1];
-  users += sqls1[sqls.length - 1];
+  users += sqls1[sqls1.length - 2];
+  users += sqls1[sqls1.length - 1];
+  // console.log(problems+"\n")
+  // console.log(users)
+
   connection.query(problems + users, req.body, function (err, result, fields) {
     if (err) {
+      console.log("@@@@@@@@@@@@@@@@@\n" + err);
       res.send({ error: err.errno });
     } else {
-      console.log(result);
+      // console.log(result)
       res.send(result);
     }
   });
 });
-// app.post("/rating", (req, res) => {
-//   const sql = "select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID"
-//   +"join Problem on Solve.PROBLEM_ID = Problem.ID"
-//   +"where User.ID in ("
-//   +"select ID from User where skhurank = (select skhurank from User where ID=?)+2"
-//   +"union"
-//   +"select ID from User where skhurank = (select skhurank from User where ID=?)+1"
-//   +"union"
-//   +"select ID from User where skhurank = (select skhurank from User where ID=?)-1"
-//   +"union"
-//   +"select ID from User where skhurank = (select skhurank from User where ID=?)-2)"
-//   +"and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = ?)"
-//   +"group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;";
-//   connection.query(sql, req.body, function (err, result, fields) {
-//     if (err) {
-//       res.send({ error: err.errno });
-//     } else {
-//       console.log(result);
-//       res.send(result);
-//     }
-//   });
-// });
 
 // rank.js가 서버에게 요청한 데이터를 받을 코드
 // "/ranking" 서브스트링을 사용하는 방식이 하나밖에 없기 때문에 rank.js는 get방식을 생략할 수 있음
@@ -552,7 +563,7 @@ app.get("/assignments", (req, res) => {
   connection.query(sql, function (err, result, fields) {
     // if문은 에러 출력을 위한 코드
     if (err) {
-      console.log("error", err);
+      console.log("error in assignments-get", err);
       throw err;
     }
     // result는 가져온 결과값
@@ -587,23 +598,24 @@ app.get("/assignments", (req, res) => {
 app.post("/assignments", async (req, res) => {
   console.log("Assignments/post ", "is called");
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  const b = req.body;
+  // const b = req.body
   console.log(req.body);
-  results = [];
 
-  console.log("Default\tID_LIST", ID_LIST);
+  // console.log('Default\tID_LIST', ID_LIST)
   console.log("Req\tID_LIST", req.body.ID_LIST);
   console.log("Problem ID\t", req.body.PID);
 
-  ID_LIST = req.body.ID_LIST;
-  pID = req.body.PID;
+  let ID_LIST = req.body.ID_LIST;
+  let pID = req.body.PID;
   // Assignment.pID=req.body.pID;
   AssignTaskExecute = true;
-  run();
+  let fuck = [];
+  console.log("rere at post:", fuck);
+  run(ID_LIST, pID, fuck);
   if (AssignTaskExecute) await waitNotify2.wait();
 
-  console.log("send response: ", results);
-  res.send(results);
+  console.log("send response: ", fuck);
+  res.send(fuck);
 });
 // res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
 //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
@@ -615,38 +627,40 @@ const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
 process.setMaxListeners(50);
 
-let pID = 1085;
-let processID;
-let results = [];
+// let pID = 1085
+// let processID
+// let results = []
 let mAsyncTaskExecute = false;
 let urls = [
   "https://www.acmicpc.net/status?problem_id=",
   "&user_id=",
-  "&language_id=-1&result_id=4",
+  "&language_id=-1&result_id=-1",
 ];
 
 /* Test Data => replace by Req */
-let ID_LIST = [
-  "kshyun419",
-  "asas6614",
-  "kwj9294",
-  "skhu1024",
-  "rladnr128",
-  // "yebinac", "idotu", "neck392", "qmffmzpdl", "skl0519"
-];
+// let ID_LIST = [
+//   'kshyun419',
+//   'asas6614',
+//   'kwj9294',
+//   'skhu1024',
+//   'rladnr128',
+//   // "yebinac", "idotu", "neck392", "qmffmzpdl", "skl0519"
+// ]
 /* */
 
-async function run() {
-  console.log("1. run");
+async function run(ID_LIST, pID, fuck) {
+  console.log("1. run", fuck);
   console.log("ID_LIST", ID_LIST);
   console.log("pID", pID);
-  processID = ID_LIST[0].bojid;
+  let processID = ID_LIST[0].bojid;
   let url = urls[0] + pID + urls[1] + processID + urls[2];
-  execute(url);
+  console.log("rere at run:", fuck);
+  execute(ID_LIST, pID, processID, url, fuck);
 }
 
-async function execute(url) {
+async function execute(ID_LIST, pID, processID, url, fuck) {
   console.log("2. execute");
+  console.log("rere at execute:", fuck);
   puppeteer
     .launch({ headless: true })
     .then(async (browser) => {
@@ -658,37 +672,69 @@ async function execute(url) {
       mAsyncTaskExecute = true;
       const page = await browser.newPage();
 
+      console.log("rere at puppet:", fuck);
       await page.goto(url, { waitUntil: "networkidle2" });
+      const content = await page.content();
+      // $에 cheerio를 로드한다.
+      const $ = cheerio.load(content);
+      let status = [];
+      let solve = false;
+      // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
+      const lists = $("tr");
+      // console.log(lists);
+      // 모든 리스트를 순환한다.
+      lists.each((index, list) => {
+        const name = $(list).find("td").toString();
+        // const name0 = $(list).find("td").text();
+        console.log(index);
+        // console.log(name);
+        status.push(name);
+        // console.log(name0);
+        // 인덱스와 함께 로그를 찍는다.
+        // console.log({
+        //     index, name
+        // });
+      });
 
       const html = await page.$eval("td.result", (e) => e.outerHTML);
 
-      ID_LIST[0].result = html.includes("맞았습니다!!");
-      results.push(ID_LIST.shift());
+      ID_LIST[0].result = html.includes("맞았습니다!!")
+        ? 20
+        : html.includes("틀렸습니다")
+        ? 10
+        : 0;
+      ID_LIST[0].status = status;
+      // ID_LIST[0].status = status;
+      // status good
+      // console.log("!status : ",status);
+      console.log("rere at result:", fuck);
+      fuck.push(ID_LIST.shift());
+      // fuck.push(status);
       console.log("\t\t", processID, "is solve");
-      isFinish();
+      isFinish(ID_LIST, pID, fuck);
     })
     .catch((error) => {
       console.log("\t\t", processID, "isn't solve");
-      ID_LIST[0].result = false;
-      results.push(ID_LIST.shift());
-      isFinish();
+      ID_LIST[0].result = 0;
+      ID_LIST[0].status = "";
+      fuck.push(ID_LIST.shift());
+      isFinish(ID_LIST, pID, fuck);
     });
 }
 
-async function isFinish() {
+async function isFinish(ID_LIST, pID, fuck) {
   console.log("3. isFinish");
-
+  console.log("rere at isFin:", fuck);
   waitNotify.notify();
   mAsyncTaskExecute = false;
   if (ID_LIST.length == 0) {
-    console.log("result: ", results);
+    console.log("result: ", fuck);
     AssignTaskExecute = false;
     waitNotify2.notify();
     // process.exit(0);
   } else {
-    console.log(
-      "-------------------------------------------------------------------------"
-    );
-    run();
+    console.log("————————————————————————————————————");
+    console.log("isFin > run", fuck);
+    run(ID_LIST, pID, fuck);
   }
 }
