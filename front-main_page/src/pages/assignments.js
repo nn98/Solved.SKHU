@@ -103,6 +103,7 @@ const Assignments = () => {
                 data[j].ID === compare[i].ID
               ) {
                 compare[i].result = data[i].result;
+                compare[i].status = data[i].status;
                 break;
               }
             }
@@ -277,13 +278,18 @@ const Assignments = () => {
         <LoadingButton
           size="small"
           color="inherit"
-          onClick={() =>
-            onClickStart({
-              ID_LIST,
-              pnumber,
-              pdate,
-            })
-          }
+          onClick={() => {
+            if (subject === "") alert("강의를 선택하세요.");
+            else if (pnumber === undefined || pnumber === "")
+              alert("문제번호를 선택하세요.");
+            else if (pdate === undefined) alert("제출 기한을 선택하세요.");
+            else
+              onClickStart({
+                ID_LIST,
+                pnumber,
+                pdate,
+              });
+          }}
           loading={loading}
           loadingIndicator="실행중..."
           variant="contained"
@@ -317,6 +323,7 @@ const Assignments = () => {
         setOpen={setOpen}
         pnumber={pnumber}
         detailName={detailName}
+        student={student}
       ></MaxWidthDialog>
     </div>
   );
