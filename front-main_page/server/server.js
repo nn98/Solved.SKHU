@@ -7,8 +7,8 @@ const port = process.env.PORT || 3001
 const WaitNotify = require('wait-notify')
 const waitNotify = new WaitNotify()
 const waitNotify2 = new WaitNotify()
+const waitNotify3 = new WaitNotify()
 let AssignTaskExecute = false
-
 
 // cors 사용하여 정보 받는 것 우회하기
 app.use(cors())
@@ -24,7 +24,7 @@ app.listen(port, () => {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '54.180.2.70',
+  host: '54.180.98.222',
   user: 'Project',
   password: 'testing00',
   database: 'SWP',
@@ -204,95 +204,102 @@ app.get('/get', (req, res) => {
 
 // Recommend - User
 
-app.post('/rating', (req, res) => {
+app.post('/rating', async (req, res) => {
   let i, j
+  console.log('rating' + req.body.ID)
   const sqls1 = [
-    [''],
-    [' '],
-    [
-      'select * from User where skhurank = (select skhurank from User where ID=?)-2 union',
-    ],
-    [
-      'select * from User where skhurank = (select skhurank from User where ID=?)-1 union',
-    ][
-      'select * from User where skhurank = (select skhurank from User where ID=?)+1 union'
-    ],
-    [
-      'select * from User where skhurank = (select skhurank from User where ID=?)+2)',
-    ],
-    [''],
-  ]
-  const query1 = 'select max(skhurank) from User;'
-  const sqls = [
-    ['select skhurank from User where ID = ?;'],
-    [
-      'select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID' +
-        'join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in (',
-    ],
-    [
-      'select ID from User where skhurank = (select skhurank from User where ID=?)-2 union',
-    ],
-    [
-      'select ID from User where skhurank = (select skhurank from User where ID=?)-1 union',
-    ][
-      'select ID from User where skhurank = (select skhurank from User where ID=?)+1 union'
-    ],
-    [
-      'select ID from User where skhurank = (select skhurank from User where ID=?)+2)',
-    ],
-    [
-      'and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = ?)' +
-        'group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;',
-    ],
-  ]
+    '',
+    '',
 
-  connection.query(sqls[0], req.body, function (err, result, fields) {
-    i = result
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")-2 union ',
+
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")-1 union ',
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '") union ',
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")+1 union ',
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")+2 ',
+
+    ';',
+  ]
+  const query1 = 'select max(skhurank) as mSkhurank from User;'
+  const sqls = [
+    'select skhurank from User where ID ="' + req.body.ID + '";',
+    'select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID' +
+      ' join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in (',
+
+    'select ID from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")-2 union ',
+
+    'select ID from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")-1 union ',
+
+    'select ID from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")+1 union ',
+    'select ID from User where skhurank = (select skhurank from User where ID="' +
+      req.body.ID +
+      '")+2) ',
+
+    'and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = "' +
+      req.body.ID +
+      '")' +
+      'group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;',
+  ]
+  connection.query(sqls[0], function (err, result, fields) {
+    if (err) console.log('@@@@@' + err)
+    for (let data of result) {
+      i = data.skhurank
+    }
+    console.log('i', i)
   })
   connection.query(query1, req.body, function (err, result, fields) {
-    j = result
+    if (err) console.log(err)
+    for (let data of result) {
+      j = data.mSkhurank
+    }
+    console.log('j', j)
+    mAsyncTaskExecute = false
+    waitNotify3.notify()
   })
+  AssignTaskExecute = true
+  if (AssignTaskExecute) await waitNotify3.wait()
   // 사용해야 함
-  let k = 5 - i < 2 ? 2 : 5 - i
-  let problems
-  let users
+  let k = Number(Number(5) - i < Number(2) ? Number(2) : Number(5) - i)
+  console.log('k: ', k)
+  let problems = sqls[1]
+  let users = sqls1[1]
   for (k; (k <= j - i + 3) & (k < 6); k++) {
+    // console.log('sqls: ', sqls[k])
     problems += sqls[k]
     users += sqls1[k]
   }
   problems += sqls[sqls.length - 1]
-  users += sqls1[sqls.length - 1]
+  users += sqls1[sqls1.length - 2]
+  users += sqls1[sqls1.length - 1]
+  // console.log(problems+"\n")
+  // console.log(users)
+
   connection.query(problems + users, req.body, function (err, result, fields) {
     if (err) {
+      console.log('@@@@@@@@@@@@@@@@@\n' + err)
       res.send({ error: err.errno })
     } else {
-      console.log(result)
+      // console.log(result)
       res.send(result)
     }
   })
 })
-// app.post("/rating", (req, res) => {
-//   const sql = "select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID"
-//   +"join Problem on Solve.PROBLEM_ID = Problem.ID"
-//   +"where User.ID in ("
-//   +"select ID from User where skhurank = (select skhurank from User where ID=?)+2"
-//   +"union"
-//   +"select ID from User where skhurank = (select skhurank from User where ID=?)+1"
-//   +"union"
-//   +"select ID from User where skhurank = (select skhurank from User where ID=?)-1"
-//   +"union"
-//   +"select ID from User where skhurank = (select skhurank from User where ID=?)-2)"
-//   +"and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = ?)"
-//   +"group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;";
-//   connection.query(sql, req.body, function (err, result, fields) {
-//     if (err) {
-//       res.send({ error: err.errno });
-//     } else {
-//       console.log(result);
-//       res.send(result);
-//     }
-//   });
-// });
 
 // rank.js가 서버에게 요청한 데이터를 받을 코드
 // "/ranking" 서브스트링을 사용하는 방식이 하나밖에 없기 때문에 rank.js는 get방식을 생략할 수 있음
@@ -351,7 +358,6 @@ app.get('/BestAlgorithm', (req, res) => {
     if (err) throw err
     // result는 가져온 결과값
     console.log(result) // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-
 
     res.send(result)
   })
