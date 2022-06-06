@@ -1,9 +1,9 @@
-.rating {
+.recommend {
   text-align: center;
   width: 90%;
   margin: 0 5%;
 }
-.rating .ratingProblem {
+.recommend .ratingProblem {
   width: auto;
   height: 50vh;
   border: 1px solid #f0f0f0;
@@ -11,14 +11,14 @@
   margin: 2% 0;
 }
 
-.rating .ratingProblem .mostProblem {
+.recommend .ratingProblem .similarStudent {
   padding-top: 4%;
-  width: 50%;
+  width: 47.5%;
   height: 100%;
-  margin: 0 2.5%;
+  margin-left: 2.5%;
   float: left;
 }
-.rating .ratingProblem .mostProblemInner {
+.recommend .ratingProblem .similarStudentInner {
   height: 100%;
   overflow: overlay;
   overflow-x: hidden;
@@ -26,17 +26,17 @@
   width: 100%;
 }
 
-.rating .ratingProblem .minProblem {
-  height: 80%;
+.recommend .ratingProblem .recommendProblem {
+  width: 47.5%;
+  float: left;
+}
+.recommend .ratingProblem .recommendProblem .recommendProblemInner {
+  height: 40vh;
   overflow: overlay;
   overflow-x: hidden;
   -ms-overflow-style: none;
-  width: 40%;
-  margin: 0% 2.5%;
-  float: left;
 }
-
-.rating .p-head {
+.recommend .p-head {
   width: 90%;
   margin: 0 5%;
   padding: 1%;
@@ -51,63 +51,62 @@
 }
 
 /* 가장 적게 푼 문제 테이블의 너비 */
-.rating .ratingProblem .minProblem .p-head span {
+.recommend .ratingProblem .recommendProblem .p-head span {
   display: inline-block;
   width: 20%;
 }
-.rating .ratingProblem .minProblem .p-head span:nth-child(2) {
+.recommend .ratingProblem .recommendProblem .p-head span:nth-child(2) {
   width: 60%;
 }
 
 /* 학생 랭킹 테이블의 너비 */
-.rating .ratingProblem .mostProblem .p-head span {
+.recommend .ratingProblem .similarStudent .p-head span {
   display: inline-block;
   width: 12%;
 }
-.rating .ratingProblem .mostProblem .p-head span:nth-child(3) {
+.recommend .ratingProblem .similarStudent .p-head span:nth-child(3) {
   width: 28%;
+  text-align: left;
 }
 
-.rating a {
+.recommend a {
   text-decoration: none;
   color: black;
 }
-.rating a:hover {
+.recommend a:hover {
   text-decoration: underline;
 }
 
 /* ************************************* */
 /* rank 별 */
-.rating .rankProblem {
+.recommend .rankProblem {
   width: auto;
   height: 70vh;
   border: 1px solid #f0f0f0;
   padding: 2% 0;
   margin: 2% 0;
 }
-.rating .rank {
+.recommend .rank {
   position: sticky;
   top: 0px;
   height: 20vh;
 }
-.rating .rankButton {
+.recommend .rankButton {
   width: 7%;
   display: inline-block;
   margin: 0 3%;
 }
-.rating .rankButton button {
+.recommend .rankButton button {
   width: 100%;
 }
 
-.rating .subRank {
+.recommend .subRank {
   margin: 3% 0;
 }
 
-.rating .rankProblems {
+.recommend .rankProblems {
   width: auto;
   height: 47vh;
-  overflow: overlay;
-  overflow-x: hidden;
   -ms-overflow-style: none;
   border: 1px solid #f0f0f0;
   padding: 2% 0;
