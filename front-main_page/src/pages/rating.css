@@ -81,15 +81,9 @@
 /* rank 별 */
 .recommend .rankProblem {
   width: auto;
-  height: 70vh;
   border: 1px solid #f0f0f0;
   padding: 2% 0;
   margin: 2% 0;
-}
-.recommend .rank {
-  position: sticky;
-  top: 0px;
-  height: 20vh;
 }
 .recommend .rankButton {
   width: 7%;
@@ -105,9 +99,9 @@
 }
 
 .recommend .rankProblems {
-  width: auto;
-  height: 47vh;
-  -ms-overflow-style: none;
-  border: 1px solid #f0f0f0;
-  padding: 2% 0;
+  position: 'sticky';
+  top: '30%';
+  overflow: hidden;
+  height: 60vh;
+  padding-top: 2%;
 }
