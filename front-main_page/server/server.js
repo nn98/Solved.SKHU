@@ -286,15 +286,15 @@ app.post('/rating', async (req, res) => {
   problems += sqls[sqls.length - 1]
   users+= sqls1[sqls1.length-2]
   users += sqls1[sqls1.length - 1]
-  console.log(problems+"\n")
-  console.log(users)
+  // console.log(problems+"\n")
+  // console.log(users)
 
   connection.query(problems + users, req.body, function (err, result, fields) {
     if (err) {
       console.log('@@@@@@@@@@@@@@@@@\n' + err)
       res.send({ error: err.errno })
     } else {
-      console.log(result)
+      // console.log(result)
       res.send(result)
     }
   })
