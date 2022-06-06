@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import CopyRadioButtonsGroup from "./MUI/CopyRadioButtonsGroup";
 import MultipleSelect from "./MUI/MultipleSelect";
+import MaxWidthDialog from "./MUI/MaxWidthDialog";
 
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,9 @@ const Assignments = () => {
   const [lecture, setLecture] = useState([]);
   const [student, setStudent] = useState([]);
   const [lectureName, setLectureName] = useState();
+
+  const [open, setOpen] = useState(false);
+  const [detailName, setDetailName] = useState();
 
   const handleCopy = async () => {
     if (copy === "resultCopy") {
@@ -132,6 +136,11 @@ const Assignments = () => {
     }
   };
 
+  const handleClickOpen = (name) => {
+    setOpen(true);
+    setDetailName(name);
+  };
+
   useEffect(() => {
     subjectAdd();
   }, []);
@@ -168,7 +177,10 @@ const Assignments = () => {
                     <span>{data.ID}</span>
                     <span>{data.name}</span>
                     <span>{data.bojid}</span>
-                    <span>
+                    <span
+                      onClick={() => handleClickOpen(data.name)}
+                      style={{ textDecoration: "underline", cursor: "pointer" }}
+                    >
                       {String(data.result) === "undefined"
                         ? ""
                         : String(data.result)}
@@ -300,6 +312,12 @@ const Assignments = () => {
           </p>
         </Button>
       </div>
+      <MaxWidthDialog
+        open={open}
+        setOpen={setOpen}
+        pnumber={pnumber}
+        detailName={detailName}
+      ></MaxWidthDialog>
     </div>
   );
 };
