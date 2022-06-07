@@ -281,6 +281,7 @@ app.post("/rating", async (req, res) => {
   // 사용해야 함
   let k = Number(Number(5) - i < Number(2) ? Number(2) : Number(5) - i);
   console.log("k: ", k);
+  
   let problems = sqls[1];
   let users = sqls1[1];
   for (k; (k <= j - i + 3) & (k < 6); k++) {
@@ -671,6 +672,7 @@ async function run(ID_LIST, pID, fuck) {
 async function execute(ID_LIST, pID, processID, url, fuck) {
   console.log("2. execute");
   console.log("rere at execute:", fuck);
+  
   puppeteer
     .launch({ headless: true })
     .then(async (browser) => {

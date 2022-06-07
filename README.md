@@ -41,7 +41,8 @@
   |`22.`|*Off*|Full|풀타임 회의|2022-05-10|
   |`23.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connecting/Data Crawling|2022-05-18|
   |`24.`|*Off*|Full|풀타임 회의-<br>Front_additional Page Implement<br>Back_Client-Server Connecting<br>Solved.ac API testing|2022-05-19|
-  |`25.`|*Off*|Full||2022-05-19|
+  |`25.`|*Off*|Full|풀타임 회의|2022-06-06|
+  |`26.`|*Off*|Full||2022-05-19|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
@@ -133,16 +134,18 @@
   |--|--|--|--|
   |테스트|MySql DB와 Node.js Server 연동.<br>서버에서 실행한 쿼리 결과를 json으로 파싱|2020-03-24|`A`|
   |구현|QnA페이지 간의 삭제, 등록, 답변 기능 구현|2022-05-10|`L`|
-  |구현|User페이지 유저가 푼 문제<br>Solved API 활용 값 삽입|2022-05-24|`A`|
+  |완료|User페이지 유저가 푼 문제<br>Solved API 활용 값 삽입|2022-05-28|`A`|
+  |완료|Recommend Page<br>DB연동 후 값 삽입|2022-06-01|`A`|
   
   ## Errors-#7
   |문제점|해결방식|날짜|Dev|
   |--|--|--|--|
-  |1번 문제 <br>mysql 연동 문제|검색을 해보니 connection.end()를 사용하면 안되었는데 <br>connection.end()를 사용하여서현재 json으로 <br>값이 도출이 되지 않았습니다 그래서 <br>.end()를 주석처리 하고 진행하였다.|2022-03-21|`A`|
-  |2번 문제 <br>pullrequest|새로운 브랜치를 만든 후(github상에 있지 않는) github remote를 하고, <br>필요파일을 만든다 그 후에 git pull origin main을 한다 그 이후에 vscode를 이용해서<br>github pullrequest라는 플러그인을 이용하여 해결|2022-03-21|`A`|
-  |3번 문제 <br>pullrequest|inflearn공부를 통하여 실습한 sql connect 풀 리퀘스트를 하려하였지만, <br>git pull에서부터 문제가 생겨서 <br>git pull origin main --allow-unrelated-histories로  연결하여서 해결하였다.|2022-03-22|`A`|
-  |||2022-03-22|`A`|
-  |QnA의 컨텐츠와 그의 답변을 QnA와 QnAInner 테이블에서 select join으로 한번에 불러오려고 하였으나 <br> 중복이 많이 select되고 QnA 안에 있는 답변들이 객체 값 안으로 출력 불가| QnA와 QnAInner 테이블에서 select join 시 자동적으로 불러오지 QnA객체 안에 답변들이 들어오지 않는다.<br>그래서, QnA QnAInner 따로 불러온 뒤 QnA의 ID값에 따라 답변들을 출력함|2022-05-10|`L`|
+  |mysql 연동 문제|검색을 해보니 connection.end()를 사용하면 안되었는데 <br>connection.end()를 사용하여서현재 json으로 <br>값이 도출이 되지 않았습니다 그래서 <br>.end()를 주석처리 하고 진행하였다.|2022-03-21|`A`|
+  |pullrequest|새로운 브랜치를 만든 후(github상에 있지 않는) github remote를 하고, <br>필요파일을 만든다 그 후에 git pull origin main을 한다 그 이후에 vscode를 이용해서<br>github pullrequest라는 플러그인을 이용하여 해결|2022-03-21|`A`|
+  |pullrequest|inflearn공부를 통하여 실습한 sql connect 풀 리퀘스트를 하려하였지만, <br>git pull에서부터 문제가 생겨서 <br>git pull origin main --allow-unrelated-histories로  연결하여서 해결하였다.|2022-03-22|`A`|
+  |QnA의 컨텐츠와 그의 답변을 QnA와 QnAInner 테이블에서 select join으로 한번에 불러오려고 하였으나 <br> 중복이 많이 select되고 QnA 안에 있는 답변들이 객체 값 안으로 출력 불가| QnA와 
+  QnAInner 테이블에서 select join 시 자동적으로 불러오지 QnA객체 안에 답변들이 들어오지 않는다.<br>그래서, QnA QnAInner 따로 불러온 뒤 QnA의 ID값에 따라 답변들을 출력함|2022-05-10|`L`|
+  |문제 추천 페이지|해당 유저 기준 위 아래 2명씩<br>해당 유저는 풀지 않았지만, 다른 유저는 푼<br>문제리스트를 출력해줄 때 위가 존재하지 않는 1등<br>아래가 존재하지 않는 꼴등이 존재 그래서<br>점화식을 이용하여 해결|2022-06-01|`A`|
   
   </details>
   
@@ -153,6 +156,7 @@
   |--|--|--|--|
   |완료|크롤링 반복 시 과부하<br>[Thread.sleep()](https://www.delftstack.com/ko/howto/java/how-to-delay-few-seconds-in-java/)|2022-04-30|`A`|
   |완료|현재 기준 데이터베이스 값 전부 삽입 완료|2022-05-18|`A`|
+  |완료|크롤링하는 페이지의 UI변경<br>크롤링 코드 업데이트|2022-06-02|`A`|
   
   ## Errors-#16
   |문제점|해결방식|날짜|Dev|
@@ -248,6 +252,7 @@
   |설명서를 보기좋게 추가하고 싶음|react mui인 mediacard를 import하고<br>드롭 다운 아이콘을 추가해 설명서가 나오도록 구현|2022-05-09|`S`|
   |클립보드에 복사하는 기능을 알지 못함|navigator.clipboard.writeText() 함수에 복사할 텍스트를 매개변수로 보내<br>비동기(async) 함수 내에서 호출한다.|2022-05-19|`S`|
   |algorithm 페이지를 갔다 오면 MUI Button 태그에 문제 발생|algorithm 페이지에 MUI Button을 일반 html button으로 변경|2022-05-24|`S`|
+  |React에서 map 시에 key값은 꼭 최상위 태그에 있어야 하지만<br> 삼항연산자 안에 있으면 최상위가 되지 않아 빈 태그로 묶어 놓으면 빈 태그에는 key 속성 사용 불가함|빈 태그에 <React.Fragment></React.Fragment>형식으로 만드면 key 속성 사용 가능|2022-05-31|`L`|
   
   </details>
 

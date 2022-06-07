@@ -34,6 +34,7 @@ const UserPage = (props) => {
   ]
   const userAdd = async () => {
     try {
+      console.log("userAdd");
       const t =
         props.globalID === ''
           ? location.state !== null
@@ -49,6 +50,7 @@ const UserPage = (props) => {
       )
         .then((res) => res.json())
         .then((data) => {
+          console.log("fetch");
           let count = 1
           let list = []
           for (let i = 1; i <= data.length - 1; i++) {
