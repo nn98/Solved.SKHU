@@ -48,7 +48,7 @@ const Rank = (props) => {
                   <img
                     src={
                       "https://static.solved.ac/tier_small/" +
-                      user.tier +
+                      user.solvedrank +
                       ".svg"
                     }
                     alt="profile"
@@ -67,7 +67,7 @@ const Rank = (props) => {
                 <td>{user.rating}</td>
                 <td>{user.class}</td>
                 <td>{user.pro}</td>
-                <td>{user.correction}</td>
+                <td style={{textAlign:'center'}}>{user.correction}</td>
               </tr>
             ))}
           </tbody>

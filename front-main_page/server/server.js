@@ -604,6 +604,187 @@ app.get("/assignments", (req, res) => {
   //   res.json(returnStates);
   // });
 });
+const puppeteer = require('puppeteer')
+const cheerio = require('cheerio')
+process.setMaxListeners(50)
+app.get('/get', (req, res) => {
+  const sql = 'select * from Problem LIMIT 0,10'
+
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err
+    console.log(result)
+    res.send(result)
+  })
+})
+app.get('/register', (req, res) => {
+  const b = req.body;
+  const url = 'https://solved.ac/ranking/o/309'
+  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
+  // ID, problems, solvedrank, worldrank, skhurank,tier, rating,class,pro,correction
+  // addRegister('q9922000',url)
+  console.log(b)
+  res.send(b) // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
+})
+app.post('/register', async (req, res) => {
+  const b = req.body;
+  
+  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
+  // ID, problems, solvedrank, worldrank, skhurank,tier, rating,class,pro,correction
+
+  // addRegister(b.uI,url)
+  console.log(b)
+  res.send(b) 
+  let resul = []// res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  let values=[];
+  let abc;
+  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
+  // 코드 stuSK# 
+  const url = 'https://solved.ac/ranking/o/309'
+  async function addRegister(pID,url) {
+  
+    puppeteer
+      .launch({ headless: true })
+      .then(async (browser) => {
+        if (mAsyncTaskExecute) {
+          await waitNotify.wait()
+        }
+        mAsyncTaskExecute = true
+        const page = await browser.newPage()
+        
+        await page.goto(url, { waitUntil: 'networkidle2' })
+        const content = await page.content();
+          // $에 cheerio를 로드한다.
+          const $ = cheerio.load(content);
+          let status=[];
+          // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
+          const lists = $("tr");
+          
+          // console.log(lists);
+          // 모든 리스트를 순환한다.
+          let name = []
+          let c = []
+          let d = []
+          
+          lists.each((index, list) => {
+              name = $(list).find("td").toString();
+              // console.log(index);
+              // console.log(name)
+              if(name.includes(b.uI)===true){
+                c = name;
+                d  = c.split("</td>");
+              }
+          });
+          abc = $(c).find("img").toString();
+          // console.log(abc);
+          // console.log(abc.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0]);
+          // console.log('c:',c);
+          // console.log('d:',d)
+          for(let e = 0;e<d.length;e++){
+            resul[e] = d[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+        }        
+          // console.log(d[1].replace([(0-9)]))
+          // AssignTaskExecute = false
+          // waitNotify2.notify()
+          console.log('addReg end_resul:',resul);
+          AssignTaskExecute = false
+          mAsyncTaskExecute = false
+          waitNotify2.notify()
+          waitNotify.notify()
+      })
+      
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  let name2 = []
+  let pages = 1;
+  let d2 = []
+  let resul2 = []
+  async function addCorrection(pID,url) {
+    console.log('addCorrection is run_to:',url);
+  
+    puppeteer
+      .launch({ headless: true })
+      .then(async (browser) => {
+        if (mAsyncTaskExecute) {
+          await waitNotify.wait()
+        }
+        mAsyncTaskExecute = true
+        const page = await browser.newPage()
+        
+        await page.goto(url, { waitUntil: 'networkidle2' })
+        const content = await page.content();
+          // $에 cheerio를 로드한다.
+          const $ = cheerio.load(content);
+          let status=[];
+          // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
+          const lists2 = $("tr");
+          // const a= []
+          // console.log(lists);
+          // 모든 리스트를 순환한다.
+          let c2 = []
+          console.log(lists2.toString())
+          lists2.each((index, list) => {
+              name2 = $(list).find("td").toString();
+              // console.log(name2)
+              // console.log(index);
+              // console.log(name)
+              if(name2.includes(b.uI)===true){
+                c2 = name2;
+                d2  = c2.split("</td>");
+              }
+          });
+          console.log(pages)
+          // console.log(c2===undefined)
+          for(let e = 0;e<d2.length;e++){
+            resul2[e] = d2[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+        }        
+          // abc = $(c).find("img").toString();
+          // console.log(abc);
+          // console.log(abc.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0]);
+          // console.log('c:',c);
+          // console.log('d:',d)
+        
+          // console.log(d[1].replace([(0-9)]))
+          AssignTaskExecute = false
+          mAsyncTaskExecute = false
+          waitNotify2.notify()
+          waitNotify.notify()
+          
+      })
+      
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  AssignTaskExecute = true;
+  addRegister(b.uI,url);
+  if (AssignTaskExecute) await waitNotify2.wait();
+  let worldrank = resul[0];
+  let skhurank = resul[1];
+  let userid = resul[2];
+  let rating = resul[3];
+  let classs = resul[4];
+  let problems = resul[5];
+  let tier = abc.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0];
+  let corr=undefined;
+  while(corr===undefined){
+    AssignTaskExecute = true;
+    addCorrection(b.uI,'https://www.acmicpc.net/school/ranklist/309/'+pages);
+    if (AssignTaskExecute) await waitNotify2.wait();
+  corr = resul2[resul2.length-2];
+  console.log(corr)
+  pages++;
+  }
+  
+  console.log(userid+'",'+problems+','+tier+',"'+worldrank+'",'+skhurank+',"'+tier+'",'+rating+',"'+classs+'",'+problems+','+corr)
+  const sql = 'insert into User values("'
+  +userid+'",'+problems+','+tier+',"'+worldrank+'",'+skhurank+',"'+tier+'",'+rating+',"'+classs+'",'+problems+',"'+corr+'");'
+  connection.query(sql, function (err, result, fields) {
+    if (err) console.log('@@@@@' + err)
+  })
+});
 
 // req는 소스코드로부터 받은 서버로 보낼 JSON 파일이 담긴 요청, res는 서버가 보낸 응답정보를 저장한 객체이고 우리는 JSON 파일 형식을 사용할 것임
 app.post("/assignments", async (req, res) => {
@@ -634,9 +815,6 @@ app.post("/assignments", async (req, res) => {
 // connection.end()
 
 /* Assignment Part - 2022-05-19 */
-const puppeteer = require("puppeteer");
-const cheerio = require("cheerio");
-process.setMaxListeners(50);
 
 // let pID = 1085
 // let processID
@@ -658,7 +836,6 @@ let urls = [
 //   // "yebinac", "idotu", "neck392", "qmffmzpdl", "skl0519"
 // ]
 /* */
-
 async function run(ID_LIST, pID, fuck) {
   console.log("1. run", fuck);
   console.log("ID_LIST", ID_LIST);
@@ -672,7 +849,6 @@ async function run(ID_LIST, pID, fuck) {
 async function execute(ID_LIST, pID, processID, url, fuck) {
   console.log("2. execute");
   console.log("rere at execute:", fuck);
-  
   puppeteer
     .launch({ headless: true })
     .then(async (browser) => {
