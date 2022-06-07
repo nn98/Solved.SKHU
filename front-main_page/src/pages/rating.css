@@ -105,3 +105,27 @@
   height: 60vh;
   padding-top: 2%;
 }
+
+.recommend .myButton {
+  /* box-shadow: 0px 0px 0px 2px #899599; */
+  background-color: #ededed;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  display: inline-block;
+  cursor: pointer;
+  color: #000;
+  font-family: Arial;
+  font-size: 19px;
+  padding: 12px 37px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #e1e2ed;
+  margin: 0 2vh;
+}
+.recommend .myButton:hover {
+  transition-duration: 0.5s;
+  background-color: #bab1ba;
+}
+.recommend .myButton:active {
+  position: relative;
+  top: 1px;
+}

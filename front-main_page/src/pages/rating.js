@@ -111,8 +111,12 @@ const Rating = (props) => {
 
   return (
     <div className="recommend">
-      <button onClick={() => setUserOrRank(true)}>유저별</button>
-      <button onClick={() => setUserOrRank(false)}>랭크별</button>
+      <button className="myButton" onClick={() => setUserOrRank(true)}>
+        유저별
+      </button>
+      <button className="myButton" onClick={() => setUserOrRank(false)}>
+        랭크별
+      </button>
       {userOrRank ? (
         // 유저별 위치 =======================
         <div>
