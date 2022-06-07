@@ -93,7 +93,7 @@ const Rating = (props) => {
       let t = (
         <iframe
           title="solvedProblems"
-          style={{ border: 'none', marginTop: '-11%' }}
+          style={{ border: 'none', marginTop: '-19vh' }}
           width="100%"
           height="230%"
           src={'https://solved.ac/problems/level/' + index}
