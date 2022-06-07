@@ -32,6 +32,25 @@ const UserPage = (props) => {
     '11',
     '12',
   ]
+
+  function getDatesStartToLast(startDate, lastDate) {
+    if (!(startDate instanceof Date && lastDate instanceof Date))
+      return 'Not Date Object'
+    var result = []
+    var curDate = startDate
+    while (curDate <= lastDate) {
+      result.push({ date: curDate.toISOString().split('T')[0], count: 0 })
+      curDate.setDate(curDate.getDate() + 1)
+    }
+    return result
+  }
+
+  const shiftDate = (date, numDays) => {
+    const newDate = new Date(date)
+    newDate.setDate(newDate.getDate() + numDays)
+    return newDate
+  }
+
   const userAdd = async () => {
     try {
       const t =
@@ -50,8 +69,17 @@ const UserPage = (props) => {
         .then((res) => res.json())
         .then((data) => {
           let count = 1
+          let list1 = getDatesStartToLast(
+            shiftDate(new Date(), -365),
+            new Date()
+          )
+          console.log(list1)
           let list = []
+          console.log(data)
+          console.log(list1[0])
           for (let i = 1; i <= data.length - 1; i++) {
+            if (data[data.length - i].timestamp.slice(0, 10) <= list1[0].date)
+              continue
             if (
               data[data.length - i].timestamp.substring(0, 10) ===
               data[data.length - 1 - i].timestamp.substring(0, 10)
@@ -59,17 +87,31 @@ const UserPage = (props) => {
               // console.log(data[i].timestamp.substring(0,10)+" "+count)
               count++
             } else {
-              list.push({
-                date: data[data.length - i].timestamp.slice(0, 10),
-                count: count,
-              })
+              list1[
+                list1.findIndex(
+                  (v) => v.date === data[data.length - i].timestamp.slice(0, 10)
+                )
+              ].count = count
+              // list.push({
+              //   date: data[data.length - i].timestamp.slice(0, 10),
+              //   count: count,
+              // })
               count = 1
             }
           }
-          list.push({ timestamp: data[0].timestamp.slice(0, 10), value: 1 })
-          // console.log(JSON.stringify(list))
-          console.log(list)
-          setUserZandi(list)
+          let todayCount = 1
+          for (let i = 1; i <= data.length - 1; i++) {
+            if (
+              data[i].timestamp.slice(0, 10) === data[0].timestamp.slice(0, 10)
+            )
+              todayCount++
+            else break
+          }
+          // list.push({ date: data[0].timestamp.slice(0, 10), value: 1 })
+          list1[
+            list1.findIndex((v) => v.date === data[0].timestamp.slice(0, 10))
+          ].count = todayCount
+          setUserZandi(list1)
         })
       await fetch('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + t)
         .then((res) => res.json())
@@ -168,21 +210,24 @@ const UserPage = (props) => {
   }
 
   useEffect(() => {
-    console.log(props.globalID)
     userAdd()
   }, [location.state, props.globalID])
 
   return (
     <div className="user">
-      <div className="head">
-        <span style={{ width: '10vh', margin: '1%' }}>
+      <div className="head" style={{ position: 'absolute' }}>
+        <div>
           <a
             href={
               'https://solved.ac/problems/level/' + (user.tier ? user.tier : 0)
             }
           >
             <img
-              style={{ width: '1.7rem', padding: '0 10px 0 0' }}
+              style={{
+                width: '1.7rem',
+                padding: '0 10px 0 0',
+                verticalAlign: -'webkit-baseline-middle',
+              }}
               src={
                 'https://static.solved.ac/tier_small/' +
                 (user.tier ? user.tier : 0) +
@@ -191,33 +236,42 @@ const UserPage = (props) => {
               alt="profile"
             />
           </a>
-        </span>
-        <span style={{ fontSize: '2em', fontWeight: 'bold' }}>
-          {props.globalID === ''
-            ? location.state !== null
-              ? location.state.userId
-              : 'q9922000'
-            : props.globalID}
-        </span>
-        <br />
+          <span
+            style={{
+              fontSize: '2em',
+              fontWeight: 'bold',
+              verticalAlign: 'bottom',
+            }}
+          >
+            {props.globalID === ''
+              ? location.state !== null
+                ? location.state.userId
+                : 'q9922000'
+              : props.globalID}
+          </span>
+          <br />
 
-        <span
-          style={{
-            width: '10%',
-            margin: user.solvedCount ? '1%' : '2.1%',
-            fontSize: '1.5em',
-            fontWeight: 'bold',
-          }}
-        >
-          {user.solvedCount}
-        </span>
-        <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>문제 해결</span>
+          <span
+            style={{
+              width: '10%',
+              margin: user.solvedCount ? '1%' : '2.1%',
+              fontSize: '1.5em',
+              fontWeight: 'bold',
+            }}
+          >
+            {user.solvedCount}
+          </span>
+          <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
+            문제 해결
+          </span>
+        </div>
       </div>
       <div className="use">
         <div className="zandi">
           <CalendarHeatmap
-            startDate={new Date('2022-01-01')}
-            endDate={new Date('2022-12-31')}
+            startDate={shiftDate(new Date(), -365)}
+            gutterSize={2}
+            endDate={new Date()}
             values={userZandi}
             monthLabels={month}
             showWeekdayLabels={false}
@@ -226,10 +280,11 @@ const UserPage = (props) => {
               if (!value) {
                 return 'color-empty'
               } else {
-                if (value.count >= 1 && value.count <= 4) c = 1
-                else if (value.count >= 5 && value.count <= 9) c = 2
-                else if (value.count >= 10 && value.count <= 14) c = 3
-                else if (value.count >= 15) c = 4
+                if (value.count === 0) c = 0
+                else if (value.count >= 1 && value.count <= 2) c = 1
+                else if (value.count >= 3 && value.count <= 6) c = 2
+                else if (value.count >= 7 && value.count <= 11) c = 3
+                else if (value.count >= 12) c = 4
               }
               return `color-beammp-${c}`
             }}
@@ -334,7 +389,7 @@ const UserPage = (props) => {
                         '.svg'
                       }
                       alt="profile"
-                      style={{ width: '1rem' }}
+                      style={{ width: '2vh' }}
                     />
                   </span>
                   <span id="user-color">{problem.problemId}</span>
@@ -372,9 +427,7 @@ const UserPage = (props) => {
               userTag.items.map((t, index) =>
                 t.solved === 0 ? null : (
                   <div key={index} className="p-head">
-                    <span style={{ fontWeight: 'bold' }}>
-                      {t.tag.displayNames[0].name}
-                    </span>
+                    <span>{t.tag.displayNames[0].name}</span>
                     <i>
                       <span id="user-color">{t.solved}</span>
                     </i>
