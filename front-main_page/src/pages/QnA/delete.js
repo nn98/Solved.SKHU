@@ -67,6 +67,18 @@ const Delete = (props) => {
             placeholder="password"
             type="password"
             value={commentDeletePassword}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                props.commentDelete({
+                  commentId,
+                  commentDeleteName,
+                  commentDeletePassword,
+                })
+                setCommentDeleteName('')
+                setCommentDeletePassword('')
+                deletButtonClick()
+              }
+            }}
           />
           <button
             className="input_button"
@@ -85,7 +97,7 @@ const Delete = (props) => {
               deletButtonClick()
             }}
           >
-            Signup
+            Delete
           </button>
         </DialogContent>
       </Dialog>
