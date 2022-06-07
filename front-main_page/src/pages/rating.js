@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import usersJ from './users.json'
 import './rating.css'
 import IconN from '../image/none.svg'
 import IconB from '../image/5.svg'
@@ -8,6 +7,7 @@ import IconG from '../image/15.svg'
 import IconP from '../image/20.svg'
 import IconD from '../image/25.svg'
 import IconM from '../image/30.svg'
+import Fade from '@mui/material/Fade'
 
 const Rating = (props) => {
   // 랭크의 image를 출력하기 위한 번호
@@ -22,6 +22,7 @@ const Rating = (props) => {
     [26, 27, 28, 29, 30],
     // [31]
   ]
+  const [checked, setChecked] = useState(false)
 
   // 각 랭크의 서브 랭크를 넣기 위한 변수
   const [rankArray, setRankArray] = useState()
@@ -67,6 +68,7 @@ const Rating = (props) => {
 
   // 각 랭크의 서브 랭크의 버튼을 추가하기 위한 함수
   const rankSubAdd = (index) => {
+    setRankArray('')
     const result = []
     for (let i = 0; i < rank[index].length; i++) {
       result.push(
@@ -81,6 +83,7 @@ const Rating = (props) => {
         </div>
       )
     }
+    setChecked(true)
     setRankArray(result)
   }
 
@@ -222,14 +225,17 @@ const Rating = (props) => {
                     src={t[index]}
                     alt="profile"
                     style={{ width: '100%' }}
-                    onClick={() =>
+                    onClick={() => {
+                      setChecked(false)
                       index === 0 ? rankAdd(0) : rankSubAdd(index)
-                    }
+                    }}
                   />
                 </div>
               ))}
               {/* 서브 랭크 출력하는 구간 */}
-              <div className="subRank">{rankArray}</div>
+              <Fade in={checked}>
+                <div className="subRank">{rankArray}</div>
+              </Fade>
             </div>
             <div className="rankProblems">{rankProblem}</div>
           </div>
