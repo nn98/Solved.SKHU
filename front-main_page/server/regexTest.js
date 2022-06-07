@@ -1,0 +1,2 @@
+console.log('<TITLE>Ben Forta`s Homepage</TITLE>'.match(/(?<=\<[tT][iI][tT][lL][eE]\>).*(?=\<\/[tT][iI][tT][lL][eE]\>)/));
+console.log('<td>Ben Forta`s Homepage</td>'.match(/(?<=\<[tT][dD]\>).*(?=\<\/[tT][dD]\>)/),"");
