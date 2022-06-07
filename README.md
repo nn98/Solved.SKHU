@@ -41,7 +41,8 @@
   |`22.`|*Off*|Full|풀타임 회의|2022-05-10|
   |`23.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connecting/Data Crawling|2022-05-18|
   |`24.`|*Off*|Full|풀타임 회의-<br>Front_additional Page Implement<br>Back_Client-Server Connecting<br>Solved.ac API testing|2022-05-19|
-  |`25.`|*Off*|Full||2022-05-19|
+  |`25.`|*Off*|Full|풀타임 회의|2022-06-06|
+  |`26.`|*Off*|Full||2022-05-19|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
