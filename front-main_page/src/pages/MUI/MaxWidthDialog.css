@@ -6,38 +6,42 @@
 
 .detail td {
   border: 1px solid black;
+  padding: 10px;
 }
 .detail th {
   background-color: black;
   color: white;
   border: 1px solid black;
   text-align: left;
+  padding: 6px;
 }
 
 .detail td:nth-child(1) {
-  width: 8%;
+  width: 9%;
 }
 .detail td:nth-child(2) {
-  width: 10%;
+  width: 11%;
 }
 .detail td:nth-child(3) {
+  font-weight: bold;
   width: 8%;
 }
 .detail td:nth-child(4) {
-  width: 42%;
+  font-weight: bold;
+  width: 28%;
 }
 .detail td:nth-child(5) {
-  width: 6%;
+  width: 10%;
 }
 .detail td:nth-child(6) {
-  width: 6%;
-}
-.detail td:nth-child(7) {
   width: 8%;
 }
+.detail td:nth-child(7) {
+  width: 9%;
+}
 .detail td:nth-child(8) {
-  width: 6%;
+  width: 8%;
 }
 .detail td:nth-child(9) {
-  width: 6%;
+  width: 9%;
 }
