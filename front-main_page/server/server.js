@@ -8,6 +8,7 @@ const WaitNotify = require('wait-notify')
 const waitNotify = new WaitNotify()
 const waitNotify2 = new WaitNotify()
 const waitNotify3 = new WaitNotify()
+const waitNotify4 = new WaitNotify()
 let AssignTaskExecute = false
 
 // cors 사용하여 정보 받는 것 우회하기
@@ -413,9 +414,7 @@ app.post('/proRegister', (req, res) => {
         b.sC +
         "', " +
         "'" +
-        b.sN +
-        '-0' +
-        (i + 1) +
+        b.sN + (b.cN<2?'':('-0'+(i+1)))+
         "', " +
         i +
         ');'
@@ -425,7 +424,7 @@ app.post('/proRegister', (req, res) => {
         if (err) {
           res
             .status(406)
-            .json({ message: '에러가 발생했습니다. 입력 내용을 확인해주세요' })
+            .json('에러가 발생했습니다. 입력 내용을 확인해주세요.')
         }
       })
 
@@ -434,9 +433,9 @@ app.post('/proRegister', (req, res) => {
       // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
       // res.send(result);
     }
-    res.status(100).json({ message: '강의 등록이 완료되었습니다' })
+    res.status(100).json('강의 등록이 완료되었습니다.')
   } else {
-    res.status(406).json({ message: '교수 승인코드가 틀렸습니다' })
+    res.status(406).json('교수 승인코드가 틀렸습니다.')
   }
   // res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
@@ -481,10 +480,11 @@ app.get('/studentRegister', (req, res) => {
   // }
 })
 
-app.post('/studentRegister', (req, res) => {
+app.post('/studentRegister', async (req, res) => {
   console.log('studentRegister/post ', 'is called')
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
   const b = req.body
+  let end=false;
   console.log('body', b)
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
   if (b.sC == 'stuSK#') {
@@ -499,44 +499,52 @@ app.post('/studentRegister', (req, res) => {
       "'" +
       b.bI +
       "');"
-    console.log('학생 등록 쿼리', sql)
+    console.log('학생 등록 쿼리 시작', sql)
     connection.query(sql, function (err, result, fields) {
       // if문은 에러 출력을 위한 코드
       console.log('학생 등록')
       if (err) {
-        console.log('res', '쿼리 실행이 실패했습니다')
-        res
-          .status(406)
-          .json({ message: '에러가 발생했습니다. 입력 내용을 확인해주세요' })
+        console.log('res', '쿼리 실행이 실패했습니다. 해당 학생이 이미 존재합니다.')
+        // res.status(406).json('에러가 발생했습니다. 입력 내용을 확인해주세요.')
+        // end=true;
       } else {
-        console.log('res', '쿼리 실행이 성공했습니다')
+        console.log('res', '쿼리 실행이 성공했습니다.')
       }
-    })
+    });
+
+    console.log('stuReg fin');
+    AssignTaskExecute=true;
     sql = 'insert into Learn values(' + Number(b.sI) + ',' + b.lI + ');'
     console.log('수강 등록 쿼리', sql)
     connection.query(sql, function (err, result, fields) {
       // if문은 에러 출력을 위한 코드
       console.log('수강 등록')
       if (err) {
-        console.log('res', '쿼리 실행이 실패했습니다')
+        console.log('res', '쿼리 실행이 실패했습니다.')
         res
           .status(406)
-          .json({ message: '에러가 발생했습니다. 입력 내용을 확인해주세요' })
+          .json('에러가 발생했습니다. 이미 수강중인 학생입니다.')
+          end=true;
+          return;
       } else {
-        console.log('res', '쿼리 실행이 성공했습니다')
+        console.log('res', '쿼리 실행이 성공했습니다.')
       }
+      AssignTaskExecute=false;
+      waitNotify4.notify();
     })
-    res.status(100).json({ message: '학생 등록이 완료되었습니다' })
+    if(AssignTaskExecute) await waitNotify4.wait();
+    if(end)return;
+    res.status(100).json('학생 등록이 완료되었습니다.')
     // result는 가져온 결과값
     // console.log(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
     // res.send(result);
   } else {
     console.log('Student code isnt correct')
-    console.log('res', '학생 승인코드가 틀렸습니다')
-    res.status(406).json({ message: '교수 승인코드가 틀렸습니다' })
+    console.log('res', '학생 승인코드가 틀렸습니다.')
+    res.status(406).json('학생 승인코드가 틀렸습니다.')
   }
-})
+});
 
 // app.get("/algorithm", (req, res) => {
 //   const sql = "select * from User"; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
@@ -697,12 +705,12 @@ async function execute(ID_LIST,pID,processID,url,fuck) {
                     for (let j = 0; j < v.length-1; red.push(v[j++].replace(/(<([^>]+)>)/ig, "")));
                 } else {
                     // console.log(name0[i]);
+                    console.log("n", i, name0[i].replace(/(<([^>]+)>)/ig, ""));
+                    red.push(name0[i].replace(/(<([^>]+)>)/ig, ""));
                     let x=name0[i].lastIndexOf("data-original-title=");
                     if(x>=0){
                       red.push(name0[i].split("data-original-title=\"")[1].split("\"")[0]);
                     }
-                    console.log("n", i, name0[i].replace(/(<([^>]+)>)/ig, ""));
-                    red.push(name0[i].replace(/(<([^>]+)>)/ig, ""));
                     // returnData.push(name0[i++].replace(/(<([^>]+)>)/ig, ""));
                 }
             }
