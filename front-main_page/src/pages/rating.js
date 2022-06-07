@@ -20,10 +20,8 @@ const Rating = (props) => {
     [16, 17, 18, 19, 20],
     [21, 22, 23, 24, 25],
     [26, 27, 28, 29, 30],
-    // [31]
   ]
   const [checked, setChecked] = useState(false)
-
   // 각 랭크의 서브 랭크를 넣기 위한 변수
   const [rankArray, setRankArray] = useState()
 

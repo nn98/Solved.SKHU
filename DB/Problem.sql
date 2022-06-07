@@ -15,6 +15,14 @@ select ID, skhurank from User order by skhurank;
 
 -- 유저 기준 위 아래 2명의(총 4명) 푼 문제 리스트
 
+select * from Lecture;
+select * from Student;
+select * from User order by skhurank;
+
+-- 해당 학생 솔브드기준 순위 찾기
+select skhurank from User where ID = 'kpeel5839';
+
+-- 해당 유저 기준 위 아래 2명씩 뽑는 쿼리문(예외 있음)
 select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID
 join Problem on Solve.PROBLEM_ID = Problem.ID
 where User.ID in (
@@ -29,13 +37,13 @@ and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = 'q9922000')
 group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;
 
 
+
 select * from Algorithm; -- O
 select * from Problem; -- O
-select * from PROBLEM_has_Algorithm;
+select * from PROBLEM_has_Algorithm; -- O
 select * from Solve;
 select * from Solvedrank; -- O
 select * from User; -- O
-select * from User order by skhurank;
 
 alter table Ranking modify column skhurank int null;
 
