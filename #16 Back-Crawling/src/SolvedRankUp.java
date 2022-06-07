@@ -10,7 +10,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class SolvedRank {
+public class SolvedRankUp {
 	public static void main(String[] args) throws IOException{
 		// id / worldrank / skhurank / tier / rating / class / pro / correction
 		String sql;
@@ -58,25 +58,23 @@ public class SolvedRank {
 				case 5: pro = Integer.parseInt(rank.get(k++).text().replaceAll(",", "")); break;
 				}
 			}
-			ti = tier.get(t).attr("src").replaceAll("[^0-9]*", "");
 			// 티어 삽입(svg 파일로 되어 있어서 혼자 다른 값을 참조하여 가져옴)
-			try {
-			// ID, problems, solvedrank, worldrank, skhurank, rating, class
-			sql = "insert into User(ID, problems, solvedrank, worldrank, skhurank, rating, class) values(?,?,?,?,?,?,?)";
+			// ID / problems / solvedrank / worldrank / skhurank / tier / rating / class / pro / correction
+			ti = tier.get(t).attr("src").replaceAll("[^0-9]*", "");
+			System.out.println(pro+" "+ti+" "+worldrank+" "+skhurank+" "+ti+" "+rating+" "+cl+" "+pro+" "+id);
+			sql = "update User set problems = ?, solvedrank = ?, worldrank = ?, skhurank = ?,rating = ?,class = ? where ID = ? ";
 			PreparedStatement pst = con.prepareStatement(sql);
-			pst.setString(1, id);
-			pst.setInt(2, pro);
-			pst.setString(3, ti);
-			pst.setString(4, worldrank);
-			pst.setInt(5, skhurank);
-			pst.setInt(6, rating);
-			pst.setString(7, cl);
+//			// id / worldrank / skhurank / tier / rating / class / pro / correction
+			pst.setInt(1, pro);
+			pst.setString(2, ti);
+			pst.setString(3, worldrank);
+			pst.setInt(4, skhurank);
+			pst.setInt(5, rating);
+			pst.setString(6, cl);
+			pst.setString(7, id);
 			pst.execute();
 			pst.close();
 			t+=2;
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
 		}
 //
 //		rs = st.executeQuery("select * from Ranking;");
