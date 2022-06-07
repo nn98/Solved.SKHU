@@ -705,12 +705,12 @@ async function execute(ID_LIST,pID,processID,url,fuck) {
                     for (let j = 0; j < v.length-1; red.push(v[j++].replace(/(<([^>]+)>)/ig, "")));
                 } else {
                     // console.log(name0[i]);
-                    console.log("n", i, name0[i].replace(/(<([^>]+)>)/ig, ""));
-                    red.push(name0[i].replace(/(<([^>]+)>)/ig, ""));
                     let x=name0[i].lastIndexOf("data-original-title=");
                     if(x>=0){
                       red.push(name0[i].split("data-original-title=\"")[1].split("\"")[0]);
                     }
+                    console.log("n", i, name0[i].replace(/(<([^>]+)>)/ig, ""));
+                    red.push(name0[i].replace(/(<([^>]+)>)/ig, ""));
                     // returnData.push(name0[i++].replace(/(<([^>]+)>)/ig, ""));
                 }
             }
