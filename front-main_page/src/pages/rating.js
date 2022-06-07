@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import usersJ from './users.json'
 import './rating.css'
+import IconN from '../image/none.svg'
+import IconB from '../image/5.svg'
+import IconS from '../image/10.svg'
+import IconG from '../image/15.svg'
+import IconP from '../image/20.svg'
+import IconD from '../image/25.svg'
+import IconM from '../image/30.svg'
+import Fade from '@mui/material/Fade'
 
 const Rating = (props) => {
   // 랭크의 image를 출력하기 위한 번호
+  const t = [IconN, IconB, IconS, IconG, IconP, IconD, IconM]
   const rank = [
+    [0, 0, 0, 0, 0],
     [1, 2, 3, 4, 5],
     [6, 7, 8, 9, 10],
     [11, 12, 13, 14, 15],
@@ -12,18 +21,21 @@ const Rating = (props) => {
     [21, 22, 23, 24, 25],
     [26, 27, 28, 29, 30],
   ]
-
+  const [checked, setChecked] = useState(false)
   // 각 랭크의 서브 랭크를 넣기 위한 변수
   const [rankArray, setRankArray] = useState()
 
   // 유저 또는 랭크 별로 알고리즘을 받을지 결정하는 boolean 변수
   const [userOrRank, setUserOrRank] = useState(true)
 
-  // 유저별 문제들을 저장하기 위한 변수
+  // 유저별로 추천된 문제를 저장하기 위한 변수
   const [ratingProblems, setRatingProblems] = useState([])
 
   // 랭크별 문제들을 저장하기 위한 변수
-  const [rankProblems, setRankProblems] = useState([])
+  const [rankProblem, setRankProblem] = useState('')
+
+  // 비슷한 수준의 학생들을 저장하기 위한 변수
+  const [similarStudent, setSimilarStudent] = useState([])
 
   // 유저별 문제 추천을 받기 위한 함수
   const ratingAdd = async () => {
@@ -44,7 +56,8 @@ const Rating = (props) => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data)
-          setRatingProblems(data)
+          setRatingProblems(data[0])
+          setSimilarStudent(data[1])
         })
     } catch (error) {
       console.error(error)
@@ -53,59 +66,125 @@ const Rating = (props) => {
 
   // 각 랭크의 서브 랭크의 버튼을 추가하기 위한 함수
   const rankSubAdd = (index) => {
+    setRankArray('')
     const result = []
     for (let i = 0; i < rank[index].length; i++) {
       result.push(
         <div key={i} className="rankButton">
-          <button onClick={() => rankAdd(rank[index][i])}>
-            <img
-              src={
-                'https://static.solved.ac/tier_small/' + rank[index][i] + '.svg'
-              }
-              alt="profile"
-            />
-          </button>
+          <img
+            onClick={() => rankAdd(rank[index][i])}
+            src={
+              'https://static.solved.ac/tier_small/' + rank[index][i] + '.svg'
+            }
+            alt="profile"
+          />
         </div>
       )
     }
+    setChecked(true)
     setRankArray(result)
   }
 
   // 랭크별 문제 추천을 받기 위한 함수
   const rankAdd = (index) => {
     try {
-      let t = usersJ.user_problems.filter(
-        (e, i) => i >= index * 10 && i <= index * 20
+      let t = (
+        <iframe
+          title="solvedProblems"
+          style={{ border: 'none', marginTop: '-19vh' }}
+          width="100%"
+          height="230%"
+          src={'https://solved.ac/problems/level/' + index}
+        ></iframe>
       )
-      setRankProblems(t)
-      console.log(rankProblems)
+      setRankProblem(t)
     } catch (err) {
       return err
     }
   }
 
   useEffect(() => {
-    console.log(props)
     ratingAdd()
   }, [])
 
   return (
-    <div className="rating">
-      <button onClick={() => setUserOrRank(true)}>유저별</button>
-      <button onClick={() => setUserOrRank(false)}>랭크별</button>
+    <div className="recommend">
+      <button className="myButton" onClick={() => setUserOrRank(true)}>
+        유저별
+      </button>
+      <button className="myButton" onClick={() => setUserOrRank(false)}>
+        랭크별
+      </button>
       {userOrRank ? (
         // 유저별 위치 =======================
         <div>
           <h1>문제 별 추천</h1>
 
           <div className="ratingProblem">
-            <div className="mostProblem">
+            <div className="similarStudent">
               <div style={{ paddingBottom: '2%' }}>
                 <strong>
                   <big>나랑 비슷한 수준의 학생</big>
                 </strong>
               </div>
-              <div className="mostProblemInner">
+              <div className="similarStudentInner">
+                <div
+                  className="p-head"
+                  style={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                    fontSize: '80%',
+                    borderRadius: '5px 5px 0 0',
+                  }}
+                >
+                  <span>전체 랭킹</span>
+                  <span>랭킹</span>
+                  <span style={{ textAlign: 'center' }}>아이디</span>
+                  <span>레이팅</span>
+                  <span>CLASS</span>
+                  <span>푼 문제</span>
+                  <span>정답률</span>
+                </div>
+                {similarStudent &&
+                  similarStudent.map((user, index) => (
+                    <div key={index} className="p-head">
+                      <span>{user.worldrank}</span>
+                      <span>{user.skhurank}</span>
+                      <span>
+                        <img
+                          src={
+                            'https://static.solved.ac/tier_small/' +
+                            user.tier +
+                            '.svg'
+                          }
+                          alt="profile"
+                          style={{ width: '7%', margin: '0 1% 0 0' }}
+                        />{' '}
+                        <strong>
+                          <a
+                            href={'https://solved.ac/profile/' + user.ID}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {user.ID}
+                          </a>
+                        </strong>
+                      </span>
+                      <span>{user.rating}</span>
+                      <span>{user.class}</span>
+                      <span>{user.pro}</span>
+                      <span>{user.correction}</span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="recommendProblem">
+              <div style={{ position: 'sticky', top: '0px' }}>
+                <div style={{ paddingBottom: '1%' }}>
+                  <strong>
+                    <big>가장 적게 푼 문제</big>
+                  </strong>
+                </div>
                 <div
                   className="p-head"
                   style={{
@@ -114,72 +193,21 @@ const Rating = (props) => {
                     borderRadius: '5px 5px 0 0',
                   }}
                 >
-                  <span>전체 랭킹</span>
-                  <span>랭킹</span>
-                  <span>아이디</span>
-                  <span>레이팅</span>
-                  <span>CLASS</span>
-                  <span>푼 문제</span>
-                  <span>정답률</span>
+                  <span>#</span>
+                  <span>제목</span>
+                  <span>시도</span>
                 </div>
-                {/* {props.ranking.map((user, index) => (
-                  <div key={index} className="p-head">
-                    <span>{user.worldrank}</span>
-                    <span>{user.skhurank}</span>
-                    <span>
-                      <img
-                        src={
-                          'https://static.solved.ac/tier_small/' +
-                          user.tier +
-                          '.svg'
-                        }
-                        alt="profile"
-                        style={{ width: '7%', margin: '0 1% 0 0' }}
-                      />{' '}
-                      <strong>
-                        <a
-                          href={'https://solved.ac/profile/' + user.ID}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {user.ID}
-                        </a>
-                      </strong>
-                    </span>
-                    <span>{user.rating}</span>
-                    <span>{user.class}</span>
-                    <span>{user.pro}</span>
-                    <span>{user.correction}</span>
-                  </div>
-                ))} */}
               </div>
-            </div>
-            <div style={{ paddingBottom: '1%' }}>
-              <strong>
-                <big>가장 적게 푼 문제</big>
-              </strong>
-            </div>
-            <div className="minProblem">
-              <div
-                className="p-head"
-                style={{
-                  backgroundColor: 'black',
-                  color: 'white',
-                  borderRadius: '5px 5px 0 0',
-                }}
-              >
-                <span>#</span>
-                <span>제목</span>
-                <span>시도</span>
+              <div className="recommendProblemInner">
+                {ratingProblems &&
+                  ratingProblems.map((problem, index) => (
+                    <div key={index} className="p-head">
+                      <span>{problem.PROBLEM_ID}</span>
+                      <span>{problem.namekr}</span>
+                      <span>{problem.sum}명 시도</span>
+                    </div>
+                  ))}
               </div>
-              {ratingProblems &&
-                ratingProblems.map((problem, index) => (
-                  <div key={index} className="p-head">
-                    <span>{problem.ID}</span>
-                    <span>{problem.namekr}</span>
-                    <span>{problem.rate}</span>
-                  </div>
-                ))}
             </div>
           </div>
         </div>
@@ -195,49 +223,23 @@ const Rating = (props) => {
             <div className="rank">
               {rank.map((n, index) => (
                 <div key={index} className="rankButton">
-                  <button onClick={() => rankSubAdd(index)}>
-                    <img
-                      src={
-                        'https://static.solved.ac/tier_small/' +
-                        (index + 1) * 5 +
-                        '.svg'
-                      }
-                      alt="profile"
-                    />
-                  </button>
+                  <img
+                    src={t[index]}
+                    alt="profile"
+                    style={{ width: '100%' }}
+                    onClick={() => {
+                      setChecked(false)
+                      index === 0 ? rankAdd(0) : rankSubAdd(index)
+                    }}
+                  />
                 </div>
               ))}
               {/* 서브 랭크 출력하는 구간 */}
-              <div className="subRank">{rankArray}</div>
+              <Fade in={checked}>
+                <div className="subRank">{rankArray}</div>
+              </Fade>
             </div>
-            <div className="rankProblems">
-              {rankProblems.length !== 0 ? (
-                <>
-                  <div
-                    className="p-head"
-                    style={{
-                      backgroundColor: 'black',
-                      color: 'white',
-                      borderRadius: '5px 5px 0 0',
-                    }}
-                  >
-                    <span>#</span>
-                    <span>제목</span>
-                    <span>해결</span>
-                    <span>시도</span>
-                  </div>
-                  {ratingProblems &&
-                    rankProblems.map((problem, index) => (
-                      <div key={index} className="p-head">
-                        <span>{problem}</span>
-                        <span>제목</span>
-                        <span>해결</span>
-                        <span></span>
-                      </div>
-                    ))}
-                </>
-              ) : null}
-            </div>
+            <div className="rankProblems">{rankProblem}</div>
           </div>
         </div>
       )}

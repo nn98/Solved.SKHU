@@ -436,7 +436,7 @@ app.post("/proRegister", (req, res) => {
       // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음
       // res.send(result);
     }
-    res.status(100).json("강의 등록이 완료되었습니다.");
+    res.status(200).json("강의 등록이 완료되었습니다.");
   } else {
     res.status(406).json("교수 승인코드가 틀렸습니다.");
   }
@@ -538,7 +538,7 @@ app.post("/studentRegister", async (req, res) => {
     });
     if (AssignTaskExecute) await waitNotify4.wait();
     if (end) return;
-    res.status(100).json("학생 등록이 완료되었습니다.");
+    res.status(200).json("학생 등록이 완료되었습니다.");
     // result는 가져온 결과값
     // console.log(result);
     // res.send를 해야, 소스코드 fetch에서 res로 사용할 수 있음

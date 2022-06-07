@@ -3,34 +3,40 @@
   margin: 0% 5%;
 }
 
+.react-calendar-heatmap .color-beammp-0 {
+  fill: #ecfcec;
+}
 .react-calendar-heatmap .color-beammp-1 {
-  fill: #d6e685;
+  fill: #82ffd5;
 }
 .react-calendar-heatmap .color-beammp-2 {
-  fill: #8cc665;
+  fill: #00ffaa;
 }
 .react-calendar-heatmap .color-beammp-3 {
-  fill: #44a340;
+  fill: #00b97b;
 }
 .react-calendar-heatmap .color-beammp-4 {
-  fill: #1e6823;
+  fill: #006d49;
 }
 
 .use .zandi {
-  width: 100%;
+  width: 75%;
+  margin: 0 0 0 25%;
   height: 100%;
   -ms-overflow-style: none;
   margin-bottom: 2%;
-  box-shadow: 3px 3px 3px gray;
+  box-shadow: 5px 5px 28px grey;
 }
+
 .use .tearTable {
-  background-color: #f0f0f0;
-  width: 55%;
+  background-color: #fff;
+  width: 50%;
   float: left;
   margin-bottom: 5%;
   padding: 1%;
-  border-radius: 1%;
-  box-shadow: 3px 3px 3px gray;
+  border-radius: 0;
+  box-shadow: 5px 5px 28px grey;
+
   font-size: 2.2vh;
 }
 
@@ -66,13 +72,12 @@
 }
 
 .use .tagTable {
-  background-color: #f0f0f0;
-  width: 55%;
+  background-color: #fff;
+  width: 50%;
   overflow: hidden;
   padding: 1%;
-  border-radius: 1%;
   text-align: center;
-  box-shadow: 3px 3px 3px gray;
+  box-shadow: 5px 5px 28px grey;
   margin-bottom: 3%;
   font-size: 2.2vh;
 }
@@ -86,8 +91,7 @@
   overflow: overlay;
   overflow-x: hidden;
   -ms-overflow-style: none;
-  box-shadow: 3px 3px 3px gray;
-  border-radius: 0px 0px 5px 5px;
+  box-shadow: 5px 5px 28px grey;
 
   font-size: 130%;
 }
