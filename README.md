@@ -41,7 +41,8 @@
   |`22.`|*Off*|Full|풀타임 회의|2022-05-10|
   |`23.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connecting/Data Crawling|2022-05-18|
   |`24.`|*Off*|Full|풀타임 회의-<br>Front_additional Page Implement<br>Back_Client-Server Connecting<br>Solved.ac API testing|2022-05-19|
-  |`25.`|*Off*|Full||2022-05-19|
+  |`25.`|*Off*|Full|풀타임 회의|2022-06-06|
+  |`26.`|*Off*|Full||2022-05-19|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
@@ -155,7 +156,7 @@
   |--|--|--|--|
   |완료|크롤링 반복 시 과부하<br>[Thread.sleep()](https://www.delftstack.com/ko/howto/java/how-to-delay-few-seconds-in-java/)|2022-04-30|`A`|
   |완료|현재 기준 데이터베이스 값 전부 삽입 완료|2022-05-18|`A`|
-  |구현|크롤링하는 페이지의 UI변경<br>크롤링 코드 업데이트|2022-05-24|`A`|
+  |완료|크롤링하는 페이지의 UI변경<br>크롤링 코드 업데이트|2022-06-02|`A`|
   
   ## Errors-#16
   |문제점|해결방식|날짜|Dev|

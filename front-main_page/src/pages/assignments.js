@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import CopyRadioButtonsGroup from "./MUI/CopyRadioButtonsGroup";
 import MultipleSelect from "./MUI/MultipleSelect";
+import MaxWidthDialog from "./MUI/MaxWidthDialog";
 
 const Assignments = () => {
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,9 @@ const Assignments = () => {
   const [lecture, setLecture] = useState([]);
   const [student, setStudent] = useState([]);
   const [lectureName, setLectureName] = useState();
+
+  const [open, setOpen] = useState(false);
+  const [detailName, setDetailName] = useState();
 
   const handleCopy = async () => {
     if (copy === "resultCopy") {
@@ -57,11 +61,18 @@ const Assignments = () => {
 
   const onClickStart = async (props) => {
     console.log("Notify: ", "LoadingButton Clicked!");
+    let LIST = [];
+    let cnt = 0;
+    for (let i = 0; i < props.ID_LIST.length; ++i) {
+      if (props.ID_LIST[i].Lecture_ID === subject)
+        LIST[cnt++] = props.ID_LIST[i];
+    }
+    console.log(LIST);
     try {
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
-        ID_LIST: props.ID_LIST,
+        ID_LIST: LIST,
         PID: props.pnumber,
         DeadLine: props.pdate,
       };
@@ -83,8 +94,23 @@ const Assignments = () => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
 
           console.log("Data: ", data);
-          setStudent(data);
-          setID_LIST(data);
+          let compare = student;
+          console.log(compare);
+          for (let i = 0; i < compare.length; ++i) {
+            for (let j = 0; j < data.length; ++j) {
+              if (
+                data[j].Lecture_ID === compare[i].Lecture_ID &&
+                data[j].ID === compare[i].ID
+              ) {
+                compare[i].result = data[i].result;
+                compare[i].status = data[i].status;
+                break;
+              }
+            }
+          }
+          console.log(compare);
+          setStudent(compare);
+          setID_LIST(compare);
           // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
           setLoading(false);
         });
@@ -109,6 +135,11 @@ const Assignments = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleClickOpen = (name) => {
+    setOpen(true);
+    setDetailName(name);
   };
 
   useEffect(() => {
@@ -140,14 +171,17 @@ const Assignments = () => {
         <div className="overScroll">
           {subject &&
             student.map((data, index) => (
-              <>
+              <React.Fragment key={data.ID}>
                 {subject === data.Lecture_ID ? (
-                  <div key={data.ID} className="p-head">
+                  <div className="p-head">
                     <span>{lectureName}</span>
                     <span>{data.ID}</span>
                     <span>{data.name}</span>
                     <span>{data.bojid}</span>
-                    <span>
+                    <span
+                      onClick={() => handleClickOpen(data.name)}
+                      style={{ textDecoration: "underline", cursor: "pointer" }}
+                    >
                       {String(data.result) === "undefined"
                         ? ""
                         : String(data.result)}
@@ -155,7 +189,7 @@ const Assignments = () => {
                     {/* <input type="text" value={data} id={"ID"+index} ></input> */}
                   </div>
                 ) : null}
-              </>
+              </React.Fragment>
             ))}
         </div>
       </div>
@@ -244,13 +278,18 @@ const Assignments = () => {
         <LoadingButton
           size="small"
           color="inherit"
-          onClick={() =>
-            onClickStart({
-              ID_LIST,
-              pnumber,
-              pdate,
-            })
-          }
+          onClick={() => {
+            if (subject === "") alert("강의를 선택하세요.");
+            else if (pnumber === undefined || pnumber === "")
+              alert("문제번호를 선택하세요.");
+            else if (pdate === undefined) alert("제출 기한을 선택하세요.");
+            else
+              onClickStart({
+                ID_LIST,
+                pnumber,
+                pdate,
+              });
+          }}
           loading={loading}
           loadingIndicator="실행중..."
           variant="contained"
@@ -279,6 +318,13 @@ const Assignments = () => {
           </p>
         </Button>
       </div>
+      <MaxWidthDialog
+        open={open}
+        setOpen={setOpen}
+        pnumber={pnumber}
+        detailName={detailName}
+        student={student}
+      ></MaxWidthDialog>
     </div>
   );
 };

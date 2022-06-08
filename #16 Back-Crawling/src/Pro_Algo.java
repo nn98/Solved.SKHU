@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,7 +33,7 @@ public class Pro_Algo {
 		while(lvP <= 30) {
 		Document doc = Jsoup.connect("https://solved.ac/problems/level/"+lvP).get();
 		// 각 티어별 페이지 수 계산
-		Elements page = doc.select("div[class=\"Paginationstyles__PaginationWrapper-sc-bdna5c-2 gFzrWw\"]");
+		Elements page = doc.select("div.css-18lc7iz a");
 		String[] Spage = page.text().split(" ");
 		// 각 티어별 페이지 수
 		int p = 1;

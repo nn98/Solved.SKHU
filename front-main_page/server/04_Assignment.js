@@ -46,7 +46,8 @@ let urls = ['https://www.acmicpc.net/status?problem_id=', '&user_id=', '&languag
 
 /* Test Data => replace by Req */
 let ID_LIST = [
-    "kshyun419", "asas6614", "kwj9294", "skhu1024", "rladnr128",
+    "kshyun419"
+    // , "asas6614", "kwj9294", "skhu1024", "rladnr128",
     // "yebinac", "idotu", "neck392", "qmffmzpdl", "skl0519"
 ];
 /* */
@@ -74,7 +75,15 @@ async function execute(url) {
 
         await page.goto(url, { waitUntil: "networkidle2" });
 
+        console.log(page);
+        console.log(page.$eval("td",e=>e.outerHTML).getResult);
+
         const html = await page.$eval("td.result", e => e.outerHTML);
+        // const html0 = await page.$eval("#solution-13513003 > td:nth-child(1)", e => e.outerHTML);
+        // const html1 = await page.$eval("tr", e => e.outerHTML);
+        // const html2 = await page.$eval("#solution-13513003", e => e.outerHTML);
+        // console.log(html0);
+        // console.log(html1);
 
         results.push(processID, html.includes('맞았습니다!!'));
         console.log("\t\t", processID, "is solve");
