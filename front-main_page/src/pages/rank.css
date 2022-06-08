@@ -20,7 +20,7 @@
 }
 
 .rankTable td {
-  text-align: right;
+  text-align: center;
   padding: 1%;
 }
 .rankTable td:nth-child(1) {

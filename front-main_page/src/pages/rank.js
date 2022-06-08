@@ -66,7 +66,7 @@ const Rank = (props) => {
                 </td>
                 <td>{user.rating}</td>
                 <td>{user.class}</td>
-                <td>{user.pro}</td>
+                <td>{user.problems}</td>
                 <td style={{textAlign:'center'}}>{user.correction}</td>
               </tr>
             ))}
