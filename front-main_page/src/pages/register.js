@@ -17,7 +17,6 @@ const Register = () => {
       console.log(props)
       if (props.userId === '') return alert('백준 ID를 입력하세요')
       else if (props.regiCode === '') return alert('REGISTER CODE를 입력하세요')
-      // if(props.userId)
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
         uI: props.userId,
@@ -39,9 +38,15 @@ const Register = () => {
       await fetch('http://localhost:3001/register', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
-          // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
-          // 여기서는 로그인 안내 문자를 팝업 메시지로 보여줄 것임
-          if (!alert(props.userId)) navigate('/rank')
+          if (data === '학생 승인코드가 틀렸습니다.')
+            return alert('학생 승인코드가 틀렸습니다.')
+            else if (data === '에러가 발생했습니다. 이미 존재하는 학생입니다.')
+            return alert('에러가 발생했습니다. 이미 존재하는 학생입니다.')
+            else if (data === 'Solved.ac에서 해당 ID를 찾을 수 없습니다 등록 후 시도해주세요')
+            return alert('Solved.ac에서 해당 ID를 찾을 수 없습니다. 등록 후 시도해주세요')
+            else if(data==='학생 등록이 성공했습니다.') navigate('/rank')
+            return alert(data);
+          // if (!alert(data)) navigate('/rank')
         })
     } catch (error) {
       console.error(error)

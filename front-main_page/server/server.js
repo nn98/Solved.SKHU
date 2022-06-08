@@ -9,6 +9,7 @@ const waitNotify = new WaitNotify();
 const waitNotify2 = new WaitNotify();
 const waitNotify3 = new WaitNotify();
 const waitNotify4 = new WaitNotify();
+const waitNotify5 = new WaitNotify();
 let AssignTaskExecute = false;
 
 // cors 사용하여 정보 받는 것 우회하기
@@ -391,14 +392,6 @@ app.post("/userPage", (req, res) => {
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
 });
 
-app.post("/register", (req, res) => {
-  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  console.log(req);
-  const b = req.body;
-  res.send(b); // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-});
-
 app.post("/proRegister", (req, res) => {
   console.log("proRegister/post ", "is called");
   // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
@@ -616,47 +609,52 @@ app.get('/get', (req, res) => {
     res.send(result)
   })
 })
-app.get('/register', (req, res) => {
-  const b = req.body;
-  const url = 'https://solved.ac/ranking/o/309'
-  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  // ID, problems, solvedrank, worldrank, skhurank,tier, rating,class,pro,correction
-  // addRegister('q9922000',url)
-  console.log(b)
-  res.send(b) // res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-})
 app.post('/register', async (req, res) => {
-  const b = req.body;
-  
-  // fetch에서 보낸 requsetOption객체의 body값을 찾아낸다.
-  // ID, problems, solvedrank, worldrank, skhurank,tier, rating,class,pro,correction
-
-  // addRegister(b.uI,url)
-  console.log(b)
-  res.send(b) 
-  let resul = []// res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-  let values=[];
-  let abc;
-  //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-  // 코드 stuSK# 
   const url = 'https://solved.ac/ranking/o/309'
-  async function addRegister(pID,url) {
-  
+  const b = req.body;
+  let errOcc=false;
+  console.log(b) 
+  let resul = []// res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
+  let abc;
+  if(b.rC!=="stuSK#"){
+    res.status(406).json("학생 승인코드가 틀렸습니다.");
+  }
+  AssignTaskExecute = true;
+console.log('solved check success');
+  let sqls = "select * from User where ID = \""+b.uI+"\"";
+  console.log('run conntion',sqls)
+
+  if(errOcc)return;
+
+  connection.query(sqls, async function (err, result, fields) {
+    console.log(result.length===0)
+    if(result.length===0){
+      console.log("등록 가능")
+    }else{
+    res.status(406).json("에러가 발생했습니다. 이미 존재하는 학생입니다.")
+      AssignTaskExecute = false;
+      waitNotify5.notify();
+      return;
+    }
+    });
+    addRegister(b.uI,url,res);
+      if (AssignTaskExecute) await waitNotify5.wait();
+      console.log(errOcc)
+      if(errOcc)return;
+    
+  // 코드 stuSK# 
+  // 입력받은 유저를 랭킹테이블(데이터베이스)에 추가하는 함수
+  async function addRegister(pID,url,res) {
+    
     puppeteer
       .launch({ headless: true })
       .then(async (browser) => {
-        if (mAsyncTaskExecute) {
-          await waitNotify.wait()
-        }
-        mAsyncTaskExecute = true
         const page = await browser.newPage()
         
         await page.goto(url, { waitUntil: 'networkidle2' })
         const content = await page.content();
           // $에 cheerio를 로드한다.
           const $ = cheerio.load(content);
-          let status=[];
           // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
           const lists = $("tr");
           
@@ -668,39 +666,38 @@ app.post('/register', async (req, res) => {
           
           lists.each((index, list) => {
               name = $(list).find("td").toString();
-              // console.log(index);
-              // console.log(name)
+              
+              
+              console.log(name.includes(b.uI));
               if(name.includes(b.uI)===true){
                 c = name;
                 d  = c.split("</td>");
               }
           });
           abc = $(c).find("img").toString();
-          // console.log(abc);
-          // console.log(abc.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0]);
-          // console.log('c:',c);
-          // console.log('d:',d)
+
           for(let e = 0;e<d.length;e++){
             resul[e] = d[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
-        }        
-          // console.log(d[1].replace([(0-9)]))
-          // AssignTaskExecute = false
-          // waitNotify2.notify()
-          console.log('addReg end_resul:',resul);
+        }     
+        console.log('suc in solved.ac')
           AssignTaskExecute = false
-          mAsyncTaskExecute = false
-          waitNotify2.notify()
-          waitNotify.notify()
+          waitNotify5.notify()
       })
+    
       
       .catch((error) => {
-        console.log(error)
+        errOcc=true;
+        console.log('err in solved.ac',error)
+        AssignTaskExecute = false
+          waitNotify5.notify()
+        res.status(406).json("Solved.ac에서 해당 ID를 찾을 수 없습니다. 등록 후 시도해주세요")
       })
   }
   let name2 = []
   let pages = 1;
   let d2 = []
   let resul2 = []
+  // 입력받은 유저의 정답률을 크롤링하는 함수
   async function addCorrection(pID,url) {
     console.log('addCorrection is run_to:',url);
   
@@ -717,7 +714,6 @@ app.post('/register', async (req, res) => {
         const content = await page.content();
           // $에 cheerio를 로드한다.
           const $ = cheerio.load(content);
-          let status=[];
           // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
           const lists2 = $("tr");
           // const a= []
@@ -740,13 +736,7 @@ app.post('/register', async (req, res) => {
           for(let e = 0;e<d2.length;e++){
             resul2[e] = d2[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
         }        
-          // abc = $(c).find("img").toString();
-          // console.log(abc);
-          // console.log(abc.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0]);
-          // console.log('c:',c);
-          // console.log('d:',d)
-        
-          // console.log(d[1].replace([(0-9)]))
+
           AssignTaskExecute = false
           mAsyncTaskExecute = false
           waitNotify2.notify()
@@ -755,35 +745,42 @@ app.post('/register', async (req, res) => {
       })
       
       .catch((error) => {
-        console.log(error)
+          console.log(error)
       })
   }
-  AssignTaskExecute = true;
-  addRegister(b.uI,url);
-  if (AssignTaskExecute) await waitNotify2.wait();
-  let worldrank = resul[0];
-  let skhurank = resul[1];
-  let userid = resul[2];
-  let rating = resul[3];
-  let classs = resul[4];
-  let problems = resul[5];
-  let tier = abc.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0];
-  let corr=undefined;
-  while(corr===undefined){
-    AssignTaskExecute = true;
-    addCorrection(b.uI,'https://www.acmicpc.net/school/ranklist/309/'+pages);
-    if (AssignTaskExecute) await waitNotify2.wait();
-  corr = resul2[resul2.length-2];
-  console.log(corr)
-  pages++;
-  }
-  
-  console.log(userid+'",'+problems+','+tier+',"'+worldrank+'",'+skhurank+',"'+tier+'",'+rating+',"'+classs+'",'+problems+','+corr)
-  const sql = 'insert into User values("'
-  +userid+'",'+problems+','+tier+',"'+worldrank+'",'+skhurank+',"'+tier+'",'+rating+',"'+classs+'",'+problems+',"'+corr+'");'
-  connection.query(sql, function (err, result, fields) {
-    if (err) console.log('@@@@@' + err)
-  })
+    // 전체랭킹 / 학교랭킹 / ID / 레이팅 / 클래스 / 푼 문제 수 / 티어 / 정답률 / 백준ID
+    let worldrank, skhurank, userid, rating, classs, problems, tier, corr, bojid;
+    
+    worldrank = resul[0];
+    skhurank = resul[1];
+    userid = resul[2];
+    rating = resul[3];
+    classs = resul[4];
+    problems = resul[5];
+    bojid = b.gI;
+    console.log(worldrank+" "+skhurank+" "+userid+" "+rating+" "+classs+" "+problems+" "+bojid)
+    tier = abc.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0];
+    corr=undefined;
+    while(corr===undefined){
+      AssignTaskExecute = true;
+      addCorrection(b.uI,'https://www.acmicpc.net/school/ranklist/309/'+pages);
+      if (AssignTaskExecute) await waitNotify2.wait();
+    corr = resul2[resul2.length-2];
+    console.log(corr)
+    pages++;
+    }
+    console.log(userid+'",'+problems+','+tier+',"'+worldrank+'",'+skhurank+','+rating+',"'+classs+'","'+corr)
+    const sql = 'insert into User values("'
+    +userid+'",'+problems+','+tier+',"'+worldrank+'",'+skhurank+','+rating+',"'+classs+'","'+corr+'","'+bojid+'");'
+    console.log(sql);
+    // 등록될 학생을 DB에 넣는 과정
+    connection.query(sql, async function (err, result, fields) {
+      if (err) {
+        console.log('err in insert',err);
+        res.status(406).json("error")
+      }
+      res.status(200).json("학생 등록이 성공했습니다.")
+      });
 });
 
 // req는 소스코드로부터 받은 서버로 보낼 JSON 파일이 담긴 요청, res는 서버가 보낸 응답정보를 저장한 객체이고 우리는 JSON 파일 형식을 사용할 것임
