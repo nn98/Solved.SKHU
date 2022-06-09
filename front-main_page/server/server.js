@@ -210,7 +210,7 @@ app.get("/get", (req, res) => {
 
 app.post("/rating", async (req, res) => {
   let i, j;
-  console.log("rating" + req.body.ID);
+  console.log("rating-post: call",req.body.ID);
   const sqls1 = [
     "",
     "",
@@ -218,7 +218,6 @@ app.post("/rating", async (req, res) => {
     'select * from User where skhurank = (select skhurank from User where ID="' +
       req.body.ID +
       '")-2 union ',
-
     'select * from User where skhurank = (select skhurank from User where ID="' +
       req.body.ID +
       '")-1 union ',
@@ -300,7 +299,7 @@ app.post("/rating", async (req, res) => {
       console.log("@@@@@@@@@@@@@@@@@\n" + err);
       res.send({ error: err.errno });
     } else {
-      // console.log(result)
+      console.log("rating-post: return Problems/Similar Users",result)
       res.send(result);
     }
   });
