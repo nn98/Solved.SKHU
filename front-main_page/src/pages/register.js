@@ -39,12 +39,14 @@ const Register = () => {
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           if (data === '학생 승인코드가 틀렸습니다.')
-            return alert('학생 승인코드가 틀렸습니다.')
+            return alert(data)
             else if (data === '에러가 발생했습니다. 이미 존재하는 학생입니다.')
-            return alert('에러가 발생했습니다. 이미 존재하는 학생입니다.')
+            return alert(data)
             else if (data === 'Solved.ac에서 해당 ID를 찾을 수 없습니다 등록 후 시도해주세요')
-            return alert('Solved.ac에서 해당 ID를 찾을 수 없습니다. 등록 후 시도해주세요')
-            else if(data==='학생 등록이 성공했습니다.') navigate('/rank')
+            return alert(data)
+            else if (data === '솔브드에서 응답하지 않습니다. 잠시후 다시 시도해주세요')
+            return alert(data)
+            else if(data==='학생 등록이 완료되었습니다. 새로고침 후 이용해주시기 바랍니다.') navigate('/rank')
             return alert(data);
           // if (!alert(data)) navigate('/rank')
         })

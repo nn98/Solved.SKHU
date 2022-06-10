@@ -194,9 +194,6 @@ app.post("/QnAInnerDelete", (req, res) => {
 //
 // 기타 api @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-app.post("/addRegister", (req, res) => {
-  const sql = "";
-});
 app.get("/get", (req, res) => {
   const sql = "select * from Problem LIMIT 0,10";
 
@@ -398,7 +395,7 @@ app.post("/proRegister", (req, res) => {
   console.log(req);
   const b = req.body;
   console.log(b);
-  if (b.pC == "proskhuOp12#") {
+  if (b.pC === "proskhuOp12#") {
     for (let i = 0; i < b.cN; i++) {
       const sql =
         "insert into Lecture (professor, code, name, distribution) values(" +
@@ -483,7 +480,7 @@ app.post("/studentRegister", async (req, res) => {
   let end = false;
   console.log("body", b);
   //res.redirect(경로)는 이 server.js에서 경로를 찾아 다시 서버에 호출한다는 뜻이다.
-  if (b.sC == "stuSK#") {
+  if (b.sC === "stuSK#") {
     console.log("Student code is correct");
     let sql =
       "insert into Student (ID, name, bojid) values(" +
@@ -614,10 +611,11 @@ app.post('/register', async (req, res) => {
   const b = req.body;
   let errOcc=false;
   console.log(b) 
-  let resul = []// res.send()를 해야, 소스코드 fetch에서 res로 사용할 수 있음
-  let abc;
+  let resul = []
+  let ti;
   if(b.rC!=="stuSK#"){
     res.status(406).json("학생 승인코드가 틀렸습니다.");
+    return;
   }
   AssignTaskExecute = true;
 console.log('solved check success');
@@ -634,17 +632,17 @@ console.log('solved check success');
     res.status(406).json("에러가 발생했습니다. 이미 존재하는 학생입니다.")
       AssignTaskExecute = false;
       waitNotify5.notify();
-      return;
+      errOcc = true;
     }
     });
-    addRegister(b.uI,url,res);
+    addRegister(b.uI,url);
       if (AssignTaskExecute) await waitNotify5.wait();
       console.log(errOcc)
       if(errOcc)return;
     
   // 코드 stuSK# 
   // 입력받은 유저를 랭킹테이블(데이터베이스)에 추가하는 함수
-  async function addRegister(pID,url,res) {
+  async function addRegister(pID,url) {
     
     puppeteer
       .launch({ headless: true })
@@ -667,30 +665,37 @@ console.log('solved check success');
           lists.each((index, list) => {
               name = $(list).find("td").toString();
               
-              
-              console.log(name.includes(b.uI));
+              // console.log(name.includes(b.uI));
               if(name.includes(b.uI)===true){
                 c = name;
                 d  = c.split("</td>");
               }
           });
-          abc = $(c).find("img").toString();
+          ti = $(c).find("img").toString();
 
           for(let e = 0;e<d.length;e++){
             resul[e] = d[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
-        }     
+        }
+        if(resul.length===0){
+          errOcc=true;
+        console.log('err in solved.ac')
+        AssignTaskExecute = false
+          waitNotify5.notify()
+          res.status(406).json("Solved.ac에서 해당 ID를 찾을 수 없습니다. 등록 후 시도해주세요")
+          return
+        }
+        console.log(resul)
         console.log('suc in solved.ac')
           AssignTaskExecute = false
           waitNotify5.notify()
+          
       })
-    
-      
       .catch((error) => {
         errOcc=true;
         console.log('err in solved.ac',error)
         AssignTaskExecute = false
           waitNotify5.notify()
-        res.status(406).json("Solved.ac에서 해당 ID를 찾을 수 없습니다. 등록 후 시도해주세요")
+        res.status(406).json("솔브드에서 응답하지 않습니다. 잠시후 다시 시도해주세요")
       })
   }
   let name2 = []
@@ -704,10 +709,6 @@ console.log('solved check success');
     puppeteer
       .launch({ headless: true })
       .then(async (browser) => {
-        if (mAsyncTaskExecute) {
-          await waitNotify.wait()
-        }
-        mAsyncTaskExecute = true
         const page = await browser.newPage()
         
         await page.goto(url, { waitUntil: 'networkidle2' })
@@ -716,16 +717,10 @@ console.log('solved check success');
           const $ = cheerio.load(content);
           // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
           const lists2 = $("tr");
-          // const a= []
-          // console.log(lists);
           // 모든 리스트를 순환한다.
           let c2 = []
-          console.log(lists2.toString())
           lists2.each((index, list) => {
               name2 = $(list).find("td").toString();
-              // console.log(name2)
-              // console.log(index);
-              // console.log(name)
               if(name2.includes(b.uI)===true){
                 c2 = name2;
                 d2  = c2.split("</td>");
@@ -735,12 +730,11 @@ console.log('solved check success');
           // console.log(c2===undefined)
           for(let e = 0;e<d2.length;e++){
             resul2[e] = d2[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+            console.log(resul2[e])
         }        
 
           AssignTaskExecute = false
-          mAsyncTaskExecute = false
-          waitNotify2.notify()
-          waitNotify.notify()
+          waitNotify5.notify();
           
       })
       
@@ -750,7 +744,6 @@ console.log('solved check success');
   }
     // 전체랭킹 / 학교랭킹 / ID / 레이팅 / 클래스 / 푼 문제 수 / 티어 / 정답률 / 백준ID
     let worldrank, skhurank, userid, rating, classs, problems, tier, corr, bojid;
-    
     worldrank = resul[0];
     skhurank = resul[1];
     userid = resul[2];
@@ -758,30 +751,149 @@ console.log('solved check success');
     classs = resul[4];
     problems = resul[5];
     bojid = b.gI;
-    console.log(worldrank+" "+skhurank+" "+userid+" "+rating+" "+classs+" "+problems+" "+bojid)
-    tier = abc.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0];
+    tier = ti.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0];
+    console.log(worldrank+" "+skhurank+" "+userid+" "+rating+" "+classs+" "+problems+" "+bojid+" "+tier)
     corr=undefined;
     while(corr===undefined){
       AssignTaskExecute = true;
       addCorrection(b.uI,'https://www.acmicpc.net/school/ranklist/309/'+pages);
-      if (AssignTaskExecute) await waitNotify2.wait();
+      if (AssignTaskExecute) await waitNotify5.wait();
     corr = resul2[resul2.length-2];
-    console.log(corr)
+    console.log('corr:',corr)
     pages++;
     }
     console.log(userid+'",'+problems+','+tier+',"'+worldrank+'",'+skhurank+','+rating+',"'+classs+'","'+corr)
     const sql = 'insert into User values("'
     +userid+'",'+problems+','+tier+',"'+worldrank+'",'+skhurank+','+rating+',"'+classs+'","'+corr+'","'+bojid+'");'
     console.log(sql);
-    // 등록될 학생을 DB에 넣는 과정
+    // 등록할 학생을 DB에 넣는 과정
     connection.query(sql, async function (err, result, fields) {
       if (err) {
         console.log('err in insert',err);
         res.status(406).json("error")
       }
-      res.status(200).json("학생 등록이 성공했습니다.")
+      res.status(200).json("학생 등록이 완료되었습니다. 새로고침 후 이용해주시기 바랍니다.")
       });
+      AssignTaskExecute = true;
+      userUpdate(url,req);
+      let updateP = 1;
+      while(updateP<=3){
+        AssignTaskExecute = true;
+        correctionUpdate('https://www.acmicpc.net/school/ranklist/309/'+updateP)
+        if (AssignTaskExecute) await waitNotify5.wait();
+      updateP++;
+      }
+      
 });
+// 전체 학생 정보 업데이트 함수
+async function userUpdate(url,req){
+
+  puppeteer
+  .launch({ headless: true })
+  .then(async (browser) => {
+    const page = await browser.newPage()
+    
+    await page.goto(url, { waitUntil: 'networkidle2' })
+    const content = await page.content();
+      // $에 cheerio를 로드한다.
+      const $ = cheerio.load(content);
+      // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
+      const lists3 = $("tr");
+      // 모든 리스트를 순환한다.
+      let c3 = []
+      let d3 = []
+      let name3 = []
+      let resul3 = []
+      let tiee;
+      let worldrank, skhurank, userid, rating, classs, problems, tie, bojid;
+      lists3.each((index, lists) => {
+        if(index>0){
+          name3 = $(lists).find("td").toString();
+            c3 = name3;
+            d3  = c3.split("</td>");
+            tiee = $(c3).find("img").toString();
+            // console.log(tiee[index].split('.svg"')[0].replace(/[^0-9]/gi,""))
+            for(let e = 0;e<d3.length;e++){
+              resul3[e] = d3[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+          }
+          worldrank = resul3[0];
+          skhurank = resul3[1];
+          userid = resul3[2];
+          rating = resul3[3];
+          classs = resul3[4];
+          problems = resul3[5].replace(",","");
+          tie = tiee.split('.svg"')[0].replace(/[^0-9]/gi,"");
+          // console.log(ti);
+          bojid = req.body.gI;
+          // console.log('worldrank : ',worldrank,'skhurank : ', skhurank,'userid : ', userid,'rating : ', rating,'class : ' ,classs,'problems : ', problems,'tier : ' ,tie,'bojid : ', bojid);
+          const sql = "update User set problems = "+problems+", solvedrank = "+tie+",worldrank=\""+worldrank+"\",skhurank="+skhurank+",rating="+rating+",class=\""+classs+"\",gitid = \""+bojid+"\" where ID = \""+userid+"\";"
+          console.log(sql)
+          connection.query(sql, async function (err, result, fields) {
+            if (err) {
+              console.log('err in update',err);
+            }
+          });
+        }
+      });
+      AssignTaskExecute = false
+      waitNotify5.notify();
+      
+  })
+  
+  .catch((error) => {
+      console.log(error)
+  })
+}
+async function correctionUpdate(url){
+  puppeteer
+  .launch({ headless: true })
+  .then(async (browser) => {
+    const page = await browser.newPage()
+    
+    await page.goto(url, { waitUntil: 'networkidle2' })
+    const content = await page.content();
+      // $에 cheerio를 로드한다.
+      const $ = cheerio.load(content);
+      // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
+      const lists4 = $("tr");
+      // 모든 리스트를 순환한다.
+      let c4 = []
+      let d4 = []
+      let name4 = []
+      let resul4 = []
+      let id;
+      let correction;
+      lists4.each((index, list) => {
+          name4 = $(list).find("td").toString();
+            c4 = name4;
+            d4  = c4.split("</td>");
+            for(let e = 0;e<d4.length;e++){
+              resul4[e] = d4[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+          }
+          id = resul4[1];
+          correction = resul4[resul4.length-2];
+          const sql = "update User set correction = \""+correction+"\" where ID = \""+id+"\";" 
+          console.log(sql)
+          connection.query(sql, async function (err, result, fields) {
+            if (err) {
+              console.log('err in update',err);
+            }
+          });      
+      });
+      // console.log(pages)
+      // console.log(c2===undefined)
+      
+
+      AssignTaskExecute = false
+      waitNotify5.notify();
+      
+  })
+  
+  .catch((error) => {
+      console.log(error)
+  })
+}
+
 
 // req는 소스코드로부터 받은 서버로 보낼 JSON 파일이 담긴 요청, res는 서버가 보낸 응답정보를 저장한 객체이고 우리는 JSON 파일 형식을 사용할 것임
 app.post("/assignments", async (req, res) => {
@@ -952,7 +1064,7 @@ async function isFinish(ID_LIST, pID, fuck) {
   console.log("rere at isFin:", fuck);
   waitNotify.notify();
   mAsyncTaskExecute = false;
-  if (ID_LIST.length == 0) {
+  if (ID_LIST.length === 0) {
     console.log("result: ", fuck);
     AssignTaskExecute = false;
     waitNotify2.notify();

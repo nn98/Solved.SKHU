@@ -154,7 +154,7 @@ const Rating = (props) => {
                         <img
                           src={
                             'https://static.solved.ac/tier_small/' +
-                            user.tier +
+                            user.solvedrank +
                             '.svg'
                           }
                           alt="profile"
