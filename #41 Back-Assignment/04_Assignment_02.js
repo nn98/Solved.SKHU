@@ -12,7 +12,7 @@ let ID_LIST = [
     "minjeong2904", "minjune8506", "kim97", "tndusy27", "kshyun419",
     "jkkj0414", "06zzkimzz06", "rlaxogjs5656", "haeunkim0807", "hesy0147",
     "201632006", "hyk4238", "a3920679", "jinsu4755", "eunseo5355",
-    "sonyejin6449", "itcantbetrueitsundifinezzzzzz", "20184120", "hs980414", "202014021",
+    "sonyejin6449", "totoro0311", "20184120", "hs980414", "202014021",
     "kuntek1953", "lsh328328", "201634015", "leejh0702", "szljs",
     "dlaxodud1217", "abcdeun", "jiyoon", "itcantbetrueitsundifinezzzzzz", "vact19",
     "joseeun0805", "wnehdtjr5", "hackin", "jinseeun1127", "dd0910",
@@ -25,14 +25,14 @@ const waitNotify = new WaitNotify();
 const cheerio = require("cheerio");
 process.setMaxListeners(50);
 
-// 9251 , 9252 , 1260 , 132 , 10451
-let pID = 1260;
+// 9251 , 9252 , 1260 , 132 , 10451, 1260
+let pID = 1931;
 let processID;
 let resultS="";
 let results = [];
 let isAssigned = false;
 let mAsyncTaskExecute = false;
-let urls = ['https://www.acmicpc.net/status?problem_id=', '&user_id=', '&language_id=-1&result_id=4'];
+let urls = ['https://www.acmicpc.net/status?problem_id=', '&user_id=', '&language_id=-1&result_id=-1'];
 
 /* input line*/
 // let fs = require('fs');
@@ -82,16 +82,32 @@ async function execute(url) {
 
         await page.goto(url, { waitUntil: "networkidle2" });
 
-        const html = await page.$eval("td.result", e => e.outerHTML);
-
-        results.push(processID, html.includes('맞았습니다!!'));
-        console.log("\t\t", processID, "is solve");
+        const content = await page.content();
+        // $에 cheerio를 로드한다.
+        const $ = cheerio.load(content);
+        const lists = $("td.result");
+        if (lists.length < 1) {
+            console.log("\t\t", processID, "isn't try");
+            results.push(0);
+        }
+        else {
+            let re = false;
+            console.log('get lists');
+            // 모든 리스트를 순환한다.
+            lists.each((index, list) => {
+                let te = $(list).toString();
+                console.log('result', index, te);
+                if (!re) re = te.includes("맞았습니다!!");
+            });
+            // console.log(results);
+            console.log("\t\t", processID, "is try");
+            console.log("\t\t", "solve?", re);
+            results.push(re?20:10);
+        }
         isFinish();
 
     }).catch(error => {
-        console.log("\t\t", processID, "isn't solve");
-        results.push(processID, false);
-        isFinish();
+        console.log("err", error);
     });
 }
 
@@ -100,13 +116,13 @@ async function isFinish() {
     waitNotify.notify();
     mAsyncTaskExecute = false;
     if (ID_LIST.length == 0) {
-        for(let i=0;i<results.length;i+=2){
-            resultS+=(results[i]==="itcantbetrueitsundifinezzzzzz"?"미제출":results[i])
-            +"\t"+(results[i+1]?1:0)+"\n";
+        for (let i = 0; i < results.length; i++) {
+            resultS += (results[i] === "itcantbetrueitsundifinezzzzzz" ? "미제출" : results[i])+ "\n";
+            // +(results[i+1]?1:0)
             // console.log(results[i]+"\t"+results[i+1]);
         }
         // console.log(results);
-        console.log("distribution",distribution,"pID",pID);
+        console.log("distribution", distribution, "pID", pID);
         console.log(resultS);
         isAssigned = true;
         process.exit(0);

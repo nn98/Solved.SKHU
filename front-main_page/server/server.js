@@ -917,9 +917,9 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
         // });
       });
 
+      console.log('get html');
       const html = await page.$eval("td.result", (e) => e.outerHTML);
-
-      console.log("html:", html);
+      console.log('html:',html);
       console.log("set result");
       ID_LIST[0].result = html.includes("맞았습니다!!")
         ? 20
@@ -940,7 +940,7 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
       isFinish(ID_LIST, pID, fuck);
     })
     .catch((error) => {
-      console.log("err", error);
+      console.log("html include err", error);
       console.log("\t\t", processID, "isn't solve");
       ID_LIST[0].result = 0;
       ID_LIST[0].status = "";
