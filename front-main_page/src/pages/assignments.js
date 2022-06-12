@@ -60,14 +60,14 @@ const Assignments = () => {
   };
 
   const onClickStart = async (props) => {
-    console.log("Notify: ", "LoadingButton Clicked!");
+    // console.log("Notify: ", "LoadingButton Clicked!");
     let LIST = [];
     let cnt = 0;
     for (let i = 0; i < props.ID_LIST.length; ++i) {
       if (props.ID_LIST[i].Lecture_ID === subject)
         LIST[cnt++] = props.ID_LIST[i];
     }
-    console.log(LIST);
+    // console.log(LIST);
     try {
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
@@ -93,9 +93,9 @@ const Assignments = () => {
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
 
-          console.log("Data: ", data);
+          // console.log("Data: ", data);
           let compare = student;
-          console.log(compare);
+          // console.log(compare);
           for (let i = 0; i < compare.length; ++i) {
             for (let j = 0; j < data.length; ++j) {
               if (
@@ -108,7 +108,7 @@ const Assignments = () => {
               }
             }
           }
-          console.log(compare);
+          // console.log(compare);
           setStudent(compare);
           setID_LIST(compare);
           // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
@@ -124,13 +124,13 @@ const Assignments = () => {
       await fetch("http://localhost:3001/assignments")
         .then((res) => res.json())
         .then((data) => {
-          console.log("Lec:", data[0]);
-          console.log("Stu:", data[1]);
+          // console.log("Lec:", data[0]);
+          // console.log("Stu:", data[1]);
           setLecture(data[0]);
           setStudent(data[1]);
           setID_LIST(data[1]);
-          console.log("setLec:", lecture);
-          console.log("setStu:", student);
+          // console.log("setLec:", lecture);
+          // console.log("setStu:", student);
         });
     } catch (error) {
       console.error(error);

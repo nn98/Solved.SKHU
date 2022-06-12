@@ -20,7 +20,9 @@ const MainPage = (props) => {
       alert("입력하신 ID는 Solve.ac에 등록되지 않았습니다.");
     }
   };
-  useEffect(() => console.log(props), []);
+  // useEffect(() =>
+  // // console.log(props)
+  // , []);
   return (
     <div className="mainPage">
       {/* box 안에 있는 textfield를 사용하여 box로 겉이 둥근 모양의 상자를 만들고
