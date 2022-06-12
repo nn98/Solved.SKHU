@@ -54,7 +54,7 @@ const Rank = (props) => {
                     alt="profile"
                     style={{ width: '3%', margin: '0 1% 0 0' }}
                   />{' '}
-                  <strong>
+                  <strong style={{ verticalAlign: 'super' }}>
                     <a
                       href={'https://solved.ac/profile/' + user.ID}
                       target="_blank"

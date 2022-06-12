@@ -147,7 +147,11 @@ const Rating = (props) => {
                 </div>
                 {similarStudent &&
                   similarStudent.map((user, index) => (
-                    <div key={index} className="p-head">
+                    <div
+                      key={index}
+                      className="p-head"
+                      style={{ position: 'relative' }}
+                    >
                       <span>{user.worldrank}</span>
                       <span>{user.skhurank}</span>
                       <span>
@@ -158,9 +162,19 @@ const Rating = (props) => {
                             '.svg'
                           }
                           alt="profile"
-                          style={{ width: '7%', margin: '0 1% 0 0' }}
+                          style={{
+                            width: '1.2rem',
+                            top: '0',
+                            margin: '0 1% 0 0',
+                            position: 'absolute',
+                          }}
                         />{' '}
-                        <strong>
+                        <strong
+                          style={{
+                            // verticalAlign: 'super',
+                            marginLeft: '1.7rem',
+                          }}
+                        >
                           <a
                             href={'https://solved.ac/profile/' + user.ID}
                             target="_blank"
@@ -201,7 +215,14 @@ const Rating = (props) => {
               <div className="recommendProblemInner">
                 {ratingProblems &&
                   ratingProblems.map((problem, index) => (
-                    <div key={index} className="p-head">
+                    <div
+                      key={index}
+                      className="p-head"
+                      style={{ position: 'relative' }}
+                    >
+                      <span>{problem.PROBLEM_ID}</span>
+                      <span>{problem.namekr}</span>
+                      <span>{problem.sum}명 시도</span>
                       <img
                         src={
                           'https://static.solved.ac/tier_small/' +
@@ -209,11 +230,14 @@ const Rating = (props) => {
                           '.svg'
                         }
                         alt="profile"
-                        style={{ width: '2%', margin: '0 1% 0 0' }}
+                        style={{
+                          width: '1.2rem',
+                          position: 'absolute',
+                          margin: '0px 1% 0px 0px',
+                          left: '0',
+                          top: '0',
+                        }}
                       />
-                      <span>{problem.PROBLEM_ID}</span>
-                      <span>{problem.namekr}</span>
-                      <span>{problem.sum}명 시도</span>
                     </div>
                   ))}
               </div>
