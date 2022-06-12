@@ -231,10 +231,10 @@ const Assignments = () => {
                       marginBottom: "5%",
                     }}
                   >
-                    <h3>과목코드 : {data.code}</h3>
-                    <h3>교수명: {data.professor}</h3>
-                    <h3>강의명 : {data.name}</h3>
-                    <h3>분반 : {data.distribution}</h3>
+                    <h4>과목코드 : {data.code}</h4>
+                    <h4>교수명: {data.professor}</h4>
+                    <h4>강의명 : {data.name}</h4>
+                    <h4>분반 : {data.distribution}</h4>
                     <Link
                       to="/studentRegister"
                       state={[
