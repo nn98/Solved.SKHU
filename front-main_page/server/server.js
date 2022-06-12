@@ -805,6 +805,11 @@ async function userUpdate(url,req){
       let name3 = []
       let resul3 = []
       let tiee;
+      const pages = $(lists3).find("a").toString()
+      let a = pages.split('</a>');
+      let b = a[a.length-2].split('<class="css-af4alp">');
+      let upage = 0;
+      let upages = b[1];
       let worldrank, skhurank, userid, rating, classs, problems, tie, bojid;
       lists3.each((index, lists) => {
         if(index>0){
@@ -834,15 +839,77 @@ async function userUpdate(url,req){
             }
           });
         }
+      solvePage("https://solved.ac/profile"+userid,userid);
+
       });
       AssignTaskExecute = false
       waitNotify5.notify();
-      
   })
-  
   .catch((error) => {
       console.log(error)
   })
+}
+async function solvePage(url,userid){
+
+  puppeteer
+  .launch({ headless: true })
+  .then(async (browser) => {
+    const page = await browser.newPage()
+    
+    await page.goto(url, { waitUntil: 'networkidle2' })
+    const content = await page.content();
+      let solpage = 1;
+      const $ = cheerio.load(content);
+      const list5 = $("#__next > div > div.css-axxp2y > div > div:nth-child(4) > div.css-18lc7iz");
+      const pages = $(list5).find("a").toString()
+      let a = pages.split('</a>');
+      let b = a[a.length-2].split('class="css-af4alp">');
+      while(solpage<=b[1]){
+        solveProblem("https://solved.ac/profile"+userid+"?page="+solpage++,userid)
+      }
+
+      AssignTaskExecute = false
+      waitNotify5.notify();
+})
+  
+.catch((error) => {
+    console.log(error)
+})
+}
+async function solveProblem(url,userid){
+  puppeteer
+  .launch({ headless: true })
+  .then(async (browser) => {
+    const page = await browser.newPage()
+    
+    await page.goto(url, { waitUntil: 'networkidle2' })
+    const content = await page.content();
+      const $ = cheerio.load(content);
+      const lists = $("tr");
+      let c5 = []
+      let d5 = []
+      let name5 = []
+      let resul5 = []
+      lists.each((index, list) => {
+          name5 = $(list).find("td").toString();
+            c5 = name5;
+            d5  = c5.split("</td>");
+            resul5[0] = d5[0].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+          const sql = "insert into Solve(USER_ID, PRIBLEM_ID) values(\""+userid+"\",\""+resul5[0]+"\")"
+          console.log(sql)
+          connection.query(sql, async function (err, result, fields) {
+            if (err) {
+              console.log('err in update',err);
+            }
+          });      
+      });
+      AssignTaskExecute = false
+      waitNotify5.notify();
+})
+  
+.catch((error) => {
+    console.log(error)
+})
 }
 async function correctionUpdate(url){
   puppeteer
