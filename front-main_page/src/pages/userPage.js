@@ -382,56 +382,62 @@ const UserPage = (props) => {
 
   return (
     <div className="user">
-      <div className="head" style={{ position: 'absolute' }}>
-        <div>
-          <a
-            href={
-              'https://solved.ac/problems/level/' + (user.tier ? user.tier : 0)
+      <div
+        className="head"
+        style={{
+          background:
+            user.tier === 31
+              ? 'linear-gradient( to bottom, #7df7ffd0, #ff7ca9d0 )'
+              : user.tier === 0
+              ? '#343434d0'
+              : COLORS[COLORS.length - user.tier] + 'd0',
+        }}
+      >
+        <a
+          href={
+            'https://solved.ac/problems/level/' + (user.tier ? user.tier : 0)
+          }
+        >
+          <img
+            style={{
+              width: '1.7rem',
+              padding: '0 10px 0 0',
+              verticalAlign: '-webkit-baseline-middle',
+            }}
+            src={
+              'https://static.solved.ac/tier_small/' +
+              (user.tier ? user.tier : 0) +
+              '.svg'
             }
-          >
-            <img
-              style={{
-                width: '1.7rem',
-                padding: '0 10px 0 0',
-                verticalAlign: '-webkit-baseline-middle',
-              }}
-              src={
-                'https://static.solved.ac/tier_small/' +
-                (user.tier ? user.tier : 0) +
-                '.svg'
-              }
-              alt="profile"
-            />
-          </a>
-          <span
-            style={{
-              fontSize: '2em',
-              fontWeight: 'bold',
-              verticalAlign: 'bottom',
-            }}
-          >
-            {props.globalID === ''
-              ? location.state !== null
-                ? location.state.userId
-                : 'q9922000'
-              : props.globalID}
-          </span>
-          <br />
-
-          <span
-            style={{
-              width: '10%',
-              margin: user.solvedCount ? '1%' : '2.1%',
-              fontSize: '1.5em',
-              fontWeight: 'bold',
-            }}
-          >
-            {user.solvedCount}
-          </span>
-          <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
-            문제 해결
-          </span>
-        </div>
+            alt="profile"
+          />
+        </a>
+        <span
+          style={{
+            fontSize: '2em',
+            fontWeight: 'bold',
+            verticalAlign: 'bottom',
+          }}
+        >
+          {props.globalID === ''
+            ? location.state !== null
+              ? location.state.userId
+              : 'q9922000'
+            : props.globalID}
+        </span>
+        <br />
+        <hr style={{ margin: '8% 0' }} />
+        <span
+          style={{
+            width: '10%',
+            margin: user.solvedCount ? '1%' : '2.1%',
+            fontSize: '1.5em',
+            fontWeight: 'bold',
+          }}
+        >
+          {user.solvedCount}
+        </span>
+        <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>문제 해결</span>
       </div>
       <div className="use">
         <div className="zandi">
@@ -579,7 +585,7 @@ const UserPage = (props) => {
                         '.svg'
                       }
                       alt="profile"
-                      style={{ width: '2vh' }}
+                      style={{ width: '1.9vh' }}
                     />
                   </span>
                   <span id="user-color">{problem.problemId}</span>
@@ -629,7 +635,7 @@ const UserPage = (props) => {
               userTag.items.map((t, index) =>
                 t.solved === 0 ? null : (
                   <div key={index} className="p-head">
-                    <span>{t.tag.displayNames[0].name}</span>
+                    <span id="user-color">{t.tag.displayNames[0].name}</span>
                     <i>
                       <span id="user-color">{t.solved}</span>
                     </i>

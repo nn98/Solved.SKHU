@@ -18,14 +18,29 @@
 .react-calendar-heatmap .color-beammp-4 {
   fill: #006d49;
 }
+.user .head {
+  box-shadow: 5px 5px 10px #ccc;
+  padding: 20px;
+  margin-left: 10%;
+  border-radius: 5px;
+  /* top: 13%; */
+  bottom: 30px;
+  right: 50px;
+  color: #fefefedd;
+  position: fixed;
+  z-index: 1;
+  width: auto;
+}
 
 .use .zandi {
-  width: 75%;
-  margin: 0 0 0 25%;
+  width: 80%;
+  margin: 0 10%;
   height: 100%;
   -ms-overflow-style: none;
   margin-bottom: 2%;
-  box-shadow: 5px 5px 28px grey;
+  margin-top: 3.2%;
+  padding: 10px;
+  box-shadow: 8px 8px 28px -14px grey;
 }
 
 .use .tearTable {
@@ -35,9 +50,9 @@
   margin-bottom: 5%;
   padding: 1%;
   border-radius: 0;
-  box-shadow: 5px 5px 28px grey;
+  box-shadow: 8px 8px 28px -14px grey;
 
-  font-size: 2.2vh;
+  font-size: 2vh;
 }
 
 .use .tearTable .teardata {
@@ -77,7 +92,7 @@
   overflow: hidden;
   padding: 1%;
   text-align: center;
-  box-shadow: 5px 5px 28px grey;
+  box-shadow: 8px 8px 28px -14px grey;
   margin-bottom: 3%;
   font-size: 2.2vh;
 }
@@ -91,9 +106,9 @@
   overflow: overlay;
   overflow-x: hidden;
   -ms-overflow-style: none;
-  box-shadow: 5px 5px 28px grey;
+  box-shadow: 8px 8px 28px -14px grey;
 
-  font-size: 130%;
+  font-size: 2.2vh;
 }
 
 @media (max-width: 1300px) {
@@ -106,7 +121,7 @@
     overflow: overlay;
     overflow-x: hidden;
     -ms-overflow-style: none;
-    box-shadow: 3px 3px 3px gray;
+    box-shadow: 8px 8px 28px -14px grey;
     border-radius: 0px 0px 5px 5px;
     font-size: 130%;
   }
@@ -186,10 +201,6 @@
 .use .p-head span:nth-child(2) {
   width: 40%;
 }
-.user .head {
-  margin-left: 5%;
-}
-
 .use p {
   text-align: left;
   color: gray;
