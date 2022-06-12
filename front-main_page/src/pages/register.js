@@ -39,6 +39,7 @@ const Register = () => {
       await fetch('http://localhost:3001/register', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
+          console.log(data);
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
           // 여기서는 로그인 안내 문자를 팝업 메시지로 보여줄 것임
           if (!alert(props.userId)) navigate('/rank')
