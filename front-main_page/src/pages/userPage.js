@@ -176,11 +176,12 @@ const UserPage = (props) => {
   const userAdd = async () => {
     try {
       const t =
-        props.globalID === ''
-          ? location.state !== null
-            ? location.state.userId
-            : 'q9922000'
-          : props.globalID
+        location.state === null && props.globalID === ''
+          ? 'q9922000'
+          : location.state === null
+          ? props.globalID
+          : location.state.userId
+      // console.log(t)
       // const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
       // 잔디
       await fetch(
@@ -236,7 +237,7 @@ const UserPage = (props) => {
         .then((res) => res.json())
         .then((data) => {
           let t = []
-          console.log(data.items.slice(0, 6))
+          // console.log(data.items.slice(0, 6))
           let sum = 0
           for (let i = 0; i < 6; i++) {
             t.push({
@@ -345,7 +346,7 @@ const UserPage = (props) => {
 
             circleData.unshift(addData)
           }
-          console.log(circleData)
+          // console.log(circleData)
           setCircleChart(circleData)
 
           // console.log(tierData)
@@ -375,8 +376,10 @@ const UserPage = (props) => {
     [setActiveIndex]
   )
   useEffect(() => {
+    // console.log('location.state ' + location.state)
+    // console.log('props.globalID ' + props.globalID)
     userAdd()
-  }, [location.state, props.globalID])
+  }, [props.globalID, location.state])
 
   return (
     <div className="user">
