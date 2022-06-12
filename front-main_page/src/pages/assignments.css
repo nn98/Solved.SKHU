@@ -19,19 +19,20 @@
 }
 
 .buttonList {
+  padding: "10%";
   width: 20%;
   float: right;
 }
 
 .buttonList input[type="text"] {
   height: 3vh;
-  width: 80%;
-  margin-bottom: 10%;
+  width: 205px;
+  margin: 0% 0% 10% 0%;
 }
 .buttonList input[type="date"] {
   height: 3vh;
-  width: 82%;
-  margin-bottom: 10%;
+  width: 207px;
+  margin: 0% 0% 10% 0%;
 }
 
 .buttonList button {
@@ -41,8 +42,8 @@
 
 .assign p {
   display: inline;
-  font-size: x-large;
-  margin-bottom: 10px;
+  font-size: large;
+  margin-right: 12px;
 }
 
 .assign .p-head {

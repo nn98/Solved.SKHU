@@ -227,7 +227,7 @@ const Assignments = () => {
                     key={data.ID}
                     sx={{
                       display: "inline-block",
-                      width: "83%",
+                      width: "208px",
                       marginBottom: "5%",
                     }}
                   >
@@ -293,10 +293,13 @@ const Assignments = () => {
           loading={loading}
           loadingIndicator="실행중..."
           variant="contained"
-          sx={{ width: "67%" }}
+          sx={{ width: "210px", backgroundColor: "#f0f0f0" }}
         >
           <p>
-            <PlayArrowIcon fontSize="small" />
+            <PlayArrowIcon
+              fontSize="12px"
+              sx={{ margin: "0px 12px 0px 0px" }}
+            />
             검사 실행
           </p>
         </LoadingButton>
@@ -311,9 +314,13 @@ const Assignments = () => {
             handleCopy();
           }}
           variant="contained"
+          sx={{ width: "210px", marginTop: "10px", backgroundColor: "#f0f0f0" }}
         >
           <p>
-            <ContentCopyIcon fontSize="small" />
+            <ContentCopyIcon
+              fontSize="12px"
+              sx={{ margin: "0px 12px 0px 0px" }}
+            />
             결과 복사하기
           </p>
         </Button>
