@@ -331,7 +331,8 @@
   ### 개발 방향성
   - **알고리즘 카테고리별 문제 정렬/제공**(first) >> 알고리즘 추천(second)
   
-  ```javascript
+  <details><summary>Backup-server.js</summary>
+    ```javascript
   // npm i wait-notify puppeteer cheerio
 const express = require("express");
 const app = express();
@@ -1328,6 +1329,7 @@ async function isFinish(ID_LIST, pID, fuck) {
   }
 }
   ```
+  </details>
   
   </details>
 
