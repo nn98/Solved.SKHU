@@ -30,7 +30,7 @@
   width: 45%;
   margin-left: 2.5%;
   float: left;
-  box-shadow: 8px 8px 28px -14px grey;
+  box-shadow: 8px 8px 21px -14px grey;
 }
 .recommend .ratingProblem .recommendProblem .recommendProblemInner {
   height: 40vh;
@@ -109,7 +109,7 @@
 .recommend .myButton {
   /* box-shadow: 0px 0px 0px 2px #899599; */
   background-color: #ededed;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   border: 1px solid #ededed;
   display: inline-block;
   cursor: pointer;
@@ -119,7 +119,7 @@
   padding: 12px 37px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #e1e2ed;
-  margin: 0 2vh;
+  /* margin: 0 2vh; */
   box-shadow: 8px 8px 28px -14px grey;
 }
 .recommend .myButton:hover {

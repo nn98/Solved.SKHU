@@ -109,16 +109,27 @@ const Rating = (props) => {
 
   return (
     <div className="recommend">
-      <button className="myButton" onClick={() => setUserOrRank(true)}>
+      <button
+        className="myButton"
+        style={{
+          marginTop: '1%',
+          borderRadius: '10px 0 0 10px',
+        }}
+        onClick={() => setUserOrRank(true)}
+      >
         유저별
       </button>
-      <button className="myButton" onClick={() => setUserOrRank(false)}>
+      <button
+        className="myButton"
+        style={{ borderRadius: '0 10px 10px 0' }}
+        onClick={() => setUserOrRank(false)}
+      >
         랭크별
       </button>
       {userOrRank ? (
         // 유저별 위치 =======================
         <div>
-          <h1>문제 별 추천</h1>
+          <h1>유저별 추천</h1>
 
           <div className="ratingProblem">
             <div className="similarStudent">
@@ -150,7 +161,16 @@ const Rating = (props) => {
                     <div
                       key={index}
                       className="p-head"
-                      style={{ position: 'relative' }}
+                      style={{
+                        position: 'relative',
+                        background:
+                          user.ID ===
+                          (props.globalID ? props.globalID : 'q9922000')
+                            ? 'linear-gradient( to right, #ffd700d0, #ff7ca9d0 )'
+                            : index % 2 === 0
+                            ? 'none'
+                            : '#f0f0f0',
+                      }}
                     >
                       <span>{user.worldrank}</span>
                       <span>{user.skhurank}</span>
@@ -196,7 +216,7 @@ const Rating = (props) => {
               <div style={{ position: 'sticky', top: '0px' }}>
                 <div style={{ paddingBottom: '1%' }}>
                   <strong>
-                    <big>가장 적게 푼 문제</big>
+                    <big>추천 문제</big>
                   </strong>
                 </div>
                 <div
@@ -220,24 +240,35 @@ const Rating = (props) => {
                       className="p-head"
                       style={{ position: 'relative' }}
                     >
-                      <span>{problem.PROBLEM_ID}</span>
-                      <span>{problem.namekr}</span>
-                      <span>{problem.sum}명 시도</span>
-                      <img
-                        src={
-                          'https://static.solved.ac/tier_small/' +
-                          problem.SOLVED_RANK +
-                          '.svg'
+                      <a
+                        key={index}
+                        href={
+                          'https://www.acmicpc.net/problem/' +
+                          problem.PROBLEM_ID
                         }
-                        alt="profile"
-                        style={{
-                          width: '1.2rem',
-                          position: 'absolute',
-                          margin: '0px 1% 0px 0px',
-                          left: '0',
-                          top: '0',
-                        }}
-                      />
+                        style={{ textDecorationLine: 'none', color: '#000' }}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span>{problem.PROBLEM_ID}</span>
+                        <span>{problem.namekr}</span>
+                        <span>{problem.sum}명 시도</span>
+                        <img
+                          src={
+                            'https://static.solved.ac/tier_small/' +
+                            problem.SOLVED_RANK +
+                            '.svg'
+                          }
+                          alt="profile"
+                          style={{
+                            width: '1.2rem',
+                            position: 'absolute',
+                            margin: '0px 1% 0px 0px',
+                            left: '0',
+                            top: '0',
+                          }}
+                        />
+                      </a>
                     </div>
                   ))}
               </div>
@@ -247,7 +278,7 @@ const Rating = (props) => {
       ) : (
         // 랭크별 위치 ================================================
         <div>
-          <h1>랭크 페이지</h1>
+          <h1>랭크별 문제</h1>
           {/* <span>
             <input type="text" />
             <button>search</button>
