@@ -331,9 +331,18 @@
   ### 개발 방향성
   - **알고리즘 카테고리별 문제 정렬/제공**(first) >> 알고리즘 추천(second)
   
-  <details><summary>Backup-server.js</summary>
-    ```javascript
-  // npm i wait-notify puppeteer cheerio
+  </details>
+
+  
+## 추가 구현 기능
+
+- 사용자간 의견 교류/질의응답용 게시판
+- 게시판 기여 정도에 따른 리워드
+- 코딩 테스트/과제 풀이
+
+#### BackUp-server.js
+```javascript
+// npm i wait-notify puppeteer cheerio
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -1328,13 +1337,4 @@ async function isFinish(ID_LIST, pID, fuck) {
     run(ID_LIST, pID, fuck);
   }
 }
-  ```
-  </details>
-  
-  </details>
-
-## 추가 구현 기능
-
-- 사용자간 의견 교류/질의응답용 게시판
-- 게시판 기여 정도에 따른 리워드
-- 코딩 테스트/과제 풀이
+```
