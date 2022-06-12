@@ -9,7 +9,6 @@ import Algorithm from "./pages/algorithm";
 import Rating from "./pages/rating";
 import Rank from "./pages/rank";
 import Assignments from "./pages/assignments";
-import AssignDetail from "./pages/assignDetail";
 import Register from "./pages/register";
 import ProRegister from "./pages/ProRegister";
 import StudentRegister from "./pages/StudentRegister";
@@ -66,7 +65,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/proRegister" element={<ProRegister />} />
           <Route path="/studentRegister" element={<StudentRegister />} />
-          <Route path="/assignDetail" element={<AssignDetail />} />
         </Routes>
         <Footer />
       </div>
