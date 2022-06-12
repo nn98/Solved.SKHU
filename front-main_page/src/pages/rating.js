@@ -172,7 +172,7 @@ const Rating = (props) => {
                       </span>
                       <span>{user.rating}</span>
                       <span>{user.class}</span>
-                      <span>{user.pro}</span>
+                      <span>{user.problems}</span>
                       <span>{user.correction}</span>
                     </div>
                   ))}
