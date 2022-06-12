@@ -331,6 +331,14 @@
   ### 개발 방향성
   - **알고리즘 카테고리별 문제 정렬/제공**(first) >> 알고리즘 추천(second)
   
+  <details><summary>Backup-server.js</summary>
+    ```javascript
+  // npm i wait-notify puppeteer cheerio
+  
+
+  ```
+  </details>
+  
   </details>
 
 ## 추가 구현 기능
