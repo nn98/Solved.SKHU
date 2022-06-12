@@ -154,7 +154,7 @@ const Rating = (props) => {
                         <img
                           src={
                             'https://static.solved.ac/tier_small/' +
-                            user.tier +
+                            user.solvedrank +
                             '.svg'
                           }
                           alt="profile"
@@ -202,6 +202,15 @@ const Rating = (props) => {
                 {ratingProblems &&
                   ratingProblems.map((problem, index) => (
                     <div key={index} className="p-head">
+                      <img
+                        src={
+                          'https://static.solved.ac/tier_small/' +
+                          problem.SOLVED_RANK +
+                          '.svg'
+                        }
+                        alt="profile"
+                        style={{ width: '2%', margin: '0 1% 0 0' }}
+                      />
                       <span>{problem.PROBLEM_ID}</span>
                       <span>{problem.namekr}</span>
                       <span>{problem.sum}명 시도</span>

@@ -41,10 +41,10 @@
 }
 
 .use .tearTable .teardata {
-  width: 50%;
+  width: 90%;
   float: right;
   display: block;
-  margin-right: 5%;
+  margin: 0 5%;
 }
 
 .use .tearTable .teardata .datahead {

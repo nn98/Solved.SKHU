@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import './user.css'
 import usersJ from './users.json'
 import { useLocation } from 'react-router-dom'
@@ -8,7 +8,129 @@ import { Collapse } from '@mui/material'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import 'react-calendar-heatmap/dist/styles.css'
 import ReactTooltip from 'react-tooltip'
+// ============원형 차트 개발====================
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Sector,
+  ResponsiveContainer,
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+} from 'recharts'
 
+const COLORS = [
+  '#ff3071',
+  '#ff0062',
+  '#f5005a',
+  '#ea0053',
+  '#e0004c',
+  '#41caff',
+  '#2bbfff',
+  '#00b4fc',
+  '#00a9f0',
+  '#009ee5',
+  '#51fdbd',
+  '#3ef0b1',
+  '#27e2a4',
+  '#00d497',
+  '#00c78b',
+  '#ffb028',
+  '#f9a518',
+  '#ec9a00',
+  '#df8f00',
+  '#d28500',
+  '#4e6a86',
+  '#496580',
+  '#435f7a',
+  '#3d5a74',
+  '#38546e',
+  '#c67739',
+  '#b55d0a',
+  '#ad5600',
+  '#a54f00',
+  '#9d4900',
+]
+
+const renderActiveShape = (props) => {
+  const RADIAN = Math.PI / 180
+  const {
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    percent,
+    value,
+  } = props
+  const sin = Math.sin(-RADIAN * midAngle)
+  const cos = Math.cos(-RADIAN * midAngle)
+  const sx = cx + (outerRadius + 10) * cos
+  const sy = cy + (outerRadius + 10) * sin
+  const mx = cx + (outerRadius + 30) * cos
+  const my = cy + (outerRadius + 30) * sin
+  const ex = mx + (cos >= 0 ? 1 : -1) * 22
+  const ey = my
+  const textAnchor = cos >= 0 ? 'start' : 'end'
+
+  return (
+    <g>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+        {payload.name}
+      </text>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={fill}
+      />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke={fill}
+        fill="none"
+      />
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        y={ey}
+        textAnchor={textAnchor}
+        fill="#333"
+      >{`EXP ${value
+        .toString()
+        .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}`}</text>
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        y={ey}
+        dy={18}
+        textAnchor={textAnchor}
+        fill="#999"
+      >
+        {`(Ratio ${(percent * 100).toFixed(2)}%)`}
+      </text>
+    </g>
+  )
+}
+
+// ==========================================
 const UserPage = (props) => {
   const location = useLocation()
   const save = usersJ
@@ -18,6 +140,8 @@ const UserPage = (props) => {
   const [opens, setOpens] = useState([false, false, false, false, false, false])
   const [userPro, setUserPro] = useState({})
   const [userZandi, setUserZandi] = useState([])
+  const [circleChart, setCircleChart] = useState([])
+  const [angleChart, setAngleChart] = useState([])
   const month = [
     '01',
     '02',
@@ -53,7 +177,6 @@ const UserPage = (props) => {
 
   const userAdd = async () => {
     try {
-      console.log("userAdd");
       const t =
         props.globalID === ''
           ? location.state !== null
@@ -69,16 +192,11 @@ const UserPage = (props) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log("fetch");
           let count = 1
           let list1 = getDatesStartToLast(
             shiftDate(new Date(), -365),
             new Date()
           )
-          console.log(list1)
-          let list = []
-          console.log(data)
-          console.log(list1[0])
           for (let i = 1; i <= data.length - 1; i++) {
             if (data[data.length - i].timestamp.slice(0, 10) <= list1[0].date)
               continue
@@ -115,18 +233,34 @@ const UserPage = (props) => {
           ].count = todayCount
           setUserZandi(list1)
         })
+      // 태그 분포 api
       await fetch('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
+          let t = []
+          console.log(data.items.slice(0, 6))
+          let sum = 0
+          for (let i = 0; i < 6; i++) {
+            t.push({
+              subject: data.items[i].tag.key,
+              // A: Math.ceil((data.items[i].exp / sum) * 100),
+              A: data.items[i].exp,
+              // A: angleData[i].A,
+              // fullMark: 150,
+            })
+          }
+          t.sort((x, y) => x.subject.localeCompare(y.subject))
           setUserTag(data)
-          // console.log(data)
+          setAngleChart(t)
         })
+      // user api
       await fetch('https://solved.ac/api/v3/user/show?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           setUser(data)
           // console.log(data)
         })
+      // 문제 api
       await fetch(
         'https://solved.ac/api/v3/search/problem?query=solved_by%3A' +
           t +
@@ -136,6 +270,7 @@ const UserPage = (props) => {
         .then((data) => {
           setUserPro(data)
         })
+      // 티어 api
       await fetch('https://solved.ac/api/v3/user/problem_stats?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
@@ -192,6 +327,29 @@ const UserPage = (props) => {
             tierData[num].eSum += data[i].exp
             tierData[num].type.push(data[i])
           }
+
+          var circleData = []
+          for (let i = 1; i < data.length; i++) {
+            if (data[i].exp === 0) {
+              let addData = {}
+              addData.name = '?'
+              addData.value = data[i].exp
+
+              circleData.unshift(addData)
+              continue
+            }
+            let addData = {}
+            addData.name =
+              tierData[parseInt((i - 1) / 5)].big_tear.substring(0, 1) +
+              '' +
+              (5 - ((i - 1) % 5))
+            addData.value = data[i].exp
+
+            circleData.unshift(addData)
+          }
+          console.log(circleData)
+          setCircleChart(circleData)
+
           // console.log(tierData)
           setUserTier(tierData)
           // console.log(data)
@@ -211,6 +369,13 @@ const UserPage = (props) => {
     setOpens(open)
   }
 
+  const [activeIndex, setActiveIndex] = useState(0)
+  const onPieEnter = useCallback(
+    (_, index) => {
+      setActiveIndex(index)
+    },
+    [setActiveIndex]
+  )
   useEffect(() => {
     userAdd()
   }, [location.state, props.globalID])
@@ -228,7 +393,7 @@ const UserPage = (props) => {
               style={{
                 width: '1.7rem',
                 padding: '0 10px 0 0',
-                verticalAlign: -'webkit-baseline-middle',
+                verticalAlign: '-webkit-baseline-middle',
               }}
               src={
                 'https://static.solved.ac/tier_small/' +
@@ -298,10 +463,33 @@ const UserPage = (props) => {
         </div>
         <div className="tearTable">
           <p>난이도 분포</p>
-          <div
-            dangerouslySetInnerHTML={{ __html: save.solved_tear_chart }}
-            style={{ width: '45%', float: 'left' }}
-          ></div>
+          <div className="circleChart">
+            <ResponsiveContainer width="100%" height={350}>
+              <PieChart width={800} height={350}>
+                <Pie
+                  activeIndex={activeIndex}
+                  activeShape={renderActiveShape}
+                  data={circleChart}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={70}
+                  outerRadius={100}
+                  fill="#000"
+                  dataKey="value"
+                  onMouseEnter={onPieEnter}
+                  exp
+                >
+                  {circleChart.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                  <h1>test</h1>
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
           <div className="teardata">
             <div>
               <div className="datahead">레벨</div>
@@ -405,10 +593,22 @@ const UserPage = (props) => {
 
         <div className="tagTable">
           <p>태그 분포</p>
-          <div
-            dangerouslySetInnerHTML={{ __html: save.solved_tag_chart }}
-            style={{ width: '60%', margin: '0% 0% 5% 20%' }}
-          ></div>
+          <div className="angleChart">
+            <ResponsiveContainer width="100%" height={500}>
+              <RadarChart cx="50%" cy="50%" outerRadius="80%" data={angleChart}>
+                <PolarGrid />
+                <PolarAngleAxis dataKey="subject" />
+                <PolarRadiusAxis angle={90} />
+                <Radar
+                  dataKey="A"
+                  stroke="#00c78b"
+                  // fill="#8884d899"
+                  fill="#88ffff55"
+                  fillOpacity={0.6}
+                />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
           <div
             className="p-head"
             style={{
