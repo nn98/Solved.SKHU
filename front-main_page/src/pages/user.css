@@ -52,7 +52,7 @@
   border-radius: 0;
   box-shadow: 8px 8px 28px -14px grey;
 
-  font-size: 2vh;
+  font-size: 1.2rem;
 }
 
 .use .tearTable .teardata {
@@ -94,7 +94,7 @@
   text-align: center;
   box-shadow: 8px 8px 28px -14px grey;
   margin-bottom: 3%;
-  font-size: 2.2vh;
+  font-size: 1.2rem;
 }
 
 .use .problem {
@@ -108,7 +108,7 @@
   -ms-overflow-style: none;
   box-shadow: 8px 8px 28px -14px grey;
 
-  font-size: 2.2vh;
+  font-size: 1.2rem;
 }
 
 @media (max-width: 1300px) {
@@ -123,7 +123,7 @@
     -ms-overflow-style: none;
     box-shadow: 8px 8px 28px -14px grey;
     border-radius: 0px 0px 5px 5px;
-    font-size: 130%;
+    font-size: 1.2rem;
   }
 }
 
