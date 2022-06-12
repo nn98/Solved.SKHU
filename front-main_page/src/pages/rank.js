@@ -56,7 +56,7 @@ const Rank = (props) => {
                   />{" "}
                   <strong>
                     <a
-                      href={"https://solved.ac/profile/" + user.ID}
+                      href={"https://solved.ac/profile/" + user.ID + "#"}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -67,7 +67,7 @@ const Rank = (props) => {
                 <td>{user.rating}</td>
                 <td>{user.class}</td>
                 <td>{user.pro}</td>
-                <td style={{textAlign:'center'}}>{user.correction}</td>
+                <td style={{ textAlign: 'center' }}>{user.correction}</td>
               </tr>
             ))}
           </tbody>

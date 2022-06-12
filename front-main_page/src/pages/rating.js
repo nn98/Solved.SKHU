@@ -153,9 +153,9 @@ const Rating = (props) => {
                       <span>
                         <img
                           src={
-                            "https://static.solved.ac/tier_small/" +
-                            user.tier +
-                            ".svg"
+                            'https://static.solved.ac/tier_small/' +
+                            user.solvedrank +
+                            '.svg'
                           }
                           alt="profile"
                           style={{ width: "7%", margin: "0 1% 0 0" }}
