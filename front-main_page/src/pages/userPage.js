@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import './user.css'
-import usersJ from './users.json'
 import { useLocation } from 'react-router-dom'
 import { Collapse } from '@mui/material'
 // import { NULL } from "mysql/lib/protocol/constants/types";
@@ -133,7 +132,6 @@ const renderActiveShape = (props) => {
 // ==========================================
 const UserPage = (props) => {
   const location = useLocation()
-  const save = usersJ
   const [user, setUser] = useState({})
   const [userTag, setUserTag] = useState({})
   const [userTier, setUserTier] = useState([])

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './qna.css'
-import usersJ from '../users.json'
 import CommentContent from './commentcontent'
 import Create from './create'
 import CommentAdd from './commentAdd'
