@@ -1,41 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import Box from '@mui/material/Box'
-import { TextField } from '@mui/material'
-import './register.css'
-import Fade from '@mui/material/Fade'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import { TextField } from "@mui/material";
+import "./register.css";
+import Fade from "@mui/material/Fade";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [userId, setUserId] = useState('')
-  const [regiCode, setRegiCode] = useState('')
-  const [gitId, setGitId] = useState('')
+  const [userId, setUserId] = useState("");
+  const [regiCode, setRegiCode] = useState("");
+  const [gitId, setGitId] = useState("");
 
-  const [checked, setChecked] = React.useState(false)
-  const navigate = useNavigate()
+  const [checked, setChecked] = React.useState(false);
+  const navigate = useNavigate();
   const onClickSubmit = async (props) => {
     try {
-      console.log(props)
-      if (props.userId === '') return alert('백준 ID를 입력하세요')
-      else if (props.regiCode === '') return alert('REGISTER CODE를 입력하세요')
+      // console.log(props)
+      if (props.userId === "") return alert("백준 ID를 입력하세요");
+      else if (props.regiCode === "")
+        return alert("REGISTER CODE를 입력하세요");
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
         uI: props.userId,
         rC: props.regiCode,
         gI: props.gitId,
-      }
+      };
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
-        method: 'POST', // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
+        method: "POST", // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(
           // 이 body에 해당하는 데이터를 서버가 받아서 처리합니다.
           sbody
         ),
-      }
+      };
       // 이 URL은 exprees의 서버이기 때문에 3000번이 되어서는 안됨 충돌가능성이 있음, 뒤 서브스트링으로 구별
-      await fetch('http://localhost:3001/register', requestOptions)
+      await fetch("http://localhost:3001/register", requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           if (data === '학생 승인코드가 틀렸습니다.')
@@ -49,25 +50,25 @@ const Register = () => {
           // if (!alert(data)) navigate('/rank')
         })
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
-    setChecked(true)
-  }, [])
+    setChecked(true);
+  }, []);
 
   return (
     <div className="registerPage">
       <Fade
         in={checked}
-        style={{ transformOrigin: '0 0 0' }}
+        style={{ transformOrigin: "0 0 0" }}
         {...(checked ? { timeout: 1000 } : {})}
       >
         <div className="regiBox">
-          <h2 style={{ margin: '0%', textAlign: 'center' }}>등록하기</h2>
+          <h2 style={{ margin: "0%", textAlign: "center" }}>등록하기</h2>
           <h6
-            style={{ margin: '5% 0%', textAlign: 'center', color: '#5D5D5D' }}
+            style={{ margin: "5% 0%", textAlign: "center", color: "#5D5D5D" }}
           >
             &lt;성공회대학교&gt; 그룹에 등록되지 않는 경우에 사용해주세요.
           </h6>
@@ -76,10 +77,10 @@ const Register = () => {
             그리고 searchIcon을 추가하여 왼쪽 끝에 적용 */}
           <Box
             sx={{
-              backgroundColor: '#F2F2F2',
+              backgroundColor: "#F2F2F2",
               borderRadius: 25,
-              textAlign: 'center',
-              marginBottom: '5%',
+              textAlign: "center",
+              marginBottom: "5%",
             }}
           >
             <TextField
@@ -87,7 +88,7 @@ const Register = () => {
               id="User_ID"
               placeholder="Baekjoon ID"
               sx={{
-                width: '90%',
+                width: "90%",
                 px: 2.9,
                 py: 2,
               }}
@@ -97,10 +98,10 @@ const Register = () => {
           </Box>
           <Box
             sx={{
-              backgroundColor: '#F2F2F2',
+              backgroundColor: "#F2F2F2",
               borderRadius: 25,
-              textAlign: 'center',
-              marginBottom: '5%',
+              textAlign: "center",
+              marginBottom: "5%",
             }}
           >
             <TextField
@@ -108,7 +109,7 @@ const Register = () => {
               id="Register_CODE"
               placeholder="REGISTER CODE"
               sx={{
-                width: '90%',
+                width: "90%",
                 px: 2.9,
                 py: 2,
               }}
@@ -118,10 +119,10 @@ const Register = () => {
           </Box>
           <Box
             sx={{
-              backgroundColor: '#F2F2F2',
+              backgroundColor: "#F2F2F2",
               borderRadius: 25,
-              textAlign: 'center',
-              marginBottom: '5%',
+              textAlign: "center",
+              marginBottom: "5%",
             }}
           >
             <TextField
@@ -129,7 +130,7 @@ const Register = () => {
               id="Git_ID"
               placeholder="*선택사항 : Github ID"
               sx={{
-                width: '90%',
+                width: "90%",
                 px: 2.9,
                 py: 2,
               }}
@@ -140,8 +141,8 @@ const Register = () => {
           <button
             className="submitButton"
             onClick={() => {
-              console.log('@@@@@@@@@@@@@@')
-              onClickSubmit({ userId, regiCode, gitId })
+              // console.log("@@@@@@@@@@@@@@");
+              onClickSubmit({ userId, regiCode, gitId });
             }}
           >
             등록
@@ -149,7 +150,7 @@ const Register = () => {
         </div>
       </Fade>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
