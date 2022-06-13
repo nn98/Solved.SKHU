@@ -321,7 +321,7 @@ app.get("/MinAlgorithm", (req, res) => {
 
 app.get("/BestAlgorithm", (req, res) => {
   const sql =
-    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) desc limit 0,10; "; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) desc limit 0,10; ";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log(result);
@@ -331,7 +331,7 @@ app.get("/BestAlgorithm", (req, res) => {
 
 app.get("/WorstAlgorithm", (req, res) => {
   const sql =
-    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) limit 0,10; "; // 요청한 값을 받기 위해 mysql에서 사용할 sql문을 같이 보냄
+    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) limit 0,10; ";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log(result);
