@@ -1,3 +1,4 @@
+// import axios from 'axios';
 // npm i wait-notify puppeteer cheerio
 const express = require("express");
 const app = express();
@@ -11,6 +12,8 @@ const waitNotify3 = new WaitNotify();
 const waitNotify4 = new WaitNotify();
 const waitNotify5 = new WaitNotify();
 let AssignTaskExecute = false;
+
+var request = require('request');
 
 app.use(cors());
 
@@ -40,7 +43,7 @@ const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
 process.setMaxListeners(50)
 
-solvePage("https://solved.ac/profile/asb0313/solved","asb0313");
+solvePage("https://solved.ac/profile/buildbright_1999/solved","buildbright_1999");
 async function solvePage(url,userid){
 
     puppeteer
@@ -54,9 +57,13 @@ async function solvePage(url,userid){
         const $ = cheerio.load(content);
         const list5 = $("#__next > div > div.css-axxp2y > div > div:nth-child(4) > div.css-18lc7iz");
         const pages = $(list5).find("a").toString()
+        console.log('pages:',pages)
         let a = pages.split('</a>');
-        let b = a[a.length-2].split('class="css-af4alp">');
-        console.log(b[1])
+        
+        console.log('a:',a+" "+a.length)
+        // css-1orliys
+        let b = a[a.length-2].split(/class="css-af4alp">|class="css-1orliys">/);
+        console.log('b[1]',b[1])
         while(solpage<=b[1]){
           solveProblem("https://solved.ac/profile/"+userid+"/solved?page="+solpage,userid)
           solpage++;
@@ -67,9 +74,10 @@ async function solvePage(url,userid){
   })
     
   .catch((error) => {
-      console.log(error)
+      console.log('error')
   })
   }
+
   async function solveProblem(url,userid){
     puppeteer
     .launch({ headless: true })
@@ -89,14 +97,20 @@ async function solvePage(url,userid){
               c5 = name5;
               d5  = c5.split("</td>");
               resul5[0] = d5[0].replace(/(<([^>]+)>)|&nbsp;/ig, "")
-            const sql = "insert into Solve(USER_ID, PRIBLEM_ID) values(\""+userid+"\",\""+resul5[0]+"\")"
+            const sql = "insert into Solve(USER_ID, PROBLEM_ID) values(\""+userid+"\",\""+resul5[0]+"\")"
             // console.log(sql)
-            console.log(userid+" "+resul5[0])
-            // connection.query(sql, async function (err, result, fields) {
-            //   if (err) {
-            //     console.log('err in update',err);
-            //   }
-            // });      
+            console.log('userid : ',userid)
+            console.log('resul5[0]:',resul5[0])
+            // console.log(userid+" "+resul5[0])
+            try{
+            connection.query(sql, async function (err, result, fields) {
+              if (err) {
+                console.log('err in update',err);
+              }
+            }); 
+          }catch(error){
+            console.log(error)
+          }     
         });
         AssignTaskExecute = false
         waitNotify5.notify();
@@ -162,4 +176,4 @@ async function hello2(url){
     console.log(error)
 })
 }
-hello2('https://www.acmicpc.net/status?from_mine=1&problem_id=1000&user_id=shg9411')
+// hello2('https://www.acmicpc.net/status?from_mine=1&problem_id=1000&user_id=shg9411')

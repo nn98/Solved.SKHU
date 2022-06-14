@@ -208,7 +208,7 @@ app.get("/get", (req, res) => {
 
 app.post("/rating", async (req, res) => {
   let i, j;
-  console.log("rating" + req.body.ID);
+  console.log("rating " + req.body.ID);
   const sqls1 = [
     "",
     "",
@@ -253,7 +253,7 @@ app.post("/rating", async (req, res) => {
       req.body.ID +
       '")+2) ',
 
-    'and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = "' +
+    ' and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = "' +
       req.body.ID +
       '")' +
       "group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;",
@@ -288,10 +288,13 @@ app.post("/rating", async (req, res) => {
     users += sqls1[k];
   }
   problems += sqls[sqls.length - 1];
+  
   users += sqls1[sqls1.length - 2];
   users += sqls1[sqls1.length - 1];
   // console.log(problems+"\n")
   // console.log(users)
+  console.log(problems)
+  console.log(users)
 
   connection.query(problems + users, req.body, function (err, result, fields) {
     if (err) {
@@ -805,11 +808,6 @@ async function userUpdate(url,req){
       let name3 = []
       let resul3 = []
       let tiee;
-      const pages = $(lists3).find("a").toString()
-      let a = pages.split('</a>');
-      let b = a[a.length-2].split('<class="css-af4alp">');
-      let upage = 0;
-      let upages = b[1];
       let worldrank, skhurank, userid, rating, classs, problems, tie, bojid;
       lists3.each((index, lists) => {
         if(index>0){
@@ -839,9 +837,10 @@ async function userUpdate(url,req){
             }
           });
         }
-      solvePage("https://solved.ac/profile"+userid,userid);
+        console.log()
 
       });
+      solvePage("https://solved.ac/profile/"+req.body.uI+"/solved",req.body.uI);
       AssignTaskExecute = false
       waitNotify5.notify();
   })
@@ -855,7 +854,7 @@ async function solvePage(url,userid){
   .launch({ headless: true })
   .then(async (browser) => {
     const page = await browser.newPage()
-    
+    await page.setDefaultNavigationTimeout(0);
     await page.goto(url, { waitUntil: 'networkidle2' })
     const content = await page.content();
       let solpage = 1;
@@ -863,9 +862,10 @@ async function solvePage(url,userid){
       const list5 = $("#__next > div > div.css-axxp2y > div > div:nth-child(4) > div.css-18lc7iz");
       const pages = $(list5).find("a").toString()
       let a = pages.split('</a>');
-      let b = a[a.length-2].split('class="css-af4alp">');
+      let b = a[a.length-2].split(/class="css-af4alp">|class="css-1orliys">/);
+      console.log(b[1])
       while(solpage<=b[1]){
-        solveProblem("https://solved.ac/profile"+userid+"?page="+solpage++,userid)
+        solveProblem("https://solved.ac/profile/"+userid+"/solved?page="+solpage++,userid)
       }
 
       AssignTaskExecute = false
@@ -881,7 +881,7 @@ async function solveProblem(url,userid){
   .launch({ headless: true })
   .then(async (browser) => {
     const page = await browser.newPage()
-    
+    await page.setDefaultNavigationTimeout(0);
     await page.goto(url, { waitUntil: 'networkidle2' })
     const content = await page.content();
       const $ = cheerio.load(content);
@@ -895,13 +895,17 @@ async function solveProblem(url,userid){
             c5 = name5;
             d5  = c5.split("</td>");
             resul5[0] = d5[0].replace(/(<([^>]+)>)|&nbsp;/ig, "")
-          const sql = "insert into Solve(USER_ID, PRIBLEM_ID) values(\""+userid+"\",\""+resul5[0]+"\")"
+          const sql = "insert into Solve(USER_ID, PROBLEM_ID) values(\""+userid+"\",\""+resul5[0]+"\")"
           console.log(sql)
+          try{
           connection.query(sql, async function (err, result, fields) {
             if (err) {
               console.log('err in update',err);
             }
-          });      
+          }); 
+        }catch(error){
+          console.log(error)
+        }     
       });
       AssignTaskExecute = false
       waitNotify5.notify();

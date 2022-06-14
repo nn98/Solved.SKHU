@@ -46,7 +46,7 @@ export default function MaxWidthDialog(props) {
             {props.pnumber} 문제에 대한 {props.detailName} 의 채점 현황입니다.
           </DialogContentText>
           {props.student.map((data, index) => (
-            <React.Fragment key={data.ID}>
+            <React.Fragment key={index}>
               {data.name === props.detailName ? (
                 <>
                   {data.status !== "" ? (
@@ -63,7 +63,7 @@ export default function MaxWidthDialog(props) {
                           <th>코드 길이</th>
                           <th>제출한 시간</th>
                         </tr>
-                        {data.status.map((result, _index) => (
+                        {data.status&&data.status.map((result, _index) => (
                           <React.Fragment key={_index}>
                             {_index !== 0 ? (
                               <tr>
