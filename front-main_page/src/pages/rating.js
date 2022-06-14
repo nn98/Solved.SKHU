@@ -56,6 +56,7 @@ const Rating = (props) => {
         .then((res) => res.json())
         .then((data) => {
           // console.log(data)
+
           setRatingProblems(data[0])
           setSimilarStudent(data[1])
         })
@@ -91,10 +92,11 @@ const Rating = (props) => {
       let t = (
         <iframe
           title="solvedProblems"
-          style={{ border: 'none', marginTop: '-19vh' }}
+          style={{ border: 'none', marginTop: '-12rem' }}
           width="100%"
-          height="230%"
+          height="150%"
           src={'https://solved.ac/problems/level/' + index}
+          onload="height = myframe.document.body.scrollHeight;"
         ></iframe>
       )
       setRankProblem(t)
@@ -114,6 +116,7 @@ const Rating = (props) => {
         style={{
           marginTop: '1%',
           borderRadius: '10px 0 0 10px',
+          boxShadow: '20px 12px 30px -16px grey',
         }}
         onClick={() => setUserOrRank(true)}
       >
@@ -121,7 +124,10 @@ const Rating = (props) => {
       </button>
       <button
         className="myButton"
-        style={{ borderRadius: '0 10px 10px 0' }}
+        style={{
+          borderRadius: '0 10px 10px 0',
+          boxShadow: '-4px 12px 30px -16px grey',
+        }}
         onClick={() => setUserOrRank(false)}
       >
         랭크별
@@ -135,7 +141,12 @@ const Rating = (props) => {
             <div className="similarStudent">
               <div style={{ paddingBottom: '2%' }}>
                 <strong>
-                  <big>나랑 비슷한 수준의 학생</big>
+                  <big>
+                    <span style={{ fontSize: '25pt', fontStyle: 'italic' }}>
+                      {props.globalID ? props.globalID : 'q9922000'}
+                    </span>
+                    와 유사한 랭킹
+                  </big>
                 </strong>
               </div>
               <div className="similarStudentInner">
@@ -162,6 +173,7 @@ const Rating = (props) => {
                       key={index}
                       className="p-head"
                       style={{
+                        display: index < 5 ? 'block' : 'none',
                         position: 'relative',
                         background:
                           user.ID ===
