@@ -69,7 +69,33 @@ export default function MaxWidthDialog(props) {
                               <tr>
                                 {result.map((value, index) => (
                                   <React.Fragment key={index}>
-                                    {index === 3 ? (
+                                    {index === 1 ? (
+                                      <td>
+                                        <a
+                                          href={
+                                            "https://www.acmicpc.net/user/" +
+                                            value
+                                          }
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                        >
+                                          {value}
+                                        </a>
+                                      </td>
+                                    ) : index === 2 ? (
+                                      <td>
+                                        <a
+                                          href={
+                                            "https://www.acmicpc.net/problem/" +
+                                            value
+                                          }
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                        >
+                                          {value}
+                                        </a>
+                                      </td>
+                                    ) : index === 3 ? (
                                       value === "맞았습니다!!" ? (
                                         <td style={{ color: "green" }}>
                                           {value}

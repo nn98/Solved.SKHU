@@ -56,7 +56,7 @@ const Rank = (props) => {
                   />{' '}
                   <strong style={{ verticalAlign: 'super' }}>
                     <a
-                      href={'https://solved.ac/profile/' + user.ID}
+                      href={"https://solved.ac/profile/" + user.ID + "#"}
                       target="_blank"
                       rel="noreferrer"
                     >

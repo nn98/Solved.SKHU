@@ -60,14 +60,14 @@ const Assignments = () => {
   };
 
   const onClickStart = async (props) => {
-    console.log("Notify: ", "LoadingButton Clicked!");
+    // console.log("Notify: ", "LoadingButton Clicked!");
     let LIST = [];
     let cnt = 0;
     for (let i = 0; i < props.ID_LIST.length; ++i) {
       if (props.ID_LIST[i].Lecture_ID === subject)
         LIST[cnt++] = props.ID_LIST[i];
     }
-    console.log(LIST);
+    // console.log(LIST);
     try {
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
@@ -93,9 +93,9 @@ const Assignments = () => {
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
 
-          console.log("Data: ", data);
+          // console.log("Data: ", data);
           let compare = student;
-          console.log(compare);
+          // console.log(compare);
           for (let i = 0; i < compare.length; ++i) {
             for (let j = 0; j < data.length; ++j) {
               if (
@@ -108,7 +108,7 @@ const Assignments = () => {
               }
             }
           }
-          console.log(compare);
+          // console.log(compare);
           setStudent(compare);
           setID_LIST(compare);
           // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
@@ -124,13 +124,13 @@ const Assignments = () => {
       await fetch("http://localhost:3001/assignments")
         .then((res) => res.json())
         .then((data) => {
-          console.log("Lec:", data[0]);
-          console.log("Stu:", data[1]);
+          // console.log("Lec:", data[0]);
+          // console.log("Stu:", data[1]);
           setLecture(data[0]);
           setStudent(data[1]);
           setID_LIST(data[1]);
-          console.log("setLec:", lecture);
-          console.log("setStu:", student);
+          // console.log("setLec:", lecture);
+          // console.log("setStu:", student);
         });
     } catch (error) {
       console.error(error);
@@ -227,14 +227,14 @@ const Assignments = () => {
                     key={data.ID}
                     sx={{
                       display: "inline-block",
-                      width: "83%",
+                      width: "208px",
                       marginBottom: "5%",
                     }}
                   >
-                    <h3>과목코드 : {data.code}</h3>
-                    <h3>교수명: {data.professor}</h3>
-                    <h3>강의명 : {data.name}</h3>
-                    <h3>분반 : {data.distribution}</h3>
+                    <h4>과목코드 : {data.code}</h4>
+                    <h4>교수명: {data.professor}</h4>
+                    <h4>강의명 : {data.name}</h4>
+                    <h4>분반 : {data.distribution}</h4>
                     <Link
                       to="/studentRegister"
                       state={[
@@ -293,10 +293,13 @@ const Assignments = () => {
           loading={loading}
           loadingIndicator="실행중..."
           variant="contained"
-          sx={{ width: "67%" }}
+          sx={{ width: "210px", backgroundColor: "#f0f0f0" }}
         >
           <p>
-            <PlayArrowIcon fontSize="small" />
+            <PlayArrowIcon
+              fontSize="12px"
+              sx={{ margin: "0px 12px 0px 0px" }}
+            />
             검사 실행
           </p>
         </LoadingButton>
@@ -311,9 +314,13 @@ const Assignments = () => {
             handleCopy();
           }}
           variant="contained"
+          sx={{ width: "210px", marginTop: "10px", backgroundColor: "#f0f0f0" }}
         >
           <p>
-            <ContentCopyIcon fontSize="small" />
+            <ContentCopyIcon
+              fontSize="12px"
+              sx={{ margin: "0px 12px 0px 0px" }}
+            />
             결과 복사하기
           </p>
         </Button>

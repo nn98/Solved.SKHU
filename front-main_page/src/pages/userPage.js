@@ -141,37 +141,37 @@ const UserPage = (props) => {
   const [circleChart, setCircleChart] = useState([])
   const [angleChart, setAngleChart] = useState([])
   const month = [
-    '01',
-    '02',
-    '03',
-    '04',
-    '05',
-    '06',
-    '07',
-    '08',
-    '09',
-    '10',
-    '11',
-    '12',
-  ]
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
 
   function getDatesStartToLast(startDate, lastDate) {
     if (!(startDate instanceof Date && lastDate instanceof Date))
-      return 'Not Date Object'
-    var result = []
-    var curDate = startDate
+      return "Not Date Object";
+    var result = [];
+    var curDate = startDate;
     while (curDate <= lastDate) {
-      result.push({ date: curDate.toISOString().split('T')[0], count: 0 })
-      curDate.setDate(curDate.getDate() + 1)
+      result.push({ date: curDate.toISOString().split("T")[0], count: 0 });
+      curDate.setDate(curDate.getDate() + 1);
     }
-    return result
+    return result;
   }
 
   const shiftDate = (date, numDays) => {
-    const newDate = new Date(date)
-    newDate.setDate(newDate.getDate() + numDays)
-    return newDate
-  }
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + numDays);
+    return newDate;
+  };
 
   const userAdd = async () => {
     try {
@@ -185,9 +185,9 @@ const UserPage = (props) => {
       // const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
       // 잔디
       await fetch(
-        'https://solved.ac/api/v3/user/history?handle=' +
+        "https://solved.ac/api/v3/user/history?handle=" +
           t +
-          '&topic=solvedCount'
+          "&topic=solvedCount"
       )
         .then((res) => res.json())
         .then((data) => {
@@ -198,33 +198,33 @@ const UserPage = (props) => {
           )
           for (let i = 1; i <= data.length - 1; i++) {
             if (data[data.length - i].timestamp.slice(0, 10) <= list1[0].date)
-              continue
+              continue;
             if (
               data[data.length - i].timestamp.substring(0, 10) ===
               data[data.length - 1 - i].timestamp.substring(0, 10)
             ) {
               // console.log(data[i].timestamp.substring(0,10)+" "+count)
-              count++
+              count++;
             } else {
               list1[
                 list1.findIndex(
                   (v) => v.date === data[data.length - i].timestamp.slice(0, 10)
                 )
-              ].count = count
+              ].count = count;
               // list.push({
               //   date: data[data.length - i].timestamp.slice(0, 10),
               //   count: count,
               // })
-              count = 1
+              count = 1;
             }
           }
-          let todayCount = 1
+          let todayCount = 1;
           for (let i = 1; i <= data.length - 1; i++) {
             if (
               data[i].timestamp.slice(0, 10) === data[0].timestamp.slice(0, 10)
             )
-              todayCount++
-            else break
+              todayCount++;
+            else break;
           }
           // list.push({ date: data[0].timestamp.slice(0, 10), value: 1 })
           list1[
@@ -256,14 +256,14 @@ const UserPage = (props) => {
       await fetch('https://solved.ac/api/v3/user/show?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
-          setUser(data)
+          setUser(data);
           // console.log(data)
         })
       // 문제 api
       await fetch(
-        'https://solved.ac/api/v3/search/problem?query=solved_by%3A' +
+        "https://solved.ac/api/v3/search/problem?query=solved_by%3A" +
           t +
-          '&sort=level&direction=desc'
+          "&sort=level&direction=desc"
       )
         .then((res) => res.json())
         .then((data) => {
@@ -275,56 +275,56 @@ const UserPage = (props) => {
         .then((data) => {
           var tierData = [
             {
-              style: 'rgb(163,92,33)',
-              big_tear: 'BRONZE',
+              style: "rgb(163,92,33)",
+              big_tear: "BRONZE",
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
-              style: 'rgb(74,94,120)',
-              big_tear: 'SILVER',
+              style: "rgb(74,94,120)",
+              big_tear: "SILVER",
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
-              style: 'rgb(225,161,62)',
-              big_tear: 'GOLD',
+              style: "rgb(225,161,62)",
+              big_tear: "GOLD",
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
-              style: 'rgb(112,223,170)',
-              big_tear: 'PLATINUM',
+              style: "rgb(112,223,170)",
+              big_tear: "PLATINUM",
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
-              style: 'rgb(85,179,246)',
-              big_tear: 'DIAMOND',
+              style: "rgb(85,179,246)",
+              big_tear: "DIAMOND",
               pSum: 0,
               eSum: 0,
               type: [],
             },
             {
-              style: 'rgb(235,56,104)',
-              big_tear: 'RUBY',
+              style: "rgb(235,56,104)",
+              big_tear: "RUBY",
               pSum: 0,
               eSum: 0,
               type: [],
             },
-          ]
-          let num = 0
+          ];
+          let num = 0;
           for (let i = 1; i < data.length; i++) {
             if (tierData[num].type.length === 5) {
-              num++
+              num++;
             }
-            tierData[num].pSum += data[i].solved
-            tierData[num].eSum += data[i].exp
-            tierData[num].type.push(data[i])
+            tierData[num].pSum += data[i].solved;
+            tierData[num].eSum += data[i].exp;
+            tierData[num].type.push(data[i]);
           }
 
           var circleData = []
@@ -350,23 +350,23 @@ const UserPage = (props) => {
           setCircleChart(circleData)
 
           // console.log(tierData)
-          setUserTier(tierData)
+          setUserTier(tierData);
           // console.log(data)
-        })
+        });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const onClickEnter = (tear) => {
-    let open = [false, false, false, false, false, false]
+    let open = [false, false, false, false, false, false];
 
     for (let i = 0; i < opens.length; i++) {
-      open[i] = opens[i]
+      open[i] = opens[i];
     }
-    open[tear] = !open[tear]
-    setOpens(open)
-  }
+    open[tear] = !open[tear];
+    setOpens(open);
+  };
 
   const [activeIndex, setActiveIndex] = useState(0)
   const onPieEnter = useCallback(
@@ -450,20 +450,20 @@ const UserPage = (props) => {
             monthLabels={month}
             showWeekdayLabels={false}
             classForValue={(value) => {
-              let c = 0
+              let c = 0;
               if (!value) {
-                return 'color-empty'
+                return "color-empty";
               } else {
-                if (value.count === 0) c = 0
-                else if (value.count >= 1 && value.count <= 2) c = 1
-                else if (value.count >= 3 && value.count <= 6) c = 2
-                else if (value.count >= 7 && value.count <= 11) c = 3
-                else if (value.count >= 12) c = 4
+                if (value.count === 0) c = 0;
+                else if (value.count >= 1 && value.count <= 2) c = 1;
+                else if (value.count >= 3 && value.count <= 6) c = 2;
+                else if (value.count >= 7 && value.count <= 11) c = 3;
+                else if (value.count >= 12) c = 4;
               }
-              return `color-beammp-${c}`
+              return `color-beammp-${c}`;
             }}
             tooltipDataAttrs={(value) => {
-              return { 'data-tip': `${value.date} ${value.count}문제` }
+              return { "data-tip": `${value.date} ${value.count}문제` };
             }}
           />
           <ReactTooltip />
@@ -509,7 +509,7 @@ const UserPage = (props) => {
                 <div onClick={() => onClickEnter(index)}>
                   <div
                     className="BigTears"
-                    style={{ color: BigTears.style, fontWeight: 'bold' }}
+                    style={{ color: BigTears.style, fontWeight: "bold" }}
                   >
                     {BigTears.big_tear}
                   </div>
@@ -526,12 +526,12 @@ const UserPage = (props) => {
                       <div
                         key={tear.level}
                         style={{
-                          display: opens[index] === false ? 'none' : 'revert',
+                          display: opens[index] === false ? "none" : "revert",
                         }}
                       >
                         <div
                           className="data"
-                          style={{ color: BigTears.style, fontWeight: 'bold' }}
+                          style={{ color: BigTears.style, fontWeight: "bold" }}
                         >
                           {BigTears.big_tear.substr(0, 1)}
                           {5 - index2}
@@ -555,11 +555,11 @@ const UserPage = (props) => {
           <div
             className="pr-head"
             style={{
-              backgroundColor: 'black',
-              color: 'white',
-              borderRadius: '5px 5px 0 0',
-              position: 'sticky',
-              top: '0px',
+              backgroundColor: "black",
+              color: "white",
+              borderRadius: "5px 5px 0 0",
+              position: "sticky",
+              top: "0px",
             }}
           >
             <span></span>
@@ -573,20 +573,20 @@ const UserPage = (props) => {
               <div key={problem.problemId} className="pr-head">
                 <a
                   key={index}
-                  href={'https://www.acmicpc.net/problem/' + problem.problemId}
-                  style={{ textDecorationLine: 'none', color: '#000' }}
+                  href={"https://www.acmicpc.net/problem/" + problem.problemId}
+                  style={{ textDecorationLine: "none", color: "#000" }}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <span>
                     <img
                       src={
-                        'https://static.solved.ac/tier_small/' +
+                        "https://static.solved.ac/tier_small/" +
                         problem.level +
-                        '.svg'
+                        ".svg"
                       }
                       alt="profile"
-                      style={{ width: '1.9vh' }}
+                      style={{ width: '1.4rem' }}
                     />
                   </span>
                   <span id="user-color">{problem.problemId}</span>
@@ -619,12 +619,12 @@ const UserPage = (props) => {
           <div
             className="p-head"
             style={{
-              backgroundColor: 'black',
-              color: 'white',
-              borderRadius: '5px 5px 0 0',
-              position: 'sticky',
-              top: '0px',
-              textAlign: 'center',
+              backgroundColor: "black",
+              color: "white",
+              borderRadius: "5px 5px 0 0",
+              position: "sticky",
+              top: "0px",
+              textAlign: "center",
             }}
           >
             <span>태그</span>
@@ -648,7 +648,7 @@ const UserPage = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserPage
+export default UserPage;
