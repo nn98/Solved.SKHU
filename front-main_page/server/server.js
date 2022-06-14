@@ -274,6 +274,7 @@ app.post("/rating", async (req, res) => {
     users += sqls1[k];
   }
   problems += sqls[sqls.length - 1];
+
   users += sqls1[sqls1.length - 2];
   users += sqls1[sqls1.length - 1];
   AssignTaskExecute3 = true;
@@ -350,7 +351,7 @@ app.post("/proRegister", (req, res) => {
   console.log(req);
   const b = req.body;
   console.log(b);
-  if (b.pC == "proskhuOp12#") {
+  if (b.pC === "proskhuOp12#") {
     for (let i = 0; i < b.cN; i++) {
       const sql =
         "insert into Lecture (professor, code, name, distribution) values(" +
@@ -473,34 +474,33 @@ app.get("/assignments", (req, res) => {
 const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
 process.setMaxListeners(50)
-
-app.get('/register', (req, res) => {
-  const b = req.body;
-  const url = 'https://solved.ac/ranking/o/309'
-  console.log(b)
-  res.send(b)
+app.get('/get', (req, res) => {
+  const sql = 'select * from Problem LIMIT 0,10';
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err
+    console.log(result)
+    res.send(result)
+  })
 })
-
 app.post('/register', async (req, res) => {
   const url = 'https://solved.ac/ranking/o/309'
   const b = req.body;
   let errOcc = false;
   console.log(b)
   let resul = []
-  let abc;
+  let ti;
   console.log('check student code');
   if (b.rC !== "stuSK#") {
     res.status(406).json("학생 승인코드가 틀렸습니다.");
     return;
   }
-  console.log('\t\tsuccess.');
+  AssignTaskExecute2 = true;
+  console.log('solved check success');
   let sqls = "select * from User where ID = \"" + b.uI + "\"";
-  console.log('check database code');
   console.log('run conntion', sqls)
 
   if (errOcc) return;
 
-  AssignTaskExecute5 = true;
   connection.query(sqls, async function (err, result, fields) {
     console.log(result.length === 0)
     if (result.length === 0) {
@@ -508,16 +508,17 @@ app.post('/register', async (req, res) => {
     } else {
       console.log('send response', "에러가 발생했습니다. 이미 존재하는 학생입니다.");
       res.status(406).json("에러가 발생했습니다. 이미 존재하는 학생입니다.")
-      AssignTaskExecute5 = false;
+      AssignTaskExecute2 = false;
       waitNotify5.notify();
       errOcc = true;
     }
   });
   addRegister(b.uI, url);
-  if (AssignTaskExecute5) await waitNotify5.wait();
+  if (AssignTaskExecute2) await waitNotify5.wait();
   console.log(errOcc)
   if (errOcc) return;
 
+  // 입력받은 유저를 랭킹테이블(데이터베이스)에 추가하는 함수
   async function addRegister(pID, url) {
 
     puppeteer
@@ -536,41 +537,36 @@ app.post('/register', async (req, res) => {
 
         lists.each((index, list) => {
           name = $(list).find("td").toString();
-
-
-          console.log(name.includes(b.uI));
           if (name.includes(b.uI) === true) {
             c = name;
             d = c.split("</td>");
           }
         });
-        abc = $(c).find("img").toString();
+        ti = $(c).find("img").toString();
 
         for (let e = 0; e < d.length; e++) {
           resul[e] = d[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
         }
-        console.log('resul', resul)
         if (resul.length === 0) {
           errOcc = true;
           console.log('err in solved.ac')
-          AssignTaskExecute5 = false
+          AssignTaskExecute2 = false
           waitNotify5.notify()
           res.status(406).json("Solved.ac에서 해당 ID를 찾을 수 없습니다. 등록 후 시도해주세요")
           return
         }
+        console.log(resul)
         console.log('suc in solved.ac')
-        AssignTaskExecute5 = false
+        AssignTaskExecute2 = false
         waitNotify5.notify()
 
       })
-
-
       .catch((error) => {
         errOcc = true;
         console.log('err in solved.ac', error)
-        AssignTaskExecute5 = false
+        AssignTaskExecute2 = false
         waitNotify5.notify()
-        res.status(406).json("Solved.ac에서 해당 ID를 찾을 수 없습니다. 등록 후 시도해주세요")
+        res.status(406).json("솔브드에서 응답하지 않습니다. 잠시후 다시 시도해주세요")
       })
   }
 
@@ -578,24 +574,23 @@ app.post('/register', async (req, res) => {
   let pages = 1;
   let d2 = []
   let resul2 = []
+  // 입력받은 유저의 정답률을 크롤링하는 함수
   async function addCorrection(pID, url) {
     console.log('addCorrection is run_to:', url);
 
     puppeteer
       .launch({ headless: true })
       .then(async (browser) => {
-        if (AssignTaskExecute5) {
-          await waitNotify5.wait()
-        }
-        AssignTaskExecute5 = true
         const page = await browser.newPage()
 
         await page.goto(url, { waitUntil: 'networkidle2' })
         const content = await page.content();
+        // $에 cheerio를 로드한다.
         const $ = cheerio.load(content);
+        // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
         const lists2 = $("tr");
+        // 모든 리스트를 순환한다.
         let c2 = []
-        console.log(lists2.toString())
         lists2.each((index, list) => {
           name2 = $(list).find("td").toString();
           if (name2.includes(b.uI) === true) {
@@ -604,23 +599,25 @@ app.post('/register', async (req, res) => {
           }
         });
         console.log(pages)
+        // console.log(c2===undefined)
         for (let e = 0; e < d2.length; e++) {
           resul2[e] = d2[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+          console.log(resul2[e])
         }
 
-        AssignTaskExecute5 = false
+        AssignTaskExecute2 = false
         waitNotify5.notify();
 
       })
 
       .catch((error) => {
         console.log(error);
-        AssignTaskExecute5 = false
+        AssignTaskExecute2 = false
         waitNotify5.notify();
       })
   }
+  // 전체랭킹 / 학교랭킹 / ID / 레이팅 / 클래스 / 푼 문제 수 / 티어 / 정답률 / 백준ID
   let worldrank, skhurank, userid, rating, classs, problems, tier, corr, bojid;
-
   worldrank = resul[0];
   skhurank = resul[1];
   userid = resul[2];
@@ -628,14 +625,13 @@ app.post('/register', async (req, res) => {
   classs = resul[4];
   problems = resul[5];
   bojid = b.gI;
-  console.log(worldrank + " " + skhurank + " " + userid + " " + rating + " " + classs + " " + problems + " " + bojid)
-  tier = abc.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0];
-  console.log('hello')
+  tier = ti.split('<img src="https://static.solved.ac/tier_small/')[1].split('.svg"')[0];
+  console.log(worldrank + " " + skhurank + " " + userid + " " + rating + " " + classs + " " + problems + " " + bojid + " " + tier)
   corr = undefined;
   while (corr === undefined) {
     AssignTaskExecute2 = true;
     addCorrection(b.uI, 'https://www.acmicpc.net/school/ranklist/309/' + pages);
-    if (AssignTaskExecute2) await waitNotify2.wait();
+    if (AssignTaskExecute2) await waitNotify5.wait();
     corr = resul2[resul2.length - 2];
     console.log('corr:', corr)
     pages++;
@@ -644,6 +640,7 @@ app.post('/register', async (req, res) => {
   const sql = 'insert into User values("'
     + userid + '",' + problems + ',' + tier + ',"' + worldrank + '",' + skhurank + ',' + rating + ',"' + classs + '","' + corr + '","' + bojid + '");'
   console.log(sql);
+  // 등록할 학생을 DB에 넣는 과정
   connection.query(sql, async function (err, result, fields) {
     if (err) {
       console.log('err in insert', err);
@@ -651,7 +648,194 @@ app.post('/register', async (req, res) => {
     }
     res.status(200).json("학생 등록이 완료되었습니다. 새로고침 후 이용해주시기 바랍니다.")
   });
+  AssignTaskExecute2 = true;
+  userUpdate(url, req);
+  let updateP = 1;
+  while (updateP <= 3) {
+    AssignTaskExecute2 = true;
+    correctionUpdate('https://www.acmicpc.net/school/ranklist/309/' + updateP)
+    if (AssignTaskExecute2) await waitNotify5.wait();
+    updateP++;
+  }
+
 });
+// 전체 학생 정보 업데이트 함수
+async function userUpdate(url, req) {
+
+  puppeteer
+    .launch({ headless: true })
+    .then(async (browser) => {
+      const page = await browser.newPage()
+
+      await page.goto(url, { waitUntil: 'networkidle2' })
+      const content = await page.content();
+      // $에 cheerio를 로드한다.
+      const $ = cheerio.load(content);
+      // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
+      const lists3 = $("tr");
+      // 모든 리스트를 순환한다.
+      let c3 = []
+      let d3 = []
+      let name3 = []
+      let resul3 = []
+      let tiee;
+      let worldrank, skhurank, userid, rating, classs, problems, tie, bojid;
+      lists3.each((index, lists) => {
+        if (index > 0) {
+          name3 = $(lists).find("td").toString();
+          c3 = name3;
+          d3 = c3.split("</td>");
+          tiee = $(c3).find("img").toString();
+          // console.log(tiee[index].split('.svg"')[0].replace(/[^0-9]/gi,""))
+          for (let e = 0; e < d3.length; e++) {
+            resul3[e] = d3[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+          }
+          worldrank = resul3[0];
+          skhurank = resul3[1];
+          userid = resul3[2];
+          rating = resul3[3];
+          classs = resul3[4];
+          problems = resul3[5].replace(",", "");
+          tie = tiee.split('.svg"')[0].replace(/[^0-9]/gi, "");
+          // console.log(ti);
+          bojid = req.body.gI;
+          // console.log('worldrank : ',worldrank,'skhurank : ', skhurank,'userid : ', userid,'rating : ', rating,'class : ' ,classs,'problems : ', problems,'tier : ' ,tie,'bojid : ', bojid);
+          const sql = "update User set problems = " + problems + ", solvedrank = " + tie + ",worldrank=\"" + worldrank + "\",skhurank=" + skhurank + ",rating=" + rating + ",class=\"" + classs + "\",gitid = \"" + bojid + "\" where ID = \"" + userid + "\";"
+          console.log(sql)
+          connection.query(sql, async function (err, result, fields) {
+            if (err) {
+              console.log('err in update', err);
+            }
+          });
+        }
+        console.log()
+
+      });
+      solvePage("https://solved.ac/profile/" + req.body.uI + "/solved", req.body.uI);
+      AssignTaskExecute2 = false
+      waitNotify5.notify();
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+async function solvePage(url, userid) {
+
+  puppeteer
+    .launch({ headless: true })
+    .then(async (browser) => {
+      const page = await browser.newPage()
+      await page.setDefaultNavigationTimeout(0);
+      await page.goto(url, { waitUntil: 'networkidle2' })
+      const content = await page.content();
+      let solpage = 1;
+      const $ = cheerio.load(content);
+      const list5 = $("#__next > div > div.css-axxp2y > div > div:nth-child(4) > div.css-18lc7iz");
+      const pages = $(list5).find("a").toString()
+      let a = pages.split('</a>');
+      let b = a[a.length - 2].split(/class="css-af4alp">|class="css-1orliys">/);
+      console.log(b[1])
+      while (solpage <= b[1]) {
+        solveProblem("https://solved.ac/profile/" + userid + "/solved?page=" + solpage++, userid)
+      }
+
+      AssignTaskExecute2 = false
+      waitNotify5.notify();
+    })
+
+    .catch((error) => {
+      console.log(error)
+    })
+}
+async function solveProblem(url, userid) {
+  puppeteer
+    .launch({ headless: true })
+    .then(async (browser) => {
+      const page = await browser.newPage()
+      await page.setDefaultNavigationTimeout(0);
+      await page.goto(url, { waitUntil: 'networkidle2' })
+      const content = await page.content();
+      const $ = cheerio.load(content);
+      const lists = $("tr");
+      let c5 = []
+      let d5 = []
+      let name5 = []
+      let resul5 = []
+      lists.each((index, list) => {
+        name5 = $(list).find("td").toString();
+        c5 = name5;
+        d5 = c5.split("</td>");
+        resul5[0] = d5[0].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+        const sql = "insert into Solve(USER_ID, PROBLEM_ID) values(\"" + userid + "\",\"" + resul5[0] + "\")"
+        console.log(sql)
+        try {
+          connection.query(sql, async function (err, result, fields) {
+            if (err) {
+              console.log('err in update', err);
+            }
+          });
+        } catch (error) {
+          console.log(error)
+        }
+      });
+      AssignTaskExecute2 = false
+      waitNotify5.notify();
+    })
+
+    .catch((error) => {
+      console.log(error)
+    })
+}
+async function correctionUpdate(url) {
+  puppeteer
+    .launch({ headless: true })
+    .then(async (browser) => {
+      const page = await browser.newPage()
+
+      await page.goto(url, { waitUntil: 'networkidle2' })
+      const content = await page.content();
+      // $에 cheerio를 로드한다.
+      const $ = cheerio.load(content);
+      // 복사한 리스트의 Selector로 리스트를 모두 가져온다.
+      const lists4 = $("tr");
+      // 모든 리스트를 순환한다.
+      let c4 = []
+      let d4 = []
+      let name4 = []
+      let resul4 = []
+      let id;
+      let correction;
+      lists4.each((index, list) => {
+        name4 = $(list).find("td").toString();
+        c4 = name4;
+        d4 = c4.split("</td>");
+        for (let e = 0; e < d4.length; e++) {
+          resul4[e] = d4[e].replace(/(<([^>]+)>)|&nbsp;/ig, "")
+        }
+        id = resul4[1];
+        correction = resul4[resul4.length - 2];
+        const sql = "update User set correction = \"" + correction + "\" where ID = \"" + id + "\";"
+        console.log(sql)
+        connection.query(sql, async function (err, result, fields) {
+          if (err) {
+            console.log('err in update', err);
+          }
+        });
+      });
+      // console.log(pages)
+      // console.log(c2===undefined)
+
+
+      AssignTaskExecute2 = false
+      waitNotify5.notify();
+
+    })
+
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
 
 app.post("/assignments", async (req, res) => {
   console.log("Assignments/post ", "is called");
@@ -770,7 +954,7 @@ async function isFinish(ID_LIST, pID, fuck) {
   console.log("rere at isFin:", fuck);
   waitNotify.notify();
   mAsyncTaskExecute = false;
-  if (ID_LIST.length == 0) {
+  if (ID_LIST.length === 0) {
     console.log("result: ", fuck);
     AssignTaskExecute = false;
     waitNotify2.notify();
