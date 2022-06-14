@@ -27,8 +27,10 @@
 }
 
 .recommend .ratingProblem .recommendProblem {
-  width: 47.5%;
+  width: 45%;
+  margin-left: 2.5%;
   float: left;
+  box-shadow: 8px 8px 21px -14px grey;
 }
 .recommend .ratingProblem .recommendProblem .recommendProblemInner {
   height: 40vh;
@@ -37,9 +39,7 @@
   -ms-overflow-style: none;
 }
 .recommend .p-head {
-  width: 90%;
-  margin: 0 5%;
-  padding: 1%;
+  padding: 1.5% 1%;
   /* transition: background-color 1s; */
 }
 
@@ -109,8 +109,8 @@
 .recommend .myButton {
   /* box-shadow: 0px 0px 0px 2px #899599; */
   background-color: #ededed;
-  border-radius: 10px;
-  border: 1px solid #fff;
+  /* border-radius: 10px; */
+  border: 1px solid #ededed;
   display: inline-block;
   cursor: pointer;
   color: #000;
@@ -119,10 +119,12 @@
   padding: 12px 37px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #e1e2ed;
-  margin: 0 2vh;
+  /* margin: 0 2vh; */
+  box-shadow: 8px 8px 28px -14px grey;
 }
 .recommend .myButton:hover {
   transition-duration: 0.5s;
+  border: 1px solid #bab1ba;
   background-color: #bab1ba;
 }
 .recommend .myButton:active {

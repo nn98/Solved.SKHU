@@ -1,25 +1,25 @@
 // import React, { useEffect, useState } from 'react'
 // import rankJ from './rank.json'
-import "./rank.css";
-import { Link } from "react-router-dom";
+import './rank.css'
+import { Link } from 'react-router-dom'
 
 const Rank = (props) => {
   return (
     <div className="rank">
       <h1>성공회대학교 랭킹</h1>
-      <div style={{ display: "inline", float: "right" }}>
-        <h3 style={{ display: "inline-block", paddingRight: "10px" }}>
-          명단에 없을 경우 :{" "}
+      <div style={{ display: 'inline', float: 'right' }}>
+        <h3 style={{ display: 'inline-block', paddingRight: '10px' }}>
+          명단에 없을 경우 :{' '}
         </h3>
         <Link to="/register">
           <button
             style={{
-              display: "inline-block",
-              fontSize: "15px",
-              borderRadius: "0%",
-              border: "0",
-              padding: "6px 12px",
-              cursor: "pointer",
+              display: 'inline-block',
+              fontSize: '15px',
+              borderRadius: '0%',
+              border: '0',
+              padding: '6px 12px',
+              cursor: 'pointer',
             }}
           >
             등록하기
@@ -47,14 +47,14 @@ const Rank = (props) => {
                 <td>
                   <img
                     src={
-                      "https://static.solved.ac/tier_small/" +
+                      'https://static.solved.ac/tier_small/' +
                       user.solvedrank +
-                      ".svg"
+                      '.svg'
                     }
                     alt="profile"
-                    style={{ width: "3%", margin: "0 1% 0 0" }}
-                  />{" "}
-                  <strong>
+                    style={{ width: '3%', margin: '0 1% 0 0' }}
+                  />{' '}
+                  <strong style={{ verticalAlign: 'super' }}>
                     <a
                       href={"https://solved.ac/profile/" + user.ID + "#"}
                       target="_blank"
@@ -66,7 +66,7 @@ const Rank = (props) => {
                 </td>
                 <td>{user.rating}</td>
                 <td>{user.class}</td>
-                <td>{user.pro}</td>
+                <td>{user.problems}</td>
                 <td style={{ textAlign: 'center' }}>{user.correction}</td>
               </tr>
             ))}
@@ -74,7 +74,7 @@ const Rank = (props) => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Rank;
+export default Rank
