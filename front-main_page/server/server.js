@@ -32,6 +32,7 @@ var connection = mysql.createConnection({
   password: "testing00",
   database: "SWP",
   multipleStatements: true,
+  charset : 'utf8mb4',
 });
 
 connection.connect(() => {
