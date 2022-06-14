@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './qna.css'
-import usersJ from '../users.json'
 import CommentContent from './commentcontent'
 import Create from './create'
 import CommentAdd from './commentAdd'
@@ -9,7 +8,7 @@ import InnerComment from './innerComment'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 
-const QnA = () => {
+const QnA = (e) => {
   // 문제 번호
   const [problem, setProblem] = useState('')
   const [problems, setProblems] = useState([])
@@ -20,7 +19,7 @@ const QnA = () => {
   // 댓글 출력문
   const qnaFind = async () => {
     try {
-      const res = await fetch('http://localhost:3001/QnA').then((res) =>
+      const res = await fetch(e.serverAddress + '/QnA').then((res) =>
         res.json()
       )
       setComments(res)
@@ -32,7 +31,7 @@ const QnA = () => {
 
   const problemAdd = async () => {
     try {
-      const res = await fetch('http://localhost:3001/QnAProblem').then((res) =>
+      const res = await fetch(e.serverAddress + '/QnAProblem').then((res) =>
         res.json()
       )
       setProblems(res)
@@ -62,7 +61,7 @@ const QnA = () => {
         problem: problem,
         password: props.commentAddPassword,
       }
-      console.log(body)
+      // console.log(body)
 
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
@@ -72,7 +71,7 @@ const QnA = () => {
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
       }
-      await fetch('http://localhost:3001/QnAAdd', requestOptions)
+      await fetch(e.serverAddress + '/QnAAdd', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
@@ -104,7 +103,7 @@ const QnA = () => {
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
       }
-      await fetch('http://localhost:3001/QnADelete', requestOptions)
+      await fetch(e.serverAddress + '/QnADelete', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
@@ -126,7 +125,7 @@ const QnA = () => {
       <h1>성공회대학교 QnA</h1>
       {/* 회원가입 부분 */}
 
-      <Create />
+      <Create serverAddress={e.serverAddress} />
       <Autocomplete
         onChange={(event, newValue) => {
           setProblem(String(newValue))
@@ -156,7 +155,10 @@ const QnA = () => {
             <CommentContent comment={comment} commentDelete={commentDelete} />
             {/* 삭제 버튼 */}
 
-            <InnerComment commentId={comment.ID} />
+            <InnerComment
+              commentId={comment.ID}
+              serverAddress={e.serverAddress}
+            />
           </div>
         ) : null
       )}

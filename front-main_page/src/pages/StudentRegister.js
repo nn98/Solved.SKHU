@@ -6,7 +6,7 @@ import Fade from '@mui/material/Fade'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 
-const StudentRegister = () => {
+const StudentRegister = (e) => {
   const navigate = useNavigate()
 
   const [studentId, setStudentId] = useState('')
@@ -20,7 +20,7 @@ const StudentRegister = () => {
 
   const onClickSubmit = async (props) => {
     try {
-      console.log(props)
+      // console.log(props)
       if (props.studentId === '') return alert('학번을 입력하세요')
       else if (props.studentName === '') return alert('학생 이름을 입력하세요')
       else if (props.studentCode === '') return alert('학생 코드를 입력하세요')
@@ -45,7 +45,7 @@ const StudentRegister = () => {
         ),
       }
       // 이 URL은 exprees의 서버이기 때문에 3000번이 되어서는 안됨 충돌가능성이 있음, 뒤 서브스트링으로 구별
-      await fetch('http://localhost:3001/studentRegister', requestOptions)
+      await fetch(e.serverAddress + '/studentRegister', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음

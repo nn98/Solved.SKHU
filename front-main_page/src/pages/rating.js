@@ -43,7 +43,7 @@ const Rating = (props) => {
       const body = {
         ID: props.globalID ? props.globalID : 'q9922000',
       }
-      console.log('rating addd    ' + body)
+      // console.log('rating addd    ' + body)
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
         method: 'POST', // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
@@ -52,10 +52,10 @@ const Rating = (props) => {
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
       }
-      await fetch('http://localhost:3001/rating', requestOptions)
+      await fetch(props.serverAddress + '/rating', requestOptions)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
+          // console.log(data)
           setRatingProblems(data[0])
           setSimilarStudent(data[1])
         })
@@ -109,16 +109,27 @@ const Rating = (props) => {
 
   return (
     <div className="recommend">
-      <button className="myButton" onClick={() => setUserOrRank(true)}>
+      <button
+        className="myButton"
+        style={{
+          marginTop: '1%',
+          borderRadius: '10px 0 0 10px',
+        }}
+        onClick={() => setUserOrRank(true)}
+      >
         유저별
       </button>
-      <button className="myButton" onClick={() => setUserOrRank(false)}>
+      <button
+        className="myButton"
+        style={{ borderRadius: '0 10px 10px 0' }}
+        onClick={() => setUserOrRank(false)}
+      >
         랭크별
       </button>
       {userOrRank ? (
         // 유저별 위치 =======================
         <div>
-          <h1>문제 별 추천</h1>
+          <h1>유저별 추천</h1>
 
           <div className="ratingProblem">
             <div className="similarStudent">
@@ -147,7 +158,20 @@ const Rating = (props) => {
                 </div>
                 {similarStudent &&
                   similarStudent.map((user, index) => (
-                    <div key={index} className="p-head">
+                    <div
+                      key={index}
+                      className="p-head"
+                      style={{
+                        position: 'relative',
+                        background:
+                          user.ID ===
+                          (props.globalID ? props.globalID : 'q9922000')
+                            ? 'linear-gradient( to right, #ffd700d0, #ff7ca9d0 )'
+                            : index % 2 === 0
+                            ? 'none'
+                            : '#f0f0f0',
+                      }}
+                    >
                       <span>{user.worldrank}</span>
                       <span>{user.skhurank}</span>
                       <span>
@@ -158,9 +182,19 @@ const Rating = (props) => {
                             '.svg'
                           }
                           alt="profile"
-                          style={{ width: '7%', margin: '0 1% 0 0' }}
+                          style={{
+                            width: '1.2rem',
+                            top: '0',
+                            margin: '0 1% 0 0',
+                            position: 'absolute',
+                          }}
                         />{' '}
-                        <strong>
+                        <strong
+                          style={{
+                            // verticalAlign: 'super',
+                            marginLeft: '1.7rem',
+                          }}
+                        >
                           <a
                             href={'https://solved.ac/profile/' + user.ID}
                             target="_blank"
@@ -172,7 +206,7 @@ const Rating = (props) => {
                       </span>
                       <span>{user.rating}</span>
                       <span>{user.class}</span>
-                      <span>{user.pro}</span>
+                      <span>{user.problems}</span>
                       <span>{user.correction}</span>
                     </div>
                   ))}
@@ -182,7 +216,7 @@ const Rating = (props) => {
               <div style={{ position: 'sticky', top: '0px' }}>
                 <div style={{ paddingBottom: '1%' }}>
                   <strong>
-                    <big>가장 적게 푼 문제</big>
+                    <big>추천 문제</big>
                   </strong>
                 </div>
                 <div
@@ -201,10 +235,40 @@ const Rating = (props) => {
               <div className="recommendProblemInner">
                 {ratingProblems &&
                   ratingProblems.map((problem, index) => (
-                    <div key={index} className="p-head">
-                      <span>{problem.PROBLEM_ID}</span>
-                      <span>{problem.namekr}</span>
-                      <span>{problem.sum}명 시도</span>
+                    <div
+                      key={index}
+                      className="p-head"
+                      style={{ position: 'relative' }}
+                    >
+                      <a
+                        key={index}
+                        href={
+                          'https://www.acmicpc.net/problem/' +
+                          problem.PROBLEM_ID
+                        }
+                        style={{ textDecorationLine: 'none', color: '#000' }}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span>{problem.PROBLEM_ID}</span>
+                        <span>{problem.namekr}</span>
+                        <span>{problem.sum}명 시도</span>
+                        <img
+                          src={
+                            'https://static.solved.ac/tier_small/' +
+                            problem.SOLVED_RANK +
+                            '.svg'
+                          }
+                          alt="profile"
+                          style={{
+                            width: '1.2rem',
+                            position: 'absolute',
+                            margin: '0px 1% 0px 0px',
+                            left: '0',
+                            top: '0',
+                          }}
+                        />
+                      </a>
                     </div>
                   ))}
               </div>
@@ -214,7 +278,7 @@ const Rating = (props) => {
       ) : (
         // 랭크별 위치 ================================================
         <div>
-          <h1>랭크 페이지</h1>
+          <h1>랭크별 문제</h1>
           {/* <span>
             <input type="text" />
             <button>search</button>

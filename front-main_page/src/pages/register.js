@@ -5,7 +5,7 @@ import './register.css'
 import Fade from '@mui/material/Fade'
 import { useNavigate } from 'react-router-dom'
 
-const Register = () => {
+const Register = (e) => {
   const [userId, setUserId] = useState('')
   const [regiCode, setRegiCode] = useState('')
   const [gitId, setGitId] = useState('')
@@ -14,7 +14,7 @@ const Register = () => {
   const navigate = useNavigate()
   const onClickSubmit = async (props) => {
     try {
-      console.log(props)
+      // console.log(props)
       if (props.userId === '') return alert('백준 ID를 입력하세요')
       else if (props.regiCode === '') return alert('REGISTER CODE를 입력하세요')
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
@@ -35,7 +35,7 @@ const Register = () => {
         ),
       }
       // 이 URL은 exprees의 서버이기 때문에 3000번이 되어서는 안됨 충돌가능성이 있음, 뒤 서브스트링으로 구별
-      await fetch('http://localhost:3001/register', requestOptions)
+      await fetch(e.serverAddress + '/register', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           if (data === '학생 승인코드가 틀렸습니다.')
@@ -46,7 +46,8 @@ const Register = () => {
             return alert(data)
             else if (data === '솔브드에서 응답하지 않습니다. 잠시후 다시 시도해주세요')
             return alert(data)
-            else if(data==='학생 등록이 완료되었습니다. 새로고침 후 이용해주시기 바랍니다.') navigate('/rank')
+            else if(data==='학생 등록이 완료되었습니다. 새로고침 후 이용해주시기 바랍니다.') 
+            navigate('/rank')
             return alert(data);
           // if (!alert(data)) navigate('/rank')
         })
@@ -142,7 +143,7 @@ const Register = () => {
           <button
             className="submitButton"
             onClick={() => {
-              console.log('@@@@@@@@@@@@@@')
+              // console.log("@@@@@@@@@@@@@@");
               onClickSubmit({ userId, regiCode, gitId })
             }}
           >

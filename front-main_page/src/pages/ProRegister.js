@@ -6,7 +6,7 @@ import Fade from '@mui/material/Fade'
 import ControlledRadioButtonsGroup from './MUI/ControlledRadioButtonsGroup'
 import { useNavigate } from 'react-router-dom'
 
-const ProRegister = () => {
+const ProRegister = (e) => {
   const navigate = useNavigate()
 
   const [proName, setProName] = useState('')
@@ -19,7 +19,7 @@ const ProRegister = () => {
 
   const onClickSubmit = async (props) => {
     try {
-      console.log(props)
+      // console.log(props)
       if (props.proName === '') return alert('교수님 성함 입력하세요')
       else if (props.proCode === '') return alert('교수님 코드 입력하세요')
       else if (props.subCode === '') return alert('과목 코드 입력하세요')
@@ -45,7 +45,7 @@ const ProRegister = () => {
         ),
       }
       // 이 URL은 exprees의 서버이기 때문에 3000번이 되어서는 안됨 충돌가능성이 있음, 뒤 서브스트링으로 구별
-      await fetch('http://localhost:3001/proRegister', requestOptions)
+      await fetch(e.serverAddress + '/proRegister', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
