@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import { TextField, InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import Box from '@mui/material/Box'
+import { TextField, InputAdornment } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
+import { useNavigate } from 'react-router-dom'
 
 const MainPage = (props) => {
-  const [userId, setUserId] = useState("");
-  const navigate = useNavigate();
+  const [userId, setUserId] = useState('')
+  const navigate = useNavigate()
 
   const add = async () => {
     try {
-      await fetch("https://solved.ac/api/v3/user/show?handle=" + userId)
+      await fetch('https://solved.ac/api/v3/user/show?handle=' + userId)
         .then((res) => res.json())
         .then((data) => {
-          navigate("/userPage", { state: { userId } });
-          props.setGlobalID(userId);
-        });
+          navigate('/userPage', { state: { userId } })
+          props.setGlobalID(userId)
+        })
     } catch (error) {
-      alert("입력하신 ID는 Solve.ac에 등록되지 않았습니다.");
+      alert('입력하신 ID는 Solve.ac에 등록되지 않았습니다.')
     }
-  };
+  }
   // useEffect(() =>
   // // console.log(props)
   // , []);
@@ -32,22 +32,22 @@ const MainPage = (props) => {
         sx={{
           // backgroundColor: "#F2F2F2",
           borderRadius: 25,
-          width: "60%",
-          textAlign: "center",
-          boxShadow: "2px 8px 20px -12px #bdbdbd",
+          width: '60%',
+          textAlign: 'center',
+          boxShadow: '2px 8px 20px -12px #bdbdbd',
         }}
       >
         <TextField
           onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              add();
+            if (e.key === 'Enter') {
+              add()
             }
           }}
           variant="standard"
           id="User_ID"
-          placeholder="solved ID를 입력해 보세요."
+          placeholder="Solved.ac ID 입력"
           sx={{
-            width: "90%",
+            width: '90%',
             px: 2.9,
             py: 2,
           }}
@@ -65,7 +65,7 @@ const MainPage = (props) => {
         />
       </Box>
     </div>
-  );
-};
+  )
+}
 
-export default MainPage;
+export default MainPage
