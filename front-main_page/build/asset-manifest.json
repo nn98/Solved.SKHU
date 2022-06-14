@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b644121b.css",
+    "main.js": "/static/js/main.dbc5ad7f.js",
+    "static/js/787.aa9cfaf5.chunk.js": "/static/js/787.aa9cfaf5.chunk.js",
+    "static/media/boj-og.png": "/static/media/boj-og.405caf916b63b12d210d.png",
+    "static/media/10.svg": "/static/media/10.c78c500343ad3b3f0376713cf1b6e738.svg",
+    "static/media/5.svg": "/static/media/5.20d53dbe9e1fe8016a323c5ca39bea09.svg",
+    "static/media/15.svg": "/static/media/15.b86e15c31af05aede339d0eb5247073c.svg",
+    "static/media/20.svg": "/static/media/20.c9bc7238de2217b0bcc4e4bd49f64ef0.svg",
+    "static/media/30.svg": "/static/media/30.ed574e25cc01e4ad9683bccfd5bd8be6.svg",
+    "static/media/25.svg": "/static/media/25.a42f7da2fbc89220e3d38e7a5da2af5c.svg",
+    "static/media/none.svg": "/static/media/none.9753ce9695429eb5a844fa0dc1869e6e.svg",
+    "index.html": "/index.html",
+    "main.b644121b.css.map": "/static/css/main.b644121b.css.map",
+    "main.dbc5ad7f.js.map": "/static/js/main.dbc5ad7f.js.map",
+    "787.aa9cfaf5.chunk.js.map": "/static/js/787.aa9cfaf5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b644121b.css",
+    "static/js/main.dbc5ad7f.js"
+  ]
+}
