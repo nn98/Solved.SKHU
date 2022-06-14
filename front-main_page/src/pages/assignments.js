@@ -171,7 +171,7 @@ const Assignments = () => {
         <div className="overScroll">
           {subject &&
             student.map((data, index) => (
-              <React.Fragment key={data.ID}>
+              <React.Fragment key={index}>
                 {subject === data.Lecture_ID ? (
                   <div className="p-head">
                     <span>{lectureName}</span>
@@ -220,11 +220,11 @@ const Assignments = () => {
         ></MultipleSelect>
         {subject !== ""
           ? lecture.map((data, index) => (
-              <div key={data.ID}>
+              <div key={index}>
                 {data.ID === subject ? (
                   <Paper
                     className="subPaper"
-                    key={data.ID}
+                    key={index}
                     sx={{
                       display: "inline-block",
                       width: "208px",
@@ -331,6 +331,7 @@ const Assignments = () => {
         pnumber={pnumber}
         detailName={detailName}
         student={student}
+        subject={subject}
       ></MaxWidthDialog>
     </div>
   );
