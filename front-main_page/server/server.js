@@ -889,13 +889,13 @@ async function run(ID_LIST, pID, fuck) {
   console.log("pID", pID);
   let processID = ID_LIST[0].bojid;
   let url = urls[0] + pID + urls[1] + processID + urls[2];
-  console.log("rere at run:", fuck);
+  // console.log("rere at run:", fuck);
   execute(ID_LIST, pID, processID, url, fuck);
 }
 
 async function execute(ID_LIST, pID, processID, url, fuck) {
   console.log("2. execute");
-  console.log("rere at execute:", fuck);
+  // console.log("rere at execute:", fuck);
   puppeteer
     .launch({ headless: true })
     .then(async (browser) => {
@@ -956,7 +956,7 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
       let insert = ID_LIST.shift();
       insert.status = returnData;
       fuck.push(insert);
-      console.log("rere at result:", fuck);
+      // console.log("rere at result:", fuck);
       console.log("\t\t", processID, "is solve");
       isFinish(ID_LIST, pID, fuck);
     })
@@ -972,16 +972,20 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
 
 async function isFinish(ID_LIST, pID, fuck) {
   console.log("3. isFinish");
-  console.log("rere at isFin:", fuck);
+  // console.log("rere at isFin:", fuck);
   waitNotify.notify();
   mAsyncTaskExecute = false;
   if (ID_LIST.length === 0) {
-    console.log("result: ", fuck);
+    // console.log("result: ", fuck);
     AssignTaskExecute = false;
     waitNotify2.notify();
   } else {
     console.log("————————————————————————————————————");
-    console.log("isFin > run", fuck);
+    while(ID_LIST[0].bojid==="-"){
+      console.log(ID_LIST[0].ID,"is unsubmitted");
+      ID_LIST.shift();
+    }
+    // console.log("isFin > run", fuck);
     run(ID_LIST, pID, fuck);
   }
 }
