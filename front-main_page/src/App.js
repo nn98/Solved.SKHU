@@ -20,14 +20,14 @@ const theme = unstable_createMuiStrictModeTheme()
 
 function App() {
   // 랭킹 페이지 변수
-  const serverAddress = 'http://54.180.98.222:3001'
+  const serverAddress = 'http://3.39.230.170:3001'
   const [globalID, setGlobalID] = useState('')
   const [ranking, setRanking] = useState([])
 
   // 각 페이지 에서 필요한 정보 추가
   const add = async () => {
     try {
-      await fetch('http://54.180.98.222:3001'+'/ranking')
+      await fetch(serverAddress+'/ranking')
         .then((res) => res.json())
         .then((data) => {
           // console.log(data)
