@@ -38,11 +38,18 @@
   |`19.`|*Off*|Full|Front-Back 연동 및 데이터 전송|2022-05-02|
   |`20.`|*Off*|Full|Front-Back 연동, 레이아웃 수정, 데이터베이스 구조 수정|2022-05-04|
   |`21.`|*Off*|Full|풀타임 회의-<br>Front_Layout update/QnA update<br>Back_Solved.ac Data Crawling+Assignment by Node.js|2022-05-09|
-  |`22.`|*Off*|Full|풀타임 회의|2022-05-10|
+  |`22.`|*Off*|Front|풀타임 회의-<br>Front_Layout/UI Update|2022-05-10|
   |`23.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connecting/Data Crawling|2022-05-18|
   |`24.`|*Off*|Full|풀타임 회의-<br>Front_additional Page Implement<br>Back_Client-Server Connecting<br>Solved.ac API testing|2022-05-19|
-  |`25.`|*Off*|Full|풀타임 회의|2022-06-06|
-  |`26.`|*Off*|Full||2022-05-19|
+  |`25.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update<br>Back_React-Node Connection/Data Crawling Code Update|2022-05-24|
+  |`26.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update<br>Back_React-Node Connection|2022-05-25|
+  |`27.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connection/Error Handling/Data Crawling Code Update|2022-05-30|
+  |`28.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild/Error Handling<br>Back_React-Node Connection/Error Handling|2022-05-31|
+  |`29.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update<br>Back_React-Node Connection|2022-06-06|
+  |`30.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connection Code Update/Error Handling|2022-06-07|
+  |`31.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update/Error Handling<br>Back_React-Node Connection Code Update/Error Handling|2022-06-12|
+  |`32.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild/Error Handling<br>Back_React-Node Connection/Error Handling/Cleanup Comments/Deploy Test|2022-06-14|
+  |`33.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild/Error Handling<br>Back_React-Node Connection/Error Handling|2022-06-16|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
@@ -134,7 +141,7 @@
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
   |테스트|MySql DB와 Node.js Server 연동.<br>서버에서 실행한 쿼리 결과를 json으로 파싱|2020-03-24|`A`|
-  |구현|QnA페이지 간의 삭제, 등록, 답변 기능 구현|2022-05-10|`L`|
+  |완료|QnA페이지 간의 삭제, 등록, 답변 기능 구현|2022-05-10|`L`|
   |완료|User페이지 유저가 푼 문제<br>Solved API 활용 값 삽입|2022-05-28|`A`|
   |완료|Recommend Page<br>DB연동 후 값 삽입|2022-06-01|`A`|
   
@@ -144,8 +151,7 @@
   |mysql 연동 문제|검색을 해보니 connection.end()를 사용하면 안되었는데 <br>connection.end()를 사용하여서현재 json으로 <br>값이 도출이 되지 않았습니다 그래서 <br>.end()를 주석처리 하고 진행하였다.|2022-03-21|`A`|
   |pullrequest|새로운 브랜치를 만든 후(github상에 있지 않는) github remote를 하고, <br>필요파일을 만든다 그 후에 git pull origin main을 한다 그 이후에 vscode를 이용해서<br>github pullrequest라는 플러그인을 이용하여 해결|2022-03-21|`A`|
   |pullrequest|inflearn공부를 통하여 실습한 sql connect 풀 리퀘스트를 하려하였지만, <br>git pull에서부터 문제가 생겨서 <br>git pull origin main --allow-unrelated-histories로  연결하여서 해결하였다.|2022-03-22|`A`|
-  |QnA의 컨텐츠와 그의 답변을 QnA와 QnAInner 테이블에서 select join으로 한번에 불러오려고 하였으나 <br> 중복이 많이 select되고 QnA 안에 있는 답변들이 객체 값 안으로 출력 불가| QnA와 
-  QnAInner 테이블에서 select join 시 자동적으로 불러오지 QnA객체 안에 답변들이 들어오지 않는다.<br>그래서, QnA QnAInner 따로 불러온 뒤 QnA의 ID값에 따라 답변들을 출력함|2022-05-10|`L`|
+  |QnA의 컨텐츠와 그의 답변을 QnA와 QnAInner 테이블에서 select join으로 한번에 불러오려고 하였으나 <br> 중복이 많이 select되고 QnA 안에 있는 답변들이 객체 값 안으로 출력 불가| QnA와 QnAInner 테이블에서 select join 시 자동적으로 불러오지 QnA객체 안에 답변들이 들어오지 않는다.<br>그래서, QnA QnAInner 따로 불러온 뒤 QnA의 ID값에 따라 답변들을 출력함|2022-05-10|`L`|
   |문제 추천 페이지|해당 유저 기준 위 아래 2명씩<br>해당 유저는 풀지 않았지만, 다른 유저는 푼<br>문제리스트를 출력해줄 때 위가 존재하지 않는 1등<br>아래가 존재하지 않는 꼴등이 존재 그래서<br>점화식을 이용하여 해결|2022-06-01|`A`|
   
   </details>
@@ -158,7 +164,7 @@
   |완료|크롤링 반복 시 과부하<br>[Thread.sleep()](https://www.delftstack.com/ko/howto/java/how-to-delay-few-seconds-in-java/)|2022-04-30|`A`|
   |완료|현재 기준 데이터베이스 값 전부 삽입 완료|2022-05-18|`A`|
   |완료|크롤링하는 페이지의 UI변경<br>크롤링 코드 업데이트|2022-06-02|`A`|
-  |진행|학생등록 시 전체 학생 업데이트|2022-06-10|`A`|
+  |완료|학생등록 시 전체 학생 업데이트|2022-06-12|`A`|
   
   
   ## Errors-#16
@@ -171,6 +177,7 @@
   |Solved User<br> 푼 문제 크롤링|전체 문제 크롤링 시 없어진 문제들을<br>제외하고 데이터베이스에 적재한 상태인데<br>없어진 문제를 푼 유저들이 존재함<br>그래서 그 부분에 try-catch문을 넣어서<br>건너뛰게 처리함|2022-05-08|`A`|
   |Solved User<br>푼 문제<br>날짜 및 시간|문제 처리 시 맞았습니다가 아닌 점수로 된 것들 중에서 0점도 정답 처리로 되어 있어서 정규식을 이용하여 문제 해결|2022-05-18|`A`|
   |파싱 시 문제점|크롤링 후 파싱할 때<br> split을 이용하여 값을 뽑은 후<br>진행하였는데, 값이 제대로 나오지 않아<br>코드를 수정하여 해결함|2022-06-10|`A`|
+  |크롤링 시 문제점|Solved.ac에서 크롤링 시<br>페이지를 읽지 못하는 경우가 발생<br>그래서 주기를 두고 업데이트 해야함|2022-06-16|`A`|
   
   </details>  
   
@@ -265,7 +272,7 @@
   ## Implements-#34
   |구현|구현 중점|날짜|Dev|
   |--|--|--|--|
-  |진행|DB데이터 React에서 사용|2022-04-21|`A`|
+  |완료|DB데이터 React에서 사용|2022-06-16|`A`|
   |완료|mainPage와 userPage연결 및 데이터 이동|2022-04-29|`S`|
  
   ## Errors-#34

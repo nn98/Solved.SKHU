@@ -102,8 +102,8 @@ const Assignments = (e) => {
                 data[j].Lecture_ID === compare[i].Lecture_ID &&
                 data[j].ID === compare[i].ID
               ) {
-                compare[i].result = data[i].result
-                compare[i].status = data[i].status
+                compare[i].result = data[j].result
+                compare[i].status = data[j].status
                 break
               }
             }

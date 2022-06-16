@@ -10,6 +10,7 @@ const waitNotify2 = new WaitNotify();
 const waitNotify3 = new WaitNotify();
 const waitNotify4 = new WaitNotify();
 const waitNotify5 = new WaitNotify();
+
 let AssignTaskExecute = false;
 let AssignTaskExecute1 = false;
 let AssignTaskExecute2 = false;
@@ -26,16 +27,17 @@ app.listen(port, () => {
 });
 
 var mysql = require("mysql");
-var connection = mysql.createConnection({
-  host: "54.180.98.222",
+var connection = mysql.createPool({
+  host: "3.39.230.170",
   user: "Project",
   password: "testing00",
   database: "SWP",
   multipleStatements: true,
   charset : 'utf8mb4',
+  connectionLimit: 30
 });
 
-connection.connect(() => {
+connection.getConnection(() => {
   console.log("connecting");
 });
 
@@ -194,57 +196,59 @@ app.get("/get", (req, res) => {
 });
 
 app.post("/rating", async (req, res) => {
-  let i, j;
+  let i;
   console.log("rating-post: call", req.body.ID);
-  const sqls1 = [
-    "",
-    "",
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '")-2 union ',
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '")-1 union ',
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '") union ',
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '")+1 union ',
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '")+2 ',
-
-    ";",
-  ];
-  const query1 = "select max(skhurank) as mSkhurank from User;";
   const sqls = [
-    'select skhurank from User where ID ="' + req.body.ID + '";',
+    // 'select skhurank from User where ID ="' + req.body.ID + '";',
     "select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID" +
     " join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in (",
 
     'select ID from User where skhurank = (select skhurank from User where ID="' +
     req.body.ID +
-    '")-2 union ',
+    '")-2 ',
 
-    'select ID from User where skhurank = (select skhurank from User where ID="' +
+    'union select ID from User where skhurank = (select skhurank from User where ID="' +
     req.body.ID +
     '")-1 union ',
 
     'select ID from User where skhurank = (select skhurank from User where ID="' +
     req.body.ID +
-    '")+1 union ',
-    'select ID from User where skhurank = (select skhurank from User where ID="' +
+    '")+1 ',
+    'union select ID from User where skhurank = (select skhurank from User where ID="' +
     req.body.ID +
     '")+2) ',
 
     'and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = "' +
     req.body.ID +
     '")' +
-    "group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;",
+    "group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;"
+    // ")"
   ];
+  const sqls1 = [
+    // "",
+    "",
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '")-2 ',
+    'union select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '")-1 union ',
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '") ',
+    'union select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '")+1 ',
+    'union select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '")+2; ',
+    // ")",
+    // ";",
+  ];
+  const query1 = "select skhurank from User where ID = \""+req.body.ID+"\";";
+  
   AssignTaskExecute3 = true;
-  connection.query(sqls[0], async function (err, result, fields) {
+  connection.query(query1, async function (err, result, fields) {
     if (err) console.log("@@@@@" + err);
     for (let data of result) {
       i = data.skhurank;
@@ -255,30 +259,46 @@ app.post("/rating", async (req, res) => {
   });
   if (AssignTaskExecute3) await waitNotify3.wait();
   AssignTaskExecute3 = true;
-  connection.query(query1, req.body, function (err, result, fields) {
-    if (err) console.log(err);
-    for (let data of result) {
-      j = data.mSkhurank;
+  let problems = ""
+  let users = ""
+  if(i===1){
+    problems += sqls[0];
+    users += sqls1[0];
+    for (let k = 3;k<sqls.length;k++) {
+      problems += sqls[k];
+      users += sqls1[k];
     }
-    console.log("j", j);
-    AssignTaskExecute3 = false;
-    waitNotify3.notify();
-  });
-  if (AssignTaskExecute3) await waitNotify3.wait();
-  let k = Number(Number(5) - i < Number(2) ? Number(2) : Number(5) - i);
-  console.log("k: ", k);
-
-  let problems = sqls[1];
-  let users = sqls1[1];
-  for (k; (k <= j - i + 3) & (k < 6); k++) {
-    problems += sqls[k];
-    users += sqls1[k];
+  }else{
+    for (let k = 0;k<sqls.length;k++) {
+      problems += sqls[k];
+      users += sqls1[k];
+    }
   }
-  problems += sqls[sqls.length - 1];
+  // connection.query(query1, req.body, function (err, result, fields) {
+  //   if (err) console.log(err);
+  //   for (let data of result) {
+  //     j = data.mSkhurank;
+  //   }
+  //   console.log("j", j);
+  //   AssignTaskExecute3 = false;
+  //   waitNotify3.notify();
+  // });
+  // if (AssignTaskExecute3) await waitNotify3.wait();
+  // let k = Number(Number(5) - i < Number(2) ? Number(2) : Number(5) - i);
+  // console.log("k: ", k);
 
-  users += sqls1[sqls1.length - 2];
-  users += sqls1[sqls1.length - 1];
+  
+  
+  // problems += sqls[sqls.length - 1];
+  // problems += sqls[sqls.length - 2];
+
+  // users += sqls1[sqls1.length-4];
+  // users += sqls1[sqls1.length-3];
+  // users += sqls1[sqls1.length - 2];
+  // users += sqls1[sqls1.length - 1];
   AssignTaskExecute3 = true;
+  console.log("SQL-problems:",problems);
+  console.log("SQL-users:",users);
   connection.query(problems + users, req.body, function (err, result, fields) {
     if (err) {
       console.log("@@@@@@@@@@@@@@@@@\n" + err);
@@ -864,18 +884,19 @@ let urls = [
 ];
 
 async function run(ID_LIST, pID, fuck) {
-  console.log("1. run", fuck);
-  console.log("ID_LIST", ID_LIST);
+  console.log("1. run");
+  // console.log("1. run", fuck);
+  // console.log("ID_LIST", ID_LIST);
   console.log("pID", pID);
   let processID = ID_LIST[0].bojid;
   let url = urls[0] + pID + urls[1] + processID + urls[2];
-  console.log("rere at run:", fuck);
+  // console.log("rere at run:", fuck);
   execute(ID_LIST, pID, processID, url, fuck);
 }
 
 async function execute(ID_LIST, pID, processID, url, fuck) {
   console.log("2. execute");
-  console.log("rere at execute:", fuck);
+  // console.log("rere at execute:", fuck);
   puppeteer
     .launch({ headless: true })
     .then(async (browser) => {
@@ -886,24 +907,24 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
       console.log("now process\t", processID);
       mAsyncTaskExecute = true;
       const page = await browser.newPage();
-
-      await page.goto(url, { waitUntil: "networkidle2" });
+      await page.setDefaultNavigationTimeout(0);
+      await page.goto(url, { waitUntil: "networkidle2" ,timeout: 0});
 
       const content = await page.content();
       const $ = cheerio.load(content);
       let re = [];
       const lists = $("tr");
-      console.log(lists);
+      // console.log(lists);
       let returnData = [];
       lists.each((index, list) => {
         let red = [];
         const name = $(list).find("td");
         const name0 = $(list).find("td").toString().split("<td>");
         for (let i = 0; ++i < name0.length;) {
-          console.log("N", i, name0[i]);
+          // console.log("N", i, name0[i]);
           if (name0[i].split("</td>").length > 3) {
             let v = name0[i].split("</td>");
-            console.log("split:", v);
+            // console.log("split:", v);
             for (
               let j = 0;
               j < v.length - 1;
@@ -916,17 +937,17 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
                 name0[i].split('data-original-title="')[1].split('"')[0]
               );
             }
-            console.log("n", i, name0[i].replace(/(<([^>]+)>)/gi, ""));
+            // console.log("n", i, name0[i].replace(/(<([^>]+)>)/gi, ""));
             red.push(name0[i].replace(/(<([^>]+)>)/gi, ""));
           }
         }
         returnData.push(red);
       });
 
-      console.log('get html');
+      // console.log('get html');
       const html = await page.$eval("td.result", (e) => e.outerHTML);
-      console.log('html:', html);
-      console.log("set result");
+      // console.log('html:', html);
+      // console.log("set result");
       ID_LIST[0].result = html.includes("맞았습니다!!")
         ? 20
         : html.includes("틀렸습니다")
@@ -936,7 +957,7 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
       let insert = ID_LIST.shift();
       insert.status = returnData;
       fuck.push(insert);
-      console.log("rere at result:", fuck);
+      // console.log("rere at result:", fuck);
       console.log("\t\t", processID, "is solve");
       isFinish(ID_LIST, pID, fuck);
     })
@@ -952,16 +973,21 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
 
 async function isFinish(ID_LIST, pID, fuck) {
   console.log("3. isFinish");
-  console.log("rere at isFin:", fuck);
+  // console.log("rere at isFin:", fuck);
   waitNotify.notify();
   mAsyncTaskExecute = false;
   if (ID_LIST.length === 0) {
-    console.log("result: ", fuck);
+    // console.log("result: ", fuck);
     AssignTaskExecute = false;
     waitNotify2.notify();
   } else {
     console.log("————————————————————————————————————");
-    console.log("isFin > run", fuck);
+    console.log(fuck[fuck.length-1]);
+    while(ID_LIST[0].bojid==="-"){
+      console.log(ID_LIST[0].ID,"is unsubmitted");
+      ID_LIST.shift();
+    }
+    // console.log("isFin > run", fuck);
     run(ID_LIST, pID, fuck);
   }
 }
