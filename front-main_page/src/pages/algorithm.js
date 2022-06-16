@@ -14,10 +14,10 @@ const Algorithm = (props) => {
       name: '가장 적게 푼 문제',
     },
     {
-      name: ' 성공률 상위 10',
+      name: ' 성공률 상위 7',
     },
     {
-      name: '성공률 하위 10',
+      name: '성공률 하위 7',
     },
   ])
 
