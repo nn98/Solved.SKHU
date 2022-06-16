@@ -96,6 +96,8 @@ const Assignments = (e) => {
           // console.log("Data: ", data);
           let compare = student
           // console.log(compare);
+          console.log('data',data);
+          console.log('compare',compare);
           for (let i = 0; i < compare.length; ++i) {
             for (let j = 0; j < data.length; ++j) {
               if (
