@@ -119,3 +119,5 @@ dist
 
 #보안관련해서..
 package-lock.json
+# Local Netlify folder
+.netlify
