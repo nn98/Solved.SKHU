@@ -10,27 +10,6 @@ const waitNotify2 = new WaitNotify();
 const waitNotify3 = new WaitNotify();
 const waitNotify4 = new WaitNotify();
 const waitNotify5 = new WaitNotify();
-const http = require('http');
-const https = require('https');
-const fs = require('fs');
-
-const HTTP_PORT = 8080;
-const HTTPS_PORT = 8443;
-
-const options = {
-  key: fs.readFileSync('./rootca.key'),
-  cert: fs.readFileSync('./rootca.crt')
-};
-
-app.get('/', (req, res) => {
-  res.json({ message: `Server is running on port ${req.secure ? HTTPS_PORT : HTTP_PORT}` });
-});
-
-// Create an HTTP server.
-http.createServer(app).listen(HTTP_PORT);
-
-// Create an HTTPS server.
-https.createServer(options, app).listen(HTTPS_PORT);
 
 let AssignTaskExecute = false;
 let AssignTaskExecute1 = false;
@@ -217,57 +196,59 @@ app.get("/get", (req, res) => {
 });
 
 app.post("/rating", async (req, res) => {
-  let i, j;
+  let i;
   console.log("rating-post: call", req.body.ID);
-  const sqls1 = [
-    "",
-    "",
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '")-2 union ',
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '")-1 union ',
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '") union ',
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '")+1 union ',
-    'select * from User where skhurank = (select skhurank from User where ID="' +
-    req.body.ID +
-    '")+2 ',
-
-    ";",
-  ];
-  const query1 = "select max(skhurank) as mSkhurank from User;";
   const sqls = [
-    'select skhurank from User where ID ="' + req.body.ID + '";',
+    // 'select skhurank from User where ID ="' + req.body.ID + '";',
     "select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID" +
     " join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in (",
 
     'select ID from User where skhurank = (select skhurank from User where ID="' +
     req.body.ID +
-    '")-2 union ',
+    '")-2 ',
 
-    'select ID from User where skhurank = (select skhurank from User where ID="' +
+    'union select ID from User where skhurank = (select skhurank from User where ID="' +
     req.body.ID +
     '")-1 union ',
 
     'select ID from User where skhurank = (select skhurank from User where ID="' +
     req.body.ID +
-    '")+1 union ',
-    'select ID from User where skhurank = (select skhurank from User where ID="' +
+    '")+1 ',
+    'union select ID from User where skhurank = (select skhurank from User where ID="' +
     req.body.ID +
     '")+2) ',
 
     'and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = "' +
     req.body.ID +
     '")' +
-    "group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;",
+    "group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;"
+    // ")"
   ];
+  const sqls1 = [
+    // "",
+    "",
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '")-2 ',
+    'union select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '")-1 union ',
+    'select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '") ',
+    'union select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '")+1 ',
+    'union select * from User where skhurank = (select skhurank from User where ID="' +
+    req.body.ID +
+    '")+2; ',
+    // ")",
+    // ";",
+  ];
+  const query1 = "select skhurank from User where ID = \""+req.body.ID+"\";";
+  
   AssignTaskExecute3 = true;
-  connection.query(sqls[0], async function (err, result, fields) {
+  connection.query(query1, async function (err, result, fields) {
     if (err) console.log("@@@@@" + err);
     for (let data of result) {
       i = data.skhurank;
@@ -278,29 +259,43 @@ app.post("/rating", async (req, res) => {
   });
   if (AssignTaskExecute3) await waitNotify3.wait();
   AssignTaskExecute3 = true;
-  connection.query(query1, req.body, function (err, result, fields) {
-    if (err) console.log(err);
-    for (let data of result) {
-      j = data.mSkhurank;
+  let problems = ""
+  let users = ""
+  if(i===1){
+    problems += sqls[0];
+    users += sqls1[0];
+    for (let k = 3;k<sqls.length;k++) {
+      problems += sqls[k];
+      users += sqls1[k];
     }
-    console.log("j", j);
-    AssignTaskExecute3 = false;
-    waitNotify3.notify();
-  });
-  if (AssignTaskExecute3) await waitNotify3.wait();
-  let k = Number(Number(5) - i < Number(2) ? Number(2) : Number(5) - i);
-  console.log("k: ", k);
-
-  let problems = sqls[1];
-  let users = sqls1[1];
-  for (k; (k <= j - i + 3) & (k < 6); k++) {
-    problems += sqls[k];
-    users += sqls1[k];
+  }else{
+    for (let k = 0;k<sqls.length;k++) {
+      problems += sqls[k];
+      users += sqls1[k];
+    }
   }
-  problems += sqls[sqls.length - 1];
+  // connection.query(query1, req.body, function (err, result, fields) {
+  //   if (err) console.log(err);
+  //   for (let data of result) {
+  //     j = data.mSkhurank;
+  //   }
+  //   console.log("j", j);
+  //   AssignTaskExecute3 = false;
+  //   waitNotify3.notify();
+  // });
+  // if (AssignTaskExecute3) await waitNotify3.wait();
+  // let k = Number(Number(5) - i < Number(2) ? Number(2) : Number(5) - i);
+  // console.log("k: ", k);
 
-  users += sqls1[sqls1.length - 2];
-  users += sqls1[sqls1.length - 1];
+  
+  
+  // problems += sqls[sqls.length - 1];
+  // problems += sqls[sqls.length - 2];
+
+  // users += sqls1[sqls1.length-4];
+  // users += sqls1[sqls1.length-3];
+  // users += sqls1[sqls1.length - 2];
+  // users += sqls1[sqls1.length - 1];
   AssignTaskExecute3 = true;
   console.log("SQL-problems:",problems);
   console.log("SQL-users:",users);
