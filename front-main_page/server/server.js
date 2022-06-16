@@ -884,8 +884,9 @@ let urls = [
 ];
 
 async function run(ID_LIST, pID, fuck) {
-  console.log("1. run", fuck);
-  console.log("ID_LIST", ID_LIST);
+  console.log("1. run");
+  // console.log("1. run", fuck);
+  // console.log("ID_LIST", ID_LIST);
   console.log("pID", pID);
   let processID = ID_LIST[0].bojid;
   let url = urls[0] + pID + urls[1] + processID + urls[2];
@@ -913,17 +914,17 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
       const $ = cheerio.load(content);
       let re = [];
       const lists = $("tr");
-      console.log(lists);
+      // console.log(lists);
       let returnData = [];
       lists.each((index, list) => {
         let red = [];
         const name = $(list).find("td");
         const name0 = $(list).find("td").toString().split("<td>");
         for (let i = 0; ++i < name0.length;) {
-          console.log("N", i, name0[i]);
+          // console.log("N", i, name0[i]);
           if (name0[i].split("</td>").length > 3) {
             let v = name0[i].split("</td>");
-            console.log("split:", v);
+            // console.log("split:", v);
             for (
               let j = 0;
               j < v.length - 1;
@@ -936,17 +937,17 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
                 name0[i].split('data-original-title="')[1].split('"')[0]
               );
             }
-            console.log("n", i, name0[i].replace(/(<([^>]+)>)/gi, ""));
+            // console.log("n", i, name0[i].replace(/(<([^>]+)>)/gi, ""));
             red.push(name0[i].replace(/(<([^>]+)>)/gi, ""));
           }
         }
         returnData.push(red);
       });
 
-      console.log('get html');
+      // console.log('get html');
       const html = await page.$eval("td.result", (e) => e.outerHTML);
-      console.log('html:', html);
-      console.log("set result");
+      // console.log('html:', html);
+      // console.log("set result");
       ID_LIST[0].result = html.includes("맞았습니다!!")
         ? 20
         : html.includes("틀렸습니다")
@@ -981,6 +982,7 @@ async function isFinish(ID_LIST, pID, fuck) {
     waitNotify2.notify();
   } else {
     console.log("————————————————————————————————————");
+    console.log(fuck[fuck.length-1]);
     while(ID_LIST[0].bojid==="-"){
       console.log(ID_LIST[0].ID,"is unsubmitted");
       ID_LIST.shift();
