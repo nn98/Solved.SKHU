@@ -10,6 +10,28 @@ const waitNotify2 = new WaitNotify();
 const waitNotify3 = new WaitNotify();
 const waitNotify4 = new WaitNotify();
 const waitNotify5 = new WaitNotify();
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+
+const HTTP_PORT = 8080;
+const HTTPS_PORT = 8443;
+
+const options = {
+  key: fs.readFileSync('./rootca.key'),
+  cert: fs.readFileSync('./rootca.crt')
+};
+
+app.get('/', (req, res) => {
+  res.json({ message: `Server is running on port ${req.secure ? HTTPS_PORT : HTTP_PORT}` });
+});
+
+// Create an HTTP server.
+http.createServer(app).listen(HTTP_PORT);
+
+// Create an HTTPS server.
+https.createServer(options, app).listen(HTTPS_PORT);
+
 let AssignTaskExecute = false;
 let AssignTaskExecute1 = false;
 let AssignTaskExecute2 = false;
@@ -36,7 +58,7 @@ var connection = mysql.createPool({
   connectionLimit: 30
 });
 
-connection.connect(() => {
+connection.getConnection(() => {
   console.log("connecting");
 });
 
@@ -280,6 +302,8 @@ app.post("/rating", async (req, res) => {
   users += sqls1[sqls1.length - 2];
   users += sqls1[sqls1.length - 1];
   AssignTaskExecute3 = true;
+  console.log("SQL-problems:",problems);
+  console.log("SQL-users:",users);
   connection.query(problems + users, req.body, function (err, result, fields) {
     if (err) {
       console.log("@@@@@@@@@@@@@@@@@\n" + err);
