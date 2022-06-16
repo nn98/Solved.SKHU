@@ -38,11 +38,18 @@
   |`19.`|*Off*|Full|Front-Back 연동 및 데이터 전송|2022-05-02|
   |`20.`|*Off*|Full|Front-Back 연동, 레이아웃 수정, 데이터베이스 구조 수정|2022-05-04|
   |`21.`|*Off*|Full|풀타임 회의-<br>Front_Layout update/QnA update<br>Back_Solved.ac Data Crawling+Assignment by Node.js|2022-05-09|
-  |`22.`|*Off*|Full|풀타임 회의|2022-05-10|
+  |`22.`|*Off*|Front|풀타임 회의-<br>Front_Layout/UI Update|2022-05-10|
   |`23.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connecting/Data Crawling|2022-05-18|
   |`24.`|*Off*|Full|풀타임 회의-<br>Front_additional Page Implement<br>Back_Client-Server Connecting<br>Solved.ac API testing|2022-05-19|
-  |`25.`|*Off*|Full|풀타임 회의|2022-06-06|
-  |`26.`|*Off*|Full||2022-05-19|
+  |`25.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update<br>Back_React-Node Connection/Data Crawling Code Update|2022-05-24|
+  |`26.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update<br>Back_React-Node Connection|2022-05-25|
+  |`27.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connection/Error Handling/Data Crawling Code Update|2022-05-30|
+  |`28.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild/Error Handling<br>Back_React-Node Connection/Error Handling|2022-05-31|
+  |`29.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update<br>Back_React-Node Connection|2022-06-06|
+  |`30.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connection Code Update/Error Handling|2022-06-07|
+  |`31.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update/Error Handling<br>Back_React-Node Connection Code Update/Error Handling|2022-06-12|
+  |`32.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild/Error Handling<br>Back_React-Node Connection/Error Handling/Cleanup Comments/Deploy Test|2022-06-14|
+  |`33.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild/Error Handling<br>Back_React-Node Connection/Error Handling|2022-06-16|
   ##### TODO
   |No.|Dev|주제|목표|날짜|
   |--|--|--|--|--|
