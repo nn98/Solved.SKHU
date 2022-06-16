@@ -906,8 +906,8 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
       console.log("now process\t", processID);
       mAsyncTaskExecute = true;
       const page = await browser.newPage();
-
-      await page.goto(url, { waitUntil: "networkidle2" });
+      await page.setDefaultNavigationTimeout(0);
+      await page.goto(url, { waitUntil: "networkidle2" ,timeout: 0});
 
       const content = await page.content();
       const $ = cheerio.load(content);
