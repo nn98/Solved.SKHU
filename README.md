@@ -43,7 +43,7 @@
   |`24.`|*Off*|Full|풀타임 회의-<br>Front_additional Page Implement<br>Back_Client-Server Connecting<br>Solved.ac API testing|2022-05-19|
   |`25.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update<br>Back_React-Node Connection/Data Crawling Code Update|2022-05-24|
   |`26.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update<br>Back_React-Node Connection|2022-05-25|
-  |`27.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connection/Error Handling/Data Crawling Code Update|2022-05-30|
+  |`27.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connection/Error Handling/<br>Data Crawling Code Update|2022-05-30|
   |`28.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild/Error Handling<br>Back_React-Node Connection/Error Handling|2022-05-31|
   |`29.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI Update<br>Back_React-Node Connection|2022-06-06|
   |`30.`|*Off*|Full|풀타임 회의-<br>Front_Layout/UI rebuild<br>Back_React-Node Connection Code Update/Error Handling|2022-06-07|
