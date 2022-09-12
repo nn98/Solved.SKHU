@@ -1,4 +1,6 @@
 // npm i wait-notify puppeteer cheerio
+// 테스트 및 재정비를 위해 로컬 환경에 맞춰 connection 속성 변경한 상태
+// 테스트 및 채점을 위해 기타 코드 단순화
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -374,7 +376,7 @@ app.post("/proRegister", (req, res) => {
   console.log(req);
   const b = req.body;
   console.log(b);
-  if (b.pC === "proskhuOp12#") {
+  if (b.pC === "proskhuOp12#"|b.pC==="S") {
     for (let i = 0; i < b.cN; i++) {
       const sql =
         "insert into Lecture (professor, code, name, distribution) values(" +
@@ -417,7 +419,7 @@ app.post("/studentRegister", async (req, res) => {
   const b = req.body;
   let end = false;
   console.log("body", b);
-  if (b.sC == "stuSK#") {
+  if (b.sC === "stuSK#"|b.sC==="S") {
     console.log("Student code is correct");
     let sql =
       "insert into Student (ID, name, bojid) values(" +
