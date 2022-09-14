@@ -20,7 +20,8 @@ const theme = unstable_createMuiStrictModeTheme()
 
 function App() {
   // 랭킹 페이지 변수
-  const serverAddress = 'http://3.39.230.170:3001'
+  // const serverAddress = 'http://3.39.230.170:3001'
+  const serverAddress = 'http://localhost:3001'
   const [globalID, setGlobalID] = useState('')
   const [ranking, setRanking] = useState([])
 

@@ -482,7 +482,7 @@ app.get("/assignments", (req, res) => {
   let returnStates;
   let sql =
     "select * from Lecture;" +
-    "select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID;";
+    "select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID order by name;";
   console.log("get Lectures", sql);
 
   connection.query(sql, function (err, result, fields) {
