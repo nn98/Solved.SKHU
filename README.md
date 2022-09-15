@@ -68,7 +68,7 @@
   
   </details>
 <details><summary>FrontEnd - </summary>
-  ####FrontEnd
+  ####FrontEnd --- Begin
   <details><summary>#2 Front-MainPage</summary><div markdown="1">
   
   ## Implements-#2
@@ -136,6 +136,72 @@
   
   </details>
   
+<details><summary>#17 Front-QnA Board</summary><div markdown="1">
+  
+  ## Implements-#17
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |완료|익명이되 비밀번호 설정 후<br>작성자 확인 가능|2022-03-25|`L`|
+  |완료|QnA 작성자 및 QnA 내용을 DB에 넣고 등록 가능하게 구현|2022-05-10|`L`|
+  
+  ## Errors-#17
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |setState 데이터 추가 시 기존 데이터에 덧붙이기|setState사용시 const [test, setTest] = useState([]) 인 경우 <br> setTest([...test, 추가 내용])이렇게 해 주어야 기존에 있던 test에 추가 내용을 덧붙이기 가능|2022-04-06|`L`|
+  |QnA의 답변 생성 시 생성 이후에 추가된 user는 QnA의 답변 작성 불가 오류|오류 원인 : QnA.js인 상위 컴포넌트에서 innerComment.js인 하위 컴포넌트로 user의 데이터를 생성시에만 전송하여 추가 불가<br>해결 방법 : QnA.js인 상위 컴포넌트에서 user의 존재 여부를 확인하는 compare 함수를 innerComment.js인 하위 컴포넌트로 전송하여 QnA의 답변 추가할때만 compare함수를 호출하여 작성 가능 여부 판별|2022-04-19|`L`|
+  |QnA테이블의 값을 불러올 때 불러오는 비동기 함수 뒤에 함수 결과값을<br>react의 변수에 추가 후 출력하였더니<br>변수에 바로 추가가 안되고 출력되는 오류|비동기 함수가 완료 되기 전에 변수에 추가하는 코드가 먼저 실행하여 결과값이 변수에 추가가 안됨<br>비동기 함수 완료되면 추가를 하도록 변경|2022-05-10|`L`|
+  
+  </details>  
+  
+  <details><summary>#27 Front-RankPage</summary>
+  
+  ## Implements-#27
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |완료|랭킹 페이지 UI 구현|2022-04-13|`S`|
+  
+  ## Errors-#27
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |||||
+  
+  </details>
+ 
+<details><summary>#32 Front-AssignmentsPage</summary>
+  
+  ## Implements-#32
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |완료|채점 페이지 UI 구현|2022-04-19|`S`|
+  |완료|등록한 강의 목록을 버튼으로 보이게 구현|2022-05-18|`S`|
+  |완료|채점 결과 학생의 상세 페이지 구현|2022-05-18|`S`|
+  |완료|채점 결과 클립보드에 복사하는 기능 구현|2022-05-19|`S`|
+  
+  ## Errors-#32
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |textarea태그의 placeholder에만 값 설정하기|사용자 입력 값과 다르게 힌트에만 css서식을 적용하고자 함<br>css시트에서 ::placeholder로 콜론(:)2개 선택자를 사용하면 됨|2022-04-19|`S`|
+  |설명서를 보기좋게 추가하고 싶음|react mui인 mediacard를 import하고<br>드롭 다운 아이콘을 추가해 설명서가 나오도록 구현|2022-05-09|`S`|
+  |클립보드에 복사하는 기능을 알지 못함|navigator.clipboard.writeText() 함수에 복사할 텍스트를 매개변수로 보내<br>비동기(async) 함수 내에서 호출한다.|2022-05-19|`S`|
+  |algorithm 페이지를 갔다 오면 MUI Button 태그에 문제 발생|algorithm 페이지에 MUI Button을 일반 html button으로 변경|2022-05-24|`S`|
+  |React에서 map 시에 key값은 꼭 최상위 태그에 있어야 하지만<br> 삼항연산자 안에 있으면 최상위가 되지 않아 빈 태그로 묶어 놓으면 빈 태그에는 key 속성 사용 불가함|빈 태그에 <React.Fragment></React.Fragment>형식으로 만드면 key 속성 사용 가능|2022-05-31|`L`|
+  
+  </details>
+
+<details><summary>#44 Front-Register</summary>
+  
+  ## Implements-#44
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |완료|교수님의 강의 등록 페이지 구현|2022-05-18|`S`|
+  |완료|학생의 등록 페이지 구현|2022-05-18|`S`|
+  
+  ## Errors-#44
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  
+  </details>
+  ####--- FrontEnd.
   </details>
 
 <details><summary>#7 Back-Node/MySql connection</summary><div markdown="1">
@@ -184,23 +250,6 @@
   
   </details>  
   
-<details><summary>#17 Front-QnA Board</summary><div markdown="1">
-  
-  ## Implements-#17
-  |구현|구현 중점|날짜|Dev|
-  |--|--|--|--|
-  |완료|익명이되 비밀번호 설정 후<br>작성자 확인 가능|2022-03-25|`L`|
-  |완료|QnA 작성자 및 QnA 내용을 DB에 넣고 등록 가능하게 구현|2022-05-10|`L`|
-  
-  ## Errors-#17
-  |문제점|해결방식|날짜|Dev|
-  |--|--|--|--|
-  |setState 데이터 추가 시 기존 데이터에 덧붙이기|setState사용시 const [test, setTest] = useState([]) 인 경우 <br> setTest([...test, 추가 내용])이렇게 해 주어야 기존에 있던 test에 추가 내용을 덧붙이기 가능|2022-04-06|`L`|
-  |QnA의 답변 생성 시 생성 이후에 추가된 user는 QnA의 답변 작성 불가 오류|오류 원인 : QnA.js인 상위 컴포넌트에서 innerComment.js인 하위 컴포넌트로 user의 데이터를 생성시에만 전송하여 추가 불가<br>해결 방법 : QnA.js인 상위 컴포넌트에서 user의 존재 여부를 확인하는 compare 함수를 innerComment.js인 하위 컴포넌트로 전송하여 QnA의 답변 추가할때만 compare함수를 호출하여 작성 가능 여부 판별|2022-04-19|`L`|
-  |QnA테이블의 값을 불러올 때 불러오는 비동기 함수 뒤에 함수 결과값을<br>react의 변수에 추가 후 출력하였더니<br>변수에 바로 추가가 안되고 출력되는 오류|비동기 함수가 완료 되기 전에 변수에 추가하는 코드가 먼저 실행하여 결과값이 변수에 추가가 안됨<br>비동기 함수 완료되면 추가를 하도록 변경|2022-05-10|`L`|
-  
-  </details>  
-  
 <details><summary>#21 DB-Database Build/Implement</summary>
   
   ## Implements-#21
@@ -232,41 +281,6 @@
   |--|--|--|--|
   |서버 외부<br>접속 불가|bind-adress 해제, User grant|2022-04-16|`N`|
   |||||
-  
-  </details>
-
-  <details><summary>#27 Front-RankPage</summary>
-  
-  ## Implements-#27
-  |구현|구현 중점|날짜|Dev|
-  |--|--|--|--|
-  |완료|랭킹 페이지 UI 구현|2022-04-13|`S`|
-  
-  ## Errors-#27
-  |문제점|해결방식|날짜|Dev|
-  |--|--|--|--|
-  |||||
-  
-  </details>
- 
-<details><summary>#32 Front-AssignmentsPage</summary>
-  
-  ## Implements-#32
-  |구현|구현 중점|날짜|Dev|
-  |--|--|--|--|
-  |완료|채점 페이지 UI 구현|2022-04-19|`S`|
-  |완료|등록한 강의 목록을 버튼으로 보이게 구현|2022-05-18|`S`|
-  |완료|채점 결과 학생의 상세 페이지 구현|2022-05-18|`S`|
-  |완료|채점 결과 클립보드에 복사하는 기능 구현|2022-05-19|`S`|
-  
-  ## Errors-#32
-  |문제점|해결방식|날짜|Dev|
-  |--|--|--|--|
-  |textarea태그의 placeholder에만 값 설정하기|사용자 입력 값과 다르게 힌트에만 css서식을 적용하고자 함<br>css시트에서 ::placeholder로 콜론(:)2개 선택자를 사용하면 됨|2022-04-19|`S`|
-  |설명서를 보기좋게 추가하고 싶음|react mui인 mediacard를 import하고<br>드롭 다운 아이콘을 추가해 설명서가 나오도록 구현|2022-05-09|`S`|
-  |클립보드에 복사하는 기능을 알지 못함|navigator.clipboard.writeText() 함수에 복사할 텍스트를 매개변수로 보내<br>비동기(async) 함수 내에서 호출한다.|2022-05-19|`S`|
-  |algorithm 페이지를 갔다 오면 MUI Button 태그에 문제 발생|algorithm 페이지에 MUI Button을 일반 html button으로 변경|2022-05-24|`S`|
-  |React에서 map 시에 key값은 꼭 최상위 태그에 있어야 하지만<br> 삼항연산자 안에 있으면 최상위가 되지 않아 빈 태그로 묶어 놓으면 빈 태그에는 key 속성 사용 불가함|빈 태그에 <React.Fragment></React.Fragment>형식으로 만드면 key 속성 사용 가능|2022-05-31|`L`|
   
   </details>
 
@@ -320,20 +334,6 @@
   |Async 불일치 발생|채점을 위해 반복문 실행 시<br>비동기 실행으로 인해 불일치.<br>async/then 콜백함수 사용해 해결|2022-05-09|`N`|
   |프론트 연동시 동기화|프론트 리액트 페이지와 연동 및 데이터 전송 시<br>비동기 실행으로 인해 결과값 리턴 불가<br>[npm wait-notify](https://www.npmjs.com/package/wait-notify)활용해 해결|2022-05-19|`N`|
   |query result 여러개 전달 불가|[다중 쿼리](https://intrepidgeeks.com/tutorial/nodejs-mysql-runs-multiple-sql-statements)|2020-05-25|`N`|
-  
-  </details>
-  
-<details><summary>#44 Front-Register</summary>
-  
-  ## Implements-#44
-  |구현|구현 중점|날짜|Dev|
-  |--|--|--|--|
-  |완료|교수님의 강의 등록 페이지 구현|2022-05-18|`S`|
-  |완료|학생의 등록 페이지 구현|2022-05-18|`S`|
-  
-  ## Errors-#44
-  |문제점|해결방식|날짜|Dev|
-  |--|--|--|--|
   
   </details>
   
