@@ -4,7 +4,7 @@
 
 ---
 
-<details><summary><strong>#1 Project Setting/Documentation</strong></summary>
+<details><summary><strong><del><em>#1 Project Setting/Documentation</em></del></strong></summary>
   
   #### Contributors
   |No.|Student_ID|Dev_ID|GitHub_ID|Name|
