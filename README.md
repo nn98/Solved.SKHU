@@ -68,7 +68,7 @@
   
   </details>
 <details><summary>FrontEnd - </summary>
-  ####FrontEnd --- Begin
+  #### FrontEnd --- Begin
   <details><summary>#2 Front-MainPage</summary><div markdown="1">
   
   ## Implements-#2
@@ -201,7 +201,7 @@
   |--|--|--|--|
   
   </details>
-  ####--- FrontEnd.
+  #### --- FrontEnd.
   </details>
 
 <details><summary>#7 Back-Node/MySql connection</summary><div markdown="1">
