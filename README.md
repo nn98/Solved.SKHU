@@ -67,7 +67,7 @@
   - [Mac 포트 죽이기](https://88240.tistory.com/475)
   
   </details>
-<details><summary>FrontEnd - </summary>
+<details><summary>FrontEnd - # 2 3 4 6 17 27 32 44</summary>
   
   
   ## FrontEnd --- Begin
@@ -215,7 +215,7 @@
 ---
   
 
-<details><summary>BackEnd - </summary>
+<details><summary>BackEnd - # 7 16 26 34 41</summary>
   
   
   ## BackEnd --- Begin
@@ -330,7 +330,7 @@
 
 ---
 
-<details><summary>DB/GIT/Else - </summary>
+<details><summary>DB/GIT/Else - # 21 38</summary>
   
   
   ## DB/GIT/Else --- Begin
