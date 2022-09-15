@@ -67,8 +67,9 @@
   - [Mac 포트 죽이기](https://88240.tistory.com/475)
   
   </details>
-
-<details><summary>#2 Front-MainPage</summary><div markdown="1">
+<details><summary>FrontEnd - </summary>
+  ####FrontEnd
+  <details><summary>#2 Front-MainPage</summary><div markdown="1">
   
   ## Implements-#2
   |구현|구현 중점|날짜|Dev|
@@ -135,6 +136,8 @@
   
   </details>
   
+  </details>
+
 <details><summary>#7 Back-Node/MySql connection</summary><div markdown="1">
   
   ## Implements-#7
@@ -336,26 +339,13 @@
   
 <details><summary>#X Static contents</summary>
   
-  ```
   ### 개발 방향성
   - **알고리즘 카테고리별 문제 정렬/제공**(first) >> 알고리즘 추천(second)
   - [배포중 Mixed Content 오류](https://velog.io/@nemo/mixed-content-error)
   
-  ```
 </details>
   
 
-<details><summary>#X Static contents</summary>
-  
-  <details><summary>#X Static contents</summary>
-  
-  <details><summary>#X Static contents</summary>
-  
-  dd
-  
-  </details>
-  </details>
-  </details>
   
 ## 추가 구현 기능
 
