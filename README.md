@@ -328,8 +328,15 @@
   
   </details>
 
+---
+
+<details><summary>DB/GIT - </summary>
   
-<details><summary>#21 DB-Database Build/Implement</summary>
+  
+  ## DB/GIT --- Begin
+  
+  
+  <details><summary>#21 DB-Database Build/Implement</summary>
   
   ## Implements-#21
   |구현|구현 중점|날짜|Dev|
@@ -360,6 +367,13 @@
   |--|--|--|--|
   |이미 node_modules이 git에 올려져 있으면<br>.gitignore에 넣어도 사라지지 않음.|git의 모든 node_modules 삭제<br>이후 gitignore 수정-업로드|2022-04-26|`L`|
   |git status 명령어를 입력하면 나오는 값|.gitignore에서 지정한 값은 git status 명령어의 반환 값으로 출력되어서는 안됨|2022-04-29|`S`|
+  
+  </details>
+
+  
+  
+  ## DB/GIT --- FrontEnd.
+  
   
   </details>
 
