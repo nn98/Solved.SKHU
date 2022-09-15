@@ -336,6 +336,7 @@
   
 <details><summary>#X Static contents</summary>
   
+  ```
   ### 개발 방향성
   - **알고리즘 카테고리별 문제 정렬/제공**(first) >> 알고리즘 추천(second)
   - [배포중 Mixed Content 오류](https://velog.io/@nemo/mixed-content-error)
