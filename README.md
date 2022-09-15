@@ -212,6 +212,16 @@
   
   </details>
 
+---
+  
+
+<details><summary>BackEnd - </summary>
+  
+  
+  ## BackEnd --- Begin
+  
+  
+  
 <details><summary>#7 Back-Node/MySql connection</summary><div markdown="1">
   
   ## Implements-#7
@@ -258,25 +268,6 @@
   
   </details>  
   
-<details><summary>#21 DB-Database Build/Implement</summary>
-  
-  ## Implements-#21
-  |구현|구현 중점|날짜|Dev|
-  |--|--|--|--|
-  |진행|설계대로 DB 구축/보완|2022-04-06|`N`|
-  |실패|Oracle Cloud 사용 시도<br>payment 카드 등록 모두 오류.<br>다른카드, 상담사 연결 시도-실패|2022-04-15|`N`|
-  |완료|AWS-서버 구축/Mysql DB 구축|2022-04-16|`N`|
-  - [Forward Engineering](https://thisisprogrammingworld.tistory.com/124)
-  - [LINUX 강의노트](https://o365skhu-my.sharepoint.com/personal/lsj_office_skhu_ac_kr/_layouts/15/onedrive.aspx?originalPath=aHR0cHM6Ly9vMzY1c2todS1teS5zaGFyZXBvaW50LmNvbS86ZjovZy9wZXJzb25hbC9sc2pfb2ZmaWNlX3NraHVfYWNfa3IvRWozazFqWE1jTnBPc1R5UWZ3VjllUVVCMG43NHZncmNjczhTQTdURlhyNG1JZz9ydGltZT1MclFHVTZqbzEwZw&id=%2Fpersonal%2Flsj%5Foffice%5Fskhu%5Fac%5Fkr%2FDocuments%2F%EC%88%98%EC%97%85%5F%EA%B3%B5%EC%9C%A0%2F%EC%A7%80%EB%82%9C%20%EA%B0%95%EC%9D%98%2Fserver%5F2021%5F2%ED%95%99%EA%B8%B0%2Flinux)
-  
-  ## Errors-#21
-  |문제점|해결방식|날짜|Dev|
-  |--|--|--|--|
-  |Oracle Cloud 계정 생성 실패|Payment 인증을 위한 카드 등록 실패<br>AWS에선 정상적으로 인증되는 카드도 실패<br>오라클 고객센터를 통한 상담 시도<br>정상적 소통 불가. 문제 해결 실패<br>AWS 서버 구축으로 우회|2022-04-15|`A`|
-  |DB AUTO_INCREMENT|필요한 값이 0부터 시작인데 테이블 수정 시<br>"AUTO_INCREMENT = 0"<br>을 넣어줘도 값이 변하지 않음<br>" Set session SQL_MODE = “no_auto_value_on_zero” "<br>을 입력해 준 후 AUTO_INCREMENT값에도 0부터 값을 지정해주어야함|2022-04-29|`A`|
-  
-  </details>
-
 <details><summary>#26 Back|DB-DB Connection</summary>
   
   ## Implements-#26
@@ -311,21 +302,6 @@
   |에러 처리|Node의 puppeteer를 이용하여<br>크롤링한 후 값이 없을 시<br>에러 처리가 제대로 되지 않음<br>그래서 에러문을 새로 하나 만들어서 해결함|2022-06-10|`A`|
   </details>
 
-  <details><summary>#38 Git Ignore</summary>
-  
-  ## Implements-#38
-  |구현|구현 중점|날짜|Dev|
-  |--|--|--|--|
-  |||||
-  
-  ## Errors-#38
-  |문제점|해결방식|날짜|Dev|
-  |--|--|--|--|
-  |이미 node_modules이 git에 올려져 있으면<br>.gitignore에 넣어도 사라지지 않음.|git의 모든 node_modules 삭제<br>이후 gitignore 수정-업로드|2022-04-26|`L`|
-  |git status 명령어를 입력하면 나오는 값|.gitignore에서 지정한 값은 git status 명령어의 반환 값으로 출력되어서는 안됨|2022-04-29|`S`|
-  
-  </details>
-
 <details><summary>#41 Back-Assignment</summary>
   
   ## Implements-#41
@@ -345,6 +321,48 @@
   
   </details>
   
+  
+  
+  ## Fin --- BackEnd.
+  
+  
+  </details>
+
+  
+<details><summary>#21 DB-Database Build/Implement</summary>
+  
+  ## Implements-#21
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |진행|설계대로 DB 구축/보완|2022-04-06|`N`|
+  |실패|Oracle Cloud 사용 시도<br>payment 카드 등록 모두 오류.<br>다른카드, 상담사 연결 시도-실패|2022-04-15|`N`|
+  |완료|AWS-서버 구축/Mysql DB 구축|2022-04-16|`N`|
+  - [Forward Engineering](https://thisisprogrammingworld.tistory.com/124)
+  - [LINUX 강의노트](https://o365skhu-my.sharepoint.com/personal/lsj_office_skhu_ac_kr/_layouts/15/onedrive.aspx?originalPath=aHR0cHM6Ly9vMzY1c2todS1teS5zaGFyZXBvaW50LmNvbS86ZjovZy9wZXJzb25hbC9sc2pfb2ZmaWNlX3NraHVfYWNfa3IvRWozazFqWE1jTnBPc1R5UWZ3VjllUVVCMG43NHZncmNjczhTQTdURlhyNG1JZz9ydGltZT1MclFHVTZqbzEwZw&id=%2Fpersonal%2Flsj%5Foffice%5Fskhu%5Fac%5Fkr%2FDocuments%2F%EC%88%98%EC%97%85%5F%EA%B3%B5%EC%9C%A0%2F%EC%A7%80%EB%82%9C%20%EA%B0%95%EC%9D%98%2Fserver%5F2021%5F2%ED%95%99%EA%B8%B0%2Flinux)
+  
+  ## Errors-#21
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |Oracle Cloud 계정 생성 실패|Payment 인증을 위한 카드 등록 실패<br>AWS에선 정상적으로 인증되는 카드도 실패<br>오라클 고객센터를 통한 상담 시도<br>정상적 소통 불가. 문제 해결 실패<br>AWS 서버 구축으로 우회|2022-04-15|`A`|
+  |DB AUTO_INCREMENT|필요한 값이 0부터 시작인데 테이블 수정 시<br>"AUTO_INCREMENT = 0"<br>을 넣어줘도 값이 변하지 않음<br>" Set session SQL_MODE = “no_auto_value_on_zero” "<br>을 입력해 준 후 AUTO_INCREMENT값에도 0부터 값을 지정해주어야함|2022-04-29|`A`|
+  
+  </details>
+
+  <details><summary>#38 Git Ignore</summary>
+  
+  ## Implements-#38
+  |구현|구현 중점|날짜|Dev|
+  |--|--|--|--|
+  |||||
+  
+  ## Errors-#38
+  |문제점|해결방식|날짜|Dev|
+  |--|--|--|--|
+  |이미 node_modules이 git에 올려져 있으면<br>.gitignore에 넣어도 사라지지 않음.|git의 모든 node_modules 삭제<br>이후 gitignore 수정-업로드|2022-04-26|`L`|
+  |git status 명령어를 입력하면 나오는 값|.gitignore에서 지정한 값은 git status 명령어의 반환 값으로 출력되어서는 안됨|2022-04-29|`S`|
+  
+  </details>
+
 <details><summary>#X Static contents</summary>
   
   ### 개발 방향성
