@@ -330,10 +330,10 @@
 
 ---
 
-<details><summary>DB/GIT - </summary>
+<details><summary>DB/GIT/Else - </summary>
   
   
-  ## DB/GIT --- Begin
+  ## DB/GIT/Else --- Begin
   
   
   <details><summary>#21 DB-Database Build/Implement</summary>
@@ -370,21 +370,20 @@
   
   </details>
 
+  <details><summary>#X Static contents</summary>
+  
+    ### 개발 방향성
+    - **알고리즘 카테고리별 문제 정렬/제공**(first) >> 알고리즘 추천(second)
+    - [배포중 Mixed Content 오류](https://velog.io/@nemo/mixed-content-error)
+  
+  </details>
   
   
-  ## DB/GIT --- FrontEnd.
+  ## DB/GIT/Else --- FrontEnd.
   
   
   </details>
 
-<details><summary>#X Static contents</summary>
-  
-  ### 개발 방향성
-  - **알고리즘 카테고리별 문제 정렬/제공**(first) >> 알고리즘 추천(second)
-  - [배포중 Mixed Content 오류](https://velog.io/@nemo/mixed-content-error)
-  
-</details>
-  
 
   
 ## 추가 구현 기능
