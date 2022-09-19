@@ -9,13 +9,13 @@ const bodyParser = require("body-parser");
 const port = process.env.PORT || 3001;
 const WaitNotify = require("wait-notify");
 
-const waitNotify = new WaitNotify();  // Assignment - execute, isFinish
+const waitNotify_Assignment_Individual = new WaitNotify();  // Assignment - execute, isFinish
 
-const waitNotify2 = new WaitNotify(); // AssignTaskExecute
+const waitNotify_Assignment_All_Task = new WaitNotify(); // AssignTaskExecute_Assignment_All_Task
 
-const waitNotify3 = new WaitNotify(); // AssignTaskExecute3
+const waitNotify_Rating = new WaitNotify(); // AssignTaskExecute_Rating
 
-const waitNotify4 = new WaitNotify(); // AssignTaskExecute4
+const waitNotify_StudentRegister = new WaitNotify(); // AssignTaskExecute_StudentRegister
 
 const waitNotify5 = new WaitNotify(); // AssignTaskExecute2
 
@@ -32,7 +32,7 @@ const waitNotify5 = new WaitNotify(); // AssignTaskExecute2
 */
 
 
-let AssignTaskExecute = false; // - waitNotify2
+let AssignTaskExecute_Assignment_All_Task = false; // - waitNotify_Assignment_All_Task
 
 let AssignTaskExecute1 = false; // non-used
 
@@ -44,10 +44,10 @@ let AssignTaskExecute1 = false; // non-used
 let AssignTaskExecute2 = false; // - waitNotify5
 
 // Rating
-let AssignTaskExecute3 = false; // - waitNotify3
+let AssignTaskExecute_Rating = false; // - waitNotify_Rating
 
 // StudentRegister
-let AssignTaskExecute4 = false; // - waitNotify4
+let AssignTaskExecute_StudentRegister = false; // - waitNotify_StudentRegister
 
 let AssignTaskExecute5 = false; // non-used
 
@@ -282,18 +282,18 @@ app.post("/rating", async (req, res) => {
   ];
   const query1 = "select skhurank from User where ID = \""+req.body.ID+"\";";
   
-  AssignTaskExecute3 = true;
+  AssignTaskExecute_Rating = true;
   connection.query(query1, async function (err, result, fields) {
     if (err) console.log("@@@@@" + err);
     for (let data of result) {
       i = data.skhurank;
     }
     console.log("i", i);
-    AssignTaskExecute3 = false;
-    waitNotify3.notify();
+    AssignTaskExecute_Rating = false;
+    waitNotify_Rating.notify();
   });
-  if (AssignTaskExecute3) await waitNotify3.wait();
-  AssignTaskExecute3 = true;
+  if (AssignTaskExecute_Rating) await waitNotify_Rating.wait();
+  AssignTaskExecute_Rating = true;
   let problems = ""
   let users = ""
   if(i===1){
@@ -315,10 +315,10 @@ app.post("/rating", async (req, res) => {
   //     j = data.mSkhurank;
   //   }
   //   console.log("j", j);
-  //   AssignTaskExecute3 = false;
-  //   waitNotify3.notify();
+  //   AssignTaskExecute_Rating = false;
+  //   waitNotify_Rating.notify();
   // });
-  // if (AssignTaskExecute3) await waitNotify3.wait();
+  // if (AssignTaskExecute_Rating) await waitNotify_Rating.wait();
   // let k = Number(Number(5) - i < Number(2) ? Number(2) : Number(5) - i);
   // console.log("k: ", k);
 
@@ -331,7 +331,7 @@ app.post("/rating", async (req, res) => {
   // users += sqls1[sqls1.length-3];
   // users += sqls1[sqls1.length - 2];
   // users += sqls1[sqls1.length - 1];
-  AssignTaskExecute3 = true;
+  AssignTaskExecute_Rating = true;
   console.log("SQL-problems:",problems);
   console.log("SQL-users:",users);
   connection.query(problems + users, req.body, function (err, result, fields) {
@@ -342,10 +342,10 @@ app.post("/rating", async (req, res) => {
       console.log("rating-post: return Problems/Similar Users", result)
       res.send(result);
     }
-    AssignTaskExecute3 = false;
-    waitNotify3.notify();
+    AssignTaskExecute_Rating = false;
+    waitNotify_Rating.notify();
   });
-  if (AssignTaskExecute3) await waitNotify3.wait();
+  if (AssignTaskExecute_Rating) await waitNotify_Rating.wait();
 });
 
 app.get("/ranking", (req, res) => {
@@ -463,7 +463,7 @@ app.post("/studentRegister", async (req, res) => {
       b.bI +
       "');";
     console.log("학생 등록 쿼리 시작", sql);
-    AssignTaskExecute4 = true;
+    AssignTaskExecute_StudentRegister = true;
     connection.query(sql, async function (err, result, fields) {
       console.log("학생 테이블 존재 여부 확인");
       if (err) {
@@ -471,18 +471,18 @@ app.post("/studentRegister", async (req, res) => {
           "res",
           "쿼리 실행이 실패했습니다. 해당 학생이 이미 존재합니다."
         );
-        AssignTaskExecute4 = false;
-        waitNotify4.notify();
+        AssignTaskExecute_StudentRegister = false;
+        waitNotify_StudentRegister.notify();
       } else {
         console.log("res", "쿼리 실행이 성공했습니다. 신규 학생입니다.");
       }
-      AssignTaskExecute4 = false;
-      waitNotify4.notify();
+      AssignTaskExecute_StudentRegister = false;
+      waitNotify_StudentRegister.notify();
     });
-    if (AssignTaskExecute4) await waitNotify4.wait();
+    if (AssignTaskExecute_StudentRegister) await waitNotify_StudentRegister.wait();
 
     console.log("존재 여부 확인 완료.");
-    AssignTaskExecute4 = true;
+    AssignTaskExecute_StudentRegister = true;
     sql = "insert into Learn values(" + Number(b.sI) + "," + b.lI + ");";
     console.log("수강 등록 쿼리", sql);
     connection.query(sql, async function (err, result, fields) {
@@ -495,10 +495,10 @@ app.post("/studentRegister", async (req, res) => {
       } else {
         console.log("res", "쿼리 실행이 성공했습니다.");
       }
-      AssignTaskExecute4 = false;
-      waitNotify4.notify();
+      AssignTaskExecute_StudentRegister = false;
+      waitNotify_StudentRegister.notify();
     });
-    if (AssignTaskExecute4) await waitNotify4.wait();
+    if (AssignTaskExecute_StudentRegister) await waitNotify_StudentRegister.wait();
     if (end) return;
     res.status(200).json("학생 등록이 완료되었습니다.");
   } else {
@@ -905,16 +905,16 @@ app.post("/assignments", async (req, res) => {
 
   let ID_LIST = req.body.ID_LIST;
   let pID = req.body.PID;
-  AssignTaskExecute = true;
+  AssignTaskExecute_Assignment_All_Task = true;
   let fuck = [];
   console.log("rere at post:", fuck);
   run(ID_LIST, pID, fuck);
-  if (AssignTaskExecute) await waitNotify2.wait();
+  if (AssignTaskExecute_Assignment_All_Task) await waitNotify_Assignment_All_Task.wait();
 
   console.log("send response: ", fuck);
   res.send(fuck);
 });
-let mAsyncTaskExecute = false;
+let AsyncTaskExecute_Assignment_Individual = false;
 let urls = [
   "https://www.acmicpc.net/status?problem_id=",
   "&user_id=",
@@ -938,12 +938,12 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
   puppeteer
     .launch({ headless: true })
     .then(async (browser) => {
-      if (mAsyncTaskExecute) {
-        await waitNotify.wait();
+      if (AsyncTaskExecute_Assignment_Individual) {
+        await waitNotify_Assignment_Individual.wait();
       }
 
       console.log("now process\t", processID);
-      mAsyncTaskExecute = true;
+      AsyncTaskExecute_Assignment_Individual = true;
       const page = await browser.newPage();
       await page.setDefaultNavigationTimeout(0);
       await page.goto(url, { waitUntil: "networkidle2" ,timeout: 0});
@@ -1012,12 +1012,12 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
 async function isFinish(ID_LIST, pID, fuck) {
   console.log("3. isFinish");
   // console.log("rere at isFin:", fuck);
-  waitNotify.notify();
-  mAsyncTaskExecute = false;
+  waitNotify_Assignment_Individual.notify();
+  AsyncTaskExecute_Assignment_Individual = false;
   if (ID_LIST.length === 0) {
     // console.log("result: ", fuck);
-    AssignTaskExecute = false;
-    waitNotify2.notify();
+    AssignTaskExecute_Assignment_All_Task = false;
+    waitNotify_Assignment_All_Task.notify();
   } else {
     console.log("————————————————————————————————————");
     console.log(fuck[fuck.length-1]);
