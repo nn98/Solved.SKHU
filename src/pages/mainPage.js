@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import Box from '@mui/material/Box'
-import { TextField, InputAdornment } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import { TextField, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from 'react-router-dom';
 
-const MainPage = (props) => {
-  const [userId, setUserId] = useState('')
-  const navigate = useNavigate()
+function MainPage(props) {
+  const [userId, setUserId] = useState('');
+  const navigate = useNavigate();
 
   const add = async () => {
     try {
-      await fetch('https://solved.ac/api/v3/user/show?handle=' + userId)
-        .then((res) => res.json())
-        .then((data) => {
-          navigate('/userPage', { state: { userId } })
-          props.setGlobalID(userId)
-        })
+      await fetch(`https://solved.ac/api/v3/user/show?handle=${userId}`)
+        .then(res => res.json())
+        .then(() => {
+          navigate('/userPage', { state: { userId } });
+          props.setGlobalID(userId);
+        });
     } catch (error) {
-      alert('입력하신 ID는 Solve.ac에 등록되지 않았습니다.')
+      alert('입력하신 ID는 Solve.ac에 등록되지 않았습니다.');
     }
-  }
+  };
   // useEffect(() =>
   // // console.log(props)
   // , []);
@@ -38,9 +38,9 @@ const MainPage = (props) => {
         }}
       >
         <TextField
-          onKeyPress={(e) => {
+          onKeyPress={e => {
             if (e.key === 'Enter') {
-              add()
+              add();
             }
           }}
           variant="standard"
@@ -52,7 +52,7 @@ const MainPage = (props) => {
             py: 2,
           }}
           value={userId}
-          onChange={(e) => setUserId(e.target.value)}
+          onChange={e => setUserId(e.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -65,7 +65,7 @@ const MainPage = (props) => {
         />
       </Box>
     </div>
-  )
+  );
 }
 
-export default MainPage
+export default MainPage;
