@@ -1,4 +1,5 @@
 // npm i wait-notify puppeteer cheerio
+// npm add react-calendar-heatmap 
 // 테스트 및 재정비를 위해 로컬 환경에 맞춰 connection 속성 변경한 상태
 // 테스트 및 채점을 위해 기타 코드 단순화
 const express = require("express");
