@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import './rating.css'
-import IconN from '../image/none.svg'
-import IconB from '../image/5.svg'
-import IconS from '../image/10.svg'
-import IconG from '../image/15.svg'
-import IconP from '../image/20.svg'
-import IconD from '../image/25.svg'
-import IconM from '../image/30.svg'
-import Fade from '@mui/material/Fade'
+import React, { useState, useEffect } from 'react';
+import './rating.css';
+import IconN from '../image/none.svg';
+import IconB from '../image/5.svg';
+import IconS from '../image/10.svg';
+import IconG from '../image/15.svg';
+import IconP from '../image/20.svg';
+import IconD from '../image/25.svg';
+import IconM from '../image/30.svg';
+import Fade from '@mui/material/Fade';
 
-const Rating = (props) => {
+function Rating(props) {
   // 랭크의 image를 출력하기 위한 번호
-  const t = [IconN, IconB, IconS, IconG, IconP, IconD, IconM]
+  const t = [IconN, IconB, IconS, IconG, IconP, IconD, IconM];
   const rank = [
     [0, 0, 0, 0, 0],
     [1, 2, 3, 4, 5],
@@ -20,29 +20,30 @@ const Rating = (props) => {
     [16, 17, 18, 19, 20],
     [21, 22, 23, 24, 25],
     [26, 27, 28, 29, 30],
-  ]
-  const [checked, setChecked] = useState(false)
+  ];
+
+  const [checked, setChecked] = useState(false);
   // 각 랭크의 서브 랭크를 넣기 위한 변수
-  const [rankArray, setRankArray] = useState()
+  const [rankArray, setRankArray] = useState();
 
   // 유저 또는 랭크 별로 알고리즘을 받을지 결정하는 boolean 변수
-  const [userOrRank, setUserOrRank] = useState(true)
+  const [userOrRank, setUserOrRank] = useState(true);
 
   // 유저별로 추천된 문제를 저장하기 위한 변수
-  const [ratingProblems, setRatingProblems] = useState([])
+  const [ratingProblems, setRatingProblems] = useState([]);
 
   // 랭크별 문제들을 저장하기 위한 변수
-  const [rankProblem, setRankProblem] = useState('')
+  const [rankProblem, setRankProblem] = useState('');
 
   // 비슷한 수준의 학생들을 저장하기 위한 변수
-  const [similarStudent, setSimilarStudent] = useState([])
+  const [similarStudent, setSimilarStudent] = useState([]);
 
   // 유저별 문제 추천을 받기 위한 함수
   const ratingAdd = async () => {
     try {
       const body = {
         ID: props.globalID ? props.globalID : 'q9922000',
-      }
+      };
       // console.log('rating addd    ' + body)
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
@@ -51,43 +52,41 @@ const Rating = (props) => {
           'Content-Type': 'application/json',
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
-      }
+      };
       await fetch(props.serverAddress + '/rating', requestOptions)
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           // console.log(data)
 
-          setRatingProblems(data[0])
-          setSimilarStudent(data[1])
-        })
+          setRatingProblems(data[0]);
+          setSimilarStudent(data[1]);
+        });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   // 각 랭크의 서브 랭크의 버튼을 추가하기 위한 함수
-  const rankSubAdd = (index) => {
-    setRankArray('')
-    const result = []
+  const rankSubAdd = index => {
+    setRankArray('');
+    const result = [];
     for (let i = 0; i < rank[index].length; i++) {
       result.push(
         <div key={i} className="rankButton">
           <img
             onClick={() => rankAdd(rank[index][i])}
-            src={
-              'https://static.solved.ac/tier_small/' + rank[index][i] + '.svg'
-            }
+            src={'https://static.solved.ac/tier_small/' + rank[index][i] + '.svg'}
             alt="profile"
           />
         </div>
-      )
+      );
     }
-    setChecked(true)
-    setRankArray(result)
-  }
+    setChecked(true);
+    setRankArray(result);
+  };
 
   // 랭크별 문제 추천을 받기 위한 함수
-  const rankAdd = (index) => {
+  const rankAdd = index => {
     try {
       let t = (
         <iframe
@@ -98,16 +97,16 @@ const Rating = (props) => {
           src={'https://solved.ac/problems/level/' + index}
           onload="height = myframe.document.body.scrollHeight;"
         ></iframe>
-      )
-      setRankProblem(t)
+      );
+      setRankProblem(t);
     } catch (err) {
-      return err
+      return err;
     }
-  }
+  };
 
   useEffect(() => {
-    ratingAdd()
-  }, [])
+    ratingAdd();
+  }, []);
 
   return (
     <div className="recommend">
@@ -176,8 +175,7 @@ const Rating = (props) => {
                         display: index < 5 ? 'block' : 'none',
                         position: 'relative',
                         background:
-                          user.ID ===
-                          (props.globalID ? props.globalID : 'q9922000')
+                          user.ID === (props.globalID ? props.globalID : 'q9922000')
                             ? 'linear-gradient( to right, #ffd700d0, #ff7ca9d0 )'
                             : index % 2 === 0
                             ? 'none'
@@ -188,11 +186,7 @@ const Rating = (props) => {
                       <span>{user.skhurank}</span>
                       <span>
                         <img
-                          src={
-                            'https://static.solved.ac/tier_small/' +
-                            user.solvedrank +
-                            '.svg'
-                          }
+                          src={'https://static.solved.ac/tier_small/' + user.solvedrank + '.svg'}
                           alt="profile"
                           style={{
                             width: '1.2rem',
@@ -247,17 +241,10 @@ const Rating = (props) => {
               <div className="recommendProblemInner">
                 {ratingProblems &&
                   ratingProblems.map((problem, index) => (
-                    <div
-                      key={index}
-                      className="p-head"
-                      style={{ position: 'relative' }}
-                    >
+                    <div key={index} className="p-head" style={{ position: 'relative' }}>
                       <a
                         key={index}
-                        href={
-                          'https://www.acmicpc.net/problem/' +
-                          problem.PROBLEM_ID
-                        }
+                        href={'https://www.acmicpc.net/problem/' + problem.PROBLEM_ID}
                         style={{ textDecorationLine: 'none', color: '#000' }}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -267,9 +254,7 @@ const Rating = (props) => {
                         <span>{problem.sum}명 시도</span>
                         <img
                           src={
-                            'https://static.solved.ac/tier_small/' +
-                            problem.SOLVED_RANK +
-                            '.svg'
+                            'https://static.solved.ac/tier_small/' + problem.SOLVED_RANK + '.svg'
                           }
                           alt="profile"
                           style={{
@@ -304,8 +289,8 @@ const Rating = (props) => {
                     alt="profile"
                     style={{ width: '100%' }}
                     onClick={() => {
-                      setChecked(false)
-                      index === 0 ? rankAdd(0) : rankSubAdd(index)
+                      setChecked(false);
+                      index === 0 ? rankAdd(0) : rankSubAdd(index);
                     }}
                   />
                 </div>
@@ -320,7 +305,7 @@ const Rating = (props) => {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default Rating
+export default Rating;
