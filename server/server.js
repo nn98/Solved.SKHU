@@ -1,4 +1,5 @@
 // npm i wait-notify puppeteer cheerio
+// npm add react-calendar-heatmap 
 // 테스트 및 재정비를 위해 로컬 환경에 맞춰 connection 속성 변경한 상태
 // 테스트 및 채점을 위해 기타 코드 단순화
 const express = require("express");
@@ -7,18 +8,48 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 3001;
 const WaitNotify = require("wait-notify");
-const waitNotify = new WaitNotify();
-const waitNotify2 = new WaitNotify();
-const waitNotify3 = new WaitNotify();
-const waitNotify4 = new WaitNotify();
-const waitNotify5 = new WaitNotify();
 
-let AssignTaskExecute = false;
-let AssignTaskExecute1 = false;
-let AssignTaskExecute2 = false;
-let AssignTaskExecute3 = false;
-let AssignTaskExecute4 = false;
-let AssignTaskExecute5 = false;
+const waitNotify = new WaitNotify();  // Assignment - execute, isFinish
+
+const waitNotify2 = new WaitNotify(); // AssignTaskExecute
+
+const waitNotify3 = new WaitNotify(); // AssignTaskExecute3
+
+const waitNotify4 = new WaitNotify(); // AssignTaskExecute4
+
+const waitNotify5 = new WaitNotify(); // AssignTaskExecute2
+
+/* 
+*  존 나 개 판
+*  요청 _ 메소드  >> 요청과 연관된 메소드, 해당 핸들러 내부에 존재.
+*  요청 - 메소드  >> 요청과 연관된 메소드, 해당 핸들러 외부에 존재.
+*  
+*  
+*  
+*  
+*  
+*  
+*/
+
+
+let AssignTaskExecute = false; // - waitNotify2
+
+let AssignTaskExecute1 = false; // non-used
+
+// UserRegister - canceled 안석범 시벌럼
+//  _ addCorrection  
+//  ?_ userUpdate
+//  ?_ solvePage
+//  ?_ correction Update
+let AssignTaskExecute2 = false; // - waitNotify5
+
+// Rating
+let AssignTaskExecute3 = false; // - waitNotify3
+
+// StudentRegister
+let AssignTaskExecute4 = false; // - waitNotify4
+
+let AssignTaskExecute5 = false; // non-used
 
 app.use(cors());
 
@@ -499,6 +530,7 @@ app.get("/assignments", (req, res) => {
 const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
 process.setMaxListeners(50)
+
 app.get('/get', (req, res) => {
   const sql = 'select * from Problem LIMIT 0,10';
   connection.query(sql, function (err, result, fields) {
@@ -507,6 +539,8 @@ app.get('/get', (req, res) => {
     res.send(result)
   })
 })
+
+//UserRegister
 app.post('/register', async (req, res) => {
   const url = 'https://solved.ac/ranking/o/309'
   const b = req.body;
