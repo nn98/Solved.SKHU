@@ -14,7 +14,7 @@ const cheerio = require('cheerio')
 process.setMaxListeners(50)
 
 const waitNotify_Assignment_Individual = new WaitNotify();  // Assignment - execute, isFinish
-let AsyncTaskExecute_Assignment_Individual = false;
+let AsyncTaskExecute_Assignment_Individual = [false,false];
 
 const waitNotify_Assignment_All_Task = new WaitNotify();    // AssignTaskExecute_Assignment_All_Task
 let AssignTaskExecute_Assignment_All_Task = false;          // - waitNotify_Assignment_All_Task
@@ -829,53 +829,131 @@ app.get("/assignments", (req, res) => {
   });
 });
 
+
+let parallelizationControl;
 app.post("/assignments", async (req, res) => {
+  let asyncReturn = true;
+  const waitReturn = new WaitNotify();
   console.log("Assignments/post ", "is called");
   console.log(req.body);
 
   console.log("Req\tID_LIST", req.body.ID_LIST);
   console.log("Problem ID\t", req.body.PID);
-
+  let assignment_Result=[];
+  console.log('check result existence...');
+  let sql = 'select * from Assignment_result;';
+  console.log(sql);
+  try {
+    connection.query(sql, async function (err, result, fields) {
+      if (err) {
+        console.log('!---err in select', err);
+      }
+      else{
+        console.log("!---select success!");
+        if(result.length>0){
+          console.log('result is exist.', result);
+          console.log(asyncReturn);
+          // console.log('result is exist.', result[0]);
+          // console.log('result is exist.', result[1]);
+          // console.log('result is exist.', result[0].ID);
+          // console.log('result is exist.', result[1].ID);
+          // console.log('result is exist.', result[0].result);
+          // console.log('result is exist.', result[1].result);
+          assignment_Result = JSON.parse(result[0].result);
+          // asyncReturn = false;
+          // waitReturn.notify();
+        }
+        else{
+          console.log("result is not exist.");
+          AssignTaskExecute_Assignment_All_Task = true;
+      parallelizationControl=[{AsyncTaskExecute:false, waitNotify:new WaitNotify(), fin:false},
+    {AsyncTaskExecute:false, waitNotify:new WaitNotify(), fin:false}];
   let ID_LIST = req.body.ID_LIST;
   let pID = req.body.PID;
-  AssignTaskExecute_Assignment_All_Task = true;
-  let fuck = [];
-  console.log("rere at post:", fuck);
-  run(ID_LIST, pID, fuck);
-  if (AssignTaskExecute_Assignment_All_Task) await waitNotify_Assignment_All_Task.wait();
+  let head_assignment_Result=[];
+  let head_ID_LIST=ID_LIST.slice(0,ID_LIST.length/2);
+  console.log("head_ID_LIST", head_ID_LIST);
+  let tail_assignment_Result=[];
+  let tail_ID_LIST=ID_LIST.slice(ID_LIST.length/2);
+  console.log("tail_ID_LIST", tail_ID_LIST);
+  console.log(ID_LIST[0].bojid);
+  console.log(head_ID_LIST[0].bojid);
+  console.log(tail_ID_LIST[0].bojid);
+  console.log("paral",parallelizationControl);
 
-  console.log("send response: ", fuck);
-  res.send(fuck);
+  console.log("rere at post:", assignment_Result);
+  run(head_ID_LIST, pID, head_assignment_Result,0);
+  run(tail_ID_LIST, pID, tail_assignment_Result,1);
+  if (AssignTaskExecute_Assignment_All_Task) await waitNotify_Assignment_All_Task.wait();
+  console.log("re_head:",head_assignment_Result);
+  console.log("re_tail:",tail_assignment_Result);
+  assignment_Result.push(...head_assignment_Result);
+  assignment_Result.push(...tail_assignment_Result);
+  // assignment_Result=head_assignment_Result.concat(tail_assignment_Result);
+  // console.log("Result-json:",JSON.stringify(assignment_Result));
+  console.log("save result...");
+  sql = 'insert into Assignment_result (ID,result) values('+pID+",'"
+  +JSON.stringify(assignment_Result)+"');";
+  console.log(sql);
+  try {
+    connection.query(sql, async function (err, result, fields) {
+      if (err) {
+        console.log('!---err in update', err);
+      }
+      else{
+        console.log("!---save success!");
+      }
+    });
+  } catch (error) {
+    console.log('!---err in update',error)
+  }
+          asyncReturn = false;
+          waitReturn.notify();
+        }
+      }
+    });
+
+    
+  } catch (error) {
+    console.log('!---err in select',error)
+  }
+
+          console.log(asyncReturn);
+  if (asyncReturn) waitReturn.wait();
+  console.log("send response: ", assignment_Result);
+  // ID_LIST=assignment_Result;
+  res.send(assignment_Result);
 });
+
 let urls = [
   "https://www.acmicpc.net/status?problem_id=",
   "&user_id=",
   "&language_id=-1&result_id=-1",
 ];
 
-async function run(ID_LIST, pID, fuck) {
+async function run(ID_LIST, pID, assignment_Result,flag) {
   console.log("1. run");
-  // console.log("1. run", fuck);
+  // console.log("1. run", assignment_Result);
   // console.log("ID_LIST", ID_LIST);
   console.log("pID", pID);
   let processID = ID_LIST[0].bojid;
   let url = urls[0] + pID + urls[1] + processID + urls[2];
-  // console.log("rere at run:", fuck);
-  execute(ID_LIST, pID, processID, url, fuck);
+  // console.log("rere at run:", assignment_Result);
+  execute(ID_LIST, pID, processID, url, assignment_Result,flag);
 }
 
-async function execute(ID_LIST, pID, processID, url, fuck) {
+async function execute(ID_LIST, pID, processID, url, assignment_Result,flag) {
   console.log("2. execute");
-  // console.log("rere at execute:", fuck);
+  // console.log("rere at execute:", assignment_Result);
   puppeteer
     .launch({ headless: true })
     .then(async (browser) => {
-      if (AsyncTaskExecute_Assignment_Individual) {
-        await waitNotify_Assignment_Individual.wait();
+      if (parallelizationControl[flag].AsyncTaskExecute) {
+        await parallelizationControl[flag].waitNotify.wait();
       }
 
       console.log("now process\t", processID);
-      AsyncTaskExecute_Assignment_Individual = true;
+      parallelizationControl[flag].AsyncTaskExecute = true;
       const page = await browser.newPage();
       await page.setDefaultNavigationTimeout(0);
       await page.goto(url, { waitUntil: "networkidle2" ,timeout: 0});
@@ -926,40 +1004,42 @@ async function execute(ID_LIST, pID, processID, url, fuck) {
       console.log("push result");
       let insert = ID_LIST.shift();
       insert.status = returnData;
-      fuck.push(insert);
-      // console.log("rere at result:", fuck);
+      assignment_Result.push(insert);
+      // console.log("rere at result:", assignment_Result);
       console.log("\t\t", processID, "is solve");
-      isFinish(ID_LIST, pID, fuck);
+      isFinish(ID_LIST, pID, assignment_Result,flag);
     })
     .catch((error) => {
       console.log("html include err", error);
       console.log("\t\t", processID, "isn't solve");
       ID_LIST[0].result = 0;
       ID_LIST[0].status = "";
-      fuck.push(ID_LIST.shift());
-      isFinish(ID_LIST, pID, fuck);
+      assignment_Result.push(ID_LIST.shift());
+      isFinish(ID_LIST, pID, assignment_Result,flag);
     });
 }
 
-async function isFinish(ID_LIST, pID, fuck) {
+async function isFinish(ID_LIST, pID, assignment_Result,flag) {
   console.log("3. isFinish");
-  // console.log("rere at isFin:", fuck);
-  waitNotify_Assignment_Individual.notify();
-  AsyncTaskExecute_Assignment_Individual = false;
+  // console.log("rere at isFin:", assignment_Result);
+  parallelizationControl[flag].waitNotify.notify();
+  parallelizationControl[flag].AsyncTaskExecute = false;
   if (ID_LIST.length === 0) {
-    // console.log("result: ", fuck);
-    AssignTaskExecute_Assignment_All_Task = false;
-    waitNotify_Assignment_All_Task.notify();
+    // console.log("result: ", assignment_Result);
+    parallelizationControl[flag].fin=true;
+    if(parallelizationControl[0].fin&parallelizationControl[1].fin){
+      AssignTaskExecute_Assignment_All_Task = false;
+      waitNotify_Assignment_All_Task.notify();
+    }
   } else {
     console.log("————————————————————————————————————");
-    console.log(fuck[fuck.length-1]);
+    console.log(assignment_Result[assignment_Result.length-1]);
     while(ID_LIST[0].bojid==="-"){
       console.log(ID_LIST[0].ID,"is unsubmitted");
       ID_LIST.shift();
     }
-    // console.log("isFin > run", fuck);
-    run(ID_LIST, pID, fuck);
+    // console.log("isFin > run", assignment_Result);
+    run(ID_LIST, pID, assignment_Result,flag);
   }
 }
-// is branched?
 /* --------------- Assignments Part --------------- */
