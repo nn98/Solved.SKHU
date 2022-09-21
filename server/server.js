@@ -2,59 +2,35 @@
 // npm add react-calendar-heatmap 
 // 테스트 및 재정비를 위해 로컬 환경에 맞춰 connection 속성 변경한 상태
 // 테스트 및 채점을 위해 기타 코드 단순화
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 3001;
 const WaitNotify = require("wait-notify");
+const puppeteer = require('puppeteer')
+const cheerio = require('cheerio')
+process.setMaxListeners(50)
 
 const waitNotify_Assignment_Individual = new WaitNotify();  // Assignment - execute, isFinish
+let AsyncTaskExecute_Assignment_Individual = false;
 
-const waitNotify_Assignment_All_Task = new WaitNotify(); // AssignTaskExecute_Assignment_All_Task
+const waitNotify_Assignment_All_Task = new WaitNotify();    // AssignTaskExecute_Assignment_All_Task
+let AssignTaskExecute_Assignment_All_Task = false;          // - waitNotify_Assignment_All_Task
 
-const waitNotify_Rating = new WaitNotify(); // AssignTaskExecute_Rating
+const waitNotify_StudentRegister = new WaitNotify();        // AssignTaskExecute_StudentRegister
+let AssignTaskExecute_StudentRegister = false;              // - waitNotify_StudentRegister
 
-const waitNotify_StudentRegister = new WaitNotify(); // AssignTaskExecute_StudentRegister
+// UserRegister - canceled _ addCorrection ?_ userUpdate ?_ solvePage ?_ correction Update
+const waitNotify_UserRegister = new WaitNotify();           // AssignTaskExecute_UserRegister
+let AssignTaskExecute_UserRegister = false;                 // - waitNotify_UserRegister
 
-const waitNotify5 = new WaitNotify(); // AssignTaskExecute2
-
-/* 
-*  존 나 개 판
-*  요청 _ 메소드  >> 요청과 연관된 메소드, 해당 핸들러 내부에 존재.
-*  요청 - 메소드  >> 요청과 연관된 메소드, 해당 핸들러 외부에 존재.
-*  
-*  
-*  
-*  
-*  
-*  
-*/
-
-
-let AssignTaskExecute_Assignment_All_Task = false; // - waitNotify_Assignment_All_Task
-
-let AssignTaskExecute1 = false; // non-used
-
-// UserRegister - canceled 안석범 시벌럼
-//  _ addCorrection  
-//  ?_ userUpdate
-//  ?_ solvePage
-//  ?_ correction Update
-let AssignTaskExecute2 = false; // - waitNotify5
-
-// Rating
-let AssignTaskExecute_Rating = false; // - waitNotify_Rating
-
-// StudentRegister
-let AssignTaskExecute_StudentRegister = false; // - waitNotify_StudentRegister
-
-let AssignTaskExecute5 = false; // non-used
+const waitNotify_Rating = new WaitNotify();                 // AssignTaskExecute_Rating
+let AssignTaskExecute_Rating = false;                       // - waitNotify_Rating
 
 app.use(cors());
-
 app.use(bodyParser.json());
-
 app.listen(port, () => {
   console.log(`express is  ${port}`);
 });
@@ -76,6 +52,13 @@ connection.getConnection(() => {
   console.log("connecting");
 });
 
+app.post("/userPage", (req, res) => {
+  console.log(req);
+  const b = req.body;
+  res.send(b);
+});
+
+/* --------------- QnA Part --------------- */
 app.post("/QnAUser", (req, res) => {
   const sql = "INSERT INTO Qnauser SET ?";
   connection.query(sql, req.body, function (err, result, fields) {
@@ -215,21 +198,9 @@ app.post("/QnAInnerDelete", (req, res) => {
     }
   });
 });
+/* --------------- QnA Part --------------- */
 
-app.post("/addRegister", (req, res) => {
-  const sql = "";
-});
-
-app.get("/get", (req, res) => {
-  const sql = "select * from Problem LIMIT 0,10";
-
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-    res.send(result);
-  });
-});
-
+/* --------------- Rating Part --------------- */
 app.post("/rating", async (req, res) => {
   let i;
   console.log("rating-post: call", req.body.ID);
@@ -277,8 +248,6 @@ app.post("/rating", async (req, res) => {
     'union select * from User where skhurank = (select skhurank from User where ID="' +
     req.body.ID +
     '")+2; ',
-    // ")",
-    // ";",
   ];
   const query1 = "select skhurank from User where ID = \""+req.body.ID+"\";";
   
@@ -309,28 +278,7 @@ app.post("/rating", async (req, res) => {
       users += sqls1[k];
     }
   }
-  // connection.query(query1, req.body, function (err, result, fields) {
-  //   if (err) console.log(err);
-  //   for (let data of result) {
-  //     j = data.mSkhurank;
-  //   }
-  //   console.log("j", j);
-  //   AssignTaskExecute_Rating = false;
-  //   waitNotify_Rating.notify();
-  // });
-  // if (AssignTaskExecute_Rating) await waitNotify_Rating.wait();
-  // let k = Number(Number(5) - i < Number(2) ? Number(2) : Number(5) - i);
-  // console.log("k: ", k);
-
   
-  
-  // problems += sqls[sqls.length - 1];
-  // problems += sqls[sqls.length - 2];
-
-  // users += sqls1[sqls1.length-4];
-  // users += sqls1[sqls1.length-3];
-  // users += sqls1[sqls1.length - 2];
-  // users += sqls1[sqls1.length - 1];
   AssignTaskExecute_Rating = true;
   console.log("SQL-problems:",problems);
   console.log("SQL-users:",users);
@@ -347,15 +295,19 @@ app.post("/rating", async (req, res) => {
   });
   if (AssignTaskExecute_Rating) await waitNotify_Rating.wait();
 });
+/* --------------- Rating Part --------------- */
 
+/* --------------- Ranking Part --------------- */
 app.get("/ranking", (req, res) => {
   const sql = "select * from User order by skhurank";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
-
     res.send(result);
   });
 });
+/* --------------- Ranking Part --------------- */
+
+/* --------------- Recommend Algorithm Part --------------- */
 app.get("/MaxAlgorithm", (req, res) => {
   const sql =
     "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) desc limit 0,10;";
@@ -365,7 +317,6 @@ app.get("/MaxAlgorithm", (req, res) => {
     res.send(result);
   });
 });
-
 app.get("/MinAlgorithm", (req, res) => {
   const sql =
     "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) asc limit 0,10;";
@@ -375,7 +326,6 @@ app.get("/MinAlgorithm", (req, res) => {
     res.send(result);
   });
 });
-
 app.get("/BestAlgorithm", (req, res) => {
   const sql =
     "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) desc limit 0,10; ";
@@ -385,7 +335,6 @@ app.get("/BestAlgorithm", (req, res) => {
     res.send(result);
   });
 });
-
 app.get("/WorstAlgorithm", (req, res) => {
   const sql =
     "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) limit 0,10; ";
@@ -395,13 +344,9 @@ app.get("/WorstAlgorithm", (req, res) => {
     res.send(result);
   });
 });
+/* --------------- Recommend Algorithm Part --------------- */
 
-app.post("/userPage", (req, res) => {
-  console.log(req);
-  const b = req.body;
-  res.send(b);
-});
-
+/* --------------- Register Part - Professor --------------- */
 app.post("/proRegister", (req, res) => {
   console.log("proRegister/post ", "is called");
   console.log(req);
@@ -437,7 +382,7 @@ app.post("/proRegister", (req, res) => {
     res.status(406).json("교수 승인코드가 틀렸습니다.");
   }
 });
-
+/* --------------- Register Part - Professor / Register Part - Student --------------- */
 app.get("/studentRegister", (req, res) => {
   console.log("studentRegister/get ", "is called");
   const b = req.body;
@@ -507,40 +452,9 @@ app.post("/studentRegister", async (req, res) => {
     res.status(406).json("학생 승인코드가 틀렸습니다.");
   }
 });
+/* --------------- Register Part - Student --------------- */
 
-app.get("/assignments", (req, res) => {
-  console.log("Assignments/get ", "is called");
-  let returnStates;
-  let sql =
-    "select * from Lecture;" +
-    "select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID order by name;";
-  console.log("get Lectures", sql);
-
-  connection.query(sql, function (err, result, fields) {
-    if (err) {
-      console.log("error in assignments-get", err);
-      throw err;
-    }
-    console.log("result:", result);
-    console.log("+result to states");
-    res.json(result);
-  });
-});
-
-const puppeteer = require('puppeteer')
-const cheerio = require('cheerio')
-process.setMaxListeners(50)
-
-app.get('/get', (req, res) => {
-  const sql = 'select * from Problem LIMIT 0,10';
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err
-    console.log(result)
-    res.send(result)
-  })
-})
-
-//UserRegister
+/* --------------- UserRegister --------------- */
 app.post('/register', async (req, res) => {
   const url = 'https://solved.ac/ranking/o/309'
   const b = req.body;
@@ -553,7 +467,7 @@ app.post('/register', async (req, res) => {
     res.status(406).json("학생 승인코드가 틀렸습니다.");
     return;
   }
-  AssignTaskExecute2 = true;
+  AssignTaskExecute_UserRegister = true;
   console.log('solved check success');
   let sqls = "select * from User where ID = \"" + b.uI + "\"";
   console.log('run conntion', sqls)
@@ -567,13 +481,13 @@ app.post('/register', async (req, res) => {
     } else {
       console.log('send response', "에러가 발생했습니다. 이미 존재하는 학생입니다.");
       res.status(406).json("에러가 발생했습니다. 이미 존재하는 학생입니다.")
-      AssignTaskExecute2 = false;
-      waitNotify5.notify();
+      AssignTaskExecute_UserRegister = false;
+      waitNotify_UserRegister.notify();
       errOcc = true;
     }
   });
   addRegister(b.uI, url);
-  if (AssignTaskExecute2) await waitNotify5.wait();
+  if (AssignTaskExecute_UserRegister) await waitNotify_UserRegister.wait();
   console.log(errOcc)
   if (errOcc) return;
 
@@ -609,22 +523,22 @@ app.post('/register', async (req, res) => {
         if (resul.length === 0) {
           errOcc = true;
           console.log('err in solved.ac')
-          AssignTaskExecute2 = false
-          waitNotify5.notify()
+          AssignTaskExecute_UserRegister = false
+          waitNotify_UserRegister.notify()
           res.status(406).json("Solved.ac에서 해당 ID를 찾을 수 없습니다. 등록 후 시도해주세요")
           return
         }
         console.log(resul)
         console.log('suc in solved.ac')
-        AssignTaskExecute2 = false
-        waitNotify5.notify()
+        AssignTaskExecute_UserRegister = false
+        waitNotify_UserRegister.notify()
 
       })
       .catch((error) => {
         errOcc = true;
         console.log('err in solved.ac', error)
-        AssignTaskExecute2 = false
-        waitNotify5.notify()
+        AssignTaskExecute_UserRegister = false
+        waitNotify_UserRegister.notify()
         res.status(406).json("솔브드에서 응답하지 않습니다. 잠시후 다시 시도해주세요")
       })
   }
@@ -664,15 +578,15 @@ app.post('/register', async (req, res) => {
           console.log(resul2[e])
         }
 
-        AssignTaskExecute2 = false
-        waitNotify5.notify();
+        AssignTaskExecute_UserRegister = false
+        waitNotify_UserRegister.notify();
 
       })
 
       .catch((error) => {
         console.log(error);
-        AssignTaskExecute2 = false
-        waitNotify5.notify();
+        AssignTaskExecute_UserRegister = false
+        waitNotify_UserRegister.notify();
       })
   }
   // 전체랭킹 / 학교랭킹 / ID / 레이팅 / 클래스 / 푼 문제 수 / 티어 / 정답률 / 백준ID
@@ -688,9 +602,9 @@ app.post('/register', async (req, res) => {
   console.log(worldrank + " " + skhurank + " " + userid + " " + rating + " " + classs + " " + problems + " " + bojid + " " + tier)
   corr = undefined;
   while (corr === undefined) {
-    AssignTaskExecute2 = true;
+    AssignTaskExecute_UserRegister = true;
     addCorrection(b.uI, 'https://www.acmicpc.net/school/ranklist/309/' + pages);
-    if (AssignTaskExecute2) await waitNotify5.wait();
+    if (AssignTaskExecute_UserRegister) await waitNotify_UserRegister.wait();
     corr = resul2[resul2.length - 2];
     console.log('corr:', corr)
     pages++;
@@ -707,13 +621,13 @@ app.post('/register', async (req, res) => {
     }
     res.status(200).json("학생 등록이 완료되었습니다. 새로고침 후 이용해주시기 바랍니다.")
   });
-  AssignTaskExecute2 = true;
+  AssignTaskExecute_UserRegister = true;
   userUpdate(url, req);
   let updateP = 1;
   while (updateP <= 3) {
-    AssignTaskExecute2 = true;
+    AssignTaskExecute_UserRegister = true;
     correctionUpdate('https://www.acmicpc.net/school/ranklist/309/' + updateP)
-    if (AssignTaskExecute2) await waitNotify5.wait();
+    if (AssignTaskExecute_UserRegister) await waitNotify_UserRegister.wait();
     updateP++;
   }
 
@@ -771,8 +685,8 @@ async function userUpdate(url, req) {
 
       });
       solvePage("https://solved.ac/profile/" + req.body.uI + "/solved", req.body.uI);
-      AssignTaskExecute2 = false
-      waitNotify5.notify();
+      AssignTaskExecute_UserRegister = false
+      waitNotify_UserRegister.notify();
     })
     .catch((error) => {
       console.log(error)
@@ -798,8 +712,8 @@ async function solvePage(url, userid) {
         solveProblem("https://solved.ac/profile/" + userid + "/solved?page=" + solpage++, userid)
       }
 
-      AssignTaskExecute2 = false
-      waitNotify5.notify();
+      AssignTaskExecute_UserRegister = false
+      waitNotify_UserRegister.notify();
     })
 
     .catch((error) => {
@@ -837,8 +751,8 @@ async function solveProblem(url, userid) {
           console.log(error)
         }
       });
-      AssignTaskExecute2 = false
-      waitNotify5.notify();
+      AssignTaskExecute_UserRegister = false
+      waitNotify_UserRegister.notify();
     })
 
     .catch((error) => {
@@ -884,9 +798,8 @@ async function correctionUpdate(url) {
       // console.log(pages)
       // console.log(c2===undefined)
 
-
-      AssignTaskExecute2 = false
-      waitNotify5.notify();
+      AssignTaskExecute_UserRegister = false
+      waitNotify_UserRegister.notify();
 
     })
 
@@ -894,7 +807,27 @@ async function correctionUpdate(url) {
       console.log(error)
     })
 }
+/* --------------- UserRegister --------------- */
 
+/* --------------- Assignments Part --------------- */
+app.get("/assignments", (req, res) => {
+  console.log("Assignments/get ", "is called");
+  let returnStates;
+  let sql =
+    "select * from Lecture;" +
+    "select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID order by name;";
+  console.log("get Lectures", sql);
+
+  connection.query(sql, function (err, result, fields) {
+    if (err) {
+      console.log("error in assignments-get", err);
+      throw err;
+    }
+    console.log("result:", result);
+    console.log("+result to states");
+    res.json(result);
+  });
+});
 
 app.post("/assignments", async (req, res) => {
   console.log("Assignments/post ", "is called");
@@ -914,7 +847,6 @@ app.post("/assignments", async (req, res) => {
   console.log("send response: ", fuck);
   res.send(fuck);
 });
-let AsyncTaskExecute_Assignment_Individual = false;
 let urls = [
   "https://www.acmicpc.net/status?problem_id=",
   "&user_id=",
@@ -1029,3 +961,4 @@ async function isFinish(ID_LIST, pID, fuck) {
     run(ID_LIST, pID, fuck);
   }
 }
+/* --------------- Assignments Part --------------- */
