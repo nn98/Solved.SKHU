@@ -831,45 +831,30 @@ app.get("/assignments", (req, res) => {
 
 
 let parallelizationControl;
+let assignment_Result = [];
+let asyncReturn = true;
+const waitReturn = new WaitNotify();
+
 app.post("/assignments", async (req, res) => {
-  let asyncReturn = true;
-  const waitReturn = new WaitNotify();
   console.log("Assignments/post ", "is called");
   console.log(req.body);
 
   console.log("Req\tID_LIST", req.body.ID_LIST);
   console.log("Problem ID\t", req.body.PID);
-  let assignment_Result=[];
-  console.log('check result existence...');
-  let sql = 'select * from Assignment_result;';
-  console.log(sql);
-  try {
-    connection.query(sql, async function (err, result, fields) {
-      if (err) {
-        console.log('!---err in select', err);
-      }
-      else{
-        console.log("!---select success!");
-        if(result.length>0){
-          console.log('result is exist.', result);
-          console.log(asyncReturn);
-          // console.log('result is exist.', result[0]);
-          // console.log('result is exist.', result[1]);
-          // console.log('result is exist.', result[0].ID);
-          // console.log('result is exist.', result[1].ID);
-          // console.log('result is exist.', result[0].result);
-          // console.log('result is exist.', result[1].result);
-          assignment_Result = JSON.parse(result[0].result);
-          // asyncReturn = false;
-          // waitReturn.notify();
-        }
-        else{
-          console.log("result is not exist.");
+  let pID = req.body.PID;
+  let ID_LIST = req.body.ID_LIST;
+  let lectureId = ID_LIST[0].Lecture_ID;
+  asyncReturn = true;
+  checkResult(pID,lectureId);
+  console.log('wait',assignment_Result.length);
+  if (asyncReturn) await waitReturn.wait();
+  console.log('notify', assignment_Result.length);
+  
+  if (assignment_Result.length < 1) {
+    console.log("execute assignment.");
           AssignTaskExecute_Assignment_All_Task = true;
       parallelizationControl=[{AsyncTaskExecute:false, waitNotify:new WaitNotify(), fin:false},
     {AsyncTaskExecute:false, waitNotify:new WaitNotify(), fin:false}];
-  let ID_LIST = req.body.ID_LIST;
-  let pID = req.body.PID;
   let head_assignment_Result=[];
   let head_ID_LIST=ID_LIST.slice(0,ID_LIST.length/2);
   console.log("head_ID_LIST", head_ID_LIST);
@@ -892,8 +877,8 @@ app.post("/assignments", async (req, res) => {
   // assignment_Result=head_assignment_Result.concat(tail_assignment_Result);
   // console.log("Result-json:",JSON.stringify(assignment_Result));
   console.log("save result...");
-  sql = 'insert into Assignment_result (ID,result) values('+pID+",'"
-  +JSON.stringify(assignment_Result)+"');";
+  sql = 'insert into Assignment_result (ID,result,lectureID) values('+pID+",'"
+  +JSON.stringify(assignment_Result)+"',"+lectureId+");";
   console.log(sql);
   try {
     connection.query(sql, async function (err, result, fields) {
@@ -907,19 +892,9 @@ app.post("/assignments", async (req, res) => {
   } catch (error) {
     console.log('!---err in update',error)
   }
-          asyncReturn = false;
-          waitReturn.notify();
-        }
-      }
-    });
-
-    
-  } catch (error) {
-    console.log('!---err in select',error)
   }
 
-          console.log(asyncReturn);
-  if (asyncReturn) waitReturn.wait();
+  if (asyncReturn) await waitReturn.wait();
   console.log("send response: ", assignment_Result);
   // ID_LIST=assignment_Result;
   res.send(assignment_Result);
@@ -1040,6 +1015,38 @@ async function isFinish(ID_LIST, pID, assignment_Result,flag) {
     }
     // console.log("isFin > run", assignment_Result);
     run(ID_LIST, pID, assignment_Result,flag);
+  }
+}
+
+async function checkResult(pID,lectureId) {
+  console.log('check result existence...');
+  let sql = 'select * from Assignment_result where ID='+pID+' and lectureId='+lectureId+';';
+  console.log(sql);
+  try {
+    connection.query(sql, async function (err, result, fields) {
+      if (err) {
+        console.log('!---err in select', err);
+      }
+      else {
+        console.log("!---select success!");
+        if (result.length > 0) {
+          console.log('result is exist.', result);
+          console.log(asyncReturn);
+          assignment_Result = JSON.parse(result[0].result);
+  console.log('notify at check', assignment_Result.length);
+          asyncReturn = false;
+          waitReturn.notify();
+        }
+        else {
+          console.log("result is not exist.");
+          assignment_Result = [];
+          asyncReturn = false;
+          waitReturn.notify();
+        }
+      }
+    })
+  } catch (err) {
+    console.log("err",err);
   }
 }
 /* --------------- Assignments Part --------------- */
