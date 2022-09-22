@@ -15,7 +15,7 @@ const ProButton = styled.button`
   top: 45%;
   left: 20%;
   z-index: 2;
-  &hover {
+  &:hover {
     background-color: #00000077;
     transition: 1s;
   }
@@ -32,7 +32,7 @@ const StuButton = styled.button`
   top: 45%;
   left: 70%;
   z-index: 2;
-  &hover {
+  &:hover {
     background-color: #00000077;
     transition: 1s;
   }
