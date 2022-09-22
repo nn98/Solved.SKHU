@@ -9,10 +9,6 @@ function Main() {
   const proClick = () => {
     setStuStyle({ transform: 'translate(50%)', transition: '1s' })
     setButStyle({ opacity: '0', transition: '0.5s' })
-
-    setTimeout(function () {
-      navigate('/test')
-    }, 1000)
   }
 
   const stuClick = () => {
@@ -21,6 +17,9 @@ function Main() {
       transition: '1s',
     })
     setButStyle({ opacity: '0', transition: '0.5s' })
+    setTimeout(function () {
+      navigate('/test')
+    }, 1000)
   }
 
   return (
