@@ -6,12 +6,14 @@ import SearchIcon from '@mui/icons-material/Search'
 
 import { keyframes } from '@emotion/react'
 
+import StudentInfo from './studentCom/StudentInfo'
+
 const searchMove1 = keyframes`
   from {left: 20vw; top: 45vh; width: 60%; }
-  to {left: 2vw; top: 2vh; width: 30%; }`
+  to {left: 2vw; top: 2vh; width: 20%; }`
 const searchMove2 = keyframes`
 from {width: 90%; px: 2.9; py: 2;}
-to {width: 80%; px: 1; py: 1;}`
+to {width: 80%; px: 1; py: 2;}`
 const fadein = keyframes`
 from {opacity: 0; }
 to {opacity: 1; }`
@@ -33,7 +35,7 @@ function Student() {
               ? {
                   left: '2vw',
                   top: '2vh',
-                  width: '30%',
+                  width: '20%',
                   animation: `${searchMove1} 1s`,
                 }
               : {
@@ -80,6 +82,7 @@ function Student() {
           />
         </Box>
       </div>
+      {change ? <StudentInfo /> : <></>}
     </div>
   )
 }
