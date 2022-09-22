@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './App.css'
-import './Front.css'
+import './pages/Front.css'
 import { Routes, Route } from 'react-router-dom'
 
-import Main from './Main'
-import Student from './Student'
+import Main from './pages/Main'
+import Student from './pages/Student'
 
 function App() {
   return (

@@ -58,7 +58,10 @@ function Main() {
   const proClick = () => {
     setStuStyle({ transform: 'translate(50%)', transition: '1s' })
     setButStyle({ opacity: '0', transition: '0.5s' })
+<<<<<<< HEAD:ui-s/src/Main.js
 
+=======
+>>>>>>> a719e63c58f286f13ec296eced48e68ef0103b09:ui-s/src/pages/Main.js
   }
   const stuClick = () => {
     setStuStyle({
@@ -66,7 +69,10 @@ function Main() {
       transition: '1s',
     })
     setButStyle({ opacity: '0', transition: '0.5s' })
+<<<<<<< HEAD:ui-s/src/Main.js
 
+=======
+>>>>>>> a719e63c58f286f13ec296eced48e68ef0103b09:ui-s/src/pages/Main.js
     setTimeout(function () {
       navigate('/test')
     }, 1000)
