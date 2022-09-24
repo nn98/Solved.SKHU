@@ -844,13 +844,18 @@ app.post("/assignments", async (req, res) => {
   let pID = req.body.PID;
   let ID_LIST = req.body.ID_LIST;
   let lectureId = ID_LIST[0].Lecture_ID;
+  let reAssignment = req.body.reAss;
   asyncReturn = true;
   checkResult(pID, lectureId);
   console.log('wait', assignment_Result.length);
   if (asyncReturn) await waitReturn.wait();
   console.log('notify', assignment_Result.length);
 
-  if (assignment_Result.length < 1) {
+  if (assignment_Result.length < 1 | reAssignment) {
+    if (reAssignment) {
+      console.log("reAssignment...");
+      assignment_Result = [];
+    }
     console.log("execute assignment.");
     AssignTaskExecute_Assignment_All_Task = true;
     parallelizationControl = [{ AsyncTaskExecute: false, waitNotify: new WaitNotify(), fin: false },
