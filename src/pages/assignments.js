@@ -93,11 +93,18 @@ const Assignments = (e) => {
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
 
-          // console.log("Data: ", data);
           let compare = student
           // console.log(compare);
+          // console.log("Data: ", data);
+          // console.log("Data[0][0]: ", data[0][0]);
+          // console.log("Data[0][0].ID: ", data[0][0].ID);
+          // console.log("Compare: ", compare);
           for (let i = 0; i < compare.length; ++i) {
             for (let j = 0; j < data.length; ++j) {
+              // console.log(data[j].Lecture_ID,compare[i].Lecture_ID,data[j].Lecture_ID === compare[i].Lecture_ID);
+              // console.log(data[j].ID,compare[i].ID,data[j].ID === compare[i].ID);
+              // console.log(compare[i].result,data[j].result,compare[i].result = data[j].result);
+              // console.log(compare[i].status,data[j].status,compare[i].status = data[j].status);
               if (
                 data[j].Lecture_ID === compare[i].Lecture_ID &&
                 data[j].ID === compare[i].ID
