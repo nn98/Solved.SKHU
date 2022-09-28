@@ -1,31 +1,31 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import { TextField, InputAdornment } from '@mui/material'
-import Box from '@mui/material/Box'
-import SearchIcon from '@mui/icons-material/Search'
+import { TextField, InputAdornment } from "@mui/material";
+import Box from "@mui/material/Box";
+import SearchIcon from "@mui/icons-material/Search";
 
-import { keyframes } from '@emotion/react'
+import { keyframes } from "@emotion/react";
 
-import StudentInfo from './studentCom/StudentInfo'
+import StudentInfo from "./studentCom/StudentInfo";
 
 const searchMove1 = keyframes`
   from {left: 20vw; top: 45vh; width: 60%; }
-  to {left: 2vw; top: 2vh; width: 20%; }`
+  to {left: 2vw; top: 2vh; width: 20%; }`;
 const searchMove2 = keyframes`
 from {width: 90%; px: 2.9; py: 2;}
-to {width: 80%; px: 1; py: 2;}`
+to {width: 80%; px: 1; py: 2;}`;
 const fadein = keyframes`
 from {opacity: 0; }
-to {opacity: 1; }`
+to {opacity: 1; }`;
 
 function Student() {
-  const [change, setChange] = useState(false)
+  const [change, setChange] = useState(false);
 
   return (
     <div
       style={{
-        backgroundColor: 'greenyellow',
-        height: '100vh',
+        backgroundColor: "greenyellow",
+        height: "100vh",
       }}
     >
       <div className="test" style={{ animation: `${fadein} 0.5s` }}>
@@ -33,29 +33,29 @@ function Student() {
           sx={Object.assign(
             change
               ? {
-                  left: '2vw',
-                  top: '2vh',
-                  width: '20%',
+                  left: "2vw",
+                  top: "2vh",
+                  width: "20%",
                   animation: `${searchMove1} 1s`,
                 }
               : {
-                  left: '20vw',
-                  top: '45vh',
-                  width: '60%',
+                  left: "20vw",
+                  top: "45vh",
+                  width: "60%",
                 },
             {
-              position: 'absolute',
-              backgroundColor: '#F2F2F2',
+              position: "absolute",
+              backgroundColor: "#F2F2F2",
               borderRadius: 25,
-              textAlign: 'center',
-              boxShadow: '2px 8px 20px -12px #bdbdbd',
+              textAlign: "center",
+              boxShadow: "2px 8px 20px -12px #bdbdbd",
             }
           )}
         >
           <TextField
             onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                setChange(true)
+              if (e.key === "Enter") {
+                setChange(true);
               }
             }}
             variant="standard"
@@ -63,8 +63,8 @@ function Student() {
             placeholder="Solved.ac ID 입력"
             sx={
               change
-                ? { width: '80%', px: 1, py: 1, animation: `${searchMove2} 1s` }
-                : { width: '90%', px: 2.9, py: 2 }
+                ? { width: "80%", px: 1, py: 1, animation: `${searchMove2} 1s` }
+                : { width: "90%", px: 2.9, py: 2 }
             }
             // value={userId}
             // onChange={(e) => setUserId(e.target.value)}
@@ -73,7 +73,7 @@ function Student() {
                 <InputAdornment position="end">
                   <SearchIcon
                     onClick={() => {
-                      setChange(true)
+                      setChange(true);
                     }}
                   />
                 </InputAdornment>
@@ -84,7 +84,7 @@ function Student() {
       </div>
       {change ? <StudentInfo /> : <></>}
     </div>
-  )
+  );
 }
 
-export default Student
+export default Student;
