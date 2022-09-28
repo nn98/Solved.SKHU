@@ -136,8 +136,9 @@ const Assignments = (e) => {
           setLecture(data[0])
           setStudent(data[1])
           setID_LIST(data[1])
-          // console.log("setLec:", lecture);
-          // console.log("setStu:", student);
+          console.log("setLec:", lecture);
+          console.log("setStu:", student);
+          console.log("setIDL:", ID_LIST);
         })
     } catch (error) {
       console.error(error)
