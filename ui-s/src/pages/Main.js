@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
+import stuimg from './studentCom/image/test2.png'
 
 // Front.css
 const ProButton = styled.button`
@@ -43,11 +44,12 @@ const ProDiv = styled.div`
   background-color: blueviolet;
   position: absolute;
 `
+//background-color: greenyellow;
 const StuDiv = styled.div`
   width: 100%;
   height: 100vh;
   left: 50%;
-  background-color: greenyellow;
+  background-image: url(${stuimg});
   position: absolute;
   z-index: 1;
 `

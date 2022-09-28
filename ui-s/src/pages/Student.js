@@ -17,11 +17,12 @@ to {width: 80%; px: 1; py: 2;}`
 
 function Student() {
   const [change, setChange] = useState(false)
+  const [userName, setUserName] = useState('')
 
   return (
     <div
       style={{
-        backgroundColor: 'greenyellow',
+        backgroundImage: 'url("/static/media/test2.c24f5bfe5d36e41c1301.png")',
         height: '100vh',
       }}
     >
@@ -53,6 +54,7 @@ function Student() {
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 setChange(true)
+                console.log(userName)
               }
             }}
             variant="standard"
@@ -63,14 +65,15 @@ function Student() {
                 ? { width: '80%', px: 1, py: 1, animation: `${searchMove2} 1s` }
                 : { width: '90%', px: 2.9, py: 2 }
             }
-            // value={userId}
-            // onChange={(e) => setUserId(e.target.value)}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <SearchIcon
                     onClick={() => {
                       setChange(true)
+                      console.log(userName)
                     }}
                   />
                 </InputAdornment>
@@ -79,7 +82,7 @@ function Student() {
           />
         </Box>
       </div>
-      {change ? <StudentInfo /> : <></>}
+      {change ? <StudentInfo userName={userName} /> : <></>}
     </div>
   )
 }

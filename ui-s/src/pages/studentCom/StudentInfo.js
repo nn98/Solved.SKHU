@@ -4,9 +4,11 @@ import ContentCard from './ContentCard'
 import Dialog from '@mui/material/Dialog'
 
 import UserPage from './userCom/userPage'
-import testttt from './image/52266-ledus-panda.json'
+import testttt from './image/panda.gif'
+import Panda from './lottiCom/Panda'
+import img from './image/test2.png'
 
-function StudentInfo() {
+function StudentInfo(props) {
   const [userOpen, setUserOpen] = useState(false)
   const [algoOpen, setAlgoOpen] = useState(false)
   const [recoOpen, setRecoOpen] = useState(false)
@@ -17,13 +19,14 @@ function StudentInfo() {
   return (
     <div
       style={{
-        backgroundColor: 'greenyellow',
+        backgroundImage: `url(${img})`,
+        // backgroundColor: 'greenyellow',
         height: '100vh',
       }}
     >
       <ContentCard
         title={'USER'}
-        text={'내 정보 확인'}
+        text={props.userName}
         height={'46%'}
         width={'46%'}
         left={'30%'}
@@ -38,7 +41,7 @@ function StudentInfo() {
         open={userOpen}
         onClose={() => setUserOpen(!userOpen)}
       >
-        <UserPage />
+        <UserPage userName={props.userName} />
       </Dialog>
 
       {/* 성공회대 추천 알고리즘 */}
@@ -155,6 +158,11 @@ function StudentInfo() {
         random
       </Dialog>
       {/* <MaxWidthDialog open={qnaOpen} setOpen={setQnAOpen}></MaxWidthDialog> */}
+
+      <div style={{ position: 'absolute', top: '50vh', left: '10vw' }}>
+        test
+        <Panda />
+      </div>
     </div>
   )
 }

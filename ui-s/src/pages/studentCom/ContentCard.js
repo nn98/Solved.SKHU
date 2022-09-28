@@ -36,7 +36,7 @@ function ContentCard(props) {
             width: '30%',
             height: '20%',
             textAlign: 'center',
-            fontSize: '300%',
+            fontSize: 'auto',
           }}
         >
           {props.title}

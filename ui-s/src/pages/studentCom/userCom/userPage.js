@@ -1,3 +1,5 @@
+import img from '../image/test.jpg'
+
 import React, { useCallback, useEffect, useState } from 'react'
 import './user.css'
 import { useLocation } from 'react-router-dom'
@@ -175,12 +177,7 @@ const UserPage = (props) => {
 
   const userAdd = async () => {
     try {
-      const t = 'q9922000'
-      // location.state === null && props.globalID === ''
-      //   ? 'q9922000'
-      //   : location.state === null
-      //   ? props.globalID
-      //   : location.state.userId
+      const t = props.userName === '' ? 'q9922000' : props.userName
 
       console.log('test@@@@@@@@@@@@@@@@' + t)
       // const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
@@ -379,11 +376,12 @@ const UserPage = (props) => {
   useEffect(() => {
     // console.log('location.state ' + location.state)
     // console.log('props.globalID ' + props.globalID)
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@다시 실행 다시실행')
     userAdd()
-  }, [props.globalID, location.state])
+  }, [props.userName])
 
   return (
-    <div className="user">
+    <div className="user" style={{ backgroundImage: `url(${img})` }}>
       <div
         className="head"
         style={{
@@ -421,11 +419,7 @@ const UserPage = (props) => {
             verticalAlign: 'bottom',
           }}
         >
-          {props.globalID === ''
-            ? location.state !== null
-              ? location.state.userId
-              : 'q9922000'
-            : props.globalID}
+          {props.userName === '' ? 'q9922000' : props.userName}
         </span>
         <br />
         <hr style={{ margin: '8% 0' }} />
