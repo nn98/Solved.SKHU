@@ -38,7 +38,7 @@ app.listen(port, () => {
 var mysql = require("mysql");
 var connection = mysql.createPool({
   host: "localhost",
-  port: 3306,
+  port: 21006,
   user: "Project",
   password: "testing00",
   database: "swp",
@@ -817,7 +817,7 @@ app.get("/assignments", (req, res) => {
   let returnStates;
   let sql =
     "select * from lecture;" +
-    "select id,name,bojid,lecture_id from student as s join learn as l on s.id=l.student_id order by name;";
+    "select id as ID,name,bojid,lecture_id as Lecture_ID from student as s join learn as l on s.id=l.student_id order by name;";
   console.log("get Lectures", sql);
 
   connection.query(sql, function (err, result, fields) {
