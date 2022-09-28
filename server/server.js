@@ -817,7 +817,7 @@ app.get("/assignments", (req, res) => {
   let returnStates;
   let sql =
     "select * from lecture;" +
-    "select id,name,bojid,lecture_id from student as s join learn as l on s.id=l.student_id order by name;";
+    "select ID,name,bojid,Lecture_ID from student as s join learn as l on s.id=l.student_id order by name;";
   console.log("get Lectures", sql);
 
   connection.query(sql, function (err, result, fields) {
@@ -1025,7 +1025,7 @@ async function isFinish(ID_LIST, pID, assignment_Result, flag) {
   }
 }
 
-async function checkResult(pID, lectureId) {
+async function checkResult(pid, lectureid) {
   console.log('check result existence...');
   let sql = 'select * from assignment_result where id=' + pid + ' and lectureid=' + lectureid + ';';
   console.log(sql);
