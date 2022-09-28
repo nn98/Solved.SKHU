@@ -37,12 +37,11 @@ app.listen(port, () => {
 
 var mysql = require("mysql");
 var connection = mysql.createPool({
-  // host: "54.180.80.37",
-  host: "localhost",
-  port: 21006,
+  host: "146.56.157.19",
+  port: 3306,
   user: "Project",
   password: "testing00",
-  database: "SWP",
+  database: "swp",
   multipleStatements: true,
   charset: 'utf8mb4',
   connectionLimit: 30
