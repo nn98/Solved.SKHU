@@ -59,7 +59,7 @@ app.post("/userPage", (req, res) => {
 
 /* --------------- QnA Part --------------- */
 app.post("/QnAUser", (req, res) => {
-  const sql = "INSERT INTO Qnauser SET ?";
+  const sql = "insert into qnauser set ?";
   connection.query(sql, req.body, function (err, result, fields) {
     if (err) {
       res.send({ error: err.errno });
@@ -71,7 +71,7 @@ app.post("/QnAUser", (req, res) => {
 });
 
 app.get("/QnA", (req, res) => {
-  const sql = "SELECT * FROM Qna  ORDER BY createdat DESC";
+  const sql = "select * from qna  order by createdat desc";
 
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
@@ -81,7 +81,7 @@ app.get("/QnA", (req, res) => {
 });
 
 app.get("/QnAProblem", (req, res) => {
-  const sql = "select distinct PROBLEM_ID from Solve;";
+  const sql = "select distinct problem_id from solve;";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log("QnA문제 출력");
@@ -90,7 +90,7 @@ app.get("/QnAProblem", (req, res) => {
 });
 
 app.get("/QnAInner", (req, res) => {
-  const sql = "SELECT * FROM Qnainner";
+  const sql = "select * from qnainner";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log("QnA안에꺼 출력");
@@ -101,7 +101,7 @@ app.get("/QnAInner", (req, res) => {
 app.post("/QnAAdd", (req, res) => {
   const userBody = [req.body.userId, req.body.password];
   const userSql =
-    "SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;";
+    "select * from qnauser where qnauser.name = ? and qnauser.password = ?;";
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err;
 
@@ -115,7 +115,7 @@ app.post("/QnAAdd", (req, res) => {
         req.body.problem,
       ];
       const insertSql =
-        "INSERT INTO Qna(content, userip, USER_ID, problem) value (?,?,?,?);";
+        "insert into qna(content, userip, user_id, problem) value (?,?,?,?);";
       connection.query(insertSql, insertBody, function (err, result, fields) {
         if (err) throw err;
         console.log("QnA 더하기");
@@ -128,7 +128,7 @@ app.post("/QnAAdd", (req, res) => {
 app.post("/QnAInnerAdd", (req, res) => {
   const userBody = [req.body.userId, req.body.password];
   const userSql =
-    "SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;";
+    "select * from qnauser where qnauser.name = ? and qnauser.password = ?;";
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err;
     if (result.length === 0) {
@@ -141,7 +141,7 @@ app.post("/QnAInnerAdd", (req, res) => {
         req.body.qnaId,
       ];
       const insertSql =
-        "INSERT INTO Qnainner(content, userip, USER_ID, QNA_ID) value (?,?,?,?);";
+        "insert into qnainner(content, userip, user_id, qna_id) value (?,?,?,?);";
       connection.query(insertSql, insertBody, function (err, result, fields) {
         if (err) throw err;
         console.log("QnA안에꺼 더하기");
@@ -154,14 +154,14 @@ app.post("/QnAInnerAdd", (req, res) => {
 app.post("/QnADelete", (req, res) => {
   const userBody = [req.body.userId, req.body.password];
   const userSql =
-    "SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;";
+    "select * from qnauser where qnauser.name = ? and qnauser.password = ?;";
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err;
     if (result.length === 0) {
       res.send({ error: "사용자가 올바르지 않습니다." });
     } else {
       const deleteBody = [req.body.ID, req.body.userId];
-      const deleteSql = "DELETE FROM Qna WHERE Qna.ID = ? and Qna.USER_ID = ?;";
+      const deleteSql = "delete from qna where qna.id = ? and qna.user_id = ?;";
       connection.query(deleteSql, deleteBody, function (err, result, fields) {
         if (result.affectedRows === 0) {
           res.send({ error: "사용자가 올바르지 않습니다." });
@@ -177,7 +177,7 @@ app.post("/QnADelete", (req, res) => {
 app.post("/QnAInnerDelete", (req, res) => {
   const userBody = [req.body.userId, req.body.password];
   const userSql =
-    "SELECT * FROM Qnauser WHERE Qnauser.name = ? and Qnauser.password = ?;";
+    "select * from qnauser where qnauser.name = ? and qnauser.password = ?;";
   connection.query(userSql, userBody, function (err, result, fields) {
     if (err) throw err;
     if (result.length === 0) {
@@ -185,7 +185,7 @@ app.post("/QnAInnerDelete", (req, res) => {
     } else {
       const deleteBody = [req.body.ID, req.body.userId];
       const deleteSql =
-        "DELETE FROM Qnainner WHERE Qnainner.ID = ? and Qnainner.USER_ID = ?;";
+        "delete from qnainner where qnainner.id = ? and qnainner.user_id = ?;";
       connection.query(deleteSql, deleteBody, function (err, result, fields) {
         if (result.affectedRows === 0) {
           res.send({ error: "사용자가 올바르지 않습니다." });
@@ -205,50 +205,50 @@ app.post("/rating", async (req, res) => {
   console.log("rating-post: call", req.body.ID);
   const sqls = [
     // 'select skhurank from User where ID ="' + req.body.ID + '";',
-    "select PROBLEM_ID, namekr, SOLVED_RANK ,count(PROBLEM_ID) as sum from User right join Solve on User.ID = Solve.USER_ID" +
-    " join Problem on Solve.PROBLEM_ID = Problem.ID where User.ID in (",
+    "select problem_id, namekr, solved_rank ,count(problem_id) as sum from user right join solve on user.id = solve.user_id" +
+    " join problem on solve.problem_id = problem.id where user.id in (",
 
-    'select ID from User where skhurank = (select skhurank from User where ID="' +
+    'select id from user where skhurank = (select skhurank from user where id="' +
     req.body.ID +
     '")-2 ',
 
-    'union select ID from User where skhurank = (select skhurank from User where ID="' +
+    'union select id from user where skhurank = (select skhurank from user where id="' +
     req.body.ID +
     '")-1 union ',
 
-    'select ID from User where skhurank = (select skhurank from User where ID="' +
+    'select id from user where skhurank = (select skhurank from user where id="' +
     req.body.ID +
     '")+1 ',
-    'union select ID from User where skhurank = (select skhurank from User where ID="' +
+    'union select id from user where skhurank = (select skhurank from user where id="' +
     req.body.ID +
     '")+2) ',
 
-    'and PROBLEM_ID not in(select PROBLEM_ID from Solve where USER_ID = "' +
+    'and problem_id not in(select problem_id from solve where user_id = "' +
     req.body.ID +
     '")' +
-    "group by PROBLEM_ID having count(PROBLEM_ID)>=1 order by count(PROBLEM_ID) desc;"
+    "group by problem_id having count(problem_id)>=1 order by count(problem_id) desc;"
     // ")"
   ];
   const sqls1 = [
     // "",
     "",
-    'select * from User where skhurank = (select skhurank from User where ID="' +
+    'select * from user where skhurank = (select skhurank from user where id="' +
     req.body.ID +
     '")-2 ',
-    'union select * from User where skhurank = (select skhurank from User where ID="' +
+    'union select * from user where skhurank = (select skhurank from user where id="' +
     req.body.ID +
     '")-1 union ',
-    'select * from User where skhurank = (select skhurank from User where ID="' +
+    'select * from user where skhurank = (select skhurank from user where id="' +
     req.body.ID +
     '") ',
-    'union select * from User where skhurank = (select skhurank from User where ID="' +
+    'union select * from user where skhurank = (select skhurank from user where id="' +
     req.body.ID +
     '")+1 ',
-    'union select * from User where skhurank = (select skhurank from User where ID="' +
+    'union select * from user where skhurank = (select skhurank from user where id="' +
     req.body.ID +
     '")+2; ',
   ];
-  const query1 = "select skhurank from User where ID = \"" + req.body.ID + "\";";
+  const query1 = "select skhurank from user where id = \"" + req.body.ID + "\";";
 
   AssignTaskExecute_Rating = true;
   connection.query(query1, async function (err, result, fields) {
@@ -298,7 +298,7 @@ app.post("/rating", async (req, res) => {
 
 /* --------------- Ranking Part --------------- */
 app.get("/ranking", (req, res) => {
-  const sql = "select * from User order by skhurank";
+  const sql = "select * from user order by skhurank";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     res.send(result);
@@ -309,7 +309,7 @@ app.get("/ranking", (req, res) => {
 /* --------------- Recommend Algorithm Part --------------- */
 app.get("/MaxAlgorithm", (req, res) => {
   const sql =
-    "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) desc limit 0,10;";
+    "select solved_rank, id, namekr, rate, count(problem_id) as sum from solve join problem on solve.problem_id = problem.id group by problem_id having count(problem_id) order by count(problem_id) desc limit 0,10;";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log(result);
@@ -318,7 +318,7 @@ app.get("/MaxAlgorithm", (req, res) => {
 });
 app.get("/MinAlgorithm", (req, res) => {
   const sql =
-    "select SOLVED_RANK, ID, namekr, rate, count(PROBLEM_ID) as sum from Solve join Problem on Solve.PROBLEM_ID = Problem.ID group by PROBLEM_ID having count(PROBLEM_ID) order by count(PROBLEM_ID) asc limit 0,10;";
+    "select solved_rank, id, namekr, rate, count(problem_id) as sum from solve join problem on solve.problem_id = problem.id group by problem_id having count(problem_id) order by count(problem_id) asc limit 0,10;";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log(result);
@@ -327,7 +327,7 @@ app.get("/MinAlgorithm", (req, res) => {
 });
 app.get("/BestAlgorithm", (req, res) => {
   const sql =
-    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) desc limit 0,10; ";
+    "select id,namekr, rate, solved_rank from problem where id in (select problem_id from solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) desc limit 0,10; ";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log(result);
@@ -336,7 +336,7 @@ app.get("/BestAlgorithm", (req, res) => {
 });
 app.get("/WorstAlgorithm", (req, res) => {
   const sql =
-    "select ID,namekr, rate, SOLVED_RANK from Problem where ID in (select PROBLEM_ID from Solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) limit 0,10; ";
+    "select id,namekr, rate, solved_rank from problem where id in (select problem_id from solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) limit 0,10; ";
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log(result);
@@ -354,16 +354,16 @@ app.post("/proRegister", (req, res) => {
   if (b.pC === "proskhuOp12#" | b.pC === "S") {
     for (let i = 0; i < b.cN; i++) {
       const sql =
-        "insert into Lecture (professor, code, name, distribution) values(" +
+        "insert into lecture (professor, code, name, distribution) values(" +
         "'" +
-        b.pN +
+        b.pn +
         "', " +
         "'" +
-        b.sC +
+        b.sc +
         "', " +
         "'" +
-        b.sN +
-        (b.cN < 2 ? "" : "-0" + (i + 1)) +
+        b.sn +
+        (b.cn < 2 ? "" : "-0" + (i + 1)) +
         "', " +
         (i + 1) +
         ");";
@@ -397,7 +397,7 @@ app.post("/studentRegister", async (req, res) => {
   if (b.sC === "stuSK#" | b.sC === "S") {
     console.log("Student code is correct");
     let sql =
-      "insert into Student (ID, name, bojid) values(" +
+      "insert into student (id, name, bojid) values(" +
       Number(b.sI) +
       ", " +
       "'" +
@@ -427,7 +427,7 @@ app.post("/studentRegister", async (req, res) => {
 
     console.log("존재 여부 확인 완료.");
     AssignTaskExecute_StudentRegister = true;
-    sql = "insert into Learn values(" + Number(b.sI) + "," + b.lI + ");";
+    sql = "insert into learn values(" + Number(b.sI) + "," + b.lI + ");";
     console.log("수강 등록 쿼리", sql);
     connection.query(sql, async function (err, result, fields) {
       console.log("수강 등록");
@@ -468,7 +468,7 @@ app.post('/register', async (req, res) => {
   }
   AssignTaskExecute_UserRegister = true;
   console.log('solved check success');
-  let sqls = "select * from User where ID = \"" + b.uI + "\"";
+  let sqls = "select * from user where id = \"" + b.ui + "\"";
   console.log('run conntion', sqls)
 
   if (errOcc) return;
@@ -609,8 +609,9 @@ app.post('/register', async (req, res) => {
     pages++;
   }
   console.log(userid + '",' + problems + ',' + tier + ',"' + worldrank + '",' + skhurank + ',' + rating + ',"' + classs + '","' + corr)
-  const sql = 'insert into User values("'
-    + userid + '",' + problems + ',' + tier + ',"' + worldrank + '",' + skhurank + ',' + rating + ',"' + classs + '","' + corr + '","' + bojid + '");'
+  const sql = 'insert into user values("'
+    + userid + '",' + problems + ',' + tier + ',"' + worldrank + '",'
+    + skhurank + ',' + rating + ',"' + classs + '","' + corr + '","' + bojid + '");'
   console.log(sql);
   // 등록할 학생을 DB에 넣는 과정
   connection.query(sql, async function (err, result, fields) {
@@ -672,7 +673,9 @@ async function userUpdate(url, req) {
           // console.log(ti);
           bojid = req.body.gI;
           // console.log('worldrank : ',worldrank,'skhurank : ', skhurank,'userid : ', userid,'rating : ', rating,'class : ' ,classs,'problems : ', problems,'tier : ' ,tie,'bojid : ', bojid);
-          const sql = "update User set problems = " + problems + ", solvedrank = " + tie + ",worldrank=\"" + worldrank + "\",skhurank=" + skhurank + ",rating=" + rating + ",class=\"" + classs + "\",gitid = \"" + bojid + "\" where ID = \"" + userid + "\";"
+          const sql = "update user set problems = " + problems + ", solvedrank = " + tie + ",worldrank=\"" + worldrank +
+            "\",skhurank=" + skhurank + ",rating=" + rating + ",class=\"" + classs + "\",gitid = \"" + bojid + "\" where id = \""
+            + userid + "\";"
           console.log(sql)
           connection.query(sql, async function (err, result, fields) {
             if (err) {
@@ -738,7 +741,7 @@ async function solveProblem(url, userid) {
         c5 = name5;
         d5 = c5.split("</td>");
         resul5[0] = d5[0].replace(/(<([^>]+)>)|&nbsp;/ig, "")
-        const sql = "insert into Solve(USER_ID, PROBLEM_ID) values(\"" + userid + "\",\"" + resul5[0] + "\")"
+        const sql = "insert into solve(user_id, problem_id) values(\"" + userid + "\",\"" + resul5[0] + "\")"
         console.log(sql)
         try {
           connection.query(sql, async function (err, result, fields) {
@@ -786,7 +789,7 @@ async function correctionUpdate(url) {
         }
         id = resul4[1];
         correction = resul4[resul4.length - 2];
-        const sql = "update User set correction = \"" + correction + "\" where ID = \"" + id + "\";"
+        const sql = "update user set correction = \"" + correction + "\" where id = \"" + id + "\";"
         console.log(sql)
         connection.query(sql, async function (err, result, fields) {
           if (err) {
@@ -813,8 +816,8 @@ app.get("/assignments", (req, res) => {
   console.log("Assignments/get ", "is called");
   let returnStates;
   let sql =
-    "select * from Lecture;" +
-    "select ID,name,bojid,Lecture_ID from Student as s join Learn as l on s.ID=l.Student_ID order by name;";
+    "select * from lecture;" +
+    "select id,name,bojid,lecture_id from student as s join learn as l on s.id=l.student_id order by name;";
   console.log("get Lectures", sql);
 
   connection.query(sql, function (err, result, fields) {
@@ -881,7 +884,7 @@ app.post("/assignments", async (req, res) => {
     // assignment_Result=head_assignment_Result.concat(tail_assignment_Result);
     // console.log("Result-json:",JSON.stringify(assignment_Result));
     console.log("save result...");
-    sql = 'insert into Assignment_result (ID,result,lectureID) values(' + pID + ",'"
+    sql = 'insert into assignment_result (id,result,lectureid) values(' + pid + ",'"
       + JSON.stringify(assignment_Result) + "'," + lectureId + ");";
     console.log(sql);
     try {
@@ -1024,7 +1027,7 @@ async function isFinish(ID_LIST, pID, assignment_Result, flag) {
 
 async function checkResult(pID, lectureId) {
   console.log('check result existence...');
-  let sql = 'select * from Assignment_result where ID=' + pID + ' and lectureId=' + lectureId + ';';
+  let sql = 'select * from assignment_result where id=' + pid + ' and lectureid=' + lectureid + ';';
   console.log(sql);
   try {
     connection.query(sql, async function (err, result, fields) {
