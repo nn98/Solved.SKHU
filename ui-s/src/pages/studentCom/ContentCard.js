@@ -12,9 +12,7 @@ function ContentCard(props) {
       style={{
         height: props.height,
         width: props.width,
-        left: props.left,
         background: '#ffffff',
-        top: props.top,
         boxShadow: '8px 8px 28px -14px grey',
       }}
       onClick={() => pageOpen()}
@@ -46,6 +44,7 @@ function ContentCard(props) {
       </div>
     </div>
   )
+
 }
 
 export default ContentCard
