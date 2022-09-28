@@ -4,6 +4,9 @@ import ContentCard from './ContentCard'
 import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
 
+import Dialog from '@mui/material/Dialog'
+import UserPage from './userCom/userPage'
+
 function StudentInfo(props) {
   const [userOpen, setUserOpen] = useState(false)
   const [algoOpen, setAlgoOpen] = useState(false)
@@ -39,11 +42,22 @@ function StudentInfo(props) {
           ></ContentCard>
         </div>
       </Slide>
-      <MaxWidthDialog
+
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
+        open={userOpen}
+        onClose={() => setUserOpen(!userOpen)}
+      >
+        <UserPage userName={props.userName} />
+      </Dialog>
+
+      {/* <MaxWidthDialog
         title={'USER'}
         open={userOpen}
         setOpen={setUserOpen}
-      ></MaxWidthDialog>
+      ></MaxWidthDialog> */}
+
       <div style={{ display: 'inline-grid' }}>
         <Slide direction="up" in={slide} timeout={1000}>
           <div
@@ -63,11 +77,19 @@ function StudentInfo(props) {
             ></ContentCard>
           </div>
         </Slide>
-        <MaxWidthDialog
+        <Dialog
+          fullWidth={true}
+          maxWidth={'xl'}
+          open={algoOpen}
+          onClose={() => setAlgoOpen(!algoOpen)}
+        >
+          tset1
+        </Dialog>
+        {/* <MaxWidthDialog
           title={'SKHU Algorthme'}
           open={algoOpen}
           setOpen={setAlgoOpen}
-        ></MaxWidthDialog>
+        ></MaxWidthDialog> */}
 
         <Slide direction="up" in={slide} timeout={2000}>
           <div
@@ -87,8 +109,17 @@ function StudentInfo(props) {
             ></ContentCard>
           </div>
         </Slide>
-        <MaxWidthDialog open={recoOpen} setOpen={setRecoOpen}></MaxWidthDialog>
+        <Dialog
+          fullWidth={true}
+          maxWidth={'xl'}
+          open={recoOpen}
+          onClose={() => setRecoOpen(!recoOpen)}
+        >
+          tset1
+        </Dialog>
+        {/* <MaxWidthDialog open={recoOpen} setOpen={setRecoOpen}></MaxWidthDialog> */}
       </div>
+
       <Slide direction="up" in={slide} timeout={2500}>
         <div
           style={{
@@ -107,7 +138,15 @@ function StudentInfo(props) {
           ></ContentCard>
         </div>
       </Slide>
-      <MaxWidthDialog open={rankOpen} setOpen={setRankOpen}></MaxWidthDialog>
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
+        open={rankOpen}
+        onClose={() => setRankOpen(!rankOpen)}
+      >
+        tset1
+      </Dialog>
+      {/* <MaxWidthDialog open={rankOpen} setOpen={setRankOpen}></MaxWidthDialog> */}
 
       <Slide direction="up" in={slide} timeout={2500}>
         <div
@@ -127,7 +166,15 @@ function StudentInfo(props) {
           ></ContentCard>
         </div>
       </Slide>
-      <MaxWidthDialog open={randOpen} setOpen={setRandOpen}></MaxWidthDialog>
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
+        open={randOpen}
+        onClose={() => setRandOpen(!randOpen)}
+      >
+        tset1
+      </Dialog>
+      {/* <MaxWidthDialog open={randOpen} setOpen={setRandOpen}></MaxWidthDialog> */}
 
       <Slide direction="up" in={slide} timeout={2750}>
         <div
@@ -147,7 +194,15 @@ function StudentInfo(props) {
           ></ContentCard>
         </div>
       </Slide>
-      <MaxWidthDialog open={qnaOpen} setOpen={setQnAOpen}></MaxWidthDialog>
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
+        open={qnaOpen}
+        onClose={() => setQnAOpen(!qnaOpen)}
+      >
+        tset1
+      </Dialog>
+      {/* <MaxWidthDialog open={qnaOpen} setOpen={setQnAOpen}></MaxWidthDialog> */}
     </>
   )
 }

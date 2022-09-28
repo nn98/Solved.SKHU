@@ -1,16 +1,17 @@
-import React from "react";
-import "./ContentCard.css";
+import React from 'react'
+import './ContentCard.css'
 
 function ContentCard(props) {
   const pageOpen = () => {
-    props.setOpen(true);
-  };
+    props.setOpen(true)
+  }
 
   return (
     <>
       <div
         className="content_card"
         style={{
+          backgroundColor: '#ffffff',
           height: props.height,
           width: props.width,
         }}
@@ -21,7 +22,7 @@ function ContentCard(props) {
         {props.text}
       </div>
     </>
-  );
+  )
 }
 
-export default ContentCard;
+export default ContentCard

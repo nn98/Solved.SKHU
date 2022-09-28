@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 
+import stbg from './studentCom/userCom/image/STBG.png'
+
 // Front.css
 const ProButton = styled.button`
   background-color: #00000000;
@@ -47,7 +49,11 @@ const StuDiv = styled.div`
   width: 100%;
   height: 100vh;
   left: 50%;
-  background-color: greenyellow;
+
+  background-image: url(${stbg});
+  background-size: cover;
+
+  //background-color: greenyellow;
   position: absolute;
   z-index: 1;
 `

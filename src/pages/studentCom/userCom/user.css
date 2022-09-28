@@ -1,0 +1,225 @@
+.use {
+  width: 90%;
+  margin: 0% 5%;
+}
+
+.react-calendar-heatmap .color-beammp-0 {
+  fill: #ecfcec;
+}
+.react-calendar-heatmap .color-beammp-1 {
+  fill: #82ffd5;
+}
+.react-calendar-heatmap .color-beammp-2 {
+  fill: #00ffaa;
+}
+.react-calendar-heatmap .color-beammp-3 {
+  fill: #00b97b;
+}
+.react-calendar-heatmap .color-beammp-4 {
+  fill: #006d49;
+}
+.user .head {
+  box-shadow: 5px 5px 10px #ccc;
+  padding: 20px;
+  margin-left: 10%;
+  border-radius: 5px;
+  /* top: 13%; */
+  bottom: 30px;
+  right: 50px;
+  color: #fefefedd;
+  position: fixed;
+  z-index: 1;
+  width: auto;
+}
+
+.use .zandi {
+  width: 80%;
+  margin: 0 10%;
+  height: 100%;
+  -ms-overflow-style: none;
+  margin-bottom: 2%;
+  margin-top: 3.2%;
+  padding: 10px;
+  box-shadow: 8px 8px 28px -14px grey;
+}
+
+.use .tearTable {
+  background-color: #fff;
+  width: 50%;
+  float: left;
+  margin-bottom: 5%;
+  padding: 1%;
+  border-radius: 0;
+  box-shadow: 8px 8px 28px -14px grey;
+
+  font-size: 1.2rem;
+}
+
+.use .tearTable .teardata {
+  width: 90%;
+  float: right;
+  display: block;
+  margin: 0 5%;
+}
+
+.use .tearTable .teardata .datahead {
+  width: 33%;
+  display: inline-block;
+  font-weight: 700;
+  text-align: right;
+  margin-bottom: 5%;
+}
+
+.use .tearTable .teardata .datahead:nth-child(1) {
+  text-align: left;
+}
+
+.use .tearTable .teardata .data {
+  width: 33%;
+  display: inline-block;
+  text-align: right;
+  margin-bottom: 2%;
+}
+
+.use .tearTable .teardata .data:nth-child(1) {
+  text-align: left;
+  padding-left: 1%;
+}
+
+.use .tagTable {
+  background-color: #fff;
+  width: 50%;
+  overflow: hidden;
+  padding: 1%;
+  text-align: center;
+  box-shadow: 8px 8px 28px -14px grey;
+  margin-bottom: 3%;
+  font-size: 1.2rem;
+}
+
+.use .problem {
+  text-align: center;
+  width: 41%;
+  float: right;
+  /* border: 1px solid #000; */
+  height: 185vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  box-shadow: 8px 8px 28px -14px grey;
+
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1300px) {
+  .use .problem {
+    text-align: center;
+    width: 41%;
+    float: right;
+    /* border: 1px solid #000; */
+    height: 120vh;
+    overflow: overlay;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    box-shadow: 8px 8px 28px -14px grey;
+    border-radius: 0px 0px 5px 5px;
+    font-size: 1.2rem;
+  }
+}
+
+.use .pr-head {
+  /* margin-left: 3%; */
+  width: 100%;
+  transition: background-color 1s;
+}
+.use .pr-head span {
+  display: inline-block;
+  width: 20%;
+}
+.pr-head:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+.use .pr-head span:nth-child(1) {
+  text-align: left;
+  width: 5%;
+  vertical-align: top;
+}
+.use .pr-head span:nth-child(2) {
+  text-align: left;
+  width: 15%;
+  padding: 1% 0;
+}
+.use .pr-head span:nth-child(3) {
+  width: 40%;
+  padding: 1% 0;
+  vertical-align: middle;
+}
+#user-color {
+  color: #555;
+}
+#pro-color {
+  color: #555;
+  font-weight: bold;
+}
+.use .p-head {
+  margin-left: 3%;
+  width: 95%;
+  padding: 1%;
+  transition: background-color 1s;
+}
+
+.use .p-head:hover {
+  background-color: gold;
+}
+
+.use .p-head span {
+  display: inline-block;
+  width: 20%;
+}
+.p-head:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+.tagTable .p-head:nth-child(even) {
+  background-color: #ffffff;
+}
+.tagTable .p-head span:nth-child(1) {
+  text-align: center;
+  width: 40%;
+}
+
+.tagTable .p-head:hover {
+  background-color: gold;
+}
+
+.tagTable .overScroll {
+  height: 50vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+
+.use .p-head span:nth-child(2) {
+  width: 40%;
+}
+.use p {
+  text-align: left;
+  color: gray;
+  padding-left: 2%;
+}
+
+.use .BigTears {
+  width: 33%;
+  border: 0px;
+  display: inline-block;
+  text-align: right;
+  /* padding: 2% 0% 2% 0%; */
+  margin-bottom: 5%;
+}
+.use .tearTable .teardata .BigTears:nth-child(1) {
+  text-align: left;
+  padding-left: 1%;
+}
+
+.use .teardata .BigTears:hover {
+  cursor: pointer;
+}
