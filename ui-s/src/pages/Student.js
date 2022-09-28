@@ -14,9 +14,6 @@ const searchMove1 = keyframes`
 const searchMove2 = keyframes`
 from {width: 90%; px: 2.9; py: 2;}
 to {width: 80%; px: 1; py: 2;}`
-const fadein = keyframes`
-from {opacity: 0; }
-to {opacity: 1; }`
 
 function Student() {
   const [change, setChange] = useState(false)
@@ -28,7 +25,7 @@ function Student() {
         height: '100vh',
       }}
     >
-      <div className="test" style={{ animation: `${fadein} 0.5s` }}>
+      <div className="test">
         <Box
           sx={Object.assign(
             change

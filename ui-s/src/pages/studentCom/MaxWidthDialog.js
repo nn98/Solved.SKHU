@@ -1,17 +1,19 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import * as React from 'react'
+// import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+// import DialogActions from '@mui/material/DialogActions'
+// import DialogContent from '@mui/material/DialogContent'
+// import DialogContentText from '@mui/material/DialogContentText'
+// import DialogTitle from '@mui/material/DialogTitle'
+
+import UserPage from './userCom/userPage'
 // import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 // import { styled } from "@mui/material/styles";
 
 export default function MaxWidthDialog(props) {
   const handleClose = () => {
-    props.setOpen(false);
-  };
+    props.setOpen(false)
+  }
 
   //   const HtmlTooltip = styled(({ className, ...props }) => (
   //     <Tooltip {...props} classes={{ popper: className }} />
@@ -28,18 +30,18 @@ export default function MaxWidthDialog(props) {
     <React.Fragment>
       <Dialog
         fullWidth={true}
-        maxWidth={"xl"}
+        maxWidth={'xl'}
         open={props.open}
         onClose={handleClose}
       >
-        <DialogTitle>{props.title}</DialogTitle>
+        {/* <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
           <DialogContentText>테스트 중</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </React.Fragment>
-  );
+  )
 }

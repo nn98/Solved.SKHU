@@ -1,10 +1,10 @@
-import React from "react";
-import "./ContentCard.css";
+import React from 'react'
+import './ContentCard.css'
 
 function ContentCard(props) {
   const pageOpen = () => {
-    props.setOpen(true);
-  };
+    props.setOpen(true)
+  }
 
   return (
     <div
@@ -13,15 +13,39 @@ function ContentCard(props) {
         height: props.height,
         width: props.width,
         left: props.left,
+        background: '#ffffff',
         top: props.top,
+        boxShadow: '8px 8px 28px -14px grey',
       }}
       onClick={() => pageOpen()}
     >
-      {props.title}
-      <br />
-      {props.text}
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url(${props.testttt})`,
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+        }}
+      >
+        <div
+          style={{
+            background: '#00000088',
+            color: '#ffffff',
+            width: '30%',
+            height: '20%',
+            textAlign: 'center',
+            fontSize: '300%',
+          }}
+        >
+          {props.title}
+        </div>
+        <br />
+        {props.text}
+      </div>
     </div>
-  );
+  )
 }
 
-export default ContentCard;
+export default ContentCard

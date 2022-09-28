@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
-import MaxWidthDialog from './MaxWidthDialog'
 import ContentCard from './ContentCard'
+
+import Dialog from '@mui/material/Dialog'
+
+import UserPage from './userCom/userPage'
+import testttt from './image/52266-ledus-panda.json'
 
 function StudentInfo() {
   const [userOpen, setUserOpen] = useState(false)
@@ -26,13 +30,18 @@ function StudentInfo() {
         top={'2%'}
         open={userOpen}
         setOpen={setUserOpen}
-      ></ContentCard>
-      <MaxWidthDialog
-        title={'USER'}
+        testttt={testttt}
+      />
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
         open={userOpen}
-        setOpen={setUserOpen}
-      ></MaxWidthDialog>
+        onClose={() => setUserOpen(!userOpen)}
+      >
+        <UserPage />
+      </Dialog>
 
+      {/* 성공회대 추천 알고리즘 */}
       <ContentCard
         title={'SKHU Algorthme'}
         text={'성공회대 추천 알고리즘'}
@@ -43,12 +52,28 @@ function StudentInfo() {
         open={algoOpen}
         setOpen={setAlgoOpen}
       ></ContentCard>
-      <MaxWidthDialog
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
+        open={algoOpen}
+        onClose={() => setAlgoOpen(!algoOpen)}
+      >
+        <div
+          style={{
+            background: 'red',
+            backgroundImage: 'url("./image/test.png")',
+          }}
+        >
+          algorithm
+        </div>
+      </Dialog>
+      {/* <MaxWidthDialog
         title={'SKHU Algorthme'}
         open={algoOpen}
         setOpen={setAlgoOpen}
-      ></MaxWidthDialog>
+      ></MaxWidthDialog> */}
 
+      {/* 사용자 추천 알고리즘 */}
       <ContentCard
         title={'Recommand'}
         text={'사용자 추천 알고리즘'}
@@ -59,7 +84,15 @@ function StudentInfo() {
         open={recoOpen}
         setOpen={setRecoOpen}
       ></ContentCard>
-      <MaxWidthDialog open={recoOpen} setOpen={setRecoOpen}></MaxWidthDialog>
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
+        open={recoOpen}
+        onClose={() => setRecoOpen(!recoOpen)}
+      >
+        recommend
+      </Dialog>
+      {/* <MaxWidthDialog open={recoOpen} setOpen={setRecoOpen}></MaxWidthDialog> */}
 
       <ContentCard
         title={'Ranking'}
@@ -71,7 +104,17 @@ function StudentInfo() {
         open={rankOpen}
         setOpen={setRankOpen}
       ></ContentCard>
-      <MaxWidthDialog open={rankOpen} setOpen={setRankOpen}></MaxWidthDialog>
+
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
+        open={rankOpen}
+        onClose={() => setRankOpen(!rankOpen)}
+      >
+        rank
+      </Dialog>
+
+      {/* <MaxWidthDialog open={rankOpen} setOpen={setRankOpen}></MaxWidthDialog> */}
 
       <ContentCard
         title={'Random'}
@@ -82,8 +125,16 @@ function StudentInfo() {
         top={'50%'}
         open={randOpen}
         setOpen={setRandOpen}
-      ></ContentCard>
-      <MaxWidthDialog open={randOpen} setOpen={setRandOpen}></MaxWidthDialog>
+      />
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
+        open={randOpen}
+        onClose={() => setRandOpen(!randOpen)}
+      >
+        random
+      </Dialog>
+      {/* <MaxWidthDialog open={randOpen} setOpen={setRandOpen}></MaxWidthDialog> */}
 
       <ContentCard
         title={'QnA'}
@@ -94,8 +145,16 @@ function StudentInfo() {
         top={'73%'}
         open={qnaOpen}
         setOpen={setQnAOpen}
-      ></ContentCard>
-      <MaxWidthDialog open={qnaOpen} setOpen={setQnAOpen}></MaxWidthDialog>
+      />
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xl'}
+        open={qnaOpen}
+        onClose={() => setQnAOpen(!qnaOpen)}
+      >
+        random
+      </Dialog>
+      {/* <MaxWidthDialog open={qnaOpen} setOpen={setQnAOpen}></MaxWidthDialog> */}
     </div>
   )
 }
