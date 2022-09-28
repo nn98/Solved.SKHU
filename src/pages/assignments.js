@@ -133,6 +133,7 @@ const Assignments = (e) => {
         .then((data) => {
           // console.log("Lec:", data[0]);
           // console.log("Stu:", data[1]);
+	  console.log("Datas:",data);
           setLecture(data[0])
           setStudent(data[1])
           setID_LIST(data[1])
