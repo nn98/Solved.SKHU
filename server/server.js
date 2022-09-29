@@ -37,8 +37,7 @@ app.listen(port, () => {
 
 var mysql = require("mysql");
 var connection = mysql.createPool({
-  host: "localhost",
-  port: 21006,
+  host: "sol-skhu.duckdns.org",
   user: "Project",
   password: "testing00",
   database: "swp",
@@ -845,8 +844,10 @@ app.post("/assignments", async (req, res) => {
   console.log("Problem ID\t", req.body.PID);
   let pID = req.body.PID;
   let ID_LIST = req.body.ID_LIST;
+  let deadLine = req.body.DeadLine;
   let lectureId = ID_LIST[0].Lecture_ID;
-  let reAssignment = req.body.reAss;
+  let reAssignment = req.body.reAssignment;
+  console.log('deadline:',deadLine);
   asyncReturn = true;
   checkResult(pID, lectureId);
   console.log('wait', assignment_Result.length);
@@ -961,6 +962,8 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
               red.push(v[j++].replace(/(<([^>]+)>)/gi, ""))
             );
           } else {
+            let y = name0[i].split("data-timestamp=")[1].split("\"")[0];
+            console.log("data-timestamp=",y);
             let x = name0[i].lastIndexOf("data-original-title=");
             if (x >= 0) {
               red.push(
