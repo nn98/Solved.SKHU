@@ -162,6 +162,7 @@ function StudentInfo(props) {
         >
           <ContentCard
             question={question}
+            shadow={'none'}
             height={'21vh'}
             width={'13vw'}
             open={randOpen}

@@ -64,6 +64,7 @@ function Student() {
                 setChange(true)
               }
             }}
+            autoComplete="off"
             variant="standard"
             id="User_ID"
             placeholder="Solved.ac ID 입력"
