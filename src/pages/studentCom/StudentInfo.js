@@ -5,7 +5,9 @@ import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
 
 import Dialog from '@mui/material/Dialog'
+
 import UserPage from './userCom/userPage'
+import AlgoPage from './algoCom/algoPage'
 
 function StudentInfo(props) {
   const [userOpen, setUserOpen] = useState(false)
@@ -83,7 +85,7 @@ function StudentInfo(props) {
           open={algoOpen}
           onClose={() => setAlgoOpen(!algoOpen)}
         >
-          tset1
+          <AlgoPage />
         </Dialog>
         {/* <MaxWidthDialog
           title={'SKHU Algorthme'}
