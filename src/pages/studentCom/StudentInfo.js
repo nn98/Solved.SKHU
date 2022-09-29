@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
-import MaxWidthDialog from './MaxWidthDialog'
+// import MaxWidthDialog from './MaxWidthDialog'
 import ContentCard from './ContentCard'
 import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
 
 import Dialog from '@mui/material/Dialog'
-
 import UserPage from './userCom/userPage'
 import AlgoPage from './algoCom/algoPage'
+
+import userCard from '../studentCom/userCom/image/user_page_card.png'
+import recoCard from '../studentCom/userCom/image/reco_page_card.png'
+import algoCard from '../studentCom/userCom/image/algo_page_card.png'
+import rankCard from '../studentCom/userCom/image/rank_page_card.png'
+import qnaCard from '../studentCom/userCom/image/qna_page_card.png'
+import question from '../studentCom/userCom/image/question.json'
 
 function StudentInfo(props) {
   const [userOpen, setUserOpen] = useState(false)
@@ -35,8 +41,7 @@ function StudentInfo(props) {
           }}
         >
           <ContentCard
-            title={'USER'}
-            text={'내 정보 확인'}
+            url={userCard}
             height={'46vh'}
             width={'46vw'}
             open={userOpen}
@@ -70,20 +75,19 @@ function StudentInfo(props) {
             }}
           >
             <ContentCard
-              title={'SKHU Algorthme'}
-              text={'성공회대 추천 알고리즘'}
+              url={recoCard}
               height={'21.75vh'}
               width={'21vw'}
-              open={algoOpen}
-              setOpen={setAlgoOpen}
+              open={recoOpen}
+              setOpen={setRecoOpen}
             ></ContentCard>
           </div>
         </Slide>
         <Dialog
           fullWidth={true}
           maxWidth={'xl'}
-          open={algoOpen}
-          onClose={() => setAlgoOpen(!algoOpen)}
+          open={recoOpen}
+          onClose={() => setRecoOpen(!recoOpen)}
         >
           <AlgoPage />
         </Dialog>
@@ -102,20 +106,19 @@ function StudentInfo(props) {
             }}
           >
             <ContentCard
-              title={'Recommand'}
-              text={'사용자 추천 알고리즘'}
+              url={algoCard}
               height={'21.75vh'}
               width={'21vw'}
-              open={recoOpen}
-              setOpen={setRecoOpen}
+              open={algoOpen}
+              setOpen={setAlgoOpen}
             ></ContentCard>
           </div>
         </Slide>
         <Dialog
           fullWidth={true}
           maxWidth={'xl'}
-          open={recoOpen}
-          onClose={() => setRecoOpen(!recoOpen)}
+          open={algoOpen}
+          onClose={() => setAlgoOpen(!algoOpen)}
         >
           tset1
         </Dialog>
@@ -131,8 +134,7 @@ function StudentInfo(props) {
           }}
         >
           <ContentCard
-            title={'Ranking'}
-            text={'성공회대 구성원 랭킹'}
+            url={rankCard}
             height={'21vh'}
             width={'27vw'}
             open={rankOpen}
@@ -159,8 +161,7 @@ function StudentInfo(props) {
           }}
         >
           <ContentCard
-            title={'Random'}
-            text={'백준 문제 랜덤 뽑기'}
+            question={question}
             height={'21vh'}
             width={'13vw'}
             open={randOpen}
@@ -187,8 +188,7 @@ function StudentInfo(props) {
           }}
         >
           <ContentCard
-            title={'QnA'}
-            text={'익명게시판'}
+            url={qnaCard}
             height={'25vh'}
             width={'50vw'}
             open={qnaOpen}

@@ -1,5 +1,16 @@
 .content_card {
-  border: 0.5px solid gray;
+  /* border: 0.5px solid gray; */
   border-radius: 5%;
+  box-shadow: 5px 5px 15px 1px black;
   display: inline-block;
+}
+
+.content_card:hover {
+  transform: scale(105%);
+  transition: 0.5s;
+}
+
+.content_card:not(:hover) {
+  transform: scale(100%);
+  transition: 0.5s;
 }
