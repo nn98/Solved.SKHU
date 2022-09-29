@@ -16,6 +16,7 @@ const Assignments = (e) => {
   const [subject, setSubject] = useState('')
   const [pnumber, setPnumber] = useState()
   const [pdate, setPdate] = useState()
+  const [reAssignment, setReAssignment] = useState(true)
   const [copy, setCopy] = useState('')
   const [ID_LIST, setID_LIST] = useState()
   const [lecture, setLecture] = useState([])
@@ -283,6 +284,17 @@ const Assignments = (e) => {
           onChange={(e) => setPdate(e.target.value)}
           value={pdate || ''}
         ></input>
+        <h3><label>재채점<input
+          type="checkbox" 
+          onChange={(e) => {
+            setReAssignment(!reAssignment)
+              // console.log('e.checked:',e.target.checked);
+              console.log("ReAssignment:",reAssignment);
+            }}
+          value={reAssignment || ''}
+          checked={!reAssignment}
+        ></input></label></h3>
+        
 
         <LoadingButton
           size="small"
@@ -297,6 +309,7 @@ const Assignments = (e) => {
                 ID_LIST,
                 pnumber,
                 pdate,
+                reAssignment,
               })
           }}
           loading={loading}

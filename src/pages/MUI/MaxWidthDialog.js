@@ -71,7 +71,25 @@ export default function MaxWidthDialog(props) {
                                 <tr>
                                   {result.map((value, index) => (
                                     <React.Fragment key={index}>
-                                      {index === 1 ? (
+                                      {index === 0 ? (
+                                        <HtmlTooltip
+                                          title={"코드 비공개시 확인 불가"}
+                                          placement="top"
+                                        >
+                                        <td>
+                                          <a
+                                            href={
+                                              "https://www.acmicpc.net/source/" +
+                                              value
+                                            }
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                          >
+                                            {value}
+                                          </a>
+                                          </td>
+                                          </HtmlTooltip>
+                                      ) : index === 1 ? (
                                         <td>
                                           <a
                                             href={
