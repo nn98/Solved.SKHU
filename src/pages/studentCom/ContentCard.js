@@ -6,7 +6,6 @@ function ContentCard(props) {
   const pageOpen = () => {
     props.setOpen(true)
   }
-
   return (
     <>
       <div
@@ -24,9 +23,8 @@ function ContentCard(props) {
           <Lottie
             animationData={props.question}
             style={{
-              width: '80%',
+              width: '100%',
               position: 'absolute',
-              padding: '5% 10% 0% 10%',
             }}
           />
         </div>

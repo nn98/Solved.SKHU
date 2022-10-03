@@ -22,7 +22,7 @@ function ProCard(props) {
     height: 40%;
     margin-top: -0.2%;
     margin-left: 10%;
-    display: inline-block;
+    // display: inline-block;
     background-repeat: no-repeat;
     background-image: url(https://static.solved.ac/tier_small/${props.proTier}.svg);
   `
@@ -56,6 +56,7 @@ function ProCard(props) {
     <ProCardBackground
       id="proCard"
       style={{
+        top : `${props.top}`,
         width: `${props.width}`,
         height: `${props.height}`,
         margin: `${props.margin}`,
