@@ -1,0 +1,89 @@
+.assign h1 {
+  text-align: center;
+  display: inline-block;
+  width: 60%;
+}
+
+.assign h3 {
+  margin: 0% 0% 10% 0%;
+}
+
+.input {
+  width: 50%;
+  margin: 0% 0% 0% 5%;
+  display: inline-block;
+}
+
+.buttonList {
+  color: #f0f0f0;
+  padding: "10%";
+  height: 100vh;
+  width: 25%;
+  float: right;
+}
+
+.buttonList input[type="text"] {
+  height: 3vh;
+  width: 100%;
+  margin: 0% 0% 10% 0%;
+}
+.buttonList input[type="date"] {
+  height: 3vh;
+  width: 100%;
+  margin: 0% 0% 10% 0%;
+}
+
+.buttonList button {
+  margin-bottom: 10%;
+  display: block;
+}
+
+.assign p {
+  display: inline;
+  font-size: large;
+  margin-right: 12px;
+}
+
+.assign .p-head {
+  width: 95%;
+  margin-left: 1.5%;
+  padding: 1%;
+  transition: background-color 1s;
+}
+
+.assign .p-head:hover {
+  background-color: gold;
+}
+
+.assign .p-head span {
+  display: inline-block;
+  width: 20%;
+}
+.assign .p-head:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+.assign .p-head:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.assign .p-head:hover {
+  background-color: gold;
+}
+
+.assign .overScroll {
+  text-align: center;
+  height: 80vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+
+/* .assign .p-head span:nth-child(2) {
+    width: 20%;
+  } */
+
+.subPaper h4 {
+  padding: 3%;
+  margin: 0%;
+}
