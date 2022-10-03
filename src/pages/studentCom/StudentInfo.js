@@ -9,13 +9,15 @@ import UserPage from './userCom/userPage'
 import RecoPage from './recoCom/recoPage'
 import Rank from './rankCom/rank'
 import QnA from './QnA/QnA'
+import RandomPage from './randomCom/randomPage'
 
 import userCard from '../studentCom/userCom/image/user_page_card.png'
 import recoCard from '../studentCom/userCom/image/reco_page_card.png'
 import algoCard from '../studentCom/userCom/image/algo_page_card.png'
 import rankCard from '../studentCom/userCom/image/rank_page_card.png'
 import qnaCard from '../studentCom/userCom/image/qna_page_card.png'
-import question from '../studentCom/userCom/image/question.json'
+import question from './userCom/image/question.json'
+import panda from './userCom/image/panda.gif'
 
 function StudentInfo(props) {
   const [userOpen, setUserOpen] = useState(false)
@@ -31,9 +33,16 @@ function StudentInfo(props) {
       setSlide(true)
     }, 1000)
   }, [])
-
   return (
     <>
+      <div className="panda">
+        <img
+          src={panda}
+          alt="panda"
+          style={{ position: 'absolute', width: '20vw', bottom: '1vh' }}
+        />
+      </div>
+
       <Slide direction="up" in={slide} timeout={1000}>
         <div
           style={{
@@ -178,13 +187,23 @@ function StudentInfo(props) {
           ></ContentCard>
         </div>
       </Slide>
+
       <Dialog
         fullWidth={true}
         maxWidth={'xl'}
         open={randOpen}
         onClose={() => setRandOpen(!randOpen)}
+        PaperProps={{
+          style: {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+            color: 'red',
+            fontSize: '5rem',
+            textAlign: 'center',
+          },
+        }}
       >
-        tset1
+        <RandomPage randOpen={randOpen} />
       </Dialog>
       {/* <MaxWidthDialog open={randOpen} setOpen={setRandOpen}></MaxWidthDialog> */}
 
@@ -217,5 +236,4 @@ function StudentInfo(props) {
     </>
   )
 }
-
 export default StudentInfo

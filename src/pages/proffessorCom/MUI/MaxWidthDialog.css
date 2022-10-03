@@ -1,0 +1,67 @@
+.detail {
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.detail td {
+  border: 1px solid black;
+  padding: 10px;
+}
+.detail th {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  text-align: left;
+  padding: 6px;
+}
+
+.detail td:nth-child(1) {
+  width: 9%;
+}
+.detail td:nth-child(2) {
+  width: 11%;
+}
+
+/* 백준 아이디, 문제번호 칸 스타일 */
+.detail td:nth-child(2) a {
+  color: #3162c7;
+  text-decoration: none;
+}
+.detail td:nth-child(2) a:hover {
+  text-decoration: underline;
+}
+.detail td:nth-child(3) a {
+  color: green;
+  text-decoration: none;
+}
+.detail td:nth-child(3) a:hover {
+  text-decoration: underline;
+}
+/* 백준 아이디, 문제번호 칸 스타일 */
+
+.detail td:nth-child(3) {
+  font-weight: bold;
+  width: 8%;
+}
+.detail td:nth-child(4) {
+  font-weight: bold;
+  width: 28%;
+}
+.detail td:nth-child(5) {
+  width: 10%;
+}
+.detail td:nth-child(6) {
+  width: 8%;
+}
+.detail td:nth-child(7) {
+  width: 9%;
+}
+.detail td:nth-child(8) {
+  width: 8%;
+}
+.detail td:nth-child(9) {
+  width: 9%;
+  color: #3162c7;
+  cursor: pointer;
+}
