@@ -37,7 +37,7 @@ app.listen(port, () => {
 
 var mysql = require("mysql");
 var connection = mysql.createPool({
-  host: "sol-skhu.duckdns.org",
+  host: "132.145.93.241",
   user: "Project",
   password: "testing00",
   database: "swp",
