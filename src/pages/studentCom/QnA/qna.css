@@ -1,0 +1,235 @@
+.comments {
+  width: 60%;
+  text-align: center;
+  margin: auto;
+  height: 100vh;
+}
+
+.comments_create {
+  float: right;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.comments_input {
+  /* border: 1px solid #808080; */
+  border-radius: 1%;
+  text-align: left;
+  margin: 1% 0 0 0;
+  height: auto;
+}
+
+.comments_input_name {
+  border: none;
+  border: 1px solid #f5f6f8;
+  text-align: left;
+  height: auto;
+  padding: 0.7rem 0.5rem 0.3rem 0.5rem;
+  border-radius: 5px;
+  margin: 0 0.5rem 0.5rem 0;
+}
+.comments_input_name:focus {
+  outline: none;
+  border-bottom: 1px solid #bdbdbd;
+}
+.comments_input_password {
+  border: none;
+  border: 1px solid #f5f6f8;
+  text-align: left;
+  height: auto;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 0 0.5rem 0.5rem 0;
+}
+.comments_input_password:focus {
+  outline: none;
+  border-bottom: 1px solid #bdbdbd;
+}
+.comment_input_area {
+  resize: none;
+  padding: 1rem 1rem 1.5rem;
+  outline: none;
+  border: 1px solid #f5f6f8;
+  margin-bottom: 1.5rem;
+  width: 97%;
+  border-radius: 4px;
+  min-height: 6.125rem;
+  font-size: 1rem;
+  color: #212529;
+  line-height: 1.75;
+  background-color: #fff;
+}
+.comment_input_area:focus {
+  border: 1px solid #bdbdbd;
+}
+.comment_input_button {
+  display: flex;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+}
+.comment_button_inner {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: #0adea1;
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 0px 1.25rem;
+  height: 2rem;
+  font-size: 1rem;
+}
+
+.comments_print {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #bdbdbd;
+  border-radius: 1%;
+  text-align: left;
+  margin: 1% 0 0 0;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.innerComments_print {
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  background-color: rgba(0, 0, 0, 0.016);
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-top: 1.3125rem;
+}
+
+.comments_print_user {
+  font-size: x-large;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.comments_print_date {
+  font-size: large;
+  margin-right: 1%;
+  color: #868e96;
+}
+
+.comments_print_content {
+  font-size: x-large;
+  font-weight: lighter;
+  padding: 1% 0 1% 0;
+  word-break: break-all;
+  margin-bottom: 1.5rem;
+}
+.innerComments_button_add {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  color: #0adea1;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comment_button {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: #0adea1;
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 0px 1.25rem;
+  height: 2rem;
+  font-size: 1rem;
+  /*  display: inline-block;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 2rem;
+  margin: 0 0 0.5% 0;
+  border-radius: 4px; */
+}
+
+.comment_delete_button {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: #fff;
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 0.8% 0.8%;
+  /* height: 2rem; */
+  font-size: 1%;
+  /*  display: inline-block;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 2rem;
+  margin: 0 0 0.5% 0;
+  border-radius: 4px; */
+  /* vertical-align: text-top; */
+  float: right;
+  margin-top: 0.5rem;
+}
+.comment_delete_button:hover {
+  background: #ff4949;
+}
+
+.input_name {
+  display: block;
+  width: 20rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #212529;
+  padding: 1rem;
+  border: 1px solid #f5f6f8;
+  background-color: #fff;
+  outline: none;
+  margin-top: 1.5rem;
+}
+.input_name:focus {
+  border: 1px solid #bdbdbd;
+}
+.input_password {
+  display: block;
+  width: 20rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #212529;
+  border: 1px solid #f5f6f8;
+  padding: 1rem;
+  outline: none;
+  background-color: #fff;
+  margin-top: 1.5rem;
+}
+.input_password:focus {
+  border: 1px solid #bdbdbd;
+}
+.input_button {
+  /* width: 230px; */
+  margin-top: 1.5rem;
+  width: 22rem;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  background: #0adea1;
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 0px 1.25rem;
+  height: 2rem;
+  font-size: 1rem;
+}

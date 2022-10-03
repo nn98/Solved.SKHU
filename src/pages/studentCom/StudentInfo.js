@@ -6,7 +6,9 @@ import { useEffect } from 'react'
 
 import Dialog from '@mui/material/Dialog'
 import UserPage from './userCom/userPage'
-import AlgoPage from './algoCom/algoPage'
+import RecoPage from './recoCom/recoPage'
+import Rank from './rankCom/rank'
+import QnA from './QnA/QnA'
 
 import userCard from '../studentCom/userCom/image/user_page_card.png'
 import recoCard from '../studentCom/userCom/image/reco_page_card.png'
@@ -89,7 +91,7 @@ function StudentInfo(props) {
           open={recoOpen}
           onClose={() => setRecoOpen(!recoOpen)}
         >
-          <AlgoPage />
+          <RecoPage recommend={props.recommend} />
         </Dialog>
         {/* <MaxWidthDialog
           title={'SKHU Algorthme'}
@@ -147,8 +149,14 @@ function StudentInfo(props) {
         maxWidth={'xl'}
         open={rankOpen}
         onClose={() => setRankOpen(!rankOpen)}
+        PaperProps={{
+          style: {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+          },
+        }}
       >
-        tset1
+        <Rank ranking={props.ranking} />
       </Dialog>
       {/* <MaxWidthDialog open={rankOpen} setOpen={setRankOpen}></MaxWidthDialog> */}
 
@@ -203,7 +211,7 @@ function StudentInfo(props) {
         open={qnaOpen}
         onClose={() => setQnAOpen(!qnaOpen)}
       >
-        tset1
+        <QnA serverAddress={props.serverAddress} />
       </Dialog>
       {/* <MaxWidthDialog open={qnaOpen} setOpen={setQnAOpen}></MaxWidthDialog> */}
     </>

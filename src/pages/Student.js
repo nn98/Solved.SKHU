@@ -20,7 +20,7 @@ const fadein = keyframes`
 from {opacity: 0; }
 to {opacity: 1; }`
 
-function Student() {
+function Student(props) {
   const [change, setChange] = useState(false)
   const [userName, setUserName] = useState('')
 
@@ -89,7 +89,16 @@ function Student() {
           />
         </Box>
       </div>
-      {change ? <StudentInfo userName={userName} /> : <></>}
+      {change ? (
+        <StudentInfo
+          userName={userName}
+          ranking={props.ranking}
+          serverAddress={props.serverAddress}
+          recommend={props.recommend}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   )
 }

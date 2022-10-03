@@ -1,0 +1,63 @@
+.rank {
+  width: 80%;
+  margin: 0% 10%;
+}
+
+.rankTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.rankTable th {
+  background-color: black;
+  color: white;
+  padding: 1% 0%;
+}
+.rankTable th:nth-child(1) {
+  border-radius: 5% 0% 0% 0%;
+}
+.rankTable th:nth-child(7) {
+  border-radius: 0% 5% 0% 0%;
+}
+
+.rankTable td {
+  text-align: center;
+  padding: 1%;
+}
+.rankTable td:nth-child(1) {
+  width: 10%;
+}
+.rankTable td:nth-child(2) {
+  width: 10%;
+}
+.rankTable td:nth-child(3) {
+  text-align: left;
+  padding-left: 2%;
+}
+.rankTable td:nth-child(4) {
+  width: 10%;
+}
+.rankTable td:nth-child(5) {
+  text-align: center;
+  width: 8%;
+}
+.rankTable td:nth-child(6) {
+  width: 10%;
+}
+.rankTable td:nth-child(7) {
+  width: 10%;
+}
+.rankTable tr:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+.rankTable tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.rank a {
+  color: black;
+  text-decoration: none;
+}
+
+.rank a:hover {
+  text-decoration: underline;
+}

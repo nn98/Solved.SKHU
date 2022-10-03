@@ -1,3 +1,17 @@
 body {
   overflow: hidden;
 }
+
+.rr {
+  width: 100vw;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1300px) {
+  .rr {
+    width: 100vw;
+    overflow-y: hidden;
+  }
+}
