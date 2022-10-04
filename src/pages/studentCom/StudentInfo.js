@@ -214,7 +214,11 @@ function StudentInfo(props) {
           },
         }}
       >
-        <RandomPage randOpen={randOpen} setOpen={setRandOpen} />
+        <RandomPage
+          randOpen={randOpen}
+          serverAddress={props.serverAddress}
+          setOpen={setRandOpen}
+        />
       </Dialog>
       {/* <MaxWidthDialog open={randOpen} setOpen={setRandOpen}></MaxWidthDialog> */}
 
