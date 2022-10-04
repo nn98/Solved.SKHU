@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, } from 'react'
 import Lottie from 'lottie-react'
 import randomBox from './image/randomBox.json'
-import test1 from './image/question5.json'
-import test2 from './image/question1.json'
+import BoxEffect from './image/BoxEffect.json'
 import ProCard from '../recoCom/proCard'
 function RandomPage(props) {
   const [time, setTime] = useState(0)
+  const [time2, setTime2] = useState(0)
   useEffect(
-    () =>
+    () =>{
       setTimeout(() => {
         setTime(1)
         console.log('5555')
-      }, 1000),
-    []
+      }, 1000)
+      setTimeout(() => {
+        setTime2(1)
+        console.log('5555')
+      }, 600)}
+      ,[]
   )
-
   // var randomNo = (Math.floor)(Math.random()*24726+1000)
   return (
     <div>
@@ -29,9 +32,9 @@ function RandomPage(props) {
           props.setOpen(false)
         }}
       >
+        
         <Lottie
           loop={false}
-          delay={'1s'}
           animationData={randomBox}
           style={{
             height: '100%',
@@ -41,21 +44,15 @@ function RandomPage(props) {
           }}
         />
         <Lottie
-          animationData={test1}
+          loop={1}
+          animationData={BoxEffect}
           style={{
-            top: '-20vh',
+            top: '-25vh',
             left: '10%',
             width: '70%',
             position: 'absolute',
-          }}
-        />
-        <Lottie
-          loop={false}
-          animationData={test2}
-          style={{
-            top: '-10vh',
-            width: '100%',
-            position: 'absolute',
+            opacity: `${time2}`,
+            transition: 'opacity 0.3s ease 0.3s',
           }}
         />
         <div
