@@ -36,13 +36,13 @@ function StudentInfo(props) {
   }, []);
   return (
     <>
-      <div className="panda">
+      {/* <div className="panda">
         <img
           src={panda}
           alt="panda"
           style={{ position: "absolute", width: "20vw", bottom: "1vh" }}
         />
-      </div>
+      </div> */}
 
       <Slide direction="up" in={slide} timeout={1000}>
         <div

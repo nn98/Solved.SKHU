@@ -1,61 +1,64 @@
-import React, { useEffect, useState } from 'react'
-import './App.css'
-import './pages/Front.css'
-import { Routes, Route } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import "./pages/Front.css";
+import { Routes, Route } from "react-router-dom";
 
-import Main from './pages/Main'
-import Assignments from './pages/Assignments'
-import Student from './pages/Student'
+import Main from "./pages/Main";
+import Assignments from "./pages/Assignments";
+import Student from "./pages/Student";
 
 function App() {
-  const serverAddress = 'http://sol-skhu.duckdns.org:3001'
-  const [ranking, setRanking] = useState([])
-  const [recommend, setRecommend] = useState([])
+  const serverAddress = "http://sol-skhu.duckdns.org:3001";
+  const [ranking, setRanking] = useState([]);
+  const [recommend, setRecommend] = useState([]);
   useEffect(() => {
     const add = async () => {
       try {
-        await fetch(serverAddress + '/ranking')
+        await fetch(serverAddress + "/ranking")
           .then((res) => res.json())
           .then((data) => {
             // console.log(data)
-            setRanking(data)
-          })
+            setRanking(data);
+          });
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
 
     const topAlgorithm = async () => {
       try {
-        const best = await fetch(serverAddress + '/BestAlgorithm').then((res) =>
+        const best = await fetch(serverAddress + "/BestAlgorithm").then((res) =>
           res.json()
-        )
-        const worst = await fetch(serverAddress + '/WorstAlgorithm').then(
+        );
+        const worst = await fetch(serverAddress + "/WorstAlgorithm").then(
           (res) => res.json()
-        )
-        const max = await fetch(serverAddress + '/MaxAlgorithm').then((res) =>
+        );
+        const max = await fetch(serverAddress + "/MaxAlgorithm").then((res) =>
           res.json()
-        )
-        const min = await fetch(serverAddress + '/MinAlgorithm').then((res) =>
+        );
+        const min = await fetch(serverAddress + "/MinAlgorithm").then((res) =>
           res.json()
-        )
+        );
 
         // console.log([most,min]);
-        setRecommend([max, min, best, worst])
+        setRecommend([max, min, best, worst]);
         // console.log([max, min, best, worst])
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
 
-    add()
-    topAlgorithm()
-  }, [])
+    add();
+    topAlgorithm();
+  }, []);
   return (
     <div className="rr">
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/assignments" element={<Assignments />} />
+        <Route
+          path="/assignments"
+          element={<Assignments serverAddress={serverAddress} />}
+        />
 
         <Route
           path="/test"
@@ -69,7 +72,7 @@ function App() {
         />
       </Routes>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

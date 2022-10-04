@@ -45,13 +45,17 @@ export default function MultipleSelect(props) {
   };
 
   return (
-    <FormControl sx={{ width: 215, marginBottom: 3 }}>
-      <InputLabel id="demo-multiple-name-label">강의 명</InputLabel>
+    <FormControl sx={{ width: 215, marginRight: "3%", color: "white" }} focused>
+      <InputLabel id="demo-multiple-name-label" sx={{ color: "white" }}>
+        강의 명
+      </InputLabel>
       <Select
         id="demo-multiple-name"
         value={props.subject}
         onChange={handleChange}
-        input={<OutlinedInput label="Name" />}
+        input={
+          <OutlinedInput label="Name" color="primary" sx={{ color: "white" }} />
+        }
         MenuProps={MenuProps}
       >
         {props.lecture &&
