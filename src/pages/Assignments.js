@@ -4,13 +4,15 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import MediaCard from "./proffessorCom/MUI/MediaCard";
+// import MediaCard from "./proffessorCom/MUI/MediaCard";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import CopyRadioButtonsGroup from "./proffessorCom/MUI/CopyRadioButtonsGroup";
 import MultipleSelect from "./proffessorCom/MUI/MultipleSelect";
 import MaxWidthDialog from "./proffessorCom/MUI/MaxWidthDialog";
 import asbg from "./proffessorCom/image/side_background.png";
+import bg from "./proffessorCom/image/bg01.png";
+import arrow from "./proffessorCom/image/arrow.gif";
 
 const Assignments = (e) => {
   const [loading, setLoading] = useState(false);
@@ -71,6 +73,7 @@ const Assignments = (e) => {
     }
     // console.log(LIST);
     try {
+      console.log("onstart", e.serverAddress);
       setLoading(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
@@ -95,6 +98,7 @@ const Assignments = (e) => {
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
 
+          console.log(e.serverAddress);
           let compare = student;
           // console.log(compare);
           // console.log("Data: ", data);
@@ -158,29 +162,37 @@ const Assignments = (e) => {
   }, []);
 
   return (
-    <div className="assign">
+    <div
+      className="assign"
+      style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
+    >
       <h1>채점 페이지</h1>
-      <div className="buttonList" style={{ backgroundImage: `url(${asbg})` }}>
-        <MultipleSelect
-          subject={subject}
-          setSubject={setSubject}
-          lecture={lecture}
-          setLectureName={setLectureName}
-        ></MultipleSelect>
-        <Link to="/proRegister">
-          <button
-            style={{
-              display: "inline-block",
-              fontSize: "15px",
-              borderRadius: "0%",
-              border: "0",
-              padding: "6px 12px",
-              cursor: "pointer",
-            }}
-          >
-            강의 등록하기
-          </button>
-        </Link>
+      <div
+        className="buttonList"
+        style={{ backgroundImage: `url(${asbg})`, backgroundSize: "cover" }}
+      >
+        <div style={{ margin: "25% 0% 3% 3%" }}>
+          <MultipleSelect
+            subject={subject}
+            setSubject={setSubject}
+            lecture={lecture}
+            setLectureName={setLectureName}
+          ></MultipleSelect>
+          <Link to="/proRegister">
+            <button
+              style={{
+                display: "inline-block",
+                fontSize: "15px",
+                borderRadius: "0%",
+                border: "0",
+                padding: "6px 12px",
+                cursor: "pointer",
+              }}
+            >
+              강의 등록하기
+            </button>
+          </Link>
+        </div>
         {subject !== ""
           ? lecture.map((data, index) => (
               <div key={index}>
@@ -190,14 +202,18 @@ const Assignments = (e) => {
                     key={index}
                     sx={{
                       display: "inline-block",
-                      width: "208px",
+                      width: "393px",
+                      marginLeft: "3%",
                       marginBottom: "5%",
+                      backgroundColor: "rgba(230, 230, 230, 0.3)",
+                      color: "white",
                     }}
                   >
-                    <h4>과목코드 : {data.code}</h4>
-                    <h4>교수명: {data.professor}</h4>
-                    <h4>강의명 : {data.name}</h4>
-                    <h4>분반 : {data.distribution}</h4>
+                    <h4>Lecture Info</h4>
+                    <h4>Code : {data.code}</h4>
+                    <h4>Professor: {data.professor}</h4>
+                    <h4>Name : {data.name}</h4>
+                    <h4>Distribution : {data.distribution}</h4>
                     <Link
                       to="/studentRegister"
                       state={[
@@ -226,20 +242,22 @@ const Assignments = (e) => {
           : null}
         <h3>문제번호</h3>
         <input
+          style={{ opacity: "0.9", width: "90%", marginLeft: "3%" }}
+          placeholder="Problem Number"
           type="text"
-          placeholder="문제번호"
           onChange={(e) => setPnumber(e.target.value)}
           value={pnumber || ""}
         ></input>
         <h3>제출기한</h3>
         <input
+          style={{ opacity: "0.9", width: "90%", marginLeft: "3%" }}
           type="date"
           onChange={(e) => setPdate(e.target.value)}
           value={pdate || ""}
         ></input>
-        <h3 style={{ display: "inline-block" }}>
+        <h3 style={{ display: "inline-block", width: "35%", fontSize: "15px" }}>
           <label>
-            재채점
+            REASSIGNMENT
             <input
               type="checkbox"
               onChange={(e) => {
@@ -277,7 +295,7 @@ const Assignments = (e) => {
               backgroundColor: "#f0f0f0",
             }}
           >
-            <p>
+            <p style={{ color: "black" }}>
               <PlayArrowIcon
                 fontSize="12px"
                 sx={{ margin: "0px 12px 0px 0px" }}
@@ -296,12 +314,13 @@ const Assignments = (e) => {
             }}
             variant="contained"
             sx={{
+              marginLeft: "10%",
               width: "210px",
               marginTop: "10px",
               backgroundColor: "#f0f0f0",
             }}
           >
-            <p>
+            <p style={{ color: "black" }}>
               <ContentCopyIcon
                 fontSize="12px"
                 sx={{ margin: "0px 12px 0px 0px" }}
@@ -310,13 +329,16 @@ const Assignments = (e) => {
             </p>
           </Button>
         </div>
-        <CopyRadioButtonsGroup
-          copy={copy}
-          setCopy={setCopy}
-        ></CopyRadioButtonsGroup>
+        <hr></hr>
+        <div style={{ marginLeft: "3%" }}>
+          <CopyRadioButtonsGroup
+            copy={copy}
+            setCopy={setCopy}
+          ></CopyRadioButtonsGroup>
+        </div>
       </div>
 
-      <MediaCard></MediaCard>
+      {/* <MediaCard></MediaCard> */}
       <div className="input">
         <div
           className="p-head"
@@ -360,7 +382,23 @@ const Assignments = (e) => {
             ))}
         </div>
       </div>
-
+      <div
+        style={{
+          display: "inline-block",
+          height: "100vh",
+          width: "20%",
+          backgroundImage: `url(${arrow})`,
+        }}
+      >
+        {/* <img
+          src={arrow}
+          alt="arrow"
+          style={{
+            scale: "10%",
+            
+          }}
+        ></img> */}
+      </div>
       <MaxWidthDialog
         open={open}
         setOpen={setOpen}
