@@ -5,7 +5,12 @@ import './rank.css'
 
 const Rank = (props) => {
   return (
-    <div className="rank">
+    <div
+      className="rank"
+      onClick={(e) => {
+        props.setOpen(false)
+      }}
+    >
       <h1 style={{ textAlign: 'center', color: '#ffffff' }}>
         성공회대학교 랭킹
       </h1>
@@ -28,7 +33,7 @@ const Rank = (props) => {
           </button>
         </Link>
       </div> */}
-      <div className="rankTable">
+      <div className="rankTable" onClick={(e) => e.stopPropagation()}>
         <table>
           <thead>
             <tr>

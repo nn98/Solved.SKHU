@@ -98,16 +98,15 @@
 }
 
 .use .problem {
-  text-align: center;
+  /* text-align: center; */
   width: 41%;
   float: right;
   /* border: 1px solid #000; */
-  height: 185vh;
+  /* height: 185vh; */
   overflow: overlay;
   overflow-x: hidden;
   -ms-overflow-style: none;
-  box-shadow: 8px 8px 28px -14px grey;
-
+  /* box-shadow: 8px 8px 28px -14px grey; */
   font-size: 1.2rem;
 }
 

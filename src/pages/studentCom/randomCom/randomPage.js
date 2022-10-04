@@ -25,6 +25,9 @@ function RandomPage(props) {
           height: '90vh',
           overflow: 'hidden',
         }}
+        onClick={(e) => {
+          props.setOpen(false)
+        }}
       >
         <Lottie
           loop={false}

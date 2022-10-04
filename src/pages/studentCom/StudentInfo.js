@@ -16,6 +16,7 @@ import recoCard from '../studentCom/userCom/image/reco_page_card.png'
 import algoCard from '../studentCom/userCom/image/algo_page_card.png'
 import rankCard from '../studentCom/userCom/image/rank_page_card.png'
 import qnaCard from '../studentCom/userCom/image/qna_page_card.png'
+
 import question from './userCom/image/question.json'
 import panda from './userCom/image/panda.gif'
 
@@ -99,8 +100,14 @@ function StudentInfo(props) {
           maxWidth={'xl'}
           open={recoOpen}
           onClose={() => setRecoOpen(!recoOpen)}
+          PaperProps={{
+            style: {
+              backgroundColor: 'transparent',
+              boxShadow: 'none',
+            },
+          }}
         >
-          <RecoPage recommend={props.recommend} />
+          <RecoPage recommend={props.recommend} setOpen={setRecoOpen} />
         </Dialog>
         {/* <MaxWidthDialog
           title={'SKHU Algorthme'}
@@ -165,7 +172,7 @@ function StudentInfo(props) {
           },
         }}
       >
-        <Rank ranking={props.ranking} />
+        <Rank ranking={props.ranking} setOpen={setRankOpen} />
       </Dialog>
       {/* <MaxWidthDialog open={rankOpen} setOpen={setRankOpen}></MaxWidthDialog> */}
 
@@ -203,7 +210,7 @@ function StudentInfo(props) {
           },
         }}
       >
-        <RandomPage randOpen={randOpen} />
+        <RandomPage randOpen={randOpen} setOpen={setRandOpen} />
       </Dialog>
       {/* <MaxWidthDialog open={randOpen} setOpen={setRandOpen}></MaxWidthDialog> */}
 
