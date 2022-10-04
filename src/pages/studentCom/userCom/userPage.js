@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import './user.css'
-import { useLocation } from 'react-router-dom'
+// import { useLocation } from 'react-router-dom'
 import { Collapse } from '@mui/material'
 // import { NULL } from "mysql/lib/protocol/constants/types";
 
@@ -20,6 +20,8 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
 } from 'recharts'
+
+import ProCard from '../recoCom/proCard'
 
 const COLORS = [
   '#ff3071',
@@ -131,7 +133,7 @@ const renderActiveShape = (props) => {
 
 // ==========================================
 const UserPage = (props) => {
-  const location = useLocation()
+  // const location = useLocation()
   const [user, setUser] = useState({})
   const [userTag, setUserTag] = useState({})
   const [userTier, setUserTier] = useState([])
@@ -233,7 +235,7 @@ const UserPage = (props) => {
         .then((data) => {
           let t = []
           // console.log(data.items.slice(0, 6))
-          let sum = 0
+          // let sum = 0
           for (let i = 0; i < 6; i++) {
             t.push({
               subject: data.items[i].tag.key,
@@ -262,6 +264,7 @@ const UserPage = (props) => {
       )
         .then((res) => res.json())
         .then((data) => {
+          console.log(data)
           setUserPro(data)
         })
       // 티어 api
@@ -374,7 +377,8 @@ const UserPage = (props) => {
     // console.log('location.state ' + location.state)
     // console.log('props.globalID ' + props.globalID)
     userAdd()
-  }, [props.globalID, location.state])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="user">
@@ -543,7 +547,22 @@ const UserPage = (props) => {
         </div>
 
         <div className="problem">
-          <div
+          {userPro.items &&
+            userPro.items.map((problem, index) =>
+              index < 7 ? (
+                <ProCard
+                  width={'80%'}
+                  height={'30vh'}
+                  fontSize={'xx-large'}
+                  proColor={COLORS[30 - problem.level]}
+                  proTier={problem.level}
+                  proNum={problem.problemId}
+                  proName={problem.titleKo}
+                  proRate={problem.averageTries.toFixed(2)}
+                />
+              ) : null
+            )}
+          {/* <div
             className="pr-head"
             style={{
               backgroundColor: 'black',
@@ -586,7 +605,7 @@ const UserPage = (props) => {
                   <span id="user-color">{problem.averageTries.toFixed(2)}</span>
                 </a>
               </div>
-            ))}
+            ))} */}
         </div>
 
         <div className="tagTable">

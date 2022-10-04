@@ -20,13 +20,15 @@ function ContentCard(props) {
         onClick={() => pageOpen()}
       >
         <div style={{ position: 'relative' }}>
-          <Lottie
-            animationData={props.question}
-            style={{
-              width: '100%',
-              position: 'absolute',
-            }}
-          />
+          <div>
+            <Lottie
+              animationData={props.question}
+              style={{
+                width: '100%',
+                position: 'absolute',
+              }}
+            />
+          </div>
         </div>
         {/* <div style={{position:"absolute"}}> */}
         {props.title}

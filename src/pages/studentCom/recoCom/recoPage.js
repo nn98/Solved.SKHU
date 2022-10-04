@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import ProCard from './proCard'
 
@@ -6,6 +6,11 @@ import crown1st from './image/crown1st.json'
 import crown2nd from './image/crown2nd.json'
 import crown3rd from './image/crown3rd.json'
 
+import lecUp from './image/lecUp.png'
+
+import raUp from './image/raUp.png'
+import sucUp from './image/sucUp.png'
+import sucDown from './image/sucDown.png'
 function RecoPage(props) {
   const COLORS = [
     '#ff3071',
@@ -38,43 +43,23 @@ function RecoPage(props) {
     '#ad5600',
     '#a54f00',
     '#9d4900',
+    '#000000',
   ]
   const [change, setChange] = useState(false)
 
   const [recommendPro, setRecommendPro] = useState([])
-
-  const BlankBox = styled.div`
-    width: 14vw;
-    height: 20vh;
-    border: 6px solid rgba(236, 154, 0, 0);
-  `
-  const AlgoButton = styled.div`
-    display: inline-block;
-    width: 40%;
-    height: 40%;
-    margin: 2% 4%;
-    border: solid;
-  `
-  const AlgoButtonInner = styled.div`
-    width: 100%;
-    font-size: 7vh;
-    vertical-align: middle;
-    display: inline-block;
-    line-height: 350%;
-    text-align: center;
-  `
-
-  useEffect(() => {
-    console.log(COLORS)
-  }, [])
 
   return (
     <div
       style={{
         display: 'inline-block',
         width: '100%',
+        height: '100vh',
         position: 'relative',
         overflow: change ? 'auto' : 'hidden',
+      }}
+      onClick={(e) => {
+        props.setOpen(false)
       }}
     >
       <div
@@ -83,52 +68,70 @@ function RecoPage(props) {
             ? {
                 width: '30%',
                 height: '30vh',
-                border: '1px solid',
+                // border: '1px solid',
                 margin: '2% 2%',
                 position: 'fixed',
                 zIndex: 2,
                 transition: '1s',
               }
             : {
-                width: '60%',
-                height: '60vh',
-                border: '1px solid',
-                margin: '8% 20% 8% 25%',
+                width: '100%',
+                height: '100%',
+                // border: '1px solid',
+                // margin: '8% 20% 8% 25%',
               }
         }
       >
         <AlgoButton
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             setRecommendPro(props.recommend[0])
             setChange(true)
           }}
+          style={{
+            backgroundImage: `url(${sucUp})`,
+            backgroundSize: 'cover',
+            marginLeft: '16%',
+          }}
         >
-          <AlgoButtonInner></AlgoButtonInner>
+          {' '}
         </AlgoButton>
         <AlgoButton
-          onClick={() => {
+          style={{
+            backgroundImage: `url(${sucDown})`,
+            backgroundSize: 'cover',
+            marginRight: '16%',
+          }}
+          onClick={(e) => {
+            e.stopPropagation()
             setRecommendPro(props.recommend[1])
             setChange(true)
           }}
-        >
-          <AlgoButtonInner></AlgoButtonInner>
-        </AlgoButton>
+        ></AlgoButton>
         <AlgoButton
-          onClick={() => {
+          style={{
+            backgroundImage: `url(${raUp})`,
+            backgroundSize: 'cover',
+            marginLeft: '16%',
+          }}
+          onClick={(e) => {
+            e.stopPropagation()
             setRecommendPro(props.recommend[2])
             setChange(true)
           }}
-        >
-          <AlgoButtonInner></AlgoButtonInner>
-        </AlgoButton>
+        ></AlgoButton>
         <AlgoButton
-          onClick={() => {
+          style={{
+            backgroundImage: `url(${lecUp})`,
+            backgroundSize: 'cover',
+            marginRight: '16%',
+          }}
+          onClick={(e) => {
+            e.stopPropagation()
             setRecommendPro(props.recommend[3])
             setChange(true)
           }}
-        >
-          <AlgoButtonInner></AlgoButtonInner>
-        </AlgoButton>
+        ></AlgoButton>
       </div>
 
       <div
@@ -168,7 +171,7 @@ function RecoPage(props) {
                 width={'29vw'}
                 height={'33vh'}
                 margin={'0%'}
-                fontSize={'4.5vh'}
+                fontSize={'xx-large'}
                 //   style={{ width: '55%', height: '33%' }}
                 // proColor={'#ec9a00'}
                 proColor={COLORS[30 - recommendPro[0].solved_rank]}
@@ -289,3 +292,27 @@ function RecoPage(props) {
 }
 
 export default RecoPage
+
+const BlankBox = styled.div`
+  width: 14vw;
+  height: 20vh;
+  border: 6px solid rgba(236, 154, 0, 0);
+`
+const AlgoButton = styled.div`
+  display: inline-block;
+  width: 31%;
+  height: 40%;
+  margin: 2%;
+  /* border: solid; */
+  border-radius: 5%;
+  box-shadow: 5px 5px 15px 1px black;
+  &:hover {
+    transform: scale(105%);
+    transition: 0.5s;
+  }
+
+  &:not(:hover) {
+    transform: scale(100%);
+    transition: 0.5s;
+  }
+`
