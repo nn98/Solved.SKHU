@@ -1058,3 +1058,23 @@ async function checkResult(pid, lectureid) {
   }
 }
 /* --------------- Assignments Part --------------- */
+
+/* +-------------- Renewal Part ------------------+ */
+/* +++++ Random +++++ */
+app.get("/randomProblem", (req, res) => {
+  console.log("RandomProblem/get ", "is called");
+  let returnStates;
+  let sql =
+    "select * from problem order by rand() limit 1;";
+    console.log("get randomProblem", sql);
+    connection.query(sql, function (err, result, fields) {
+    if (err) {
+      console.log("error in RandomProblem/get", err);
+      throw err;
+    }
+    console.log("result:", result);
+    console.log("+result to states");
+    res.json(result);
+  });
+});
+
