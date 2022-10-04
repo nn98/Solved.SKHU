@@ -885,7 +885,7 @@ app.post("/assignments", async (req, res) => {
     // assignment_Result=head_assignment_Result.concat(tail_assignment_Result);
     // console.log("Result-json:",JSON.stringify(assignment_Result));
     console.log("save result...");
-    sql = 'insert into assignment_result (id,result,lectureid) values(' + pid + ",'"
+    sql = 'insert into assignment_result (id,result,lectureid) values(' + pID + ",'"
       + JSON.stringify(assignment_Result) + "'," + lectureId + ");";
     console.log(sql);
     try {
@@ -929,7 +929,7 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
   console.log("2. execute");
   // console.log("rere at execute:", assignment_Result);
   puppeteer
-    .launch({ headless: true })
+    .launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'], })
     .then(async (browser) => {
       if (parallelizationControl[flag].AsyncTaskExecute) {
         await parallelizationControl[flag].waitNotify.wait();
@@ -962,8 +962,6 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
               red.push(v[j++].replace(/(<([^>]+)>)/gi, ""))
             );
           } else {
-            let y = name0[i].split("data-timestamp=")[1].split("\"")[0];
-            console.log("data-timestamp=",y);
             let x = name0[i].lastIndexOf("data-original-title=");
             if (x >= 0) {
               red.push(
