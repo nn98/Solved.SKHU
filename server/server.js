@@ -1061,7 +1061,7 @@ async function checkResult(pid, lectureid) {
 
 /* +-------------- Renewal Part ------------------+ */
 /* +++++ Random +++++ */
-app.get("/randomProblem", (req, res) => {
+app.post("/randomProblem", (req, res) => {
   console.log("RandomProblem/get ", "is called");
   let returnStates;
   let sql =
