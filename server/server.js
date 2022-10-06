@@ -995,11 +995,18 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
           // console.log("N", i, name0[i]);
           if (name0[i].split('</td>').length > 3) {
             let v = name0[i].split('</td>');
-            console.log('split:', v);
-            for (let j = 0; j < v.length - 1; red.push(v[j++].replace(/(<([^>]+)>)/gi, '')));
+            console.log('case 1:', v);
+            for (
+              let j = 0;
+              j < v.length - 1;
+              console.log('case 1:', name0[i].split('data-original-title="')[1].split('"')[0]),
+                red.push(v[j++].replace(/(<([^>]+)>)/gi, ''))
+            );
           } else {
             let x = name0[i].lastIndexOf('data-original-title=');
+            console.log('case 2:', x);
             if (x >= 0) {
+              console.log('case 2-push:', name0[i].split('data-original-title="')[1].split('"')[0]);
               red.push(name0[i].split('data-original-title="')[1].split('"')[0]);
             }
             // console.log("n", i, name0[i].replace(/(<([^>]+)>)/gi, ""));
