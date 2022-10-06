@@ -1021,7 +1021,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
               if (x >= 0) {
                 let date = name0[i].split('data-original-title="');
                 console.log('date', date);
-                ldate = date[0].split('data-timestamp="')[1].split('"') + '000';
+                ldate = date[0].split('data-timestamp="')[1].split('"')[0] + '000';
                 console.log('ldate', ldate);
                 red.push(date[1].split('"')[0]);
               }
