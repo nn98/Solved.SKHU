@@ -965,7 +965,7 @@ async function run(ID_LIST, pID, deadLine, assignment_Result, flag) {
   let processID = ID_LIST[0].bojid;
   let url = urls[0] + pID + urls[1] + processID + urls[2];
   // console.log("rere at run:", assignment_Result);
-  execute(ID_LIST, pID, processID, url, assignment_Result, flag);
+  execute(ID_LIST, pID, deadLine, processID, url, assignment_Result, flag);
 }
 
 async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result, flag) {
