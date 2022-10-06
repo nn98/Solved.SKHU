@@ -10,3 +10,11 @@
     opacity: 1;
   }
 }
+
+body {
+  overflow: hidden;
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}

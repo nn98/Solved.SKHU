@@ -1,0 +1,136 @@
+.recommend {
+  overflow: hidden;
+  text-align: center;
+  height: 100vh;
+  width: 90%;
+  padding: 0 5%;
+}
+.recommend .ratingProblem {
+  width: auto;
+  height: 50vh;
+  /* border: 1px solid #f0f0f0; */
+  padding: 2% 0;
+  margin: 2% 0;
+  box-shadow: grey 10px 22px 60px -16px;
+}
+
+.recommend .ratingProblem .similarStudent {
+  width: 47.5%;
+  height: 100%;
+  margin-left: 2.5%;
+  float: left;
+}
+.recommend .ratingProblem .similarStudentInner {
+  height: 100%;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  width: 100%;
+}
+
+.recommend .ratingProblem .recommendProblem {
+  /* padding-top: 1.9%; */
+  width: 45%;
+  margin-left: 2.5%;
+  float: left;
+  /* box-shadow: 8px 8px 21px -14px grey; */
+}
+.recommend .ratingProblem .recommendProblem .recommendProblemInner {
+  height: 40vh;
+  overflow: overlay;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+.recommend .p-head {
+  padding: 1.5% 1%;
+  font-size: 80%;
+  /* transition: background-color 1s; */
+}
+
+/* .rating .p-head:hover {
+    background-color: gold;
+  } */
+.p-head:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+/* 가장 적게 푼 문제 테이블의 너비 */
+.recommend .ratingProblem .recommendProblem .p-head span {
+  display: inline-block;
+  width: 20%;
+}
+.recommend .ratingProblem .recommendProblem .p-head span:nth-child(2) {
+  width: 60%;
+}
+
+/* 학생 랭킹 테이블의 너비 */
+.recommend .ratingProblem .similarStudent .p-head span {
+  display: inline-block;
+  width: 12%;
+}
+.recommend .ratingProblem .similarStudent .p-head span:nth-child(3) {
+  width: 28%;
+  text-align: left;
+}
+
+.recommend a {
+  text-decoration: none;
+  color: black;
+}
+.recommend a:hover {
+  text-decoration: underline;
+}
+
+/* ************************************* */
+/* rank 별 */
+.recommend .rankProblem {
+  width: auto;
+  background-color: #f0f0f0;
+  padding: 2% 0;
+  margin: 2% 0;
+}
+.recommend .rankButton {
+  width: 7%;
+  display: inline-block;
+  margin: 0 3%;
+}
+.recommend .rankButton button {
+  width: 100%;
+}
+
+.recommend .subRank {
+  margin: 3% 0;
+}
+
+.recommend .rankProblems {
+  position: 'sticky';
+  top: '30%';
+  overflow: hidden;
+  height: 60vh;
+  padding-top: 6%;
+}
+
+.recommend .myButton {
+  /* box-shadow: 0px 0px 0px 2px #899599; */
+  background-color: #ededed;
+  /* border-radius: 10px; */
+  border: 1px solid #ededed;
+  display: inline-block;
+  cursor: pointer;
+  color: #000;
+  font-family: Arial;
+  font-size: 19px;
+  padding: 12px 37px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #e1e2ed;
+  /* margin: 0 2vh; */
+}
+.recommend .myButton:hover {
+  transition-duration: 0.5s;
+  border: 1px solid #bab1ba;
+  background-color: #bab1ba;
+}
+.recommend .myButton:active {
+  position: relative;
+  top: 1px;
+}

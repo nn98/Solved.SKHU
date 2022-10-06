@@ -54,6 +54,7 @@ const ProRegister = (e) => {
           // 여기서는 로그인 안내 문자를 팝업 메시지로 보여줄 것임
           if (data === "교수 승인코드가 틀렸습니다.")
             return alert("교수 승인코드가 틀렸습니다.");
+          // e.setProOpen(false);
           if (!alert(data)) navigate("/assignments");
         });
     } catch (error) {

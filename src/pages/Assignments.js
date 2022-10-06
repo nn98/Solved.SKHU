@@ -11,8 +11,9 @@ import MultipleSelect from "./proffessorCom/MUI/MultipleSelect";
 import MaxWidthDialog from "./proffessorCom/MUI/MaxWidthDialog";
 import bg from "./proffessorCom/image/bg01.png";
 import ProRegister from "./proffessorCom/ProRegister";
-import Register from "./proffessorCom/Register";
+import StudentRegister from "./proffessorCom/StudentRegister";
 import { Dialog } from "@mui/material";
+import plusGreen from "./proffessorCom/image/plus_green.gif";
 
 import copyGif from './proffessorCom/image/copy.gif'
 import gauge from './proffessorCom/image/gauge.gif'
@@ -111,6 +112,7 @@ const Assignments = (e) => {
         ID_LIST: LIST,
         PID: props.pnumber,
         DeadLine: props.pdate,
+        reAssignment: props.reAssignment,
       };
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
@@ -226,7 +228,7 @@ const Assignments = (e) => {
     >
       <h1>채점 페이지</h1>
       <div className="buttonList" style={sideStyle}>
-        <div style={{ margin: "25% 0% 3% 3%" }}>
+        <div style={{ margin: "30% 0% 3% 3%" }}>
           <MultipleSelect
             subject={subject}
             setSubject={setSubject}
@@ -234,19 +236,16 @@ const Assignments = (e) => {
             setLectureName={setLectureName}
           ></MultipleSelect>
 
-          <button
+          <img
+            src={plusGreen}
+            alt="강의 추가하기"
+            onClick={() => proPageOpen()}
             style={{
               display: "inline-block",
-              fontSize: "15px",
-              borderRadius: "0%",
-              border: "0",
-              padding: "6px 12px",
+              width: "13%",
               cursor: "pointer",
             }}
-            onClick={() => proPageOpen()}
-          > 
-            강의 등록하기
-          </button>
+          ></img>
         </div>
         {subject !== ""
           ? lecture.map((data, index) => (
@@ -269,27 +268,23 @@ const Assignments = (e) => {
                     <h4>Professor: {data.professor}</h4>
                     <h4>Name : {data.name}</h4>
                     <h4>Distribution : {data.distribution}</h4>
-                    <button
+                    <img
+                      src={plusGreen}
+                      alt="학생 등록하기"
+                      onClick={() => stuPageOpen()}
                       style={{
                         display: "inline-block",
-                        fontSize: "15px",
-                        borderRadius: "0%",
-                        border: "0px",
-                        padding: "6px 12px",
-                        margin: "0% 0% 3% 3%",
+                        width: "13%",
                         cursor: "pointer",
                       }}
-                      onClick={() => stuPageOpen()}
-                    >
-                      학생 등록하기
-                    </button>
+                    ></img>
                     <Dialog
                       fullWidth={true}
                       maxWidth={"xl"}
                       open={stuOpen}
                       onClose={() => setStuOpen(!stuOpen)}
                     >
-                      <Register
+                      <StudentRegister
                         dataID={data.ID}
                         lectureName={lectureName}
                         serverAddress={serverAddress}
@@ -315,6 +310,7 @@ const Assignments = (e) => {
           onChange={(e) => setPdate(e.target.value)}
           value={pdate || ""}
         ></input>
+
         <h3 style={{ display: "inline-block", width: "35%", fontSize: "15px" }}>
           <label>
             REASSIGNMENT
@@ -389,6 +385,7 @@ const Assignments = (e) => {
           <div>
         </div>
         </div>
+
         <h3 style={{ display: "inline-block" }}>COPY RESULT</h3>
         <div style={{ display: "inline-block", paddingLeft: "5%", verticalAlign:"middle" }}>
         <img  src={copyController?copyGif:cp} 
@@ -502,7 +499,7 @@ const Assignments = (e) => {
         open={proOpen}
         onClose={() => setProOpen(!proOpen)}
       >
-        <ProRegister serverAddress={serverAddress} />
+        <ProRegister serverAddress={serverAddress} setProOpen={setProOpen} />
       </Dialog>
     </div>
   );
