@@ -1014,7 +1014,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
               for (let j = 0; j < v.length - 1; j++) {
                 let data = v[j].replace(/(<([^>]+)>)/gi, '');
                 console.log('data', data);
-                lac = data == '맞았습니다!!' ? 20 : 10;
+                lac = lac < 1 ? (data == '맞았습니다!!' ? 20 : 10) : lac;
                 red.push(data);
               }
             } else {
