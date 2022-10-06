@@ -89,6 +89,7 @@ const Assignments = (e) => {
         ID_LIST: LIST,
         PID: props.pnumber,
         DeadLine: props.pdate,
+        reAssignment: props.reAssignment,
       };
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
