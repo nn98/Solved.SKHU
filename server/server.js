@@ -1020,7 +1020,9 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
               console.log('case 2:', x);
               if (x >= 0) {
                 let date = name0[i].split('data-original-title="');
-                ldate = date[0].split('data-timestamp="')[1].split('"') + '000';
+                console.log('date', date);
+                ldate = date[0].split('data-timestamp="')[1].split(',') + '000';
+                console.log('ldate', ldate);
                 red.push(date[1].split('"')[0]);
               }
               red.push(name0[i].replace(/(<([^>]+)>)/gi, ''));
