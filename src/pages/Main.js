@@ -3,17 +3,23 @@ import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 
 import stbg from './studentCom/userCom/image/STBG.png'
+import pfbg from './studentCom/userCom/image/PFBG.png'
+// import pfbg from './proffessorCom/image/bg01.png'
 
 function Main() {
+  const [proBG,setProBG] = useState(false);
   const [stuStyle, setStuStyle] = useState({})
   const [butStyle, setButStyle] = useState({})
   const navigate = useNavigate()
   const proClick = () => {
-    setStuStyle({ transform: 'translate(50%)', transition: '1s' })
+    setStuStyle({ transform: 'translate(50%)', transition: '1s',})
     setButStyle({ opacity: '0', transition: '0.5s' })
 
     setTimeout(function () {
-      navigate('/assignments')
+      setProBG(true)
+      setTimeout(function () {
+        navigate('/assignments')
+      }, 500)
     }, 1000)
   }
   const stuClick = () => {
@@ -21,7 +27,10 @@ function Main() {
       transform: 'translate(-50%)',
       transition: '1s',
     })
-    setButStyle({ opacity: '0', transition: '0.5s' })
+    setButStyle({ 
+      opacity: '0',
+      transition: '0.5s' 
+    })
 
     setTimeout(function () {
       navigate('/test')
@@ -30,13 +39,18 @@ function Main() {
 
   return (
     <div>
-      <ProButton style={butStyle} onClick={() => proClick()}>
+      <ProButton style={butStyle} onClick={() => {
+        proClick()
+      }}>
         교수용
       </ProButton>
       <StuButton style={butStyle} onClick={() => stuClick()}>
         학생용
       </StuButton>
-      <ProDiv></ProDiv>
+      <ProDiv>
+        <div style={{width:'100%',height:'100%',background:"#000000", opacity: proBG?0.2:0,
+            transition: 'opacity 0.3s'}}></div>
+            </ProDiv>
       <StuDiv style={stuStyle}></StuDiv>
     </div>
   )
@@ -55,7 +69,7 @@ const ProButton = styled.button`
   position: absolute;
   top: 45%;
   left: 20%;
-  z-index: 2;
+  z-index: 3;
   &:hover {
     background-color: #00000077;
     transition: 1s;
@@ -72,27 +86,26 @@ const StuButton = styled.button`
   position: absolute;
   top: 45%;
   left: 70%;
-  z-index: 2;
+  z-index: 3;
   &:hover {
     background-color: #00000077;
     transition: 1s;
   }
 `
 const ProDiv = styled.div`
+  z-index : 1;
   width: 100%;
   height: 100vh;
-  background-color: blueviolet;
+  background-image: url(${pfbg});
+  backgroun-size : cover;
   position: absolute;
 `
 const StuDiv = styled.div`
   width: 100%;
   height: 100vh;
   left: 50%;
-
   background-image: url(${stbg});
   background-size: cover;
-
-  //background-color: greenyellow;
   position: absolute;
   z-index: 1;
 `
