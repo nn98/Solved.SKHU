@@ -374,7 +374,7 @@ app.post('/studentRegister', async (req, res) => {
   const b = req.body;
   let end = false;
   console.log('body', b);
-  if ((b.sC === 'stuSK#') | (b.sC === 'S')) {
+  if ((b.rc === 'stuSK#') | (b.rC === 'S')) {
     console.log('Student code is correct');
     let sql =
       'insert into student (id, name, bojid) values(' +
@@ -848,7 +848,6 @@ async function correctionUpdate(url) {
 /* --------------- Assignments Part --------------- */
 app.get('/assignments', (req, res) => {
   console.log('Assignments/get ', 'is called');
-  let returnStates;
   let sql =
     'select * from lecture;' +
     'select ID,name,bojid,Lecture_ID from student as s join learn as l on s.id=l.student_id order by name;';
@@ -859,8 +858,7 @@ app.get('/assignments', (req, res) => {
       console.log('error in assignments-get', err);
       throw err;
     }
-    console.log('result:', result);
-    console.log('+result to states');
+    console.log('result is recived ... response');
     res.json(result);
   });
 });
@@ -992,11 +990,12 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
         let red = [];
         // const name = $(list).find('td');
         const name0 = $(list).find('td').toString().split('<td>');
+        console.log(name0);
         for (let i = 0; ++i < name0.length; ) {
           // console.log("N", i, name0[i]);
           if (name0[i].split('</td>').length > 3) {
             let v = name0[i].split('</td>');
-            // console.log("split:", v);
+            console.log('split:', v);
             for (let j = 0; j < v.length - 1; red.push(v[j++].replace(/(<([^>]+)>)/gi, '')));
           } else {
             let x = name0[i].lastIndexOf('data-original-title=');
