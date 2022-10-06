@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import "./pages/Front.css";
 import { Routes, Route } from "react-router-dom";
 
 import Main from "./pages/Main";
