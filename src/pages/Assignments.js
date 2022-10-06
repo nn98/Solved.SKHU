@@ -5,13 +5,14 @@ import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 // import MediaCard from "./proffessorCom/MUI/MediaCard";
-import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import CopyRadioButtonsGroup from "./proffessorCom/MUI/CopyRadioButtonsGroup";
 import MultipleSelect from "./proffessorCom/MUI/MultipleSelect";
 import MaxWidthDialog from "./proffessorCom/MUI/MaxWidthDialog";
 import bg from "./proffessorCom/image/bg01.png";
-import arrow from "./proffessorCom/image/arrow.gif";
+import ProRegister from "./proffessorCom/ProRegister";
+import Register from "./proffessorCom/Register";
+import { Dialog } from "@mui/material";
 
 const Assignments = (e) => {
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,11 @@ const Assignments = (e) => {
   const [sideStyle, setSideStyle] = useState({});
   const [arrowStyle, setArrowStyle] = useState({});
 
+  const [proOpen, setProOpen] = useState(false);
+  const [stuOpen, setStuOpen] = useState(false);
+  const [serverAddress, setServerAddress] = useState(e.serverAddress);
+
+  console.log(serverAddress);
   const handleCopy = async () => {
     if (copy === "resultCopy") {
       let clipBoard = "";
@@ -178,6 +184,14 @@ const Assignments = (e) => {
     }
   };
 
+  const proPageOpen = () => {
+    setProOpen(true);
+  };
+
+  const stuPageOpen = () => {
+    setStuOpen(true);
+  };
+
   useEffect(() => {
     subjectAdd();
   }, []);
@@ -196,20 +210,20 @@ const Assignments = (e) => {
             lecture={lecture}
             setLectureName={setLectureName}
           ></MultipleSelect>
-          <Link to="/proRegister">
-            <button
-              style={{
-                display: "inline-block",
-                fontSize: "15px",
-                borderRadius: "0%",
-                border: "0",
-                padding: "6px 12px",
-                cursor: "pointer",
-              }}
-            >
-              강의 등록하기
-            </button>
-          </Link>
+
+          <button
+            style={{
+              display: "inline-block",
+              fontSize: "15px",
+              borderRadius: "0%",
+              border: "0",
+              padding: "6px 12px",
+              cursor: "pointer",
+            }}
+            onClick={() => proPageOpen()}
+          >
+            강의 등록하기
+          </button>
         </div>
         {subject !== ""
           ? lecture.map((data, index) => (
@@ -232,27 +246,32 @@ const Assignments = (e) => {
                     <h4>Professor: {data.professor}</h4>
                     <h4>Name : {data.name}</h4>
                     <h4>Distribution : {data.distribution}</h4>
-                    <Link
-                      to="/studentRegister"
-                      state={[
-                        { dataID: data.ID },
-                        { lectureName: lectureName },
-                      ]}
+                    <button
+                      style={{
+                        display: "inline-block",
+                        fontSize: "15px",
+                        borderRadius: "0%",
+                        border: "0px",
+                        padding: "6px 12px",
+                        margin: "0% 0% 3% 3%",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => stuPageOpen()}
                     >
-                      <button
-                        style={{
-                          display: "inline-block",
-                          fontSize: "15px",
-                          borderRadius: "0%",
-                          border: "0px",
-                          padding: "6px 12px",
-                          margin: "0% 0% 3% 3%",
-                          cursor: "pointer",
-                        }}
-                      >
-                        학생 등록하기
-                      </button>
-                    </Link>
+                      학생 등록하기
+                    </button>
+                    <Dialog
+                      fullWidth={true}
+                      maxWidth={"xl"}
+                      open={stuOpen}
+                      onClose={() => setStuOpen(!stuOpen)}
+                    >
+                      <Register
+                        dataID={data.ID}
+                        lectureName={lectureName}
+                        serverAddress={serverAddress}
+                      />
+                    </Dialog>
                   </Paper>
                 ) : null}
               </div>
@@ -413,6 +432,15 @@ const Assignments = (e) => {
         student={student}
         subject={subject}
       ></MaxWidthDialog>
+
+      <Dialog
+        fullWidth={true}
+        maxWidth={"xl"}
+        open={proOpen}
+        onClose={() => setProOpen(!proOpen)}
+      >
+        <ProRegister serverAddress={serverAddress} />
+      </Dialog>
     </div>
   );
 };
