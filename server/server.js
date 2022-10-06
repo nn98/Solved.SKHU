@@ -988,7 +988,8 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
       let returnData = [];
       lists.each((index, list) => {
         let red = [];
-        // const name = $(list).find('td');
+        const name = $(list).find('td');
+        console.log('name', name);
         const name0 = $(list).find('td').toString().split('<td>');
         console.log('name0', name0[0]);
         for (let i = 0; ++i < name0.length; ) {
@@ -1009,7 +1010,7 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
               console.log('case 2-push:', name0[i].split('data-original-title="')[1].split('"')[0]);
               red.push(name0[i].split('data-original-title="')[1].split('"')[0]);
             }
-            // console.log("n", i, name0[i].replace(/(<([^>]+)>)/gi, ""));
+            console.log('last push:', name0[i].replace(/(<([^>]+)>)/gi, ''));
             red.push(name0[i].replace(/(<([^>]+)>)/gi, ''));
           }
         }
