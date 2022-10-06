@@ -40,7 +40,7 @@ function StudentInfo(props) {
         <img
           src={panda}
           alt="panda"
-          style={{ position: 'absolute', width: '20vw', bottom: '1vh' }}
+          style={{ position: "absolute", width: "20vw", bottom: "1vh" }}
         />
       </div> */}
 
@@ -172,7 +172,11 @@ function StudentInfo(props) {
           },
         }}
       >
-        <Rank ranking={props.ranking} setOpen={setRankOpen} />
+        <Rank
+          ranking={props.ranking}
+          userName={props.userName}
+          setOpen={setRankOpen}
+        />
       </Dialog>
       {/* <MaxWidthDialog open={rankOpen} setOpen={setRankOpen}></MaxWidthDialog> */}
 
@@ -210,7 +214,11 @@ function StudentInfo(props) {
           },
         }}
       >
-        <RandomPage randOpen={randOpen} setOpen={setRandOpen} />
+        <RandomPage
+          randOpen={randOpen}
+          serverAddress={props.serverAddress}
+          setOpen={setRandOpen}
+        />
       </Dialog>
       {/* <MaxWidthDialog open={randOpen} setOpen={setRandOpen}></MaxWidthDialog> */}
 

@@ -1,17 +1,18 @@
-import React from 'react'
-import cardBg from './image/cardBg.png'
+import React from "react";
+import cardBg from "./image/cardBg.png";
 
-import styled from '@emotion/styled'
-import Lottie from 'lottie-react'
+import styled from "@emotion/styled";
+import Lottie from "lottie-react";
 
 function ProCard(props) {
   //   const t = document.getElementById('proCard').clientWidth
   //   console.log(t)
-
+  console.log("props", props);
+  console.log("problems", props.problem);
   return (
     <a
       onClick={(e) => e.stopPropagation()}
-      href={'https://www.acmicpc.net/problem/' + props.proNum}
+      href={"https://www.acmicpc.net/problem/" + props.proNum}
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -23,13 +24,13 @@ function ProCard(props) {
           width: `${props.width}`,
           height: `${props.height}`,
           margin: `${props.margin}`,
-          display: 'inline-block',
+          display: "inline-block",
         }}
       >
         <Lottie
           animationData={props.crown}
           style={{
-            position: 'absolute',
+            position: "absolute",
             width: `${props.crownWidth}`,
             top: `${props.crownTop}`,
             left: `${props.crownLeft}`,
@@ -40,16 +41,16 @@ function ProCard(props) {
         <div>
           <ProCardNum
             style={{
-              left: '23%',
+              left: "23%",
             }}
             fontSize={props.fontSize}
           >
-            <span style={{ color: `${props.proColor}` }}>P</span>roblem{' '}
+            <span style={{ color: `${props.proColor}` }}>P</span>roblem{" "}
             {props.proNum}
           </ProCardNum>
           <ProCardLine
             style={{
-              top: '55%',
+              top: "55%",
             }}
             proColor={props.proColor}
           ></ProCardLine>
@@ -57,19 +58,19 @@ function ProCard(props) {
         <div>
           <ProCardNum
             style={{
-              top: '65%',
-              right: '23%',
+              top: "65%",
+              right: "23%",
             }}
             fontSize={props.fontSize}
           >
-            <span style={{ verticalAlign: 'middle' }}>
-              <span style={{ color: `${props.proColor}` }}>C</span>orrect{' '}
+            <span style={{ verticalAlign: "middle" }}>
+              <span style={{ color: `${props.proColor}` }}>C</span>orrect{" "}
               {props.proRate}
             </span>
           </ProCardNum>
           <ProCardLine
             style={{
-              top: '80%',
+              top: "80%",
               right: 0,
             }}
             proColor={props.proColor}
@@ -77,10 +78,10 @@ function ProCard(props) {
         </div>
       </ProCardBackground>
     </a>
-  )
+  );
 }
 
-export default ProCard
+export default ProCard;
 
 const ProCardBackground = styled.div`
   width: 17vw;
@@ -104,7 +105,7 @@ const ProCardBackground = styled.div`
     transform: scale(100%);
     transition: 0.5s;
   }
-`
+`;
 const ProCardContent = styled.div`
   width: 20%;
   height: 40%;
@@ -114,31 +115,31 @@ const ProCardContent = styled.div`
   background-repeat: no-repeat;
   background-image: ${(props) =>
     `url(https://static.solved.ac/tier_small/${props.proTier}.svg)`};
-`
+`;
 const ProCardTitle = styled.div`
   width: 60%;
   left: 30%;
   top: 10%;
   font-size: ${(props) =>
-    props.fontSize === undefined ? '2.5vh' : props.fontSize};
+    props.fontSize === undefined ? "2.5vh" : props.fontSize};
   position: absolute;
   display: inline-block;
   color: #ffffff;
   font-weight: bolder;
-`
+`;
 const ProCardLine = styled.div`
   width: 72%;
   background-color: ${(props) => props.proColor};
   height: 1.3%;
   position: absolute;
-`
+`;
 const ProCardNum = styled.div`
   position: absolute;
   text-align: center;
-  font-size: ${(props) => (props.fontSize === undefined ? '2vh' : '2.5vh')};
+  font-size: ${(props) => (props.fontSize === undefined ? "2vh" : "2.5vh")};
   font-weight: bolder;
   background-color: #00000050;
   color: #ffffff;
   height: 15%;
   width: 50%;
-`
+`;

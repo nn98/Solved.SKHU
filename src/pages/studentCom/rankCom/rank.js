@@ -1,6 +1,6 @@
 // import React, { useEffect, useState } from 'react'
 // import rankJ from './rank.json'
-import './rank.css'
+import "./rank.css";
 // import { Link } from 'react-router-dom'
 
 const Rank = (props) => {
@@ -8,10 +8,10 @@ const Rank = (props) => {
     <div
       className="rank"
       onClick={(e) => {
-        props.setOpen(false)
+        props.setOpen(false);
       }}
     >
-      <h1 style={{ textAlign: 'center', color: '#ffffff' }}>
+      <h1 style={{ textAlign: "center", color: "#ffffff" }}>
         성공회대학교 랭킹
       </h1>
       {/* <div style={{ display: 'inline', float: 'right' }}>
@@ -48,22 +48,32 @@ const Rank = (props) => {
           </thead>
           <tbody>
             {props.ranking.map((user, index) => (
-              <tr key={index}>
+              <tr
+                key={index}
+                style={{
+                  background:
+                    props.userName === user.ID
+                      ? "linear-gradient(to right, rgba(255, 215, 0, 0.816), rgba(255, 124, 169, 0.816))"
+                      : "",
+                  boxShadow:
+                    props.userName === user.ID ? "0 0 0 2px #0ff inset" : "",
+                }}
+              >
                 <td>{user.worldrank}</td>
                 <td>{user.skhurank}</td>
                 <td>
                   <img
                     src={
-                      'https://static.solved.ac/tier_small/' +
+                      "https://static.solved.ac/tier_small/" +
                       user.solvedrank +
-                      '.svg'
+                      ".svg"
                     }
                     alt="profile"
-                    style={{ width: '3%', margin: '0 1% 0 0' }}
-                  />{' '}
-                  <strong style={{ verticalAlign: 'super' }}>
+                    style={{ width: "3%", margin: "0 1% 0 0" }}
+                  />{" "}
+                  <strong style={{ verticalAlign: "super" }}>
                     <a
-                      href={'https://solved.ac/profile/' + user.ID + '#'}
+                      href={"https://solved.ac/profile/" + user.ID + "#"}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -74,14 +84,14 @@ const Rank = (props) => {
                 <td>{user.rating}</td>
                 <td>{user.class}</td>
                 <td>{user.problems}</td>
-                <td style={{ textAlign: 'center' }}>{user.correction}</td>
+                <td style={{ textAlign: "center" }}>{user.correction}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Rank
+export default Rank;
