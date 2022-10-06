@@ -884,7 +884,8 @@ app.post('/assignments', async (req, res) => {
   myDate = deadLine.split('-');
   var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
   console.log(newDate.getTime());
-  deadLine = newDate;
+  deadLine = newDate.getTime();
+  console.log('deadline:', deadLine);
   if (!reAssignment) {
     asyncReturn = true;
     checkResult(pID, lectureId);
@@ -1012,7 +1013,8 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
               console.log('case 1:', v);
               for (let j = 0; j < v.length - 1; j++) {
                 let data = v[j].replace(/(<([^>]+)>)/gi, '');
-                lac = data === '맞았습니다!!' ? 20 : 10;
+                console.log(data);
+                lac = data == '맞았습니다!!' ? 20 : 10;
                 red.push(data);
               }
             } else {
