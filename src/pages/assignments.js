@@ -156,13 +156,6 @@ const Assignments = e => {
   return (
     <div className="assign">
       <h1>채점 페이지</h1>
-      <lottie-player
-        src="https://assets5.lottiefiles.com/datafiles/9P0TTCFMNh7ejB7/data.json"
-        background="transparent"
-        speed="1"
-        style="width: 300px; height: 300px;"
-        autoplay
-      ></lottie-player>
       <MediaCard></MediaCard>
       <div className="input">
         <div
