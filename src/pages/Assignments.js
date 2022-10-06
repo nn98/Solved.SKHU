@@ -5,14 +5,15 @@ import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 // import MediaCard from "./proffessorCom/MUI/MediaCard";
-import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import CopyRadioButtonsGroup from "./proffessorCom/MUI/CopyRadioButtonsGroup";
 import MultipleSelect from "./proffessorCom/MUI/MultipleSelect";
 import MaxWidthDialog from "./proffessorCom/MUI/MaxWidthDialog";
-import asbg from "./proffessorCom/image/side_background.png";
 import bg from "./proffessorCom/image/bg01.png";
-import arrow from "./proffessorCom/image/arrow.gif";
+import ProRegister from "./proffessorCom/ProRegister";
+import StudentRegister from "./proffessorCom/StudentRegister";
+import { Dialog } from "@mui/material";
+import plusGreen from "./proffessorCom/image/plus_green.gif";
 
 const Assignments = (e) => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,15 @@ const Assignments = (e) => {
   const [open, setOpen] = useState(false);
   const [detailName, setDetailName] = useState();
 
+  const [sideOpen, setSideOpen] = useState(true);
+  const [sideStyle, setSideStyle] = useState({});
+  const [arrowStyle, setArrowStyle] = useState({});
+
+  const [proOpen, setProOpen] = useState(false);
+  const [stuOpen, setStuOpen] = useState(false);
+  const [serverAddress, setServerAddress] = useState(e.serverAddress);
+
+  console.log(serverAddress);
   const handleCopy = async () => {
     if (copy === "resultCopy") {
       let clipBoard = "";
@@ -157,6 +167,32 @@ const Assignments = (e) => {
     setDetailName(name);
   };
 
+  const sideClickOpen = () => {
+    setSideOpen(!sideOpen);
+
+    if (sideOpen) {
+      setSideStyle({ transform: "translate(100%)", transition: "2s" });
+      setArrowStyle({
+        transform: "translate(450%) rotateY(180deg)",
+        transition: "2s",
+      });
+    } else {
+      setSideStyle({ transform: "translate(0%)", transition: "2s " });
+      setArrowStyle({
+        transform: "translate(0%) rotateY(0deg)",
+        transition: "2s",
+      });
+    }
+  };
+
+  const proPageOpen = () => {
+    setProOpen(true);
+  };
+
+  const stuPageOpen = () => {
+    setStuOpen(true);
+  };
+
   useEffect(() => {
     subjectAdd();
   }, []);
@@ -167,31 +203,25 @@ const Assignments = (e) => {
       style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
     >
       <h1>채점 페이지</h1>
-      <div
-        className="buttonList"
-        style={{ backgroundImage: `url(${asbg})`, backgroundSize: "cover" }}
-      >
-        <div style={{ margin: "25% 0% 3% 3%" }}>
+      <div className="buttonList" style={sideStyle}>
+        <div style={{ margin: "30% 0% 3% 3%" }}>
           <MultipleSelect
             subject={subject}
             setSubject={setSubject}
             lecture={lecture}
             setLectureName={setLectureName}
           ></MultipleSelect>
-          <Link to="/proRegister">
-            <button
-              style={{
-                display: "inline-block",
-                fontSize: "15px",
-                borderRadius: "0%",
-                border: "0",
-                padding: "6px 12px",
-                cursor: "pointer",
-              }}
-            >
-              강의 등록하기
-            </button>
-          </Link>
+
+          <img
+            src={plusGreen}
+            alt="강의 추가하기"
+            onClick={() => proPageOpen()}
+            style={{
+              display: "inline-block",
+              width: "13%",
+              cursor: "pointer",
+            }}
+          ></img>
         </div>
         {subject !== ""
           ? lecture.map((data, index) => (
@@ -214,27 +244,28 @@ const Assignments = (e) => {
                     <h4>Professor: {data.professor}</h4>
                     <h4>Name : {data.name}</h4>
                     <h4>Distribution : {data.distribution}</h4>
-                    <Link
-                      to="/studentRegister"
-                      state={[
-                        { dataID: data.ID },
-                        { lectureName: lectureName },
-                      ]}
+                    <img
+                      src={plusGreen}
+                      alt="학생 등록하기"
+                      onClick={() => stuPageOpen()}
+                      style={{
+                        display: "inline-block",
+                        width: "13%",
+                        cursor: "pointer",
+                      }}
+                    ></img>
+                    <Dialog
+                      fullWidth={true}
+                      maxWidth={"xl"}
+                      open={stuOpen}
+                      onClose={() => setStuOpen(!stuOpen)}
                     >
-                      <button
-                        style={{
-                          display: "inline-block",
-                          fontSize: "15px",
-                          borderRadius: "0%",
-                          border: "0px",
-                          padding: "6px 12px",
-                          margin: "0% 0% 3% 3%",
-                          cursor: "pointer",
-                        }}
-                      >
-                        학생 등록하기
-                      </button>
-                    </Link>
+                      <StudentRegister
+                        dataID={data.ID}
+                        lectureName={lectureName}
+                        serverAddress={serverAddress}
+                      />
+                    </Dialog>
                   </Paper>
                 ) : null}
               </div>
@@ -255,6 +286,7 @@ const Assignments = (e) => {
           onChange={(e) => setPdate(e.target.value)}
           value={pdate || ""}
         ></input>
+
         <h3 style={{ display: "inline-block", width: "35%", fontSize: "15px" }}>
           <label>
             REASSIGNMENT
@@ -304,6 +336,7 @@ const Assignments = (e) => {
             </p>
           </LoadingButton>
         </div>
+
         <h3 style={{ display: "inline-block" }}>COPY RESULT</h3>
         <div style={{ display: "inline-block", paddingLeft: "5%" }}>
           <Button
@@ -383,22 +416,10 @@ const Assignments = (e) => {
         </div>
       </div>
       <div
-        style={{
-          display: "inline-block",
-          height: "100vh",
-          width: "20%",
-          backgroundImage: `url(${arrow})`,
-        }}
-      >
-        {/* <img
-          src={arrow}
-          alt="arrow"
-          style={{
-            scale: "10%",
-            
-          }}
-        ></img> */}
-      </div>
+        className="arrow"
+        style={arrowStyle}
+        onClick={() => sideClickOpen()}
+      />
       <MaxWidthDialog
         open={open}
         setOpen={setOpen}
@@ -407,6 +428,15 @@ const Assignments = (e) => {
         student={student}
         subject={subject}
       ></MaxWidthDialog>
+
+      <Dialog
+        fullWidth={true}
+        maxWidth={"xl"}
+        open={proOpen}
+        onClose={() => setProOpen(!proOpen)}
+      >
+        <ProRegister serverAddress={serverAddress} setProOpen={setProOpen} />
+      </Dialog>
     </div>
   );
 };
