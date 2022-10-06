@@ -10,8 +10,6 @@ import Paper from '@mui/material/Paper';
 import CopyRadioButtonsGroup from './MUI/CopyRadioButtonsGroup';
 import MultipleSelect from './MUI/MultipleSelect';
 import MaxWidthDialog from './MUI/MaxWidthDialog';
-import Lottie from 'react-lottie-player';
-import lottieJson from './my-lottie.json';
 const Assignments = e => {
   const [loading, setLoading] = useState(false);
   const [subject, setSubject] = useState('');
