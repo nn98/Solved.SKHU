@@ -1013,7 +1013,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
               console.log('case 1:', v);
               for (let j = 0; j < v.length - 1; j++) {
                 let data = v[j].replace(/(<([^>]+)>)/gi, '');
-                console.log(data);
+                console.log('data', data);
                 lac = data == '맞았습니다!!' ? 20 : 10;
                 red.push(data);
               }
