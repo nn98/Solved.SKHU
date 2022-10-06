@@ -991,7 +991,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
       // console.log(lists);
       let returnData = [];
       let ac = 0;
-      if (lists.length() > 1) {
+      if (lists.length > 1) {
         lists.each((index, list) => {
           let red = [];
           let lac = 0;
