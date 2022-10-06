@@ -880,6 +880,10 @@ app.post('/assignments', async (req, res) => {
   let lectureId = ID_LIST[0].Lecture_ID;
   let reAssignment = req.body.reAssignment;
   console.log('deadline:', deadLine);
+  myDate = myDate.split('-');
+  var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
+  console.log(newDate.getTime());
+  deadLine = newDate;
   asyncReturn = true;
   checkResult(pID, lectureId);
   console.log('wait', assignment_Result.length);
@@ -909,8 +913,8 @@ app.post('/assignments', async (req, res) => {
     console.log('paral', parallelizationControl);
 
     console.log('rere at post:', assignment_Result);
-    run(head_ID_LIST, pID, head_assignment_Result, 0);
-    run(tail_ID_LIST, pID, tail_assignment_Result, 1);
+    run(head_ID_LIST, pID, deadLine, head_assignment_Result, 0);
+    run(tail_ID_LIST, pID, deadLine, tail_assignment_Result, 1);
     if (AssignTaskExecute_Assignment_All_Task) await waitNotify_Assignment_All_Task.wait();
     console.log('re_head:', head_assignment_Result);
     console.log('re_tail:', tail_assignment_Result);
@@ -953,7 +957,7 @@ let urls = [
   '&language_id=-1&result_id=-1',
 ];
 
-async function run(ID_LIST, pID, assignment_Result, flag) {
+async function run(ID_LIST, pID, deadLine, assignment_Result, flag) {
   console.log('1. run');
   // console.log("1. run", assignment_Result);
   // console.log("ID_LIST", ID_LIST);
@@ -964,7 +968,7 @@ async function run(ID_LIST, pID, assignment_Result, flag) {
   execute(ID_LIST, pID, processID, url, assignment_Result, flag);
 }
 
-async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
+async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result, flag) {
   console.log('2. execute');
   // console.log("rere at execute:", assignment_Result);
   puppeteer
@@ -986,49 +990,60 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
       const lists = $('tr');
       // console.log(lists);
       let returnData = [];
-      lists.each((index, list) => {
-        let red = [];
-        // const name = $(list).find('td').toString();
-        // console.log('name', name);
-        const name0 = $(list).find('td').toString().split('<td>');
-        console.log('name0', name0);
-        for (let i = 0; i < name0.length; console.log(i, name0[i++]));
-        for (let i = 0; ++i < name0.length; ) {
-          // console.log("N", i, name0[i]);
-          if (name0[i].split('</td>').length > 3) {
-            let v = name0[i].split('</td>');
-            console.log('case 1:', v);
-            for (
-              let j = 0;
-              j < v.length - 1;
-              console.log('case 1:', name0[i].split('data-original-title="')[1].split('"')[0]),
-                red.push(v[j++].replace(/(<([^>]+)>)/gi, ''))
-            );
-          } else {
-            let x = name0[i].lastIndexOf('data-original-title=');
-            console.log('case 2:', x);
-            if (x >= 0) {
-              console.log('case 2-push:', name0[i].split('data-original-title="')[1].split('"')[0]);
-              red.push(name0[i].split('data-original-title="')[1].split('"')[0]);
+      let ac = 0;
+      if (lists.length() > 1) {
+        lists.each((index, list) => {
+          let red = [];
+          let lac = 0;
+          let ldate;
+          let rdate;
+          // const name = $(list).find('td').toString();
+          // console.log('name', name);
+          const name0 = $(list).find('td').toString().split('<td>');
+          console.log('name0', name0);
+          for (let i = 0; i < name0.length; console.log(i, name0[i++]));
+          for (let i = 0; ++i < name0.length; ) {
+            // console.log("N", i, name0[i]);
+            if (name0[i].split('</td>').length > 3) {
+              let v = name0[i].split('</td>');
+              console.log('case 1:', v);
+              for (let j = 0; j < v.length - 1; j++) {
+                let data = v[j].replace(/(<([^>]+)>)/gi, '');
+                lac = data === '맞았습니다!!' ? 20 : 10;
+              }
+            } else {
+              let x = name0[i].lastIndexOf('data-original-title=');
+              console.log('case 2:', x);
+              if (x >= 0) {
+                let date = name0[i].split('data-original-title="');
+                ldate = date[0].split('data-timestamp="')[1].split('"') + '000';
+                red.push(date[1].split('"')[0]);
+              }
+              red.push(name0[i].replace(/(<([^>]+)>)/gi, ''));
             }
-            console.log('last push:', name0[i].replace(/(<([^>]+)>)/gi, ''));
-            red.push(name0[i].replace(/(<([^>]+)>)/gi, ''));
           }
-        }
-        returnData.push(red);
-      });
-
-      // console.log('get html');
-      const html = await page.$eval('td.result', e => e.outerHTML);
-      // console.log('html:', html);
-      // console.log("set result");
-      ID_LIST[0].result = html.includes('맞았습니다!!') ? 20 : html.includes('틀렸습니다') ? 10 : 0;
+          if (ac < 20) {
+            console.log('lac', lac);
+            console.log('ldate', ldate);
+            if (ldate <= deadLine) {
+              ac = lac;
+            } else ac = 10;
+          }
+          returnData.push(red);
+        });
+      }
+      // // console.log('get html');
+      // const html = await page.$eval('td.result', e => e.outerHTML);
+      // // console.log('html:', html);
+      // // console.log("set result");
+      // ID_LIST[0].result = html.includes('맞았습니다!!') ? 20 : html.includes('틀렸습니다') ? 10 : 0;
+      ID_LIST[0].result = ac;
       console.log('push result');
       let insert = ID_LIST.shift();
       insert.status = returnData;
       assignment_Result.push(insert);
       // console.log("rere at result:", assignment_Result);
-      console.log('\t\t', processID, 'is solve');
+      console.log('\t\t', processID, 'is', insert.result);
       isFinish(ID_LIST, pID, assignment_Result, flag);
     })
     .catch(error => {
