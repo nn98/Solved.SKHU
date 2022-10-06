@@ -880,7 +880,7 @@ app.post('/assignments', async (req, res) => {
   let lectureId = ID_LIST[0].Lecture_ID;
   let reAssignment = req.body.reAssignment;
   console.log('deadline:', deadLine);
-  myDate = myDate.split('-');
+  myDate = deadLine.split('-');
   var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
   console.log(newDate.getTime());
   deadLine = newDate;
