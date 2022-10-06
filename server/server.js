@@ -988,10 +988,11 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
       let returnData = [];
       lists.each((index, list) => {
         let red = [];
-        const name = $(list).find('td').toString();
-        console.log('name', name);
+        // const name = $(list).find('td').toString();
+        // console.log('name', name);
         const name0 = $(list).find('td').toString().split('<td>');
-        console.log('name0', name0[0]);
+        console.log('name0', name0);
+        for (let i = 0; i < name0.length; console.log(i, name0[i++]));
         for (let i = 0; ++i < name0.length; ) {
           // console.log("N", i, name0[i]);
           if (name0[i].split('</td>').length > 3) {
