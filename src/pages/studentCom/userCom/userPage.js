@@ -23,38 +23,38 @@ import {
 
 import ProCard from '../recoCom/proCard'
 
-const COLORS = [
-  '#ff3071',
-  '#ff0062',
-  '#f5005a',
-  '#ea0053',
-  '#e0004c',
-  '#41caff',
-  '#2bbfff',
-  '#00b4fc',
-  '#00a9f0',
-  '#009ee5',
-  '#51fdbd',
-  '#3ef0b1',
-  '#27e2a4',
-  '#00d497',
-  '#00c78b',
-  '#ffb028',
-  '#f9a518',
-  '#ec9a00',
-  '#df8f00',
-  '#d28500',
-  '#4e6a86',
-  '#496580',
-  '#435f7a',
-  '#3d5a74',
-  '#38546e',
-  '#c67739',
-  '#b55d0a',
-  '#ad5600',
-  '#a54f00',
-  '#9d4900',
-]
+// const COLORS = [
+//   '#ff3071',
+//   '#ff0062',
+//   '#f5005a',
+//   '#ea0053',
+//   '#e0004c',
+//   '#41caff',
+//   '#2bbfff',
+//   '#00b4fc',
+//   '#00a9f0',
+//   '#009ee5',
+//   '#51fdbd',
+//   '#3ef0b1',
+//   '#27e2a4',
+//   '#00d497',
+//   '#00c78b',
+//   '#ffb028',
+//   '#f9a518',
+//   '#ec9a00',
+//   '#df8f00',
+//   '#d28500',
+//   '#4e6a86',
+//   '#496580',
+//   '#435f7a',
+//   '#3d5a74',
+//   '#38546e',
+//   '#c67739',
+//   '#b55d0a',
+//   '#ad5600',
+//   '#a54f00',
+//   '#9d4900',
+// ]
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180
@@ -264,7 +264,7 @@ const UserPage = (props) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
+          // console.log(data)
           setUserPro(data)
         })
       // 티어 api
@@ -390,7 +390,7 @@ const UserPage = (props) => {
               ? 'linear-gradient( to bottom, #7df7ffd0, #ff7ca9d0 )'
               : user.tier === 0
               ? '#343434d0'
-              : COLORS[COLORS.length - user.tier] + 'd0',
+              : props.COLORS[props.COLORS.length - user.tier] + 'd0',
         }}
       >
         <a
@@ -484,7 +484,7 @@ const UserPage = (props) => {
                   {circleChart.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
+                      fill={props.COLORS[index % props.COLORS.length]}
                     />
                   ))}
                   <h1>test</h1>
@@ -552,9 +552,9 @@ const UserPage = (props) => {
               index < 7 ? (
                 <ProCard
                   width={'80%'}
-                  height={'30vh'}
+                  height={'25vh'}
                   fontSize={'xx-large'}
-                  proColor={COLORS[30 - problem.level]}
+                  proColor={props.COLORS[30 - problem.level]}
                   proTier={problem.level}
                   proNum={problem.problemId}
                   proName={problem.titleKo}
