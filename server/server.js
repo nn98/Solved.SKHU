@@ -990,7 +990,7 @@ async function execute(ID_LIST, pID, processID, url, assignment_Result, flag) {
         let red = [];
         // const name = $(list).find('td');
         const name0 = $(list).find('td').toString().split('<td>');
-        console.log(name0);
+        console.log('name0', name0[0]);
         for (let i = 0; ++i < name0.length; ) {
           // console.log("N", i, name0[i]);
           if (name0[i].split('</td>').length > 3) {
