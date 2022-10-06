@@ -330,22 +330,22 @@ app.get('/WorstAlgorithm', (req, res) => {
 /* --------------- Register Part - Professor --------------- */
 app.post('/proRegister', (req, res) => {
   console.log('proRegister/post ', 'is called');
-  console.log(req);
+  // console.log(req);
   const b = req.body;
-  console.log(b);
+  // console.log(b);
   if ((b.pC === 'proskhuOp12#') | (b.pC === 'S')) {
     for (let i = 0; i < b.cN; i++) {
       const sql =
         'insert into lecture (professor, code, name, distribution) values(' +
         "'" +
-        b.pn +
+        b.pN +
         "', " +
         "'" +
-        b.sc +
+        b.sC +
         "', " +
         "'" +
-        b.sn +
-        (b.cn < 2 ? '' : '-0' + (i + 1)) +
+        b.sN +
+        (b.cN < 2 ? '' : '-0' + (i + 1)) +
         "', " +
         (i + 1) +
         ');';
