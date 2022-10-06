@@ -1034,7 +1034,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
             console.log('lac', lac);
             console.log('ldate', ldate);
             console.log('deadLine', deadLine);
-            if (ldate >= deadLine) {
+            if (ldate <= deadLine) {
               ac = lac;
             } else ac = 10;
           }
