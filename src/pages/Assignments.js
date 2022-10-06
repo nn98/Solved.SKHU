@@ -10,7 +10,6 @@ import Paper from "@mui/material/Paper";
 import CopyRadioButtonsGroup from "./proffessorCom/MUI/CopyRadioButtonsGroup";
 import MultipleSelect from "./proffessorCom/MUI/MultipleSelect";
 import MaxWidthDialog from "./proffessorCom/MUI/MaxWidthDialog";
-import asbg from "./proffessorCom/image/side_background.png";
 import bg from "./proffessorCom/image/bg01.png";
 import arrow from "./proffessorCom/image/arrow.gif";
 
@@ -28,6 +27,10 @@ const Assignments = (e) => {
 
   const [open, setOpen] = useState(false);
   const [detailName, setDetailName] = useState();
+
+  const [sideOpen, setSideOpen] = useState(true);
+  const [sideStyle, setSideStyle] = useState({});
+  const [arrowStyle, setArrowStyle] = useState({});
 
   const handleCopy = async () => {
     if (copy === "resultCopy") {
@@ -157,6 +160,24 @@ const Assignments = (e) => {
     setDetailName(name);
   };
 
+  const sideClickOpen = () => {
+    setSideOpen(!sideOpen);
+
+    if (sideOpen) {
+      setSideStyle({ transform: "translate(100%)", transition: "2s" });
+      setArrowStyle({
+        transform: "translate(450%) rotateY(180deg)",
+        transition: "2s",
+      });
+    } else {
+      setSideStyle({ transform: "translate(0%)", transition: "2s " });
+      setArrowStyle({
+        transform: "translate(0%) rotateY(0deg)",
+        transition: "2s",
+      });
+    }
+  };
+
   useEffect(() => {
     subjectAdd();
   }, []);
@@ -167,10 +188,7 @@ const Assignments = (e) => {
       style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
     >
       <h1>채점 페이지</h1>
-      <div
-        className="buttonList"
-        style={{ backgroundImage: `url(${asbg})`, backgroundSize: "cover" }}
-      >
+      <div className="buttonList" style={sideStyle}>
         <div style={{ margin: "25% 0% 3% 3%" }}>
           <MultipleSelect
             subject={subject}
@@ -383,22 +401,10 @@ const Assignments = (e) => {
         </div>
       </div>
       <div
-        style={{
-          display: "inline-block",
-          height: "100vh",
-          width: "20%",
-          backgroundImage: `url(${arrow})`,
-        }}
-      >
-        {/* <img
-          src={arrow}
-          alt="arrow"
-          style={{
-            scale: "10%",
-            
-          }}
-        ></img> */}
-      </div>
+        className="arrow"
+        style={arrowStyle}
+        onClick={() => sideClickOpen()}
+      />
       <MaxWidthDialog
         open={open}
         setOpen={setOpen}

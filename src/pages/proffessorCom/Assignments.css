@@ -2,6 +2,7 @@
   height: 100vh;
   width: 100%;
 }
+
 .assign h1 {
   text-align: center;
   color: white;
@@ -20,6 +21,8 @@
 }
 
 .buttonList {
+  background-image: url("./image/side_background.png");
+  background-size: cover;
   color: #f0f0f0;
   padding: "10%";
   height: 100vh;
@@ -84,6 +87,16 @@
   -ms-overflow-style: none;
 }
 
+.arrow {
+  display: inline-block;
+  height: 15%;
+  width: 11%;
+  background-image: url("./image/arrow.gif");
+  background-size: cover;
+  margin-bottom: 20%;
+  margin-left: 9%;
+  scale: 50%;
+}
 /* .assign .p-head span:nth-child(2) {
     width: 20%;
   } */
