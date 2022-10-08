@@ -282,7 +282,7 @@ const Assignments = e => {
                 console.log('ReAssignment:', reAssignment);
               }}
               value={reAssignment || ''}
-              checked={!reAssignment}
+              checked={reAssignment}
             ></input>
           </label>
         </h3>
