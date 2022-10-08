@@ -15,7 +15,7 @@ const Assignments = e => {
   const [subject, setSubject] = useState('');
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
-  const [reAssignment, setReAssignment] = useState(true);
+  const [reAssignment, setReAssignment] = useState(false);
   const [copy, setCopy] = useState('');
   const [ID_LIST, setID_LIST] = useState();
   const [lecture, setLecture] = useState([]);

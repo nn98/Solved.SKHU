@@ -863,10 +863,12 @@ app.get('/assignments', (req, res) => {
   });
 });
 
-let parallelizationControl;
-let assignment_Result = [];
 let asyncReturn = true;
 const waitReturn = new WaitNotify();
+let parallelizationControl;
+let assignment_Result = [];
+let re_asyncReturn = false;
+let re_waitReturn = new WaitNotify();
 
 app.post('/assignments', async (req, res) => {
   console.log('Assignments/post ', 'is called');
@@ -890,10 +892,10 @@ app.post('/assignments', async (req, res) => {
   console.log('deadline:', deadLine);
   if (!reAssignment) {
     console.log('fresh Assignment');
-    asyncReturn = true;
     console.log('ASYNC --- wait for checkResult, assignment_R.length:', assignment_Result.length);
+    re_asyncReturn = true;
     checkResult(pID, lectureId);
-    if (asyncReturn) await waitReturn.wait();
+    if (re_asyncReturn) await re_waitReturn.wait();
     console.log('ASYNC --- checkResult is finish, assignment_R.length:', assignment_Result.length);
   }
 
@@ -1104,21 +1106,23 @@ async function checkResult(pid, lectureid) {
         console.log('!---select success!');
         if (result.length > 0) {
           console.log('result is exist.', result);
-          console.log(asyncReturn);
+          console.log(re_asyncReturn);
           assignment_Result = JSON.parse(result[0].result);
           console.log('notify at check', assignment_Result.length);
-          asyncReturn = false;
-          waitReturn.notify();
+          re_asyncReturn = false;
+          re_waitReturn.notify();
         } else {
           console.log('result is not exist.');
           assignment_Result = [];
-          asyncReturn = false;
-          waitReturn.notify();
+          re_asyncReturn = false;
+          re_waitReturn.notify();
         }
       }
     });
   } catch (err) {
     console.log('err', err);
+    re_asyncReturn = false;
+    re_waitReturn.notify();
   }
 }
 /* --------------- Assignments Part --------------- */
