@@ -1053,7 +1053,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
       assignment_Result.push(insert);
       // console.log("rere at result:", assignment_Result);
       console.log('\t\t', processID, 'is', insert.result);
-      isFinish(ID_LIST, pID, assignment_Result, flag);
+      isFinish(ID_LIST, pID, deadLine, assignment_Result, flag);
     })
     .catch(error => {
       console.log('html include err', error);
