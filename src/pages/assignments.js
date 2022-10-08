@@ -23,7 +23,7 @@ const Assignments = e => {
   const [lectureName, setLectureName] = useState();
 
   const [open, setOpen] = useState(false);
-  const [detailName, setDetailName] = useState();
+  const [detailID, setDetailID] = useState();
 
   const handleCopy = async () => {
     if (copy === 'resultCopy') {
@@ -144,9 +144,9 @@ const Assignments = e => {
     }
   };
 
-  const handleClickOpen = name => {
+  const handleClickOpen = ID => {
     setOpen(true);
-    setDetailName(name);
+    setDetailID(ID);
   };
 
   useEffect(() => {
@@ -186,7 +186,7 @@ const Assignments = e => {
                     <span>{data.name}</span>
                     <span>{data.bojid}</span>
                     <span
-                      onClick={() => handleClickOpen(data.name)}
+                      onClick={() => handleClickOpen(data.ID)}
                       style={{ textDecoration: 'underline', cursor: 'pointer' }}
                     >
                       {String(data.result) === 'undefined' ? '' : String(data.result)}
@@ -331,7 +331,7 @@ const Assignments = e => {
         open={open}
         setOpen={setOpen}
         pnumber={pnumber}
-        detailName={detailName}
+        detailID={detailID}
         student={student}
         subject={subject}
       ></MaxWidthDialog>
