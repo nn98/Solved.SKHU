@@ -1085,7 +1085,7 @@ async function isFinish(ID_LIST, pID, assignment_Result, flag) {
       ID_LIST.shift();
     }
     // console.log("isFin > run", assignment_Result);
-    run(ID_LIST, pID, assignment_Result, flag);
+    run(ID_LIST, pID, deadLine, assignment_Result, flag);
   }
 }
 
