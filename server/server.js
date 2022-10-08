@@ -1061,11 +1061,11 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
       ID_LIST[0].result = 0;
       ID_LIST[0].status = '';
       assignment_Result.push(ID_LIST.shift());
-      isFinish(ID_LIST, pID, assignment_Result, flag);
+      isFinish(ID_LIST, pID, deadLine, assignment_Result, flag);
     });
 }
 
-async function isFinish(ID_LIST, pID, assignment_Result, flag) {
+async function isFinish(ID_LIST, pID, deadLine, assignment_Result, flag) {
   console.log('3. isFinish');
   // console.log("rere at isFin:", assignment_Result);
   parallelizationControl[flag].waitNotify.notify();

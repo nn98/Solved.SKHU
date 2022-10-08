@@ -90,11 +90,11 @@ const Assignments = e => {
         .then(async res => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then(async data => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
-
+          console.log('post recived');
           let compare = student;
           let printResult = [];
           // console.log(compare);
-          // console.log("Data: ", data);
+          console.log('Data: ', data);
           // console.log("Data[0][0]: ", data[0][0]);
           // console.log("Data[0][0].ID: ", data[0][0].ID);
           // console.log("Compare: ", compare);
