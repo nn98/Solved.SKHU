@@ -863,8 +863,6 @@ app.get('/assignments', (req, res) => {
   });
 });
 
-let asyncReturn = true;
-const waitReturn = new WaitNotify();
 let parallelizationControl;
 let assignment_Result = [];
 let re_asyncReturn = false;
@@ -874,24 +872,24 @@ app.post('/assignments', async (req, res) => {
   console.log('Assignments/post ', 'is called');
   console.log('cleadn assignment_Result');
   assignment_Result = [];
-  console.log(req.body);
+  // console.log(req.body);
 
-  console.log('Req\tID_LIST', req.body.ID_LIST);
-  console.log('Problem ID\t', req.body.PID);
+  console.log('ID_LIST:\t\t', req.body.ID_LIST);
+  console.log('Problem ID:\t', req.body.PID);
   let pID = req.body.PID;
   let ID_LIST = req.body.ID_LIST;
   let deadLine = req.body.DeadLine;
   let lectureId = ID_LIST[0].Lecture_ID;
   let reAssignment = req.body.reAssignment;
-  console.log('deadline:', deadLine);
-  console.log('reAssignment:', reAssignment);
+  console.log('deadline:\t', deadLine);
   myDate = deadLine.split('-');
   var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
-  console.log(newDate.getTime());
+  // console.log(newDate.getTime());
   deadLine = newDate.getTime();
-  console.log('deadline:', deadLine);
+  console.log('deadline to timestamp:', deadLine);
+  console.log('reAssignment:\t', reAssignment);
   if (!reAssignment) {
-    console.log('fresh Assignment');
+    console.log('not reAssignment');
     console.log('ASYNC --- wait for checkResult, assignment_R.length:', assignment_Result.length);
     re_asyncReturn = true;
     checkResult(pID, lectureId);
@@ -954,7 +952,7 @@ app.post('/assignments', async (req, res) => {
     }
   }
 
-  if (asyncReturn) await waitReturn.wait();
+  if (re_asyncReturn) await re_waitReturn.wait();
   console.log('send response: ', assignment_Result);
   // ID_LIST=assignment_Result;
   res.send(assignment_Result);
