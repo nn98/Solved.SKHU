@@ -874,7 +874,7 @@ app.post('/assignments', async (req, res) => {
   assignment_Result = [];
   // console.log(req.body);
 
-  console.log('ID_LIST:\t\t', req.body.ID_LIST);
+  console.log('ID_LIST:', req.body.ID_LIST);
   console.log('Problem ID:\t', req.body.PID);
   let pID = req.body.PID;
   let ID_LIST = req.body.ID_LIST;
@@ -886,7 +886,7 @@ app.post('/assignments', async (req, res) => {
   var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
   // console.log(newDate.getTime());
   deadLine = newDate.getTime();
-  console.log('deadline to timestamp:', deadLine);
+  console.log('DL timestamp:', deadLine);
   console.log('reAssignment:\t', reAssignment);
   if (!reAssignment) {
     console.log('not reAssignment');
@@ -1007,32 +1007,42 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
           // const name = $(list).find('td').toString();
           // console.log('name', name);
           const name0 = $(list).find('td').toString().split('<td>');
-          console.log('name0', name0);
-          for (let i = 0; i < name0.length; console.log(i, name0[i++]));
+
+          // !===== #84 check deadLine console.log('name0', name0);
+          // !===== #84 check deadLine for (let i = 0; ++i < name0.length; console.log(i, name0[i]));
+
           for (let i = 0; ++i < name0.length; ) {
             // console.log("N", i, name0[i]);
             if (name0[i].split('</td>').length > 3) {
               let v = name0[i].split('</td>');
-              console.log('case 1:', v);
+
+              // !===== #84 check deadLine console.log('case 1:', v);
+
               for (let j = 0; j < v.length - 1; j++) {
                 let data = v[j].replace(/(<([^>]+)>)/gi, '');
-                console.log('data', data);
+
+                // !===== #84 check deadLine console.log('data', data);
+
+                // AC!! & DL Check
                 lac = lac < 20 ? (data == '맞았습니다!!' ? 20 : 10) : lac;
                 red.push(data);
               }
             } else {
               let x = name0[i].lastIndexOf('data-original-title=');
-              console.log('case 2:', x);
+              // !===== #84 check deadLine console.log('case 2:', x);
               if (x >= 0) {
                 let date = name0[i].split('data-original-title="');
-                console.log('date', date);
                 ldate = date[0].split('data-timestamp="')[1].split('"')[0] + '000';
-                console.log('ldate', ldate);
+
+                // !===== #84 check deadLine console.log('date', date);
+                // !===== #84 check deadLine console.log('ldate', ldate);
+
                 red.push(date[1].split('"')[0]);
               }
               red.push(name0[i].replace(/(<([^>]+)>)/gi, ''));
             }
           }
+          // AC!! & DL Check
           if (ac < 20) {
             console.log('lac', lac);
             console.log('ldate', ldate);
