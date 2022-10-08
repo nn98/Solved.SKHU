@@ -136,9 +136,11 @@ const Assignments = e => {
           setLecture(data[0]);
           setStudent(data[1]);
           setID_LIST(data[1]);
-          console.log('setLec:', lecture);
-          console.log('setStu:', student);
-          console.log('setIDL:', ID_LIST);
+          // 위 로그는 잘 찍히는데 왜 아래 로그들에선 빈배열이나 und? set이 느린가?
+          // console.log('setLec:', lecture);
+          // console.log('setStu:', student);
+          // console.log('setIDL:', ID_LIST);
+          console.log('reAssignment', reAssignment);
         });
     } catch (error) {
       console.error(error);
@@ -277,9 +279,11 @@ const Assignments = e => {
             <input
               type="checkbox"
               onChange={e => {
+                // 위에서의 log 확인을 통해 set이 느리다고 추론할 경우
+                // 프론트의 reAssignment와 서버가 받는 reAssignment가 다른 이유가 설명됨
+                console.log('ReAssignment:', reAssignment);
                 setReAssignment(!reAssignment);
                 // console.log('e.checked:',e.target.checked);
-                console.log('ReAssignment:', reAssignment);
               }}
               value={reAssignment || ''}
               checked={reAssignment}
