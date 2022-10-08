@@ -870,6 +870,8 @@ const waitReturn = new WaitNotify();
 
 app.post('/assignments', async (req, res) => {
   console.log('Assignments/post ', 'is called');
+  console.log('cleadn assignment_Result');
+  assignment_Result = [];
   console.log(req.body);
 
   console.log('Req\tID_LIST', req.body.ID_LIST);
@@ -887,11 +889,12 @@ app.post('/assignments', async (req, res) => {
   deadLine = newDate.getTime();
   console.log('deadline:', deadLine);
   if (!reAssignment) {
+    console.log('fresh Assignment');
     asyncReturn = true;
+    console.log('ASYNC --- wait for checkResult, assignment_R.length:', assignment_Result.length);
     checkResult(pID, lectureId);
-    console.log('wait', assignment_Result.length);
     if (asyncReturn) await waitReturn.wait();
-    console.log('notify', assignment_Result.length);
+    console.log('ASYNC --- checkResult is finish, assignment_R.length:', assignment_Result.length);
   }
 
   if ((assignment_Result.length < 1) | reAssignment) {
