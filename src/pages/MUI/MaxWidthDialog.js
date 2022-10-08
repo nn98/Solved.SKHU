@@ -1,16 +1,16 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import "./MaxWidthDialog.css";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import './MaxWidthDialog.css';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
 
 export default function MaxWidthDialog(props) {
-  let detailDate = "";
+  let detailDate = '';
 
   const handleClose = () => {
     props.setOpen(false);
@@ -20,37 +20,31 @@ export default function MaxWidthDialog(props) {
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "rgba(0, 0, 0, 0.87)",
-      color: "rgba(255, 255, 255, 0.87)",
+      backgroundColor: 'rgba(0, 0, 0, 0.87)',
+      color: 'rgba(255, 255, 255, 0.87)',
       maxWidth: 220,
       fontSize: theme.typography.pxToRem(18),
     },
   }));
 
-  const setDetailDate = (value) => {
+  const setDetailDate = value => {
     detailDate = value;
     return;
   };
 
   return (
     <React.Fragment>
-      <Dialog
-        fullWidth={true}
-        maxWidth={"xl"}
-        open={props.open}
-        onClose={handleClose}
-      >
+      <Dialog fullWidth={true} maxWidth={'xl'} open={props.open} onClose={handleClose}>
         <DialogTitle>채점 상세 보기</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {props.pnumber} 문제에 대한 {props.detailName} 의 채점 현황입니다.
+            {props.pnumber} 문제에 대한 {props.detailID} 의 채점 현황입니다.
           </DialogContentText>
           {props.student.map((data, index) => (
             <React.Fragment key={index}>
-              {data.Lecture_ID === props.subject &&
-              data.name === props.detailName ? (
+              {data.Lecture_ID === props.subject && data.ID === props.detailID ? (
                 <>
-                  {data.status !== "" ? (
+                  {data.status !== '' ? (
                     <table className="detail">
                       <thead>
                         <tr>
@@ -73,29 +67,23 @@ export default function MaxWidthDialog(props) {
                                     <React.Fragment key={index}>
                                       {index === 0 ? (
                                         <HtmlTooltip
-                                          title={"코드 비공개시 확인 불가"}
+                                          title={'코드 비공개시 확인 불가'}
                                           placement="top"
                                         >
-                                        <td>
-                                          <a
-                                            href={
-                                              "https://www.acmicpc.net/source/" +
-                                              value
-                                            }
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                          >
-                                            {value}
-                                          </a>
+                                          <td>
+                                            <a
+                                              href={'https://www.acmicpc.net/source/' + value}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                            >
+                                              {value}
+                                            </a>
                                           </td>
-                                          </HtmlTooltip>
+                                        </HtmlTooltip>
                                       ) : index === 1 ? (
                                         <td>
                                           <a
-                                            href={
-                                              "https://www.acmicpc.net/user/" +
-                                              value
-                                            }
+                                            href={'https://www.acmicpc.net/user/' + value}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                           >
@@ -105,10 +93,7 @@ export default function MaxWidthDialog(props) {
                                       ) : index === 2 ? (
                                         <td>
                                           <a
-                                            href={
-                                              "https://www.acmicpc.net/problem/" +
-                                              value
-                                            }
+                                            href={'https://www.acmicpc.net/problem/' + value}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                           >
@@ -116,51 +101,35 @@ export default function MaxWidthDialog(props) {
                                           </a>
                                         </td>
                                       ) : index === 3 ? (
-                                        value === "맞았습니다!!" ? (
-                                          <td style={{ color: "green" }}>
-                                            {value}
-                                          </td>
+                                        value === '맞았습니다!!' ? (
+                                          <td style={{ color: 'green' }}>{value}</td>
                                         ) : (
-                                          <td style={{ color: "red" }}>
-                                            {value}
-                                          </td>
+                                          <td style={{ color: 'red' }}>{value}</td>
                                         )
                                       ) : index === 4 ? (
-                                        value !== "" ? (
+                                        value !== '' ? (
                                           <td>
-                                            {value}{" "}
-                                            <span style={{ color: "#CC723D" }}>
-                                              KB
-                                            </span>
+                                            {value} <span style={{ color: '#CC723D' }}>KB</span>
                                           </td>
                                         ) : (
                                           <td></td>
                                         )
                                       ) : index === 5 ? (
-                                        value !== "" ? (
+                                        value !== '' ? (
                                           <td>
-                                            {value}{" "}
-                                            <span style={{ color: "#CC723D" }}>
-                                              ms
-                                            </span>
+                                            {value} <span style={{ color: '#CC723D' }}>ms</span>
                                           </td>
                                         ) : (
                                           <td></td>
                                         )
                                       ) : index === 7 ? (
                                         <td>
-                                          {value}{" "}
-                                          <span style={{ color: "#CC723D" }}>
-                                            B
-                                          </span>
+                                          {value} <span style={{ color: '#CC723D' }}>B</span>
                                         </td>
                                       ) : index === 8 ? (
                                         <>{setDetailDate(value)}</>
                                       ) : index === 9 ? (
-                                        <HtmlTooltip
-                                          title={detailDate}
-                                          placement="top"
-                                        >
+                                        <HtmlTooltip title={detailDate} placement="top">
                                           <td>{value}</td>
                                         </HtmlTooltip>
                                       ) : (
