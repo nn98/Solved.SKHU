@@ -847,7 +847,7 @@ async function correctionUpdate(url) {
 
 /* --------------- Assignments Part --------------- */
 app.get('/assignments', (req, res) => {
-  console.log('Assignments/get ', 'is called');
+  console.log('!++++++++++++++++++++', 'assignments/get ', 'is called');
   let sql =
     'select * from lecture;' +
     'select ID,name,bojid,Lecture_ID from student as s join learn as l on s.id=l.student_id order by name;';
@@ -869,7 +869,7 @@ let re_asyncReturn = false;
 let re_waitReturn = new WaitNotify();
 
 app.post('/assignments', async (req, res) => {
-  console.log('Assignments/post ', 'is called');
+  console.log('!++++++++++++++++++++', 'assignments/post ', 'is called');
   console.log('cleadn assignment_Result');
   assignment_Result = [];
   // console.log(req.body);
@@ -886,10 +886,10 @@ app.post('/assignments', async (req, res) => {
   var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
   // console.log(newDate.getTime());
   deadLine = newDate.getTime();
-  console.log('DL timestamp:', deadLine);
+  console.log('DL timestamp:\t', deadLine);
   console.log('reAssignment:\t', reAssignment);
   if (!reAssignment) {
-    console.log('not reAssignment');
+    console.log('not reAssignment...');
     console.log('ASYNC --- wait for checkResult, assignment_R.length:', assignment_Result.length);
     re_asyncReturn = true;
     checkResult(pID, lectureId);
@@ -902,7 +902,7 @@ app.post('/assignments', async (req, res) => {
       console.log('reAssignment...');
       assignment_Result = [];
     }
-    console.log('execute assignment.');
+    console.log('@----------', 'execute assignment.');
     AssignTaskExecute_Assignment_All_Task = true;
     parallelizationControl = [
       { AsyncTaskExecute: false, waitNotify: new WaitNotify(), fin: false },
@@ -910,25 +910,27 @@ app.post('/assignments', async (req, res) => {
     ];
     let head_assignment_Result = [];
     let head_ID_LIST = ID_LIST.slice(0, ID_LIST.length / 2);
-    console.log('head_ID_LIST', head_ID_LIST);
     let tail_assignment_Result = [];
     let tail_ID_LIST = ID_LIST.slice(ID_LIST.length / 2);
-    console.log('tail_ID_LIST', tail_ID_LIST);
-    console.log(ID_LIST[0].bojid);
-    console.log(head_ID_LIST[0].bojid);
-    console.log(tail_ID_LIST[0].bojid);
-    console.log('paral', parallelizationControl);
 
-    console.log('rere at post:', assignment_Result);
+    // console.log('head_ID_LIST', head_ID_LIST);
+    // console.log('tail_ID_LIST', tail_ID_LIST);
+    // console.log('paral', parallelizationControl);
+    // console.log('rere at post:', assignment_Result);
+
     run(head_ID_LIST, pID, deadLine, head_assignment_Result, 0);
     run(tail_ID_LIST, pID, deadLine, tail_assignment_Result, 1);
     if (AssignTaskExecute_Assignment_All_Task) await waitNotify_Assignment_All_Task.wait();
-    console.log('re_head:', head_assignment_Result);
-    console.log('re_tail:', tail_assignment_Result);
+
+    // console.log('re_head:', head_assignment_Result);
+    // console.log('re_tail:', tail_assignment_Result);
+
     assignment_Result.push(...head_assignment_Result);
     assignment_Result.push(...tail_assignment_Result);
+
     // assignment_Result=head_assignment_Result.concat(tail_assignment_Result);
     // console.log("Result-json:",JSON.stringify(assignment_Result));
+
     console.log('save result...');
     sql =
       'insert into assignment_result (id,result,lectureid) values(' +
@@ -938,7 +940,9 @@ app.post('/assignments', async (req, res) => {
       "'," +
       lectureId +
       ');';
-    console.log(sql);
+
+    // console.log(sql);
+
     try {
       connection.query(sql, async function (err, result, fields) {
         if (err) {
@@ -965,10 +969,10 @@ let urls = [
 ];
 
 async function run(ID_LIST, pID, deadLine, assignment_Result, flag) {
-  console.log('1. run');
+  console.log('----------', 'paral:', flag, '1. run');
   // console.log("1. run", assignment_Result);
   // console.log("ID_LIST", ID_LIST);
-  console.log('pID', pID);
+  console.log('----------', 'paral:', flag, 'pID', pID);
   let processID = ID_LIST[0].bojid;
   let url = urls[0] + pID + urls[1] + processID + urls[2];
   // console.log("rere at run:", assignment_Result);
@@ -976,7 +980,7 @@ async function run(ID_LIST, pID, deadLine, assignment_Result, flag) {
 }
 
 async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result, flag) {
-  console.log('2. execute');
+  console.log('----------', 'paral:', flag, '2. execute');
   // console.log("rere at execute:", assignment_Result);
   puppeteer
     .launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
@@ -985,7 +989,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
         await parallelizationControl[flag].waitNotify.wait();
       }
 
-      console.log('now process\t', processID);
+      console.log('----------', 'paral:', flag, 'now process\t', processID);
       parallelizationControl[flag].AsyncTaskExecute = true;
       const page = await browser.newPage();
       await page.setDefaultNavigationTimeout(0);
@@ -995,7 +999,9 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
       const $ = cheerio.load(content);
       let re = [];
       const lists = $('tr');
+
       // console.log(lists);
+
       let returnData = [];
       let ac = 0;
       if (lists.length > 1) {
@@ -1004,8 +1010,10 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
           let lac = 0;
           let ldate;
           let rdate;
+
           // const name = $(list).find('td').toString();
           // console.log('name', name);
+
           const name0 = $(list).find('td').toString().split('<td>');
 
           // !===== #84 check deadLine console.log('name0', name0);
@@ -1044,9 +1052,9 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
           }
           // AC!! & DL Check
           if (ac < 20) {
-            console.log('lac', lac);
-            console.log('ldate', ldate);
-            console.log('deadLine', deadLine);
+            console.log('----------', 'paral:', flag, 'user:', processID, '- lac', lac);
+            console.log('----------', 'paral:', flag, 'user:', processID, '- ldate', ldate);
+            console.log('----------', 'paral:', flag, 'user:', processID, '- deadLine', deadLine);
             if (ldate <= deadLine) {
               ac = lac;
             } else ac = 10;
@@ -1060,17 +1068,17 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
       // // console.log("set result");
       // ID_LIST[0].result = html.includes('맞았습니다!!') ? 20 : html.includes('틀렸습니다') ? 10 : 0;
       ID_LIST[0].result = ac;
-      console.log('push result');
+      console.log('----------', 'paral:', flag, 'push result');
       let insert = ID_LIST.shift();
       insert.status = returnData;
       assignment_Result.push(insert);
       // console.log("rere at result:", assignment_Result);
-      console.log('\t\t', processID, 'is', insert.result);
+      console.log('----------', 'paral:', flag, '\t\t', processID, 'is', insert.result);
       isFinish(ID_LIST, pID, deadLine, assignment_Result, flag);
     })
     .catch(error => {
-      console.log('html include err', error);
-      console.log('\t\t', processID, "isn't solve");
+      console.log('----------', 'paral:', flag, 'html include err', error);
+      console.log('----------', 'paral:', flag, '\t\t', processID, "isn't solve");
       ID_LIST[0].result = 0;
       ID_LIST[0].status = '';
       assignment_Result.push(ID_LIST.shift());
@@ -1079,7 +1087,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
 }
 
 async function isFinish(ID_LIST, pID, deadLine, assignment_Result, flag) {
-  console.log('3. isFinish');
+  console.log('----------', 'paral:', flag, '3. isFinish');
   // console.log("rere at isFin:", assignment_Result);
   parallelizationControl[flag].waitNotify.notify();
   parallelizationControl[flag].AsyncTaskExecute = false;
@@ -1091,10 +1099,10 @@ async function isFinish(ID_LIST, pID, deadLine, assignment_Result, flag) {
       waitNotify_Assignment_All_Task.notify();
     }
   } else {
-    console.log('————————————————————————————————————');
+    console.log('—————————————————————————————————————————————————————————');
     console.log(assignment_Result[assignment_Result.length - 1]);
     while (ID_LIST[0].bojid === '-') {
-      console.log(ID_LIST[0].ID, 'is unsubmitted');
+      console.log('----------', 'paral:', flag, ID_LIST[0].ID, 'is unsubmitted');
       ID_LIST.shift();
     }
     // console.log("isFin > run", assignment_Result);
@@ -1103,7 +1111,7 @@ async function isFinish(ID_LIST, pID, deadLine, assignment_Result, flag) {
 }
 
 async function checkResult(pid, lectureid) {
-  console.log('check result existence...');
+  console.log('!——————————check result existence...');
   let sql = 'select * from assignment_result where id=' + pid + ' and lectureid=' + lectureid + ';';
   console.log(sql);
   try {
@@ -1113,14 +1121,16 @@ async function checkResult(pid, lectureid) {
       } else {
         console.log('!---select success!');
         if (result.length > 0) {
-          console.log('result is exist.', result);
+          console.log('result is exist.——————————!', result);
           console.log(re_asyncReturn);
           assignment_Result = JSON.parse(result[0].result);
-          console.log('notify at check', assignment_Result.length);
+
+          // console.log('notify at check', assignment_Result.length);
+
           re_asyncReturn = false;
           re_waitReturn.notify();
         } else {
-          console.log('result is not exist.');
+          console.log('result is not exist.——————————!');
           assignment_Result = [];
           re_asyncReturn = false;
           re_waitReturn.notify();
@@ -1128,7 +1138,7 @@ async function checkResult(pid, lectureid) {
       }
     });
   } catch (err) {
-    console.log('err', err);
+    console.log('err——————————!', err);
     re_asyncReturn = false;
     re_waitReturn.notify();
   }
