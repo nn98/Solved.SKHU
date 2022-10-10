@@ -29,7 +29,7 @@ const Assignments = (e) => {
   const [subject, setSubject] = useState("");
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
-  const [reAssignment, setReAssignment] = useState(true);
+  const [reAssignment, setReAssignment] = useState(false);
   const [copy, setCopy] = useState("");
   const [ID_LIST, setID_LIST] = useState();
   const [lecture, setLecture] = useState([]);
@@ -47,12 +47,10 @@ const Assignments = (e) => {
   const [stuOpen, setStuOpen] = useState(false);
   const [serverAddress, setServerAddress] = useState(e.serverAddress);
 
+  const [submitController, setSubmitController] = useState(false);
+  const [copyController, setCopyController] = useState(false);
+  const [gaugeController, setGaugeController] = useState(false);
 
-  const [submitController,setSubmitController] = useState(false);
-  const [copyController,setCopyController] = useState(false);
-  const [gaugeController,setGaugeController] = useState(false);
-  
- 
   console.log(serverAddress);
   const handleCopy = async () => {
     if (copy === "resultCopy") {
@@ -66,7 +64,7 @@ const Assignments = (e) => {
         alert("클립보드에 복사 되었습니다!");
       } catch {
         alert("복사 실패!");
-        return
+        return;
       }
     } else if (copy === "allCopy") {
       let clipBoard = "";
@@ -83,17 +81,16 @@ const Assignments = (e) => {
         alert("클립보드에 복사 되었습니다!");
       } catch {
         alert("복사 실패!");
-        return
+        return;
       }
     } else {
       alert("복사 옵션을 선택하세요.");
-      return
+      return;
     }
     setCopyController(true);
     setTimeout(() => {
       setCopyController(false);
     }, 4000);
-
   };
 
   const onClickStart = async (props) => {
@@ -365,16 +362,22 @@ const Assignments = (e) => {
             <input
               type="checkbox"
               onChange={(e) => {
-                setReAssignment(!reAssignment);
-                // console.log('e.checked:',e.target.checked);
                 console.log("ReAssignment:", reAssignment);
+                setReAssignment(!reAssignment);
               }}
               value={reAssignment || ""}
-              checked={!reAssignment}
+              checked={reAssignment}
             ></input>
           </label>
         </h3>
-        <div style={{ display: "inline-block", paddingLeft: "5%" ,width:"55%",verticalAlign:"middle"}}>
+        <div
+          style={{
+            display: "inline-block",
+            paddingLeft: "5%",
+            width: "55%",
+            verticalAlign: "middle",
+          }}
+        >
           {/* <LoadingButton
             size="small"
             color="inherit"
@@ -407,49 +410,62 @@ const Assignments = (e) => {
               검사 실행
             </p> */}
           {/* </LoadingButton>  */}
-          <div style={{width: '100%'}}>
-          <img src={submitController?submit:sb} alt="submit" style={{width:'80%'}} 
-          onClick={() => {
-            if (subject === "") alert("강의를 선택하세요.");
-            else if (pnumber === undefined || pnumber === "")
-              alert("문제번호를 선택하세요.");
-            else if (pdate === undefined) alert("제출 기한을 선택하세요.");
-            else{
-              onClickStart({
-                ID_LIST,
-                pnumber,
-                pdate,
-                reAssignment,
-              });
-              setSubmitController(true);
-              setTimeout(() => {
-                setSubmitController(false);
-              }, 4000);
-            }
-
-          }}/>
-            <img src={gaugeController?gauge:gg} alt="gauge" style={{width:'80%'}} />
-           </div>
-          <div>
-        </div>
+          <div style={{ width: "100%" }}>
+            <img
+              src={submitController ? submit : sb}
+              alt="submit"
+              style={{ width: "80%" }}
+              onClick={() => {
+                if (subject === "") alert("강의를 선택하세요.");
+                else if (pnumber === undefined || pnumber === "")
+                  alert("문제번호를 선택하세요.");
+                else if (pdate === undefined) alert("제출 기한을 선택하세요.");
+                else {
+                  onClickStart({
+                    ID_LIST,
+                    pnumber,
+                    pdate,
+                    reAssignment,
+                  });
+                  setSubmitController(true);
+                  setTimeout(() => {
+                    setSubmitController(false);
+                  }, 4000);
+                }
+              }}
+            />
+            <img
+              src={gaugeController ? gauge : gg}
+              alt="gauge"
+              style={{ width: "80%" }}
+            />
+          </div>
+          <div></div>
         </div>
 
         <h3 style={{ display: "inline-block" }}>COPY RESULT</h3>
-        <div style={{ display: "inline-block", paddingLeft: "5%", verticalAlign:"middle" }}>
-        <img  src={copyController?copyGif:cp} 
-              alt="copy" style={{width : '5vw',height : '5vw'}}
-              onClick={() => {
-                handleCopy();
-
-
-              }}
-        variant="contained"
-        sx={{
-          marginLeft: "10%",
-          width: "210px",
-          marginTop: "10px",
-          backgroundColor: "#000000",
-        }}/>
+        <div
+          style={{
+            display: "inline-block",
+            paddingLeft: "5%",
+            verticalAlign: "middle",
+          }}
+        >
+          <img
+            src={copyController ? copyGif : cp}
+            alt="copy"
+            style={{ width: "5vw", height: "5vw" }}
+            onClick={() => {
+              handleCopy();
+            }}
+            variant="contained"
+            sx={{
+              marginLeft: "10%",
+              width: "210px",
+              marginTop: "10px",
+              backgroundColor: "#000000",
+            }}
+          />
           {/* <Button
             size="small"
             color="inherit"
@@ -465,14 +481,14 @@ const Assignments = (e) => {
             }}
           >
             {/* <p style={{ color: "black" }}> */}
-              {/* <ContentCopyIcon
+          {/* <ContentCopyIcon
                 fontSize="12px"
                 sx={{ margin: "0px 12px 0px 0px" }}
               /> */}
-              {/* 결과 복사하기 */}
-                
-            {/* </p> */}
-          {/* </Button> */} 
+          {/* 결과 복사하기 */}
+
+          {/* </p> */}
+          {/* </Button> */}
         </div>
         <hr></hr>
         <div style={{ marginLeft: "3%" }}>
@@ -488,7 +504,7 @@ const Assignments = (e) => {
         <div
           className="p-head"
           style={{
-            backgroundColor: "black",
+            backgroundColor: "#4bd137",
             color: "white",
             borderRadius: "5px 5px 0 0",
             position: "sticky",
