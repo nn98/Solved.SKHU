@@ -8,7 +8,7 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3001;
-const httpsport=3002;
+const httpsport = 3002;
 const WaitNotify = require('wait-notify');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
@@ -39,14 +39,17 @@ const fs = require('fs');
 const http = require('http');
 const https = require('https');
 
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem', 'utf8');
+const privateKey = fs.readFileSync(
+  '/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem',
+  'utf8'
+);
 const certificate = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/cert.pem', 'utf8');
 const ca = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/chain.pem', 'utf8');
 
 const credentials = {
-	key: privateKey,
-	cert: certificate,
-	ca: ca
+  key: privateKey,
+  cert: certificate,
+  ca: ca,
 };
 
 //app.use((req, res) => {
@@ -58,19 +61,19 @@ const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(80, () => {
-	console.log('HTTP Server running on port 80');
+  console.log('HTTP Server running on port 80');
 });
 
 httpsServer.listen(httpsport, () => {
-	console.log('HTTPS Server running on port  ${httpsport}');
+  console.log('HTTPS Server running on port  ${httpsport}');
 });
 
 app.get('/', (req, res) => {
-	res.send('working?');
+  res.send('working?');
 });
 
 app.get('/httpstest', (req, res) => {
-        res.send('https is working?');
+  res.send('https is working?');
 });
 
 var mysql = require('mysql');
@@ -884,6 +887,7 @@ async function correctionUpdate(url) {
 /* --------------- UserRegister --------------- */
 
 /* --------------- Assignments Part --------------- */
+let processing = false;
 app.get('/assignments', (req, res) => {
   console.log('!++++++++++++++++++++', 'assignments/get ', 'is called');
   let sql =
@@ -897,7 +901,7 @@ app.get('/assignments', (req, res) => {
       throw err;
     }
     console.log('result is recived ... response');
-    res.json(result);
+    res.json(processing, result);
   });
 });
 
@@ -908,7 +912,8 @@ let re_waitReturn = new WaitNotify();
 
 app.post('/assignments', async (req, res) => {
   console.log('!++++++++++++++++++++', 'assignments/post ', 'is called');
-  console.log('cleadn assignment_Result');
+  console.log('clean assignment_Result');
+  processing = true;
   assignment_Result = [];
   // console.log(req.body);
 
@@ -997,7 +1002,8 @@ app.post('/assignments', async (req, res) => {
   if (re_asyncReturn) await re_waitReturn.wait();
   console.log('send response: ', assignment_Result);
   // ID_LIST=assignment_Result;
-  res.send(assignment_Result);
+  processing = false;
+  res.send(processing, assignment_Result);
 });
 
 let urls = [
