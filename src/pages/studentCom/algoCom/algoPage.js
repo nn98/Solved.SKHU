@@ -116,7 +116,12 @@ function AlgoPage(props) {
   }, [])
 
   return (
-    <div className="recommend">
+    <div
+      className="recommend"
+      onClick={(e) => {
+        props.setOpen(false)
+      }}
+    >
       <div
         style={
           userOrRank === 0
@@ -151,7 +156,10 @@ function AlgoPage(props) {
               borderRadius: '10px 0 0 10px',
               boxShadow: '20px 12px 30px -16px grey',
             }}
-            onClick={() => setUserOrRank(1)}
+            onClick={(e) => {
+              e.stopPropagation()
+              setUserOrRank(1)
+            }}
           >
             유저별
           </button>
@@ -161,7 +169,10 @@ function AlgoPage(props) {
               borderRadius: '0 10px 10px 0',
               boxShadow: '-4px 12px 30px -16px grey',
             }}
-            onClick={() => setUserOrRank(2)}
+            onClick={(e) => {
+              e.stopPropagation()
+              setUserOrRank(2)
+            }}
           >
             랭크별
           </button>
@@ -181,7 +192,12 @@ function AlgoPage(props) {
             <h1 style={{ color: '#ffffff' }}>유저별 추천</h1>
 
             <div className="ratingProblem">
-              <div className="similarStudent">
+              <div
+                className="similarStudent"
+                onClick={(e) => {
+                  e.stopPropagation()
+                }}
+              >
                 <div style={{ paddingBottom: '2%', color: '#ffffff' }}>
                   <strong>
                     <big>
@@ -266,7 +282,12 @@ function AlgoPage(props) {
                     ))}
                 </div>
               </div>
-              <div className="recommendProblem">
+              <div
+                className="recommendProblem"
+                onClick={(e) => {
+                  e.stopPropagation()
+                }}
+              >
                 <div style={{ position: 'sticky', top: '0px' }}>
                   <div style={{ paddingBottom: '1%' }}>
                     <strong>
@@ -362,7 +383,12 @@ function AlgoPage(props) {
             <input type="text" />
             <button>search</button>
           </span> */}
-            <div className="rankProblem">
+            <div
+              className="rankProblem"
+              onClick={(e) => {
+                e.stopPropagation()
+              }}
+            >
               <div
                 style={
                   aniChange

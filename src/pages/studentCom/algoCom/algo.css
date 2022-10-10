@@ -16,7 +16,7 @@
 
 .recommend .ratingProblem .similarStudent {
   width: 47.5%;
-  height: 100%;
+  /* height: 100%;    */
   margin-left: 2.5%;
   float: left;
 }

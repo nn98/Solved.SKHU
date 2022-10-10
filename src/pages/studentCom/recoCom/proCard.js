@@ -1,10 +1,30 @@
 import React from 'react'
-import cardBg from './image/cardBg.png'
+import cardBgBronze from './image/cardBg0.png'
+import cardBgSilver from './image/cardBg1.png'
+import cardBgGold from './image/cardBg2.png'
+import cardBgPlatinum from './image/cardBg3.png'
+import cardBgDiamond from './image/cardBg4.png'
+import cardBgRuby from './image/cardBg5.png'
+import cardBgNotratable from './image/cardBg6.png'
 
 import styled from '@emotion/styled'
 import Lottie from 'lottie-react'
 
 function ProCard(props) {
+  const cardBg =
+    props.proTier === 0
+      ? cardBgNotratable
+      : props.proTier >= 1 && props.proTier <= 5
+      ? cardBgBronze
+      : props.proTier >= 6 && props.proTier <= 10
+      ? cardBgSilver
+      : props.proTier >= 11 && props.proTier <= 15
+      ? cardBgGold
+      : props.proTier >= 16 && props.proTier <= 20
+      ? cardBgPlatinum
+      : props.proTier >= 21 && props.proTier <= 25
+      ? cardBgDiamond
+      : cardBgRuby
   //   const t = document.getElementById('proCard').clientWidth
   //   console.log(t)
   // console.log("props", props);
@@ -18,6 +38,7 @@ function ProCard(props) {
     >
       <ProCardBackground
         id="proCard"
+        cardBg={cardBg}
         proColor={props.proColor}
         style={{
           top: `${props.top}`,
@@ -93,7 +114,7 @@ const ProCardBackground = styled.div`
   width: 17vw;
   height: 20vh;
   margin: 1.1vw;
-  background-image: url(${cardBg});
+  background-image: url(${({ cardBg }) => cardBg});
   border-radius: 10px;
   background-size: cover;
   position: relative;
