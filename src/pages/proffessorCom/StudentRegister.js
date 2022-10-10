@@ -54,7 +54,7 @@ const StudentRegister = (e) => {
             return alert("학생 승인코드가 틀렸습니다.");
           else if (data === "에러가 발생했습니다. 이미 수강중인 학생입니다.")
             return alert("에러가 발생했습니다. 이미 수강중인 학생입니다.");
-          if (!alert(data)) navigate("/assignments");
+          if (!alert(data)) window.location.reload();
         });
     } catch (error) {
       console.error(error);

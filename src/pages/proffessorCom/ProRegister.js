@@ -4,11 +4,8 @@ import { TextField } from "@mui/material";
 import "./register.css";
 import Fade from "@mui/material/Fade";
 import ControlledRadioButtonsGroup from "./MUI/ControlledRadioButtonsGroup";
-import { useNavigate } from "react-router-dom";
 
 const ProRegister = (e) => {
-  const navigate = useNavigate();
-
   const [proName, setProName] = useState("");
   const [proCode, setProRegiCode] = useState("");
   const [subCode, setSubCode] = useState("");
@@ -52,10 +49,11 @@ const ProRegister = (e) => {
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
           // 여기서는 로그인 안내 문자를 팝업 메시지로 보여줄 것임
+          console.log(data);
           if (data === "교수 승인코드가 틀렸습니다.")
             return alert("교수 승인코드가 틀렸습니다.");
           // e.setProOpen(false);
-          if (!alert(data)) navigate("/assignments");
+          if (!alert(data)) window.location.reload();
         });
     } catch (error) {
       console.error(error);
