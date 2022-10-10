@@ -115,6 +115,12 @@
   margin-bottom: 20%;
   margin-left: 9%;
   scale: 50%;
+  opacity: .2;
+}
+
+.arrow:hover {
+  cursor: pointer;
+  opacity: 1;
 }
 
 /* .assign .p-head span:nth-child(2) {
