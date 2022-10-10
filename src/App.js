@@ -1,13 +1,16 @@
-import React from 'react'
-import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import React from "react";
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
 
-import Main from './pages/Main'
-import Assignments from './pages/Assignments'
-import Student from './pages/Student'
+import Main from "./pages/Main";
+import Assignments from "./pages/Assignments";
+import Student from "./pages/Student";
 
-function App() {
-  const serverAddress = 'http://sol-skhu.duckdns.org:3001'
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+
+function App({ children }) {
+  const serverAddress = "http://sol-skhu.duckdns.org:3001";
 
   return (
     <div className="rr">
@@ -23,8 +26,11 @@ function App() {
           element={<Student serverAddress={serverAddress} />}
         />
       </Routes>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {children}
+      </LocalizationProvider>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

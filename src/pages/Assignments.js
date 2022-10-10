@@ -14,6 +14,8 @@ import ProRegister from "./proffessorCom/ProRegister";
 import StudentRegister from "./proffessorCom/StudentRegister";
 import { Dialog } from "@mui/material";
 import plusGreen from "./proffessorCom/image/plus_green.gif";
+import TextField from "@mui/material/TextField";
+import MaterialUIPickers from "./proffessorCom/MUI/MaterialUIPickers";
 
 const Assignments = (e) => {
   const [loading, setLoading] = useState(false);
@@ -271,21 +273,25 @@ const Assignments = (e) => {
               </div>
             ))
           : null}
-        <h3>문제번호</h3>
-        <input
-          style={{ opacity: "0.9", width: "90%", marginLeft: "3%" }}
-          placeholder="Problem Number"
-          type="text"
+        <TextField
+          sx={{
+            height: "10%",
+            width: "90%",
+            marginTop: "4%",
+            marginLeft: "3%",
+            input: { color: "white" },
+          }}
+          label="Problem Number"
+          type="number"
           onChange={(e) => setPnumber(e.target.value)}
           value={pnumber || ""}
-        ></input>
-        <h3>제출기한</h3>
-        <input
-          style={{ opacity: "0.9", width: "90%", marginLeft: "3%" }}
-          type="date"
+          focused
+        ></TextField>
+        <MaterialUIPickers
+          setPdate={setPdate}
           onChange={(e) => setPdate(e.target.value)}
           value={pdate || ""}
-        ></input>
+        ></MaterialUIPickers>
 
         <h3 style={{ display: "inline-block", width: "35%", fontSize: "15px" }}>
           <label>
