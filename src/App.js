@@ -1,19 +1,19 @@
-import React from "react";
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import React from 'react'
+import './App.css'
+import { Routes, Route } from 'react-router-dom'
 
-import Main from "./pages/Main";
-import Assignments from "./pages/Assignments";
-import Student from "./pages/Student";
+import Main from './pages/Main'
+import Assignments from './pages/Assignments'
+import Student from './pages/Student'
 
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
 function App({ children }) {
-  const serverAddress = "http://sol-skhu.duckdns.org:3001";
+  const serverAddress = 'http://sol-skhu.duckdns.org:3001'
 
   return (
-    <div className="rr">
+    <div className="rr" style={{ overflow: 'auto' }}>
       <Routes>
         <Route path="/" element={<Main />} />
         <Route
@@ -30,7 +30,7 @@ function App({ children }) {
         {children}
       </LocalizationProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

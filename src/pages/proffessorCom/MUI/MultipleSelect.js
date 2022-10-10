@@ -1,13 +1,13 @@
-import * as React from "react";
-import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import * as React from 'react'
+import { useTheme } from '@mui/material/styles'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
 const MenuProps = {
   PaperProps: {
     style: {
@@ -15,7 +15,7 @@ const MenuProps = {
       width: 250,
     },
   },
-};
+}
 
 function getStyles(name, subjectName, theme) {
   return {
@@ -23,30 +23,30 @@ function getStyles(name, subjectName, theme) {
       subjectName.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
-  };
+  }
 }
 
 export default function MultipleSelect(props) {
-  const theme = useTheme();
+  const theme = useTheme()
 
   const handleChange = (event) => {
     const {
       target: { value },
-    } = event;
-    props.setSubject(value);
-    lectureName(value);
-  };
+    } = event
+    props.setSubject(value)
+    lectureName(value)
+  }
 
   const lectureName = (id) => {
     for (let i = 0; i < props.lecture.length; ++i) {
       if (props.lecture[i].ID === id)
-        props.setLectureName(props.lecture[i].name);
+        props.setLectureName(props.lecture[i].name)
     }
-  };
+  }
 
   return (
-    <FormControl sx={{ width: 215, marginRight: "3%", color: "white" }} focused>
-      <InputLabel id="demo-multiple-name-label" sx={{ color: "white" }}>
+    <FormControl sx={{ width: 240, marginRight: '3%', color: 'white' }} focused>
+      <InputLabel id="demo-multiple-name-label" sx={{ color: 'white' }}>
         강의 명
       </InputLabel>
       <Select
@@ -54,7 +54,7 @@ export default function MultipleSelect(props) {
         value={props.subject}
         onChange={handleChange}
         input={
-          <OutlinedInput label="Name" color="primary" sx={{ color: "white" }} />
+          <OutlinedInput label="Name" color="primary" sx={{ color: 'white' }} />
         }
         MenuProps={MenuProps}
       >
@@ -70,5 +70,5 @@ export default function MultipleSelect(props) {
           ))}
       </Select>
     </FormControl>
-  );
+  )
 }

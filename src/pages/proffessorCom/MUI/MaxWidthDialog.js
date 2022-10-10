@@ -43,8 +43,7 @@ export default function MaxWidthDialog(props) {
         <DialogTitle>채점 상세 보기</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {props.pnumber} 문제에 대한 {props.detailName} 학생의 채점
-            현황입니다.
+            {props.pnumber} 문제에 대한 {props.detailID} 학생의 채점 현황입니다.
           </DialogContentText>
           {props.student.map((data, index) => (
             <React.Fragment key={index}>
