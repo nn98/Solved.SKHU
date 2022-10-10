@@ -13,7 +13,8 @@ import bg from "./proffessorCom/image/bg01.png";
 import ProRegister from "./proffessorCom/ProRegister";
 import StudentRegister from "./proffessorCom/StudentRegister";
 import { Dialog } from "@mui/material";
-import plusGreen from "./proffessorCom/image/plus_green.gif";
+import Lottie from 'lottie-react';
+import plusGreen from './proffessorCom/image/plus_green.json'
 
 import copyGif from './proffessorCom/image/copy.gif'
 import gauge from './proffessorCom/image/gauge.gif'
@@ -21,6 +22,7 @@ import gg from './proffessorCom/image/gauge.png'
 import submit from './proffessorCom/image/submit2.gif'
 import sb from './proffessorCom/image/sb.png'
 import cp from './proffessorCom/image/copy.png'
+import { fontFamily } from "@mui/system";
 
 const Assignments = (e) => {
   const [loading, setLoading] = useState(false);
@@ -235,17 +237,35 @@ const Assignments = (e) => {
             lecture={lecture}
             setLectureName={setLectureName}
           ></MultipleSelect>
-
-          <img
-            src={plusGreen}
-            alt="강의 추가하기"
-            onClick={() => proPageOpen()}
+          <button onClick={() => proPageOpen()}
+          style={{
+            margin : '0.3vh 0 0 0',
+            display : 'inline-block',
+            width:'35%',
+            borderRadius : '10vw',
+            background : '#56eF56',
+            height : '5vh',
+            border : 'none',
+            cursor: "pointer",
+            }}>
+          <Lottie
+              animationData={plusGreen}
+              alt="강의 등록하기"
+              // onClick={() => proPageOpen()}
             style={{
-              display: "inline-block",
-              width: "13%",
-              cursor: "pointer",
+              position : 'fixed',
+              width: "3.5%",
+              float : 'left',
+              margin : '-1.8vh 0 0 -0.8vw'
             }}
-          ></img>
+            />
+            <span style={{
+              color : 'white', 
+              fontSize : '1.4rem',
+              margin : '0.2vh 0 0 1.8vw', 
+              display : 'inline-block',
+              }}>강의 등록</span>
+            </button>
         </div>
         {subject !== ""
           ? lecture.map((data, index) => (
@@ -268,16 +288,44 @@ const Assignments = (e) => {
                     <h4>Professor: {data.professor}</h4>
                     <h4>Name : {data.name}</h4>
                     <h4>Distribution : {data.distribution}</h4>
-                    <img
-                      src={plusGreen}
-                      alt="학생 등록하기"
-                      onClick={() => stuPageOpen()}
-                      style={{
-                        display: "inline-block",
-                        width: "13%",
-                        cursor: "pointer",
-                      }}
-                    ></img>
+                    {/* <Lottie
+                    animationData={plusg}
+                    alt="학생 등록하기"
+                    onClick={() => proPageOpen()}
+                    style={{
+                      display: "inline-block",
+                      width: "13%",
+                      cursor: "pointer",
+                    }}
+                     /> */}
+           <button onClick={() => stuPageOpen()}
+          style={{
+            margin : '0.5vh 0px 0.5vh 0.3vw',
+            width:'40%',
+            borderRadius : '10vw',
+            background : '#56eF56',
+            height : '4vh',
+            border : 'none',
+            cursor: "pointer",
+            }}>
+          <Lottie
+              animationData={plusGreen}
+              alt="학생 등록하기"
+              // onClick={() => proPageOpen()}
+            style={{
+              position : 'fixed',
+              width: "3%",
+              float : 'left',
+              margin : '-1.4vh 0 0 -0.8vw'
+            }}
+            />
+            <span style={{
+              color : 'white', 
+              fontSize : '1.3rem',
+              margin : '0.2vh 0 0 1vw', 
+              display : 'inline-block',
+              }}>학생 등록</span>
+            </button>
                     <Dialog
                       fullWidth={true}
                       maxWidth={"xl"}
