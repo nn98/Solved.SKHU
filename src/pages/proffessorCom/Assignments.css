@@ -4,7 +4,7 @@
   overflow: scroll;
 }
 
-@media screen and (min-width: 1300px) {
+@media screen and (min-width: 1300px) and (min-height: 1080px) {
   .assign {
     width: 100vw;
     overflow: hidden;
@@ -30,9 +30,10 @@
 }
 
 .buttonList {
-  background-image: url("./image/side_background.png");
+  background-image: url('./image/side_background.png');
   background-size: contain;
-  position: absolute;
+  /* position: absolute; */
+  float: right;
   color: #f0f0f0;
   height: 1080px;
   width: 520px;
@@ -40,13 +41,13 @@
   top: 0%;
 }
 
-.buttonList input[type="text"] {
+.buttonList input[type='text'] {
   height: 3vh;
   width: 100%;
   margin: 0% 0% 10% 0%;
 }
 
-.buttonList input[type="date"] {
+.buttonList input[type='date'] {
   height: 3vh;
   width: 100%;
   margin: 0% 0% 10% 0%;
@@ -104,9 +105,12 @@
 
 .arrow {
   display: inline-block;
-  height: 15%;
+  height: 172px;
   width: 11%;
-  background-image: url("./image/arrow.gif");
+  background-image: url('./image/arrow.gif');
+  position: absolute;
+  right: 520px;
+  top: 45vh;
   background-size: cover;
   margin-bottom: 20%;
   margin-left: 9%;

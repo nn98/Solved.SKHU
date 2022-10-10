@@ -117,6 +117,7 @@ function Student(props) {
         backgroundImage: `url(${stbg})`,
         backgroundSize: 'cover',
         height: '100vh',
+        overflow: 'hidden',
       }}
     >
       <div className="test" style={{ animation: `${fadein} 0.5s` }}>
