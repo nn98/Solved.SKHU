@@ -35,7 +35,7 @@ const Assignments = (e) => {
   const [lectureName, setLectureName] = useState();
 
   const [open, setOpen] = useState(false);
-  const [detailName, setDetailName] = useState();
+  const [detailID, setDetailID] = useState();
 
   const [sideOpen, setSideOpen] = useState(true);
   const [sideStyle, setSideStyle] = useState({});
@@ -183,9 +183,9 @@ const Assignments = (e) => {
     }
   };
 
-  const handleClickOpen = (name) => {
+  const handleClickOpen = (ID) => {
     setOpen(true);
-    setDetailName(name);
+    setDetailID(ID);
   };
 
   const sideClickOpen = () => {
@@ -481,7 +481,7 @@ const Assignments = (e) => {
                     <span>{data.name}</span>
                     <span>{data.bojid}</span>
                     <span
-                      onClick={() => handleClickOpen(data.name)}
+                      onClick={() => handleClickOpen(data.ID)}
                       style={{ textDecoration: "underline", cursor: "pointer" }}
                     >
                       {String(data.result) === "undefined"
@@ -504,7 +504,7 @@ const Assignments = (e) => {
         open={open}
         setOpen={setOpen}
         pnumber={pnumber}
-        detailName={detailName}
+        detailID={detailID}
         student={student}
         subject={subject}
       ></MaxWidthDialog>
