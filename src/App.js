@@ -10,7 +10,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
 function App({ children }) {
-  const serverAddress = 'http://sol-skhu.duckdns.org:3001'
+  const serverAddress = 'https://sol-skhu.duckdns.org:3002'
 
   return (
     <div className="rr" style={{ overflow: 'auto' }}>
@@ -22,7 +22,7 @@ function App({ children }) {
         />
 
         <Route
-          path="/test"
+          path="/Student"
           element={<Student serverAddress={serverAddress} />}
         />
       </Routes>

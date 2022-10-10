@@ -7,12 +7,12 @@ import pfbg from './studentCom/userCom/image/PFBG.png'
 // import pfbg from './proffessorCom/image/bg01.png'
 
 function Main() {
-  const [proBG,setProBG] = useState(false);
+  const [proBG, setProBG] = useState(false)
   const [stuStyle, setStuStyle] = useState({})
   const [butStyle, setButStyle] = useState({})
   const navigate = useNavigate()
   const proClick = () => {
-    setStuStyle({ transform: 'translate(50%)', transition: '1s',})
+    setStuStyle({ transform: 'translate(50%)', transition: '1s' })
     setButStyle({ opacity: '0', transition: '0.5s' })
 
     setTimeout(function () {
@@ -27,30 +27,40 @@ function Main() {
       transform: 'translate(-50%)',
       transition: '1s',
     })
-    setButStyle({ 
+    setButStyle({
       opacity: '0',
-      transition: '0.5s' 
+      transition: '0.5s',
     })
 
     setTimeout(function () {
-      navigate('/test')
+      navigate('/Student')
     }, 1000)
   }
 
   return (
     <div>
-      <ProButton style={butStyle} onClick={() => {
-        proClick()
-      }}>
+      <ProButton
+        style={butStyle}
+        onClick={() => {
+          proClick()
+        }}
+      >
         교수용
       </ProButton>
       <StuButton style={butStyle} onClick={() => stuClick()}>
         학생용
       </StuButton>
       <ProDiv>
-        <div style={{width:'100%',height:'100%',background:"#000000", opacity: proBG?0.2:0,
-            transition: 'opacity 0.3s'}}></div>
-            </ProDiv>
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            background: '#000000',
+            opacity: proBG ? 0.2 : 0,
+            transition: 'opacity 0.3s',
+          }}
+        ></div>
+      </ProDiv>
       <StuDiv style={stuStyle}></StuDiv>
     </div>
   )
@@ -93,11 +103,11 @@ const StuButton = styled.button`
   }
 `
 const ProDiv = styled.div`
-  z-index : 1;
+  z-index: 1;
   width: 100%;
   height: 100vh;
   background-image: url(${pfbg});
-  backgroun-size : cover;
+  backgroun-size: cover;
   position: absolute;
 `
 const StuDiv = styled.div`

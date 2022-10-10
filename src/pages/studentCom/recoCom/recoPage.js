@@ -132,9 +132,9 @@ function RecoPage(props) {
               <BlankBox />
               <ProCard
                 crown={crown1st}
-                crownTop={'-68%'}
+                crownTop={'-170px'}
                 crownLeft={'30%'}
-                crownWidth={'40%'}
+                crownWidth={'35%'}
                 width={'29vw'}
                 height={'33vh'}
                 margin={'0%'}

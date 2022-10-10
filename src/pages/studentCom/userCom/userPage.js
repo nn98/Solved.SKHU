@@ -423,7 +423,7 @@ const UserPage = (props) => {
         </span>
         <br />
         <hr style={{ margin: '8% 0' }} />
-        <span
+        {/* <span
           style={{
             width: '10%',
             margin: user.solvedCount ? '1%' : '2.1%',
@@ -431,9 +431,11 @@ const UserPage = (props) => {
             fontWeight: 'bold',
           }}
         >
-          {user.solvedCount}
+         
+        </span> */}
+        <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
+          {user.solvedCount} {'   '}문제 해결
         </span>
-        <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>문제 해결</span>
       </div>
       <div className="use">
         <div className="zandi">
