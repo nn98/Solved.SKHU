@@ -48,7 +48,7 @@ export default function MaxWidthDialog(props) {
           {props.student.map((data, index) => (
             <React.Fragment key={index}>
               {data.Lecture_ID === props.subject &&
-              data.name === props.detailName ? (
+              data.ID === props.detailID ? (
                 <>
                   {data.status !== "" ? (
                     <table className="detail">
