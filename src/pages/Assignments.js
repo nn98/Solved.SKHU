@@ -456,7 +456,7 @@ const Assignments = (e) => {
         <div
           className="p-head"
           style={{
-            backgroundColor: "black",
+            backgroundColor: "#4bd137",
             color: "white",
             borderRadius: "5px 5px 0 0",
             position: "sticky",
