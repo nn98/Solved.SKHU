@@ -24,7 +24,7 @@ export default function MaterialUIPickers(props) {
           <TextField
             {...params}
             sx={{
-              height: "10%",
+              height: "7%",
               width: "90%",
               marginLeft: "3%",
               input: { color: "white" },
