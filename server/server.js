@@ -8,6 +8,7 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3001;
+const httpsport=3002;
 const WaitNotify = require('wait-notify');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
@@ -33,6 +34,43 @@ app.use(cors());
 app.use(bodyParser.json());
 app.listen(port, () => {
   console.log(`express is  ${port}`);
+});
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
+
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/chain.pem', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+
+//app.use((req, res) => {
+//	res.send('Hello there !');
+//});
+
+// Starting both http & https servers
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(80, () => {
+	console.log('HTTP Server running on port 80');
+});
+
+httpsServer.listen(httpsport, () => {
+	console.log('HTTPS Server running on port  ${httpsport}');
+});
+
+app.get('/', (req, res) => {
+	res.send('working?');
+});
+
+app.get('/httpstest', (req, res) => {
+        res.send('https is working?');
 });
 
 var mysql = require('mysql');
@@ -374,7 +412,7 @@ app.post('/studentRegister', async (req, res) => {
   const b = req.body;
   let end = false;
   console.log('body', b);
-  if ((b.rc === 'stuSK#') | (b.rC === 'S')) {
+  if ((b.sC === 'stuSK#') | (b.sC === 'S')) {
     console.log('Student code is correct');
     let sql =
       'insert into student (id, name, bojid) values(' +
