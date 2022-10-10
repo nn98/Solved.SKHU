@@ -13,16 +13,25 @@ import bg from "./proffessorCom/image/bg01.png";
 import ProRegister from "./proffessorCom/ProRegister";
 import StudentRegister from "./proffessorCom/StudentRegister";
 import { Dialog } from "@mui/material";
-import plusGreen from "./proffessorCom/image/plus_green.gif";
+
+// import plusGreen from "./proffessorCom/image/plus_green.gif";
 import TextField from "@mui/material/TextField";
 import MaterialUIPickers from "./proffessorCom/MUI/MaterialUIPickers";
+import Lottie from "lottie-react";
+import plusGreen from "./proffessorCom/image/plus_green.json";
+import copyGif from "./proffessorCom/image/copy.gif";
+import gauge from "./proffessorCom/image/gauge.gif";
+import gg from "./proffessorCom/image/gauge.png";
+import submit from "./proffessorCom/image/submit2.gif";
+import sb from "./proffessorCom/image/sb.png";
+import cp from "./proffessorCom/image/copy.png";
 
 const Assignments = (e) => {
   const [loading, setLoading] = useState(false);
   const [subject, setSubject] = useState("");
   const [pnumber, setPnumber] = useState();
   const [pdate, setPdate] = useState();
-  const [reAssignment, setReAssignment] = useState(true);
+  const [reAssignment, setReAssignment] = useState(false);
   const [copy, setCopy] = useState("");
   const [ID_LIST, setID_LIST] = useState();
   const [lecture, setLecture] = useState([]);
@@ -40,6 +49,10 @@ const Assignments = (e) => {
   const [stuOpen, setStuOpen] = useState(false);
   const [serverAddress, setServerAddress] = useState(e.serverAddress);
 
+  const [submitController, setSubmitController] = useState(false);
+  const [copyController, setCopyController] = useState(false);
+  const [gaugeController, setGaugeController] = useState(false);
+
   console.log(serverAddress);
   const handleCopy = async () => {
     if (copy === "resultCopy") {
@@ -53,6 +66,7 @@ const Assignments = (e) => {
         alert("클립보드에 복사 되었습니다!");
       } catch {
         alert("복사 실패!");
+        return;
       }
     } else if (copy === "allCopy") {
       let clipBoard = "";
@@ -69,10 +83,16 @@ const Assignments = (e) => {
         alert("클립보드에 복사 되었습니다!");
       } catch {
         alert("복사 실패!");
+        return;
       }
     } else {
       alert("복사 옵션을 선택하세요.");
+      return;
     }
+    setCopyController(true);
+    setTimeout(() => {
+      setCopyController(false);
+    }, 4000);
   };
 
   const onClickStart = async (props) => {
@@ -87,11 +107,13 @@ const Assignments = (e) => {
     try {
       console.log("onstart", e.serverAddress);
       setLoading(true);
+      setGaugeController(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
       const sbody = {
         ID_LIST: LIST,
         PID: props.pnumber,
         DeadLine: props.pdate,
+        reAssignment: props.reAssignment,
       };
       const requestOptions = {
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
@@ -138,6 +160,7 @@ const Assignments = (e) => {
           setID_LIST(compare);
           // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
           setLoading(false);
+          setGaugeController(false);
         });
     } catch (error) {
       console.error(error);
@@ -213,17 +236,41 @@ const Assignments = (e) => {
             lecture={lecture}
             setLectureName={setLectureName}
           ></MultipleSelect>
-
-          <img
-            src={plusGreen}
-            alt="강의 추가하기"
+          <button
             onClick={() => proPageOpen()}
             style={{
+              margin: "0.3vh 0 0 0",
               display: "inline-block",
-              width: "13%",
+              width: "35%",
+              borderRadius: "10vw",
+              background: "#56eF56",
+              height: "5vh",
+              border: "none",
               cursor: "pointer",
             }}
-          ></img>
+          >
+            <Lottie
+              animationData={plusGreen}
+              alt="강의 등록하기"
+              // onClick={() => proPageOpen()}
+              style={{
+                position: "fixed",
+                width: "3.5%",
+                float: "left",
+                margin: "-1.8vh 0 0 -0.8vw",
+              }}
+            />
+            <span
+              style={{
+                color: "white",
+                fontSize: "1.4rem",
+                margin: "0.2vh 0 0 1.8vw",
+                display: "inline-block",
+              }}
+            >
+              강의 등록
+            </span>
+          </button>
         </div>
         {subject !== ""
           ? lecture.map((data, index) => (
@@ -246,16 +293,50 @@ const Assignments = (e) => {
                     <h4>Professor: {data.professor}</h4>
                     <h4>Name : {data.name}</h4>
                     <h4>Distribution : {data.distribution}</h4>
-                    <img
-                      src={plusGreen}
-                      alt="학생 등록하기"
+                    {/* <Lottie
+                    animationData={plusg}
+                    alt="학생 등록하기"
+                    onClick={() => proPageOpen()}
+                    style={{
+                      display: "inline-block",
+                      width: "13%",
+                      cursor: "pointer",
+                    }}
+                     /> */}
+                    <button
                       onClick={() => stuPageOpen()}
                       style={{
-                        display: "inline-block",
-                        width: "13%",
+                        margin: "0.5vh 0px 0.5vh 0.3vw",
+                        width: "40%",
+                        borderRadius: "10vw",
+                        background: "#56eF56",
+                        height: "4vh",
+                        border: "none",
                         cursor: "pointer",
                       }}
-                    ></img>
+                    >
+                      <Lottie
+                        animationData={plusGreen}
+                        alt="학생 등록하기"
+                        // onClick={() => proPageOpen()}
+                        style={{
+                          position: "fixed",
+                          width: "3%",
+                          float: "left",
+                          margin: "-1.4vh 0 0 -0.8vw",
+                        }}
+                      />
+                      <span
+                        style={{
+                          color: "white",
+                          fontSize: "1.3rem",
+                          margin: "0.2vh 0 0 1vw",
+                          display: "inline-block",
+                        }}
+                      >
+                        학생 등록
+                      </span>
+                    </button>
                     <Dialog
                       fullWidth={true}
                       maxWidth={"xl"}
@@ -299,17 +380,23 @@ const Assignments = (e) => {
             <input
               type="checkbox"
               onChange={(e) => {
-                setReAssignment(!reAssignment);
-                // console.log('e.checked:',e.target.checked);
                 console.log("ReAssignment:", reAssignment);
+                setReAssignment(!reAssignment);
               }}
               value={reAssignment || ""}
-              checked={!reAssignment}
+              checked={reAssignment}
             ></input>
           </label>
         </h3>
-        <div style={{ display: "inline-block", paddingLeft: "5%" }}>
-          <LoadingButton
+        <div
+          style={{
+            display: "inline-block",
+            paddingLeft: "5%",
+            width: "55%",
+            verticalAlign: "middle",
+          }}
+        >
+          {/* <LoadingButton
             size="small"
             color="inherit"
             onClick={() => {
@@ -333,19 +420,71 @@ const Assignments = (e) => {
               backgroundColor: "#f0f0f0",
             }}
           >
-            <p style={{ color: "black" }}>
+            {/* <p style={{ color: "black" }}>
               <PlayArrowIcon
                 fontSize="12px"
                 sx={{ margin: "0px 12px 0px 0px" }}
               />
               검사 실행
-            </p>
-          </LoadingButton>
+            </p> */}
+          {/* </LoadingButton>  */}
+          <div style={{ width: "100%" }}>
+            <img
+              src={submitController ? submit : sb}
+              alt="submit"
+              style={{ width: "80%" }}
+              onClick={() => {
+                if (subject === "") alert("강의를 선택하세요.");
+                else if (pnumber === undefined || pnumber === "")
+                  alert("문제번호를 선택하세요.");
+                else if (pdate === undefined) alert("제출 기한을 선택하세요.");
+                else {
+                  onClickStart({
+                    ID_LIST,
+                    pnumber,
+                    pdate,
+                    reAssignment,
+                  });
+                  setSubmitController(true);
+                  setTimeout(() => {
+                    setSubmitController(false);
+                  }, 4000);
+                }
+              }}
+            />
+            <img
+              src={gaugeController ? gauge : gg}
+              alt="gauge"
+              style={{ width: "80%" }}
+            />
+          </div>
+          <div></div>
         </div>
 
         <h3 style={{ display: "inline-block" }}>COPY RESULT</h3>
-        <div style={{ display: "inline-block", paddingLeft: "5%" }}>
-          <Button
+        <div
+          style={{
+            display: "inline-block",
+            paddingLeft: "5%",
+            verticalAlign: "middle",
+          }}
+        >
+          <img
+            src={copyController ? copyGif : cp}
+            alt="copy"
+            style={{ width: "5vw", height: "5vw" }}
+            onClick={() => {
+              handleCopy();
+            }}
+            variant="contained"
+            sx={{
+              marginLeft: "10%",
+              width: "210px",
+              marginTop: "10px",
+              backgroundColor: "#000000",
+            }}
+          />
+          {/* <Button
             size="small"
             color="inherit"
             onClick={() => {
@@ -356,17 +495,18 @@ const Assignments = (e) => {
               marginLeft: "10%",
               width: "210px",
               marginTop: "10px",
-              backgroundColor: "#f0f0f0",
+              backgroundColor: "#000000",
             }}
           >
-            <p style={{ color: "black" }}>
-              <ContentCopyIcon
+            {/* <p style={{ color: "black" }}> */}
+          {/* <ContentCopyIcon
                 fontSize="12px"
                 sx={{ margin: "0px 12px 0px 0px" }}
-              />
-              결과 복사하기
-            </p>
-          </Button>
+              /> */}
+          {/* 결과 복사하기 */}
+
+          {/* </p> */}
+          {/* </Button> */}
         </div>
         <hr></hr>
         <div style={{ marginLeft: "3%" }}>
@@ -382,7 +522,7 @@ const Assignments = (e) => {
         <div
           className="p-head"
           style={{
-            backgroundColor: "black",
+            backgroundColor: "#4bd137",
             color: "white",
             borderRadius: "5px 5px 0 0",
             position: "sticky",

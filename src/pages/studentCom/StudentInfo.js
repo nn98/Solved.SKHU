@@ -157,6 +157,7 @@ function StudentInfo(props) {
           }}
         >
           <AlgoPage
+            setOpen={setAlgoOpen}
             userName={props.userName}
             serverAddress={props.serverAddress}
             COLORS={COLORS}
