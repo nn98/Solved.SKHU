@@ -919,6 +919,8 @@ app.post('/assignments', async (req, res) => {
   let reAssignment = req.body.reAssignment;
   console.log('deadline:\t', deadLine);
   myDate = deadLine.split('-');
+  console.log(myDate);
+  console.log(myDate[2].split('T')[0]);
   var newDate = new Date(myDate[2].split('T')[0], myDate[1] - 1, myDate[0]);
   // console.log(newDate.getTime());
   deadLine = newDate.getTime();
