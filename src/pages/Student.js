@@ -32,7 +32,7 @@ function Student(props) {
 
   const userCheck = async () => {
     if (userName === '') {
-      alert('입력하세요')
+      alert('백준 아이디를 입력해주세요')
       return
     }
     const requestOptions = {

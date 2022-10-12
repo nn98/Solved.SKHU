@@ -231,7 +231,15 @@ const Assignments = (e) => {
         position: 'relative',
       }}
     >
-      <h1>채점 페이지</h1>
+      <h1
+        style={
+          sideOpen
+            ? { transform: 'translate(0)', transition: '2s' }
+            : { transform: 'translate(33%)', transition: '2s' }
+        }
+      >
+        채점 페이지
+      </h1>
       <div className="buttonList" style={sideStyle}>
         <div style={{ margin: '30% 0% 3% 3%' }}>
           <MultipleSelect
@@ -531,7 +539,14 @@ const Assignments = (e) => {
       </div>
 
       {/* <MediaCard></MediaCard> */}
-      <div className="input">
+      <div
+        className="input"
+        style={
+          sideOpen
+            ? { transform: 'translate(0)', transition: '2s' }
+            : { transform: 'translate(40%)', transition: '2s' }
+        }
+      >
         <div
           className="p-head"
           style={{
