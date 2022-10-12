@@ -919,7 +919,7 @@ app.post('/assignments', async (req, res) => {
   let reAssignment = req.body.reAssignment;
   console.log('deadline:\t', deadLine);
   myDate = deadLine.split('-');
-  var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
+  var newDate = new Date(myDate[2].split('T')[0], myDate[1] - 1, myDate[0]);
   // console.log(newDate.getTime());
   deadLine = newDate.getTime();
   console.log('DL timestamp:\t', deadLine);
@@ -996,7 +996,7 @@ app.post('/assignments', async (req, res) => {
   console.log('send response: ', assignment_Result);
   // ID_LIST=assignment_Result;
   processing = false;
-  res.send(processing, assignment_Result);
+  res.send(assignment_Result);
 });
 
 let urls = [
