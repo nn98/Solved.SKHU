@@ -1,8 +1,3 @@
-// npm i wait-notify puppeteer cheerio
-// npm add react-calendar-heatmap
-// 테스트 및 재정비를 위해 로컬 환경에 맞춰 connection 속성 변경한 상태
-// 테스트 및 채점을 위해 기타 코드 단순화
-
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -52,10 +47,6 @@ const credentials = {
   ca: ca,
 };
 
-//app.use((req, res) => {
-//	res.send('Hello there !');
-//});
-
 // Starting both http & https servers
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
@@ -65,7 +56,7 @@ httpServer.listen(80, () => {
 });
 
 httpsServer.listen(httpsport, () => {
-  console.log('HTTPS Server running on port  ${httpsport}');
+  console.log(`HTTPS Server running on port  ${httpsport}`);
 });
 
 app.get('/', (req, res) => {
@@ -888,6 +879,7 @@ async function correctionUpdate(url) {
 
 /* --------------- Assignments Part --------------- */
 let processing = false;
+
 app.get('/assignments', (req, res) => {
   console.log('!++++++++++++++++++++', 'assignments/get ', 'is called');
   let sql =
@@ -901,7 +893,8 @@ app.get('/assignments', (req, res) => {
       throw err;
     }
     console.log('result is recived ... response');
-    res.json(processing, result);
+    // res.json(result);
+    res.json({ result: result, processing: processing });
   });
 });
 
@@ -961,8 +954,8 @@ app.post('/assignments', async (req, res) => {
     // console.log('paral', parallelizationControl);
     // console.log('rere at post:', assignment_Result);
 
-    run(head_ID_LIST, pID, deadLine, head_assignment_Result, 0);
-    run(tail_ID_LIST, pID, deadLine, tail_assignment_Result, 1);
+    if (head_ID_LIST.length > 0) run(head_ID_LIST, pID, deadLine, head_assignment_Result, 0);
+    if (tail_ID_LIST.length > 0) run(tail_ID_LIST, pID, deadLine, tail_assignment_Result, 1);
     if (AssignTaskExecute_Assignment_All_Task) await waitNotify_Assignment_All_Task.wait();
 
     // console.log('re_head:', head_assignment_Result);
