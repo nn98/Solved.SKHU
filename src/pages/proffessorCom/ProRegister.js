@@ -111,6 +111,7 @@ const ProRegister = (e) => {
             }}
           >
             <TextField
+              type="password"
               variant="standard"
               id="PROFESSOR_CODE"
               placeholder="*PROFESSOR CODE"

@@ -134,6 +134,7 @@ const StudentRegister = (e) => {
             }}
           >
             <TextField
+              type="password"
               variant="standard"
               id="STUDENT_CODE"
               placeholder="*STUDENT CODE"
