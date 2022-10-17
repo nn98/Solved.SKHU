@@ -183,7 +183,7 @@ const Assignments = (e) => {
           console.log("setLec:", lecture);
           console.log("setStu:", student);
           console.log("setIDL:", ID_LIST);
-          console.log("Datas:", data.processing);
+          console.log("processing:", data.processing);
           setProcessing(data.processing);
         });
     } catch (error) {
@@ -238,8 +238,8 @@ const Assignments = (e) => {
       <h1
         style={
           sideOpen
-            ? { transform: 'translate(0)', transition: '2s' }
-            : { transform: 'translate(33%)', transition: '2s' }
+            ? { transform: "translate(0)", transition: "2s" }
+            : { transform: "translate(33%)", transition: "2s" }
         }
       >
         채점 페이지
@@ -547,8 +547,8 @@ const Assignments = (e) => {
         className="input"
         style={
           sideOpen
-            ? { transform: 'translate(0)', transition: '2s' }
-            : { transform: 'translate(40%)', transition: '2s' }
+            ? { transform: "translate(0)", transition: "2s" }
+            : { transform: "translate(40%)", transition: "2s" }
         }
       >
         <div
