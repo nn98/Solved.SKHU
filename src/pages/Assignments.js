@@ -24,6 +24,7 @@ import gauge from "./proffessorCom/image/gauge.gif";
 import gg from "./proffessorCom/image/gauge.png";
 import submit from "./proffessorCom/image/submit2.gif";
 import sb from "./proffessorCom/image/sb.png";
+import sb_d from "./proffessorCom/image/sb_disable.png";
 import cp from "./proffessorCom/image/copy.png";
 
 const Assignments = (e) => {
@@ -54,7 +55,6 @@ const Assignments = (e) => {
   const [copyController, setCopyController] = useState(false);
   const [gaugeController, setGaugeController] = useState(false);
 
-  console.log(serverAddress);
   const handleCopy = async () => {
     if (copy === "resultCopy") {
       let clipBoard = "";
@@ -106,7 +106,7 @@ const Assignments = (e) => {
     }
     // console.log(LIST);
     try {
-      console.log("onstart", e.serverAddress);
+      console.log("assignment begin", e.serverAddress);
       setLoading(true);
       setGaugeController(true);
       // 매개변수로 받은 JSON형태 데이터를 조건에 맞게 바꾸기 위해 다시 정의
@@ -123,8 +123,7 @@ const Assignments = (e) => {
           "Content-Type": "application/json",
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(
-          // 이 body에 해당하는 데이터를 서버가 받아서 처리합니다.
-          sbody
+          sbody // 이 body에 해당하는 데이터를 서버가 받아서 처리합니다.
         ),
       };
       // 이 URL은 exprees의 서버이기 때문에 3000번이 되어서는 안됨 충돌가능성이 있음, 뒤 서브스트링으로 구별
@@ -132,8 +131,7 @@ const Assignments = (e) => {
         .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then(async (data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
-
-          console.log(e.serverAddress);
+          console.log("assignment fin, set Results", e.serverAddress);
           let compare = student;
           // console.log(compare);
           // console.log("Data: ", data);
@@ -157,11 +155,12 @@ const Assignments = (e) => {
             }
           }
           // console.log(compare);
+          setProcessing(data.processing);
+          setGaugeController(false);
           setStudent(compare);
           setID_LIST(compare);
-          // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
           setLoading(false);
-          setGaugeController(false);
+          // setStudentList(JSON.stringify(data)); // 결과 JSON을 입력창에 문자형태로 출력
         });
     } catch (error) {
       console.error(error);
@@ -175,15 +174,15 @@ const Assignments = (e) => {
         .then((data) => {
           // console.log("Lec:", data[0]);
           // console.log("Stu:", data[1]);
+          // console.log("Datas:", data.result);
           console.log("Datas:", data);
-          console.log("Datas:", data.result);
           setLecture(data.result[0]);
           setStudent(data.result[1]);
           setID_LIST(data.result[1]);
-          console.log("setLec:", lecture);
-          console.log("setStu:", student);
-          console.log("setIDL:", ID_LIST);
-          console.log("processing:", data.processing);
+          // console.log("setLec:", lecture);
+          // console.log("setStu:", student);
+          // console.log("setIDL:", ID_LIST);
+          // console.log("processing:", data.processing);
           setProcessing(data.processing);
         });
     } catch (error) {
@@ -412,6 +411,18 @@ const Assignments = (e) => {
               checked={reAssignment}
             ></input>
           </label>
+          {/* <label>
+            PROCESSING
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                console.log("Processing:", processing);
+                setProcessing(!processing);
+              }}
+              value={processing || ""}
+              checked={processing}
+            ></input>
+          </label> */}
         </span>
         <div
           style={{
@@ -455,11 +466,15 @@ const Assignments = (e) => {
           {/* </LoadingButton>  */}
           <div style={{ width: "100%" }}>
             <img
-              src={submitController ? submit : sb}
+              src={submitController ? submit : processing ? sb_d : sb}
               alt="submit"
               style={{ width: "80%", cursor: "pointer" }}
               onClick={() => {
-                if (subject === "") alert("강의를 선택하세요.");
+                if (processing)
+                  alert(
+                    "현재 서버에서 채점이 진행중입니다.\n잠시만 기다려주세요!"
+                  );
+                else if (subject === "") alert("강의를 선택하세요.");
                 else if (pnumber === undefined || pnumber === "")
                   alert("문제번호를 선택하세요.");
                 else if (pdate === undefined) alert("제출 기한을 선택하세요.");
@@ -471,6 +486,7 @@ const Assignments = (e) => {
                     reAssignment,
                   });
                   setSubmitController(true);
+                  setProcessing(true);
                   setTimeout(() => {
                     setSubmitController(false);
                   }, 4000);
