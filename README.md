@@ -1,7 +1,8 @@
 # Solved.skhu
 
 ### 프로그래밍 저지 서포터
-#### [OLD](https://github.com/nn98/TA_Assist)
+#### [Service](https://sol-skhu.vercel.app)
+#### [OLD_Project](https://github.com/nn98/TA_Assist)
 ---
 
 <details><summary><strong><em>#1 Project Setting/Documentation</em></strong></summary>
