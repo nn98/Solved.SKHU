@@ -1,7 +1,7 @@
-# 2022-1Software Capstonedesign
+# Solved.skhu
 
-### prof. Lee 백준 프로그래밍 저지 문제 분류/추천 서비스
-
+### 프로그래밍 저지 서포터
+#### [OLD](https://github.com/nn98/TA_Assist)
 ---
 
 <details><summary><strong><em>#1 Project Setting/Documentation</em></strong></summary>
