@@ -971,15 +971,17 @@ app.post('/assignments', async (req, res) => {
 
     console.log('save result...');
     sql =
-      'insert into assignment_result (id,result,lectureid) values(' +
+      'insert into assignment_result (id,result,lectureid,deadline) values(' +
       pID +
       ",'" +
       JSON.stringify(assignment_Result) +
       "'," +
       lectureId +
+      "'," +
+      deadLine
       ');';
-
-    // console.log(sql);
+    
+    console.log(sql);
 
     try {
       connection.query(sql, async function (err, result, fields) {
