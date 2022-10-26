@@ -81,6 +81,8 @@
 .assign .p-head span {
   display: inline-block;
   width: 20%;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .assign .p-head:nth-child(odd) {

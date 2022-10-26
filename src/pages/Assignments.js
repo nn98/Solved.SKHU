@@ -129,12 +129,13 @@ const Assignments = (e) => {
       // 이 URL은 exprees의 서버이기 때문에 3000번이 되어서는 안됨 충돌가능성이 있음, 뒤 서브스트링으로 구별
       await fetch(e.serverAddress + "/assignments", requestOptions)
         .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
-        .then(async (data) => {
+        .then(async (result) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
           console.log("assignment fin, set Results", e.serverAddress);
+          console.log("Result: ", result);
           let compare = student;
+          let data = result.result;
           // console.log(compare);
-          // console.log("Data: ", data);
           // console.log("Data[0][0]: ", data[0][0]);
           // console.log("Data[0][0].ID: ", data[0][0].ID);
           // console.log("Compare: ", compare);
@@ -576,13 +577,22 @@ const Assignments = (e) => {
             position: "sticky",
             top: "0px",
             textAlign: "center",
+            verticalAlign: "middle",
           }}
         >
           <span>{lectureName}</span>
-          <span>학번</span>
-          <span>이름</span>
-          <span>아이디</span>
-          <span>결과</span>
+          <span>
+            <strong>학번</strong>
+          </span>
+          <span>
+            <strong>이름</strong>
+          </span>
+          <span>
+            <strong>아이디</strong>
+          </span>
+          <span>
+            <strong>결과</strong>
+          </span>
         </div>
         <div className="overScroll">
           {subject &&
