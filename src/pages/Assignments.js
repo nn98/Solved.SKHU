@@ -244,6 +244,22 @@ const Assignments = (e) => {
       >
         채점 페이지
       </h1>
+      <div
+        style={{
+          position: "absolute",
+          float: "right",
+          left: "0px",
+          bottom: "0px",
+          width: "100px",
+          height: "25px",
+          background: "#ffffff88",
+          color: "#0ff",
+          verticalAlign: "center",
+          paddingLeft: "10px",
+        }}
+      >
+        <span>Testing...</span>
+      </div>
       <div className="buttonList" style={sideStyle}>
         <div style={{ margin: "30% 0% 3% 3%" }}>
           <MultipleSelect
