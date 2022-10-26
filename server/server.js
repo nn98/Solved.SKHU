@@ -988,7 +988,7 @@ app.post('/assignments', async (req, res) => {
       JSON.stringify(assignment_Result) +
       "'," +
       lectureId +
-      "'," +
+      "," +
       deadLine+
       ");";
     
