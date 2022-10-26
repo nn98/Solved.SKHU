@@ -879,6 +879,7 @@ async function correctionUpdate(url) {
 
 /* --------------- Assignments Part --------------- */
 let processing = false;
+let called = 0;
 
 app.get('/assignments', (req, res) => {
   console.log('!+++++++++++++++++++', 'assignments/get ', 'is called');
@@ -894,7 +895,7 @@ app.get('/assignments', (req, res) => {
     }
     console.log('result is recived ... response');
     // res.json(result);
-    res.json({ result: result, processing: processing });
+    res.json({ result: result, processing: processing ,called:called});
   });
 });
 
@@ -905,6 +906,7 @@ let re_waitReturn = new WaitNotify();
 
 app.post('/assignments', async (req, res) => {
   console.log('!+++++++++++++++++++', 'assignments/post ', 'is called');
+  called++;
   console.log('%%%%%processing:',processing);
   processing = true;
   console.log('%%%%%set processing:',processing);
