@@ -881,7 +881,7 @@ async function correctionUpdate(url) {
 let processing = false;
 
 app.get('/assignments', (req, res) => {
-  console.log('!++++++++++++++++++++', 'assignments/get ', 'is called');
+  console.log('!+++++++++++++++++++', 'assignments/get ', 'is called');
   let sql =
     'select * from lecture;' +
     'select ID,name,bojid,Lecture_ID from student as s join learn as l on s.id=l.student_id order by name;';
@@ -899,52 +899,52 @@ app.get('/assignments', (req, res) => {
 });
 
 let parallelizationControl;
-let assignment_Result = [];
 let re_asyncReturn = false;
 let re_waitReturn = new WaitNotify();
 
 app.post('/assignments', async (req, res) => {
-  console.log('!++++++++++++++++++++', 'assignments/post ', 'is called');
-  console.log('clean assignment_Result');
+  console.log('!+++++++++++++++++++', 'assignments/post ', 'is called');
+  console.log('%%%%%processing:',processing);
+  // console.log('clean assignment_Result');
   processing = true;
-  assignment_Result = [];
+  let assignment_Result = [];
   // console.log(req.body);
-
-  console.log('ID_LIST:', req.body.ID_LIST);
+  console.log('%%%%%set processing:',processing);
+  console.log('ID_LIST:\n', req.body.ID_LIST);
   console.log('Problem ID:\t', req.body.PID);
   let pID = req.body.PID;
   let ID_LIST = req.body.ID_LIST;
   let deadLine = req.body.DeadLine;
   let lectureId = ID_LIST[0].Lecture_ID;
   let reAssignment = req.body.reAssignment;
-  console.log('deadline:\t', deadLine);
+  console.log('deadline:\t\t', deadLine);
   myDate = deadLine.split('-');
-  console.log('deadline:\t',myDate);
+  console.log('deadline:\t\t',myDate);
   let myTime = myDate[2].split('T');
-  console.log('myTime:\t',myTime);
+  console.log('myTime:\t\t\t',myTime);
   let spTime = myTime[1].split(':');
   spTime[0]=Number(spTime[0])+9;
-  console.log('spTime:\t',spTime);
+  console.log('spTime:\t\t\t',spTime);
   var newDate = new Date(myDate[0], myDate[1] - 1, myTime[0], spTime[0]);
   // console.log(newDate.getTime());
   deadLine = newDate.getTime();
   console.log('DL timestamp:\t', deadLine);
   console.log('reAssignment:\t', reAssignment);
   if (!reAssignment) {
-    console.log('not reAssignment...');
-    console.log('ASYNC --- wait for checkResult, assignment_R.length:', assignment_Result.length);
+    console.log('not reAssign...');
+    console.log('#---------','$ASYNC --- wait for checkResult, assignment_R.length:', assignment_Result.length);
     re_asyncReturn = true;
     checkResult(pID, lectureId);
     if (re_asyncReturn) await re_waitReturn.wait();
-    console.log('ASYNC --- checkResult is finish, assignment_R.length:', assignment_Result.length);
+    console.log('#---------','$ASYNC --- checkResult is finish, assignment_R.length:', assignment_Result.length);
   }
 
   if ((assignment_Result.length < 1) | reAssignment) {
     if (reAssignment) {
-      console.log('reAssignment...');
+      console.log('reAssign...');
       assignment_Result = [];
     }
-    console.log('@----------', 'execute assignment.');
+    console.log('@---------', 'execute assignment.');
     AssignTaskExecute_Assignment_All_Task = true;
     parallelizationControl = [
       { AsyncTaskExecute: false, waitNotify: new WaitNotify(), fin: false },
@@ -973,7 +973,7 @@ app.post('/assignments', async (req, res) => {
     // assignment_Result=head_assignment_Result.concat(tail_assignment_Result);
     // console.log("Result-json:",JSON.stringify(assignment_Result));
 
-    console.log('save result...');
+    console.log('#--------- save result...');
     sql =
       'insert into assignment_result (id,result,lectureid,deadline) values(' +
       pID +
@@ -990,21 +990,23 @@ app.post('/assignments', async (req, res) => {
     try {
       connection.query(sql, async function (err, result, fields) {
         if (err) {
-          console.log('!---err in update', err);
+          console.log('!#--------err in update', err);
         } else {
-          console.log('!---save success!');
+          console.log('!#--------save success!');
         }
       });
     } catch (error) {
-      console.log('!---err in update', error);
+      console.log('!#--------err in update', error);
     }
   }
 
+  console.log('%%%%%wait for return - processing:',processing);
   if (re_asyncReturn) await re_waitReturn.wait();
   // console.log('send response: ', assignment_Result);
   // ID_LIST=assignment_Result;
   processing = false;
   // res.send(assignment_Result);
+  console.log('%%%%%return - processing:',processing);
   res.json({ result: assignment_Result, processing: processing });
 });
 
