@@ -974,6 +974,13 @@ app.post('/assignments', async (req, res) => {
     // console.log("Result-json:",JSON.stringify(assignment_Result));
 
     console.log('#--------- save result...');
+    console.log('without result:',('insert into assignment_result (id,lectureid,deadline) values(' +
+      pID +
+      ",'" +
+      lectureId +
+      "'," +
+      deadLine+
+      ");"));
     sql =
       'insert into assignment_result (id,result,lectureid,deadline) values(' +
       pID +
@@ -982,7 +989,7 @@ app.post('/assignments', async (req, res) => {
       "'," +
       lectureId +
       "'," +
-      deadLine
+      deadLine+
       ');';
     
     console.log(sql);
