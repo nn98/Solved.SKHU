@@ -990,7 +990,7 @@ app.post('/assignments', async (req, res) => {
       lectureId +
       "'," +
       deadLine+
-      ');';
+      ");";
     
     console.log(sql);
 
