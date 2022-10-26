@@ -997,10 +997,11 @@ app.post('/assignments', async (req, res) => {
   }
 
   if (re_asyncReturn) await re_waitReturn.wait();
-  console.log('send response: ', assignment_Result);
+  // console.log('send response: ', assignment_Result);
   // ID_LIST=assignment_Result;
   processing = false;
-  res.send(assignment_Result);
+  // res.send(assignment_Result);
+  res.json({ result: assignment_Result, processing: processing });
 });
 
 let urls = [
