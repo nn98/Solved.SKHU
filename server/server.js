@@ -879,7 +879,9 @@ async function correctionUpdate(url) {
 
 /* --------------- Assignments Part --------------- */
 let processing = false;
+global.processing;
 let called = 0;
+global.called;
 
 app.get('/assignments', (req, res) => {
   console.log('!+++++++++++++++++++', 'assignments/get ', 'is called');
