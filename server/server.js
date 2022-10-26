@@ -899,17 +899,18 @@ app.get('/assignments', (req, res) => {
 });
 
 let parallelizationControl;
+let assignment_Result = [];
 let re_asyncReturn = false;
 let re_waitReturn = new WaitNotify();
 
 app.post('/assignments', async (req, res) => {
   console.log('!+++++++++++++++++++', 'assignments/post ', 'is called');
   console.log('%%%%%processing:',processing);
-  // console.log('clean assignment_Result');
   processing = true;
-  let assignment_Result = [];
-  // console.log(req.body);
   console.log('%%%%%set processing:',processing);
+  // console.log('clean assignment_Result');
+  assignment_Result = [];
+  // console.log(req.body);
   console.log('ID_LIST:\n', req.body.ID_LIST);
   console.log('Problem ID:\t', req.body.PID);
   let pID = req.body.PID;
