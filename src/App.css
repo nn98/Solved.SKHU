@@ -18,3 +18,11 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+@font-face {
+	font-family: "doHyeon";
+	src: url(./fonts/Do_Hyeon/DoHyeon-Regular.ttf);
+}
+:root{
+  --font-doHyeon: "doHyeon";
+}
