@@ -66,19 +66,29 @@ const StudentRegister = (e) => {
   }, []);
 
   return (
-    <div className="registerPage">
+    <div
+      className="registerPage"
+      style={{}}
+      onClick={() => {
+        e.setStuOpen(false);
+      }}
+    >
       <Fade
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         in={checked}
         style={{ transformOrigin: "0 0 0" }}
         {...(checked ? { timeout: 1000 } : {})}
       >
-        <div className="regiBox">
+        <div className="regiBox" style={{ background: "#fff" }}>
           <h2 style={{ margin: "0%", textAlign: "center" }}>학생 등록하기</h2>
           <h6
             style={{ margin: "5% 0%", textAlign: "center", color: "#5D5D5D" }}
           >
-            {e.lectureName}
-            강의에 등록합니다. 학번, 이름, Baekjoon 아이디를 입력해주세요.
+            {e.lectureName} 강의에 등록합니다.
+            <p />
+            학번, 이름, 백준 아이디를 입력해주세요.
           </h6>
           {/* box 안에 있는 textfield를 사용하여 box로 겉이 둥근 모양의 상자를 만들고
             textfield에 padding 값 좌우 = 2.9, 상하 = 2 를 적용함

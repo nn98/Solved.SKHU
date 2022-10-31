@@ -11,12 +11,15 @@
   }
 }
 
-.assign h1 {
-  margin-top: 3%;
+.assign .tableHead {
+  margin-top: 2%;
+  margin-bottom: 10px;
   text-align: center;
   color: white;
   display: inline-block;
   width: 60%;
+  font-family: 'doHyeon';
+  font-size: 30pt;
 }
 
 .assign h3 {
@@ -103,6 +106,12 @@
   overflow: overlay;
   overflow-x: hidden;
   -ms-overflow-style: none;
+}
+
+.assign .th {
+  color: #000;
+  font-size: 16pt;
+  font-weight: bold;
 }
 
 .arrow {

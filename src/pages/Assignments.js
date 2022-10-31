@@ -238,31 +238,16 @@ const Assignments = (e) => {
         position: "relative",
       }}
     >
-      <h1
+      <span
+        className="tableHead"
         style={
           sideOpen
             ? { transform: "translate(0)", transition: "2s" }
             : { transform: "translate(33%)", transition: "2s" }
         }
       >
-        채점 페이지
-      </h1>
-      <div
-        style={{
-          position: "absolute",
-          float: "right",
-          left: "0px",
-          bottom: "0px",
-          width: "100px",
-          height: "25px",
-          background: "#ffffff88",
-          color: "#0ff",
-          verticalAlign: "center",
-          paddingLeft: "10px",
-        }}
-      >
-        <span>Testing...</span>
-      </div>
+        수강생 목록
+      </span>
       <div className="buttonList" style={sideStyle}>
         <div style={{ margin: "30% 0% 3% 3%" }}>
           <MultipleSelect
@@ -295,7 +280,7 @@ const Assignments = (e) => {
             />
             <span
               style={{
-                fontFamily:'doHyeon',
+                fontFamily: "doHyeon",
                 color: "white",
                 fontSize: "1.6rem",
                 margin: "12px 10px 0px 0vw",
@@ -314,53 +299,73 @@ const Assignments = (e) => {
                     className="subPaper"
                     key={index}
                     sx={{
-                      padding: '20px 10px 10px 15px',
+                      padding: "20px 10px 10px 15px",
                       display: "inline-block",
                       width: "445px",
                       marginLeft: "3%",
                       marginBottom: "5%",
                       backgroundColor: "#00000000",
-                      boxShadow: '0px 0px 10px 1px #ffffffaa',
+                      boxShadow: "0px 0px 10px 1px #ffffffaa",
                       color: "white",
                     }}
                   >
-                    <span style={{
-                      display:'block',
-                      fontSize:'23pt',
-                      fontFamily:'doHyeon',
-                      paddingLeft:'20px',
-                      marginBottom:'5px',
-                      color:'rgb(86, 239, 86)',
-                    }}>강의 정보</span>
-                    <span style={{
-                      display:'block',
-                      fontSize:'18pt',
-                      fontFamily:'doHyeon',
-                      paddingLeft:'20px',
-                      marginBottom:'5px',
-                    }}>교수 : {data.professor}</span>
-                    <span style={{
-                      display:'block',
-                      fontSize:'18pt',
-                      fontFamily:'doHyeon',
-                      paddingLeft:'20px',
-                      marginBottom:'5px',
-                    }}>강의명 : {data.name}</span>
-                    <span style={{
-                      display:'block',
-                      fontSize:'18pt',
-                      fontFamily:'doHyeon',
-                      paddingLeft:'20px',
-                      marginBottom:'5px',
-                    }}>강의 코드 : {data.code}</span>
-                  {/* }}>강의 코드 : {data.code}{data.distribution?'-'+data.distribution:''}</span> */}
-                    <span style={{
-                      display:'block',
-                      fontSize:'18pt',
-                      fontFamily:'doHyeon',
-                      paddingLeft:'20px',
-                      marginBottom:'5px',
-                    }}>분반 : {data.distribution}</span>
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "23pt",
+                        fontFamily: "doHyeon",
+                        paddingLeft: "20px",
+                        marginBottom: "5px",
+                        color: "rgb(86, 239, 86)",
+                      }}
+                    >
+                      강의 정보
+                    </span>
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "18pt",
+                        fontFamily: "doHyeon",
+                        paddingLeft: "20px",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      교수 : {data.professor}
+                    </span>
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "18pt",
+                        fontFamily: "doHyeon",
+                        paddingLeft: "20px",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      강의명 : {data.name}
+                    </span>
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "18pt",
+                        fontFamily: "doHyeon",
+                        paddingLeft: "20px",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      강의 코드 : {data.code}
+                    </span>
+                    {/* }}>강의 코드 : {data.code}{data.distribution?'-'+data.distribution:''}</span> */}
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "18pt",
+                        fontFamily: "doHyeon",
+                        paddingLeft: "20px",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      분반 : {data.distribution}
+                    </span>
                     {/* <Lottie
                     animationData={plusg}
                     alt="학생 등록하기"
@@ -377,11 +382,11 @@ const Assignments = (e) => {
                         float: "right",
                         display: "inline-block",
                         height: "55px",
-                        margin: "0.5vh 0.5vw 1vh 0.3vw",
+                        margin: "-5.5vh 0.5vw 1vh 0.3vw",
                         width: "40%",
                         border: "none",
                         cursor: "pointer",
-                        paddingLeft:'20px',
+                        paddingLeft: "20px",
                       }}
                     >
                       <Lottie
@@ -397,11 +402,11 @@ const Assignments = (e) => {
                       />
                       <span
                         style={{
-                          fontFamily:'doHyeon',
+                          fontFamily: "doHyeon",
                           color: "white",
                           fontSize: "1.6rem",
                           margin: "12px 0px 0px 15px",
-                          display: "inline-block"
+                          display: "inline-block",
                         }}
                       >
                         학생 등록
@@ -412,10 +417,18 @@ const Assignments = (e) => {
                       maxWidth={"xl"}
                       open={stuOpen}
                       onClose={() => setStuOpen(!stuOpen)}
+                      PaperProps={{
+                        style: {
+                          backgroundColor: "transparent",
+                          boxShadow: "none",
+                          transition: "1s",
+                        },
+                      }}
                     >
                       <StudentRegister
                         dataID={data.ID}
                         lectureName={lectureName}
+                        setStuOpen={setStuOpen}
                         serverAddress={serverAddress}
                       />
                     </Dialog>
@@ -631,19 +644,13 @@ const Assignments = (e) => {
             verticalAlign: "middle",
           }}
         >
-          <span>{lectureName}</span>
-          <span>
-            <strong>학번</strong>
+          <span className="th" style={{ fontSize: "14pt" }}>
+            {lectureName}
           </span>
-          <span>
-            <strong>이름</strong>
-          </span>
-          <span>
-            <strong>아이디</strong>
-          </span>
-          <span>
-            <strong>결과</strong>
-          </span>
+          <span className="th">학번</span>
+          <span className="th">이름</span>
+          <span className="th">아이디</span>
+          <span className="th">결과</span>
         </div>
         <div className="overScroll">
           {subject &&
@@ -689,28 +696,16 @@ const Assignments = (e) => {
         maxWidth={"xl"}
         open={proOpen}
         onClose={() => setProOpen(!proOpen)}
+        PaperProps={{
+          style: {
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            transition: "1s",
+          },
+        }}
       >
         <ProRegister serverAddress={serverAddress} setProOpen={setProOpen} />
       </Dialog>
-      <label 
-      className="tutorial"
-      style={{
-        background: '#ffffff22',
-        backgroundSize: "cover",
-        position: "relative",
-        display:"none",
-      }}>
-            REASSIGNMENT
-            <input
-              type="checkbox"
-              onChange={(e) => {
-                console.log("ReAssignment:", reAssignment);
-                setReAssignment(!reAssignment);
-              }}
-              value={reAssignment || ""}
-              checked={reAssignment}
-            ></input>
-          </label>
     </div>
   );
 };

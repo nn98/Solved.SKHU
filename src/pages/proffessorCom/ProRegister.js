@@ -65,13 +65,23 @@ const ProRegister = (e) => {
   }, []);
 
   return (
-    <div className="registerPage">
+    <div
+      className="registerPage"
+      style={{}}
+      onClick={() => {
+        // console.log("@@@@@@@@@@@@");
+        e.setProOpen(false);
+      }}
+    >
       <Fade
         in={checked}
         style={{ transformOrigin: "0 0 0" }}
         {...(checked ? { timeout: 1000 } : {})}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       >
-        <div className="regiBox">
+        <div className="regiBox" style={{ background: "#fff" }}>
           <h2 style={{ margin: "0%", textAlign: "center" }}>강의 등록하기</h2>
           <h6
             style={{ margin: "5% 0%", textAlign: "center", color: "#5D5D5D" }}
