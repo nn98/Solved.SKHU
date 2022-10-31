@@ -185,6 +185,7 @@ const Assignments = (e) => {
           // console.log("setIDL:", ID_LIST);
           // console.log("processing:", data.processing);
           setProcessing(data.processing);
+          console.log(data.called);
         });
     } catch (error) {
       console.error(error);
