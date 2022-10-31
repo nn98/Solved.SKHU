@@ -13,6 +13,7 @@ import bg from "./proffessorCom/image/bg01.png";
 import ProRegister from "./proffessorCom/ProRegister";
 import StudentRegister from "./proffessorCom/StudentRegister";
 import { Dialog } from "@mui/material";
+import "../App.css";
 
 // import plusGreen from "./proffessorCom/image/plus_green.gif";
 import TextField from "@mui/material/TextField";
@@ -46,6 +47,7 @@ const Assignments = (e) => {
   const [sideOpen, setSideOpen] = useState(true);
   const [sideStyle, setSideStyle] = useState({});
   const [arrowStyle, setArrowStyle] = useState({});
+  const [tutorial, setTutorial] = useState({});
 
   const [proOpen, setProOpen] = useState(false);
   const [stuOpen, setStuOpen] = useState(false);
@@ -274,10 +276,7 @@ const Assignments = (e) => {
             style={{
               float: "right",
               margin: "0 9% 0 0",
-              display: "inline-block",
-              width: "37%",
-              borderRadius: "10vw",
-              background: "#56eF56",
+              width: "33%",
               height: "55px",
               border: "none",
               cursor: "pointer",
@@ -290,14 +289,15 @@ const Assignments = (e) => {
               style={{
                 // position: 'fixed',
                 width: "40%",
-                float: "left",
-                margin: "-9.5px 0px 0px -8px",
+                float: "right",
+                margin: "-4.5px 2px 0px 0px",
               }}
             />
             <span
               style={{
+                fontFamily:'doHyeon',
                 color: "white",
-                fontSize: "1.4rem",
+                fontSize: "1.6rem",
                 margin: "12px 10px 0px 0vw",
                 display: "inline-block",
               }}
@@ -314,19 +314,53 @@ const Assignments = (e) => {
                     className="subPaper"
                     key={index}
                     sx={{
+                      padding: '20px 10px 10px 15px',
                       display: "inline-block",
-                      width: "470px",
+                      width: "445px",
                       marginLeft: "3%",
                       marginBottom: "5%",
-                      backgroundColor: "rgba(230, 230, 230, 0.3)",
+                      backgroundColor: "#00000000",
+                      boxShadow: '0px 0px 10px 1px #ffffffaa',
                       color: "white",
                     }}
                   >
-                    <h4>Lecture Info</h4>
-                    <h4>Code : {data.code}</h4>
-                    <h4>Professor: {data.professor}</h4>
-                    <h4>Name : {data.name}</h4>
-                    <h4>Distribution : {data.distribution}</h4>
+                    <span style={{
+                      display:'block',
+                      fontSize:'23pt',
+                      fontFamily:'doHyeon',
+                      paddingLeft:'20px',
+                      marginBottom:'5px',
+                      color:'rgb(86, 239, 86)',
+                    }}>강의 정보</span>
+                    <span style={{
+                      display:'block',
+                      fontSize:'18pt',
+                      fontFamily:'doHyeon',
+                      paddingLeft:'20px',
+                      marginBottom:'5px',
+                    }}>교수 : {data.professor}</span>
+                    <span style={{
+                      display:'block',
+                      fontSize:'18pt',
+                      fontFamily:'doHyeon',
+                      paddingLeft:'20px',
+                      marginBottom:'5px',
+                    }}>강의명 : {data.name}</span>
+                    <span style={{
+                      display:'block',
+                      fontSize:'18pt',
+                      fontFamily:'doHyeon',
+                      paddingLeft:'20px',
+                      marginBottom:'5px',
+                    }}>강의 코드 : {data.code}</span>
+                  {/* }}>강의 코드 : {data.code}{data.distribution?'-'+data.distribution:''}</span> */}
+                    <span style={{
+                      display:'block',
+                      fontSize:'18pt',
+                      fontFamily:'doHyeon',
+                      paddingLeft:'20px',
+                      marginBottom:'5px',
+                    }}>분반 : {data.distribution}</span>
                     {/* <Lottie
                     animationData={plusg}
                     alt="학생 등록하기"
@@ -345,10 +379,9 @@ const Assignments = (e) => {
                         height: "55px",
                         margin: "0.5vh 0.5vw 1vh 0.3vw",
                         width: "40%",
-                        borderRadius: "10vw",
-                        background: "#56eF56",
                         border: "none",
                         cursor: "pointer",
+                        paddingLeft:'20px',
                       }}
                     >
                       <Lottie
@@ -358,16 +391,17 @@ const Assignments = (e) => {
                         style={{
                           // position: 'fixed',
                           width: "40%",
-                          float: "left",
-                          margin: "-10.5px 0px 0px -8px",
+                          float: "right",
+                          margin: "-6.5px 0px 0px 0px",
                         }}
                       />
                       <span
                         style={{
+                          fontFamily:'doHyeon',
                           color: "white",
-                          fontSize: "1.4rem",
-                          margin: "12px 10px 0px 0vw",
-                          display: "inline-block",
+                          fontSize: "1.6rem",
+                          margin: "12px 0px 0px 15px",
+                          display: "inline-block"
                         }}
                       >
                         학생 등록
@@ -658,6 +692,25 @@ const Assignments = (e) => {
       >
         <ProRegister serverAddress={serverAddress} setProOpen={setProOpen} />
       </Dialog>
+      <label 
+      className="tutorial"
+      style={{
+        background: '#ffffff22',
+        backgroundSize: "cover",
+        position: "relative",
+        display:"none",
+      }}>
+            REASSIGNMENT
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                console.log("ReAssignment:", reAssignment);
+                setReAssignment(!reAssignment);
+              }}
+              value={reAssignment || ""}
+              checked={reAssignment}
+            ></input>
+          </label>
     </div>
   );
 };
