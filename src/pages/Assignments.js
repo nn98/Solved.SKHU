@@ -100,6 +100,7 @@ const Assignments = (e) => {
 
   const onClickStart = async (props) => {
     // console.log("Notify: ", "LoadingButton Clicked!");
+    alert("채점이 시작되었습니다.\n버튼이 재활성화될때까지 기다려주세요.");
     let LIST = [];
     let cnt = 0;
     for (let i = 0; i < props.ID_LIST.length; ++i) {
