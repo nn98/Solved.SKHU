@@ -193,7 +193,14 @@ function AlgoPage(props) {
         ) : userOrRank === 1 ? (
           // 유저별 위치 =======================
           <div>
-            <h1 style={{ color: '#ffffff' }}>유저별 추<span onClick={(e) => {
+            <h1 style={{ 
+              color: '#ffffff', 
+              fontSize: '4vh',
+              marginTop: '2vh',
+              marginBottom: '-4vh',
+              textShadow: '2px 2px 8px black',
+              }}>
+                유저별 추<span onClick={(e) => {
               e.stopPropagation()
               setUserOrRank(2)
             }}>천</span></h1>
@@ -206,14 +213,12 @@ function AlgoPage(props) {
                 }}
               >
                 <div style={{ paddingBottom: '2%', color: '#ffffff' }}>
-                  <strong>
-                    <big>
-                      <span style={{ fontSize: '25pt', fontStyle: 'italic' }}>
+                    <span style={{ fontSize: '3vh',}}>
+                      <span style={{ fontSize: '4vh', fontStyle: 'italic' }}>
                         {props.userName}
                       </span>
-                      와 유사한 랭킹
-                    </big>
-                  </strong>
+                      &nbsp;의 랭킹 테이블
+                    </span>
                 </div>
                 <div className="similarStudentInner">
                   <div

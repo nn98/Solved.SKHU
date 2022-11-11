@@ -39,7 +39,7 @@
 }
 
 .recommend .ratingProblem .recommendProblem .recommendProblemInner {
-  height: 65vh;
+  height: 75vh;
   overflow: overlay;
   overflow-x: hidden;
   background-color: #fff;
