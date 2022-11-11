@@ -45,10 +45,10 @@ function Main() {
           proClick()
         }}
       >
-        교수용
+        TA
       </ProButton>
       <StuButton style={butStyle} onClick={() => stuClick()}>
-        학생용
+        학생
       </StuButton>
       <ProDiv>
         <div
@@ -70,35 +70,40 @@ export default Main
 // Front.css
 const ProButton = styled.button`
   background-color: #00000000;
-  border: 3px solid white;
+  border: 4px solid white;
   color: white;
-  font-size: large;
-  font-weight: bold;
-  width: 10%;
-  height: 5%;
+  font-family: doHyeon;
+  font-size: 3.5vh;
+  width: 20vh;
+  height: 5.2vh;
   position: absolute;
   top: 45%;
   left: 20%;
   z-index: 3;
   &:hover {
-    background-color: #00000077;
+    background-color: #ffffffee;
+    color: #000;
+    border-image: linear-gradient(to right, rgb(86, 239, 86) 0%, rgb(106 157 228) 100%);
+    border-image-slice: 1;
     transition: 1s;
   }
 `
 const StuButton = styled.button`
   background-color: #00000000;
-  border: 3px solid white;
+  border: 4px solid white;
   color: white;
-  font-size: large;
-  font-weight: bold;
-  width: 10%;
-  height: 5%;
+  font-family: doHyeon;
+  font-size: 3.5vh;
+  width: 20vh;
+  height: 5.2vh;
   position: absolute;
   top: 45%;
   left: 70%;
   z-index: 3;
   &:hover {
     background-color: #00000077;
+    border-image: linear-gradient(to right, red 0%, orange 100%);
+    border-image-slice: 1;
     transition: 1s;
   }
 `
