@@ -1,5 +1,9 @@
+body{
+  font-family: doHyeon;
+}
+
 .use {
-  width: 90%;
+  width: 95%;
   margin: 0% 5%;
 }
 
@@ -19,23 +23,33 @@
   fill: #006d49;
 }
 .user .head {
-  box-shadow: 5px 5px 10px #ccc;
+  box-shadow: 2px 2px 15px grey;
   padding: 20px;
   margin-left: 10%;
   border-radius: 5px;
   /* top: 13%; */
-  bottom: 30px;
-  right: 50px;
+  top: 8%;
+  right: 12%;
   color: #fefefedd;
   position: fixed;
   z-index: 1;
   width: auto;
 }
 
+.use .zandi .streak {
+  background-color: #00000055;
+  color: #fff;
+  font-size: 2.5vh;
+  width: 6vh;
+  margin: -1vh 0 -2vh -1vh;
+  position: relative;
+  padding: .5vh 3vh .5vh 3vh;
+}
+
 .use .zandi {
   background: #ffffff;
   width: 80%;
-  margin: 0 10%;
+  margin: 0 0%;
   height: 100%;
   -ms-overflow-style: none;
   margin-bottom: 2%;
@@ -156,6 +170,8 @@
 }
 #user-color {
   color: #555;
+  font-size: 1.7vh;
+  font-family: doHyeon;
 }
 #pro-color {
   color: #555;
@@ -192,7 +208,7 @@
 }
 
 .tagTable .overScroll {
-  height: 50vh;
+  height: 60vh;
   overflow: overlay;
   overflow-x: hidden;
   -ms-overflow-style: none;

@@ -415,7 +415,6 @@ const UserPage = (props) => {
         <span
           style={{
             fontSize: '2em',
-            fontWeight: 'bold',
             verticalAlign: 'bottom',
           }}
         >
@@ -433,12 +432,15 @@ const UserPage = (props) => {
         >
          
         </span> */}
-        <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
+        <span style={{ fontSize: '1.5em', }}>
           {user.solvedCount} {'   '}문제 해결
         </span>
       </div>
       <div className="use">
         <div className="zandi">
+          <div className='streak'>
+            스트릭
+          </div>
           <CalendarHeatmap
             startDate={shiftDate(new Date(), -365)}
             gutterSize={2}

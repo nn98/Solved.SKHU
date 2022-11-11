@@ -52,6 +52,10 @@
   /* transition: background-color 1s; */
 }
 
+.p-head span {
+  font-size: 140%;
+}
+
 /* .rating .p-head:hover {
     background-color: gold;
   } */

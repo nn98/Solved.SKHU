@@ -152,7 +152,7 @@ const ProCardTitle = styled.div`
   position: absolute;
   display: inline-block;
   color: #ffffff;
-  font-weight: bolder;
+  text-shadow: 2px 2px 6px gray;
 `
 const ProCardLine = styled.div`
   width: 72%;
@@ -164,7 +164,6 @@ const ProCardNum = styled.div`
   position: absolute;
   text-align: center;
   font-size: ${(props) => (props.fontSize === undefined ? '2vh' : '2.5vh')};
-  font-weight: bolder;
   background-color: #00000050;
   color: #ffffff;
   height: 15%;
