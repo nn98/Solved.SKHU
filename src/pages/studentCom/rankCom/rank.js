@@ -56,7 +56,7 @@ const Rank = (props) => {
                         ? 'linear-gradient(to right, rgba(255, 215, 0, 0.816), rgba(255, 124, 169, 0.816))'
                         : '',
                     boxShadow:
-                      props.userName === user.ID ? '0 0 0 2px #0ff inset' : '',
+                      props.userName === user.ID ? '0 0 0 3px rgb(86, 255, 86) inset' : '',
                   }}
                 >
                   <td>{user.worldrank}</td>
