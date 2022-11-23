@@ -1142,7 +1142,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
                 // !===== #84 check deadLine console.log('data', data);
 
                 // AC!! & DL Check
-                lac = lac < 20 ? (data == '맞았습니다!!' ? 20 : 10) : lac;
+                lac = lac < 20 ? ((data == '맞았습니다!!')||(data == '100점') ? 20 : 10) : lac;
                 red.push(data);
               }
             } else {
