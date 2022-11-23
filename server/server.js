@@ -985,7 +985,7 @@ app.post('/assignments', async (req, res) => {
       sql = 'update assignment_result set'+
         'result=' + JSON.stringify(assignment_Result) +
         ' where ' + 
-        'id=' + id +
+        'id=' + pID +
         'and lectureid=' + lectureId +
         'and deadline=' + deadLine +
         ";";
@@ -1009,9 +1009,9 @@ app.post('/assignments', async (req, res) => {
       deadLine+
       ");";
     
-    console.log(sql);
     }
     
+    console.log('$$$$$sql:',sql);
 
     try {
       connection.query(sql, async function (err, result, fields) {
