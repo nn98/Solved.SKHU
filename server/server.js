@@ -979,9 +979,32 @@ app.post('/assignments', async (req, res) => {
     // console.log("Result-json:",JSON.stringify(assignment_Result));
 
     // re_asyncReturn = true;
+    let isAssigned = false;
+
+    console.log('$$$$$isAssigned?');
+
+    sql =
+      'select * from assignment_result where' + 
+        ' id=' + pID +
+        ' and lectureid=' + lectureId +
+        ' and deadline=' + deadLine +
+        ";";
+    
+    try {
+      connection.query(sql, async function (err, result, fields) {
+        if (err) {
+          console.log('!#--------err in isAssigned', err);
+        } else {
+          console.log('!#--------isAssigned! length:', result.length);
+          if (result.length > 0) isAssigned = true;
+        }
+      });
+    } catch (error) {
+      console.log('!#--------err in isAssigned', error);
+    }
 
     console.log('#--------- save result...');
-    if (reAssignment) {
+    if (reAssignment & isAssigned) {
       sql = 'update assignment_result set'+
         " result='" + JSON.stringify(assignment_Result) +
         "' where" + 
