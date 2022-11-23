@@ -986,8 +986,8 @@ app.post('/assignments', async (req, res) => {
         ' result=' + JSON.stringify(assignment_Result) +
         ' where' + 
         ' id=' + pID +
-        ' and lectureid=' + lectureId +
-        ' and deadline=' + deadLine +
+        ' and lectureid="' + lectureId +
+        '" and deadline=' + deadLine +
         ";";
     }
     else {
