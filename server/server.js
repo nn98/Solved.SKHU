@@ -983,6 +983,8 @@ app.post('/assignments', async (req, res) => {
 
     console.log('$$$$$isAssigned?');
 
+    re_asyncReturn = true;
+
     sql =
       'select * from assignment_result where' + 
         ' id=' + pID +
@@ -994,14 +996,25 @@ app.post('/assignments', async (req, res) => {
       connection.query(sql, async function (err, result, fields) {
         if (err) {
           console.log('!#--------err in isAssigned', err);
+          re_asyncReturn = false;
+          re_waitReturn.notify();
+    
         } else {
           console.log('!#--------isAssigned! length:', result.length);
           if (result.length > 0) isAssigned = true;
+          re_asyncReturn = false;
+          re_waitReturn.notify();
+    
         }
       });
     } catch (error) {
       console.log('!#--------err in isAssigned', error);
+      re_asyncReturn = false;
+      re_waitReturn.notify();
+    
     }
+
+    if (re_asyncReturn) await re_waitReturn.wait();
 
     console.log('#--------- save result...');
     if (reAssignment & isAssigned) {
