@@ -983,11 +983,11 @@ app.post('/assignments', async (req, res) => {
     console.log('#--------- save result...');
     if (reAssignment) {
       sql = 'update assignment_result set'+
-        'result=' + JSON.stringify(assignment_Result) +
-        ' where ' + 
-        'id=' + pID +
-        'and lectureid=' + lectureId +
-        'and deadline=' + deadLine +
+        ' result=' + JSON.stringify(assignment_Result) +
+        ' where' + 
+        ' id=' + pID +
+        ' and lectureid=' + lectureId +
+        ' and deadline=' + deadLine +
         ";";
     }
     else {
