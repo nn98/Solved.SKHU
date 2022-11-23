@@ -116,7 +116,8 @@ export default function MaxWidthDialog(props) {
                                           </a>
                                         </td>
                                       ) : index === 3 ? (
-                                        value === "맞았습니다!!" ? (
+                                        value === "맞았습니다!!" ||
+                                        value === "100점" ? (
                                           <td style={{ color: "green" }}>
                                             {value}
                                           </td>
