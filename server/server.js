@@ -939,7 +939,7 @@ app.post('/assignments', async (req, res) => {
     console.log('not reAssign...');
     console.log('#---------','$ASYNC --- wait for checkResult, assignment_R.length:', assignment_Result.length);
     re_asyncReturn = true;
-    checkResult(pID, lectureId);
+    checkResult(pID, lectureId, deadLine);
     if (re_asyncReturn) await re_waitReturn.wait();
     console.log('#---------','$ASYNC --- checkResult is finish, assignment_R.length:', assignment_Result.length);
   }
@@ -978,8 +978,20 @@ app.post('/assignments', async (req, res) => {
     // assignment_Result=head_assignment_Result.concat(tail_assignment_Result);
     // console.log("Result-json:",JSON.stringify(assignment_Result));
 
+    // re_asyncReturn = true;
+
     console.log('#--------- save result...');
-    console.log('without result:',('insert into assignment_result (id,lectureid,deadline) values(' +
+    if (reAssignment) {
+      sql = 'update assignment_result set'+
+        'result=' + JSON.stringify(assignment_Result) +
+        ' where ' + 
+        'id=' + id +
+        'and lectureid=' + lectureId +
+        'and deadline=' + deadLine +
+        ";";
+    }
+    else {
+      console.log('without result:',('insert into assignment_result (id,lectureid,deadline) values(' +
       pID +
       ",'" +
       lectureId +
@@ -998,6 +1010,8 @@ app.post('/assignments', async (req, res) => {
       ");";
     
     console.log(sql);
+    }
+    
 
     try {
       connection.query(sql, async function (err, result, fields) {
@@ -1170,9 +1184,9 @@ async function isFinish(ID_LIST, pID, deadLine, assignment_Result, flag) {
   }
 }
 
-async function checkResult(pid, lectureid) {
+async function checkResult(pid, lectureid, deadLine) {
   console.log('!——————————check result existence...');
-  let sql = 'select * from assignment_result where id=' + pid + ' and lectureid=' + lectureid + ';';
+  let sql = 'select * from assignment_result where id=' + pid + ' and lectureid=' + lectureid + ' and deadline=' + deadLine +';';
   console.log(sql);
   try {
     connection.query(sql, async function (err, result, fields) {
