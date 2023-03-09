@@ -15,16 +15,16 @@
 
 <details><summary>Project Overview</summary>
 
-  <img src="img/Presentation000.png" width="240" height="135">
-  <img src="img/Presentation001.png" width="240" height="135">
-  <img src="img/Presentation002.png" width="240" height="135">
-  <img src="img/Presentation003.png" width="240" height="135">
-  <img src="img/Presentation004.png" width="240" height="135">
-  <img src="img/Presentation005.png" width="240" height="135">
-  <img src="img/Presentation006.png" width="240" height="135">
-  <img src="img/Presentation007.png" width="240" height="135">
-  <img src="img/Presentation008.png" width="240" height="135">
-  <img src="img/Presentation009.png" width="240" height="135">
+  <img src="img/Presentation000.png" width="640" height="360">
+  <img src="img/Presentation001.png" width="640" height="360">
+  <img src="img/Presentation002.png" width="640" height="360">
+  <img src="img/Presentation003.png" width="640" height="360">
+  <img src="img/Presentation004.png" width="640" height="360">
+  <img src="img/Presentation005.png" width="640" height="360">
+  <img src="img/Presentation006.png" width="640" height="360">
+  <img src="img/Presentation007.png" width="640" height="360">
+  <img src="img/Presentation008.png" width="640" height="360">
+  <img src="img/Presentation009.png" width="640" height="360">
 
 </details>
 
