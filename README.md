@@ -1,8 +1,8 @@
 <a href="https://sol-skhu.vercel.app/">
 <img src="img/TitleBar01.png">
 <div style="text-align: center;"> <h5>Service Link</h5> </div>
-<img src="img/Member.png">
 </a>
+<img src="img/Member.png">
 
 <div style="text-align: center;">
 
