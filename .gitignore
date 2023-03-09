@@ -121,3 +121,6 @@ dist
 package-lock.json
 # Local Netlify folder
 .netlify
+
+# InteliJ
+.idea/
