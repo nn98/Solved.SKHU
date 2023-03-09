@@ -36,10 +36,7 @@
 
 <img src="img/Cut-Front.png">
 <br />
-<br />
 <img src="img/Cut-Assign.png">
 <br />
-<br />
 <img src="img/Cut-Student.png">
-<br />
 <br />
