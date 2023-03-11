@@ -26,7 +26,7 @@
 
 <hr>
 
-<img src="Project_summary.png">
+<img src="img/Project_summary.png">
 
 ### 백준 프로그래밍 저지 서포터
 
