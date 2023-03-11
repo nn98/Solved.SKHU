@@ -33,11 +33,14 @@
 * * * 
 
 <details><summary>Project Overview</summary>
+<hr/>
     <img src="img/Cut-Front.png">
     <img src="img/Cut-Assign.png">
     <img src="img/Cut-Student.png">
 
 </details>
+
+<hr/>
 
 <details><summary>Project Presentation</summary>
 
