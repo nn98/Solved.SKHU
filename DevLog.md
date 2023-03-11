@@ -88,7 +88,7 @@
   |react의 <br>페이지간 이동 기능을 <br>알지 못함|Route로 경로를 정하고 <br>Link로 경로로 이동시키면 된다는 것을 깨달음 |2022-03-21|`S`|
   |login, main, signup의 <br>css가 모든 컴포넌트에 <br>중첩 적용되어 문제|전역 css인 common2.css는 .scss로 변경 후 <br>app.js에 적용하고 각 컴포넌트에 적용할 각 css들은 <br>scss로 변경 후 최상위 태그에 적용|2022-03-21|`S`|
   |react에서 table 안에 바로<br>tr 태그 사용 시 오류| table 안에 thead 태그 or tbody 태그를 쓰고 tr 태그를 사용해야 함<br>(이유 = React가 rerender를 진행할 때,<br>DOM tree가 예상과는 달리 진행될 수 있으므로)|2022-03-22|`L`|
-  
+  </div>
   </details>
 
 <details><summary>#3 Front-User Profile</summary>
@@ -156,7 +156,7 @@
   |setState 데이터 추가 시 기존 데이터에 덧붙이기|setState사용시 const [test, setTest] = useState([]) 인 경우 <br> setTest([...test, 추가 내용])이렇게 해 주어야 기존에 있던 test에 추가 내용을 덧붙이기 가능|2022-04-06|`L`|
   |QnA의 답변 생성 시 생성 이후에 추가된 user는 QnA의 답변 작성 불가 오류|오류 원인 : QnA.js인 상위 컴포넌트에서 innerComment.js인 하위 컴포넌트로 user의 데이터를 생성시에만 전송하여 추가 불가<br>해결 방법 : QnA.js인 상위 컴포넌트에서 user의 존재 여부를 확인하는 compare 함수를 innerComment.js인 하위 컴포넌트로 전송하여 QnA의 답변 추가할때만 compare함수를 호출하여 작성 가능 여부 판별|2022-04-19|`L`|
   |QnA테이블의 값을 불러올 때 불러오는 비동기 함수 뒤에 함수 결과값을<br>react의 변수에 추가 후 출력하였더니<br>변수에 바로 추가가 안되고 출력되는 오류|비동기 함수가 완료 되기 전에 변수에 추가하는 코드가 먼저 실행하여 결과값이 변수에 추가가 안됨<br>비동기 함수 완료되면 추가를 하도록 변경|2022-05-10|`L`|
-  
+  </div>
   </details>  
   
   <details><summary>#27 Front-RankPage</summary>
@@ -242,7 +242,7 @@
   |pullrequest|inflearn공부를 통하여 실습한 sql connect 풀 리퀘스트를 하려하였지만, <br>git pull에서부터 문제가 생겨서 <br>git pull origin main --allow-unrelated-histories로  연결하여서 해결하였다.|2022-03-22|`A`|
   |QnA의 컨텐츠와 그의 답변을 QnA와 QnAInner 테이블에서 select join으로 한번에 불러오려고 하였으나 <br> 중복이 많이 select되고 QnA 안에 있는 답변들이 객체 값 안으로 출력 불가| QnA와 QnAInner 테이블에서 select join 시 자동적으로 불러오지 QnA객체 안에 답변들이 들어오지 않는다.<br>그래서, QnA QnAInner 따로 불러온 뒤 QnA의 ID값에 따라 답변들을 출력함|2022-05-10|`L`|
   |문제 추천 페이지|해당 유저 기준 위 아래 2명씩<br>해당 유저는 풀지 않았지만, 다른 유저는 푼<br>문제리스트를 출력해줄 때 위가 존재하지 않는 1등<br>아래가 존재하지 않는 꼴등이 존재 그래서<br>점화식을 이용하여 해결|2022-06-01|`A`|
-  
+  </div>
   </details>
   
 <details><summary>#16 Back/Crawling_Practice</summary><div markdown="1">
@@ -267,7 +267,7 @@
   |Solved User<br>푼 문제<br>날짜 및 시간|문제 처리 시 맞았습니다가 아닌 점수로 된 것들 중에서 0점도 정답 처리로 되어 있어서 정규식을 이용하여 문제 해결|2022-05-18|`A`|
   |파싱 시 문제점|크롤링 후 파싱할 때<br> split을 이용하여 값을 뽑은 후<br>진행하였는데, 값이 제대로 나오지 않아<br>코드를 수정하여 해결함|2022-06-10|`A`|
   |크롤링 시 문제점|Solved.ac에서 크롤링 시<br>페이지를 읽지 못하는 경우가 발생<br>그래서 주기를 두고 업데이트 해야함|2022-06-16|`A`|
-  
+  </div>
   </details>  
   
 <details><summary>#26 Back|DB-DB Connection</summary>
