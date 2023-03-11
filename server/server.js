@@ -7,8 +7,58 @@ const httpsport = 3002;
 const WaitNotify = require('wait-notify');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
-process.setMaxListeners(50);
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
 
+const privateKey = fs.readFileSync(
+    '/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem',
+    'utf8'
+);
+const certificate = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/chain.pem', 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca,
+};
+
+// Starting both http & https servers
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+
+process.setMaxListeners(50);
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const port = process.env.PORT || 3001;
+const httpsport = 3002;
+const WaitNotify = require('wait-notify');
+const puppeteer = require('puppeteer');
+const cheerio = require('cheerio');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
+
+const privateKey = fs.readFileSync(
+    '/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem',
+    'utf8'
+);
+const certificate = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/chain.pem', 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca,
+};
+
+// Starting both http & https servers
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
 const waitNotify_Assignment_Individual = new WaitNotify(); // Assignment - execute, isFinish
 let AsyncTaskExecute_Assignment_Individual = [false, false];
 
@@ -30,26 +80,6 @@ app.use(bodyParser.json());
 app.listen(port, () => {
   console.log(`express is  ${port}`);
 });
-const fs = require('fs');
-const http = require('http');
-const https = require('https');
-
-const privateKey = fs.readFileSync(
-  '/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem',
-  'utf8'
-);
-const certificate = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/cert.pem', 'utf8');
-const ca = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/chain.pem', 'utf8');
-
-const credentials = {
-  key: privateKey,
-  cert: certificate,
-  ca: ca,
-};
-
-// Starting both http & https servers
-const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(80, () => {
   console.log('HTTP Server running on port 80');
