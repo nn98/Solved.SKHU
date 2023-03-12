@@ -188,7 +188,7 @@ function Student(props) {
               verticalAlign: 'middle',
               color: "#fff",
               fontFamily: "doHyeon",
-              fontSize: '22pt',
+              fontSize: '2.2vw',
               position: 'absolute',
               left: '40vw',
               top: '52vh',
@@ -216,7 +216,7 @@ function Student(props) {
               <br/>
               <span style={{
                   color: "#aaa",
-                  fontSize: '16pt',
+                  fontSize: '1.8vw',
 
               }}>
                   개발자 아이디로 테스트
