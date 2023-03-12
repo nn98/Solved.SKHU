@@ -177,17 +177,29 @@ const UserPage = (props) => {
 
   const userAdd = async () => {
     try {
+      console.log('props.userName:',props.userName)
       const t = props.userName === '' ? 'q9922000' : props.userName
       // console.log(t)
       // const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
       // 잔디
       await fetch(
-        'https://solved.ac/api/v3/user/history?handle=' +
+        '/api/v3/user/history?handle=' +
           t +
           '&topic=solvedCount'
+          // , {
+          //   method: "GET",
+          //   credentials: "include",
+          // }
       )
-        .then((res) => res.json())
+        .then((res) => {
+          console.log('OK?',res.ok)
+            if(res.ok) {
+                return res.json();
+            }
+            throw new Error('NO OK TLQKF');
+        })
         .then((data) => {
+          console.log('zandiData',data)
           let count = 1
           let list1 = getDatesStartToLast(
             shiftDate(new Date(), -365),
@@ -230,7 +242,7 @@ const UserPage = (props) => {
           setUserZandi(list1)
         })
       // 태그 분포 api
-      await fetch('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + t)
+      await fetch('/api/v3/user/problem_tag_stats?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           let t = []
@@ -250,7 +262,7 @@ const UserPage = (props) => {
           setAngleChart(t)
         })
       // user api
-      await fetch('https://solved.ac/api/v3/user/show?handle=' + t)
+      await fetch('/api/v3/user/show?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           setUser(data)
@@ -258,7 +270,7 @@ const UserPage = (props) => {
         })
       // 문제 api
       await fetch(
-        'https://solved.ac/api/v3/search/problem?query=solved_by%3A' +
+        '/api/v3/search/problem?query=solved_by%3A' +
           t +
           '&sort=level&direction=desc'
       )
@@ -268,7 +280,7 @@ const UserPage = (props) => {
           setUserPro(data)
         })
       // 티어 api
-      await fetch('https://solved.ac/api/v3/user/problem_stats?handle=' + t)
+      await fetch('/api/v3/user/problem_stats?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           var tierData = [
