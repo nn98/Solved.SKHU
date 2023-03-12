@@ -10,6 +10,7 @@ import StudentInfo from "./studentCom/StudentInfo";
 // import Ranking from "./studentCom/rankCom/rank";
 
 import stbg from "./studentCom/userCom/image/STBG.png";
+import {bgBG} from "@mui/material/locale";
 
 const searchMove1 = keyframes`
   from {left: 20vw; top: 45vh; width: 60%; }
@@ -18,8 +19,11 @@ const searchMove2 = keyframes`
 from {width: 90%; px: 2.9; py: 2;}
 to {width: 80%; px: 1; py: 2;}`;
 const fadein = keyframes`
-from {opacity: 0; }
-to {opacity: 1; }`;
+  from {opacity: 0; }
+  to {opacity: 1; }`;
+const fadeout = keyframes`
+from {opacity: 1; }
+to {opacity: 0; }`;
 
 function Student(props) {
   const [change, setChange] = useState(false);
@@ -175,6 +179,49 @@ function Student(props) {
             }}
           />
         </Box>
+          <Box style={{
+              textAlign: 'center',
+              backgroundColor: `#00000055`,
+              backgroundSize: "cover",
+              width: "25vh",
+              height: "6vh",
+              verticalAlign: 'middle',
+              color: "#fff",
+              fontFamily: "doHyeon",
+              fontSize: '22pt',
+              position: 'absolute',
+              left: '40vw',
+              top: '52vh',
+              alignContent: 'revert',
+              padding: '1vw',
+              boxShadow: '0px 0px 40px -15px #eee',
+          }}
+          onClick={() => {
+              setUserName('q9922000');
+          }}
+               sx={Object.assign(
+                   change ? {
+                       animation: `${fadeout} 0.5s`,
+                       visibility: 'hidden',
+                   } : {
+
+                   }
+                   )}>
+
+              <span style={{
+
+              }}>
+                  성공회대 학생이 아니신가요?
+              </span>
+              <br/>
+              <span style={{
+                  color: "#aaa",
+                  fontSize: '16pt',
+
+              }}>
+                  개발자 아이디로 테스트
+              </span>
+          </Box>
       </div>
       {change ? (
         <StudentInfo
@@ -186,6 +233,8 @@ function Student(props) {
       ) : (
         <></>
       )}
+
+
     </div>
   );
 }
