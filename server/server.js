@@ -69,7 +69,7 @@ app.get('/httpstest', (req, res) => {
 
 var mysql = require('mysql');
 var connection = mysql.createPool({
-  host: '132.145.93.241',
+  host: 'localhost',
   user: 'Project',
   password: 'testing00',
   database: 'swp',
