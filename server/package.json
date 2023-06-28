@@ -17,7 +17,7 @@
     "http-errors": "~1.6.3",
     "https": "^1.0.0",
     "morgan": "~1.9.1",
-    "mysql": "^2.18.1",
+    "mysql2": "^3.4.2",
     "pug": "2.0.0-beta11",
     "puppeteer": "^20.5.0",
     "wait-notify": "^1.0.3"
