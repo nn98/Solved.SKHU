@@ -1,3 +1,9 @@
+const express = require('express');
+const router = express.Router();
+let connection;
+function setConnection(mainConnection) {
+    connection = mainConnection;
+}
 
 /* --------------- Assignments Part --------------- */
 const WaitNotify = require("wait-notify");
@@ -8,7 +14,7 @@ let processing = false;
 let called = 0;
 // global.called;
 
-app.get('/assignments', (req, res) => {
+router.get('/', (req, res) => {
     console.log('!+++++++++++++++++++', 'assignments/get ', 'is called');
     let sql =
         'select * from lecture;' +
@@ -33,7 +39,7 @@ let re_waitReturn = new WaitNotify();
 let myDate;
 let sql;
 
-app.post('/assignments', async (req, res) => {
+router.post('/', async (req, res) => {
     console.log('!+++++++++++++++++++', 'assignments/post ', 'is called');
     called++;
     console.log('%%%%%processing:',processing);
@@ -381,3 +387,8 @@ async function checkResult(pid, lectureid, deadLine) {
     }
 }
 /* --------------- Assignments Part --------------- */
+
+module.exports = {
+    router,
+    setConnection
+};
