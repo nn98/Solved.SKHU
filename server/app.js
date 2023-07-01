@@ -32,8 +32,10 @@ process.setMaxListeners(50);
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const assignmentsRouter = require('./routes/assignments');
+const qnaRouter = require('./routes/qna');
 
 assignmentsRouter.setConnection(connection);
+qnaRouter.setConnection(connection);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,22 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/assignments', assignmentsRouter.router);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use('/qna', qnaRouter.router);
 
 const waitNotify_Assignment_All_Task = new WaitNotify(); // AssignTaskExecute_Assignment_All_Task
 let AssignTaskExecute_Assignment_All_Task = false; // - waitNotify_Assignment_All_Task
@@ -128,131 +115,6 @@ app.post('/userPage', (req, res) => {
   const b = req.body;
   res.send(b);
 });
-
-/* --------------- QnA Part --------------- */
-app.post('/QnAUser', (req, res) => {
-  const sql = 'insert into qnauser set ?';
-  connection.query(sql, req.body, function (err, result, fields) {
-    if (err) {
-      res.send({ error: err.errno });
-    } else {
-      console.log(result);
-      res.send({ data: '어서오세요' });
-    }
-  });
-});
-
-app.get('/QnA', (req, res) => {
-  const sql = 'select * from qna  order by createdat desc';
-
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    console.log('QnA 출력');
-    res.send(result);
-  });
-});
-
-app.get('/QnAProblem', (req, res) => {
-  const sql = 'select distinct problem_id from solve;';
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    console.log('QnA문제 출력');
-    res.send(result);
-  });
-});
-
-app.get('/QnAInner', (req, res) => {
-  const sql = 'select * from qnainner';
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    console.log('QnA안에꺼 출력');
-    res.send(result);
-  });
-});
-
-app.post('/QnAAdd', (req, res) => {
-  const userBody = [req.body.userId, req.body.password];
-  const userSql = 'select * from qnauser where qnauser.name = ? and qnauser.password = ?;';
-  connection.query(userSql, userBody, function (err, result, fields) {
-    if (err) throw err;
-
-    if (result.length === 0) {
-      res.send({ error: '사용자가 올바르지 않습니다.' });
-    } else {
-      const insertBody = [req.body.content, req.body.userIP, req.body.userId, req.body.problem];
-      const insertSql = 'insert into qna(content, userip, user_id, problem) value (?,?,?,?);';
-      connection.query(insertSql, insertBody, function (err, result, fields) {
-        if (err) throw err;
-        console.log('QnA 더하기');
-        res.redirect('/QnA');
-      });
-    }
-  });
-});
-
-app.post('/QnAInnerAdd', (req, res) => {
-  const userBody = [req.body.userId, req.body.password];
-  const userSql = 'select * from qnauser where qnauser.name = ? and qnauser.password = ?;';
-  connection.query(userSql, userBody, function (err, result, fields) {
-    if (err) throw err;
-    if (result.length === 0) {
-      res.send({ error: '사용자가 올바르지 않습니다.' });
-    } else {
-      const insertBody = [req.body.content, req.body.userIP, req.body.userId, req.body.qnaId];
-      const insertSql = 'insert into qnainner(content, userip, user_id, qna_id) value (?,?,?,?);';
-      connection.query(insertSql, insertBody, function (err, result, fields) {
-        if (err) throw err;
-        console.log('QnA안에꺼 더하기');
-        res.redirect('/QnAInner');
-      });
-    }
-  });
-});
-
-app.post('/QnADelete', (req, res) => {
-  const userBody = [req.body.userId, req.body.password];
-  const userSql = 'select * from qnauser where qnauser.name = ? and qnauser.password = ?;';
-  connection.query(userSql, userBody, function (err, result, fields) {
-    if (err) throw err;
-    if (result.length === 0) {
-      res.send({ error: '사용자가 올바르지 않습니다.' });
-    } else {
-      const deleteBody = [req.body.ID, req.body.userId];
-      const deleteSql = 'delete from qna where qna.id = ? and qna.user_id = ?;';
-      connection.query(deleteSql, deleteBody, function (err, result, fields) {
-        if (result.affectedRows === 0) {
-          res.send({ error: '사용자가 올바르지 않습니다.' });
-        } else {
-          console.log('QnA 삭제');
-          res.redirect('/QnA');
-        }
-      });
-    }
-  });
-});
-
-app.post('/QnAInnerDelete', (req, res) => {
-  const userBody = [req.body.userId, req.body.password];
-  const userSql = 'select * from qnauser where qnauser.name = ? and qnauser.password = ?;';
-  connection.query(userSql, userBody, function (err, result, fields) {
-    if (err) throw err;
-    if (result.length === 0) {
-      res.send({ error: '사용자가 올바르지 않습니다.' });
-    } else {
-      const deleteBody = [req.body.ID, req.body.userId];
-      const deleteSql = 'delete from qnainner where qnainner.id = ? and qnainner.user_id = ?;';
-      connection.query(deleteSql, deleteBody, function (err, result, fields) {
-        if (result.affectedRows === 0) {
-          res.send({ error: '사용자가 올바르지 않습니다.' });
-        } else {
-          console.log('QnA안에꺼 삭제');
-          res.redirect('/QnAInner');
-        }
-      });
-    }
-  });
-});
-/* --------------- QnA Part --------------- */
 
 /* --------------- Rating Part --------------- */
 app.post('/rating', async (req, res) => {
@@ -1329,33 +1191,6 @@ app.post('/userCheck', (req, res) => {
   });
 });
 
-module.exports = app;
-/****************************************
-
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
-var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -1373,5 +1208,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-****************************************/
