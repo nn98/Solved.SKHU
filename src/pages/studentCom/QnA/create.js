@@ -36,7 +36,7 @@ const Create = (e) => {
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
       }
-      await fetch('https://cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/User', requestOptions)
+      await fetch('https://cors-anywhere.herokuapp.com/'+e.serverAddress + '/QnA/User', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
