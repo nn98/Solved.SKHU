@@ -105,45 +105,6 @@ app.get('/httpstest', (req, res) => {
   res.send('https is working?');
 });
 
-/* --------------- Recommend Algorithm Part --------------- */
-app.get('/MaxAlgorithm', (req, res) => {
-  const sql =
-      'select solved_rank, id, namekr, rate, count(problem_id) as sum from solve join problem on solve.problem_id = problem.id group by problem_id having count(problem_id) order by count(problem_id) desc limit 0,10;';
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-    res.send(result);
-  });
-});
-app.get('/MinAlgorithm', (req, res) => {
-  const sql =
-      'select solved_rank, id, namekr, rate, count(problem_id) as sum from solve join problem on solve.problem_id = problem.id group by problem_id having count(problem_id) order by count(problem_id) asc limit 0,10;';
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-    res.send(result);
-  });
-});
-app.get('/BestAlgorithm', (req, res) => {
-  const sql =
-      "select id,namekr, rate, solved_rank from problem where id in (select problem_id from solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) desc limit 0,10; ";
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-    res.send(result);
-  });
-});
-app.get('/WorstAlgorithm', (req, res) => {
-  const sql =
-      "select id,namekr, rate, solved_rank from problem where id in (select problem_id from solve) and namekr regexp '^[가-힇 % %]*$' order by cast(rate as signed) limit 0,10; ";
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-    res.send(result);
-  });
-});
-/* --------------- Recommend Algorithm Part --------------- */
-
 /* +++++ Random +++++ */
 app.post('/randomProblem', (req, res) => {
   console.log('randomProblem/get', '- called');
