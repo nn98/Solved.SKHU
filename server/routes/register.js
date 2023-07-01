@@ -11,6 +11,7 @@ let AssignTaskExecute_UserRegister = false;             // - waitNotify_UserRegi
 
 /* --------------- Register Part - Professor --------------- */
 app.post('/professor', (req, res) => {
+    const connection = req.mysql;
     console.log('proRegister/post ', 'is called');
     // console.log(req);
     const b = req.body;
@@ -52,6 +53,7 @@ app.get('/student', (req, res) => {
 });
 
 app.post('/student', async (req, res) => {
+    const connection = req.mysql;
     console.log('studentRegister/post ', 'is called');
     const b = req.body;
     let end = false;
@@ -114,6 +116,7 @@ app.post('/student', async (req, res) => {
 
 /* --------------- UserRegister --------------- */
 app.post('/', async (req, res) => {
+    const connection = req.mysql;
     const url = 'https://solved.ac/ranking/o/309';
     const b = req.body;
     let errOcc = false;
@@ -331,13 +334,14 @@ app.post('/', async (req, res) => {
     let updateP = 1;
     while (updateP <= 3) {
         AssignTaskExecute_UserRegister = true;
-        correctionUpdate('https://www.acmicpc.net/school/ranklist/309/' + updateP);
+        correctionUpdate('https://www.acmicpc.net/school/ranklist/309/' + updateP, connection);
         if (AssignTaskExecute_UserRegister) await waitNotify_UserRegister.wait();
         updateP++;
     }
 });
 // 전체 학생 정보 업데이트 함수
 async function userUpdate(url, req) {
+    const connection = req.mysql;
     puppeteer
         .launch({ headless: true })
         .then(async browser => {
@@ -403,7 +407,7 @@ async function userUpdate(url, req) {
                 }
                 console.log();
             });
-            solvePage('https://solved.ac/profile/' + req.body.uI + '/solved', req.body.uI);
+            solvePage('https://solved.ac/profile/' + req.body.uI + '/solved', req.body.uI, connection);
             AssignTaskExecute_UserRegister = false;
             waitNotify_UserRegister.notify();
         })
@@ -411,7 +415,7 @@ async function userUpdate(url, req) {
             console.log(error);
         });
 }
-async function solvePage(url, userid) {
+async function solvePage(url, userid, connection) {
     puppeteer
         .launch({ headless: true })
         .then(async browser => {
@@ -427,7 +431,7 @@ async function solvePage(url, userid) {
             let b = a[a.length - 2].split(/class="css-af4alp">|class="css-1orliys">/);
             console.log(b[1]);
             while (solpage <= b[1]) {
-                solveProblem('https://solved.ac/profile/' + userid + '/solved?page=' + solpage++, userid);
+                solveProblem('https://solved.ac/profile/' + userid + '/solved?page=' + solpage++, userid, connection);
             }
 
             AssignTaskExecute_UserRegister = false;
@@ -438,7 +442,7 @@ async function solvePage(url, userid) {
             console.log(error);
         });
 }
-async function solveProblem(url, userid) {
+async function solveProblem(url, userid, connection) {
     puppeteer
         .launch({ headless: true })
         .then(async browser => {
@@ -478,7 +482,7 @@ async function solveProblem(url, userid) {
             console.log(error);
         });
 }
-async function correctionUpdate(url) {
+async function correctionUpdate(url, connection) {
     puppeteer
         .launch({ headless: true })
         .then(async browser => {
