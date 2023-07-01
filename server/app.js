@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
 const fs = require('fs');
-const http = require('http');
+// const http = require('http');
 const createError = require('http-errors');
 const https = require('https');
 const logger = require('morgan');
@@ -16,8 +16,27 @@ const puppeteer = require('puppeteer');
 // const Vals
 const app = express();
 const port = process.env.PORT || 3001;
-const httpsport = 3002;
+const httpsPort = 3002;
+const privateKey = fs.readFileSync(
+    'keys/privkey8.pem',
+    'utf8'
+);
+const certificate = fs.readFileSync('keys/cert8.pem', 'utf8');
+const ca = fs.readFileSync('keys/chain8.pem', 'utf8');
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca,
+};
+const httpsServer = https.createServer(credentials, app);
 const WaitNotify = require('wait-notify');
+const waitNotify_StudentRegister = new WaitNotify();  // AssignTaskExecute_StudentRegister
+let AssignTaskExecute_StudentRegister = false;          // - waitNotify_StudentRegister
+// UserRegister - canceled _ addCorrection ?_ userUpdate ?_ solvePage ?_ correction Update
+const waitNotify_UserRegister = new WaitNotify();     // AssignTaskExecute_UserRegister
+let AssignTaskExecute_UserRegister = false;             // - waitNotify_UserRegister
+const waitNotify_Rating = new WaitNotify();           // AssignTaskExecute_Rating
+let AssignTaskExecute_Rating = false;                   // - waitNotify_Rating
 const connection = mysql.createPool({
   host: 'sol-skhu.duckdns.org',
   user: 'Project',
@@ -27,6 +46,25 @@ const connection = mysql.createPool({
   charset: 'utf8mb4',
   connectionLimit: 30,
 });
+connection.getConnection((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL:', err);
+    return;
+  }
+  console.log('Connected to MySQL');
+});
+
+httpsServer.listen(httpsPort, () => {
+  console.log(`HTTPS Server running on port  ${httpsPort}`);
+});
+
+/*
+const httpServer = http.createServer(app);
+httpServer.listen(80, () => {
+  console.log('HTTP Server running on port 80');
+});
+*/
+
 process.setMaxListeners(50);
 
 const indexRouter = require('./routes/index');
@@ -52,62 +90,18 @@ app.use('/users', usersRouter);
 app.use('/assignments', assignmentsRouter.router);
 app.use('/qna', qnaRouter.router);
 
-const waitNotify_Assignment_All_Task = new WaitNotify(); // AssignTaskExecute_Assignment_All_Task
-let AssignTaskExecute_Assignment_All_Task = false; // - waitNotify_Assignment_All_Task
-
-const waitNotify_StudentRegister = new WaitNotify(); // AssignTaskExecute_StudentRegister
-let AssignTaskExecute_StudentRegister = false; // - waitNotify_StudentRegister
-
-// UserRegister - canceled _ addCorrection ?_ userUpdate ?_ solvePage ?_ correction Update
-const waitNotify_UserRegister = new WaitNotify(); // AssignTaskExecute_UserRegister
-let AssignTaskExecute_UserRegister = false; // - waitNotify_UserRegister
-
-const waitNotify_Rating = new WaitNotify(); // AssignTaskExecute_Rating
-let AssignTaskExecute_Rating = false; // - waitNotify_Rating
-
 app.use(cors());
 app.use(bodyParser.json());
 app.listen(port, () => {
   console.log(`express is  ${port}`);
 });
 
-const privateKey = fs.readFileSync(
-    'keys/privkey8.pem',
-    'utf8'
-);
-const certificate = fs.readFileSync('keys/cert8.pem', 'utf8');
-const ca = fs.readFileSync('keys/chain8.pem', 'utf8');
-
-const credentials = {
-  key: privateKey,
-  cert: certificate,
-  ca: ca,
-};
-
-// Starting both http & https servers
-const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
-
-/*
-httpServer.listen(80, () => {
-  console.log('HTTP Server running on port 80');
-});
-*/
-
-httpsServer.listen(httpsport, () => {
-  console.log(`HTTPS Server running on port  ${httpsport}`);
-});
-
+// System check
 app.get('/', (req, res) => {
   res.send('working?');
 });
-
 app.get('/httpstest', (req, res) => {
   res.send('https is working?');
-});
-
-connection.getConnection(() => {
-  console.log('connecting');
 });
 
 app.post('/userPage', (req, res) => {
@@ -115,6 +109,7 @@ app.post('/userPage', (req, res) => {
   const b = req.body;
   res.send(b);
 });
+
 
 /* --------------- Rating Part --------------- */
 app.post('/rating', async (req, res) => {
