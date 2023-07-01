@@ -62,6 +62,9 @@ const ratingRouter = require('./routes/rating');
 const registerRouter = require('./routes/register');
 const usersRouter = require('./routes/users');
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
 app.use(mysqlMiddleware);
 app.use(logger('dev'));
 app.use(express.json());
