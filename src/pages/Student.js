@@ -55,7 +55,10 @@ function Student(props) {
     };
     try {
       await fetch('https //cors-anywhere.herokuapp.com'+props.serverAddress + "/user/check", requestOptions)
-        .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
+        .then(async (res) => {
+            console.log(res.json())
+            await res.json()
+        }) // res 결과 값을 PROMISE 형태 파일로 받음
         .then(async (data) => {
           // console.log(data)
           // console.log(data.find((x) => x.ID === userName))
