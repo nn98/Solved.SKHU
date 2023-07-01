@@ -112,13 +112,6 @@ app.get('/httpstest', (req, res) => {
   res.send('https is working?');
 });
 
-app.post('/userPage', (req, res) => {
-  console.log(req);
-  const b = req.body;
-  res.send(b);
-});
-
-
 /* --------------- Rating Part --------------- */
 app.post('/rating', async (req, res) => {
   let i;

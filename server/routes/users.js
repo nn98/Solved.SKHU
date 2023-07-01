@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.post('/page', (req, res) => {
+  console.log(req);
+  const b = req.body;
+  res.send(b);
 });
 
 module.exports = router;
