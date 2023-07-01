@@ -35,8 +35,6 @@ let AssignTaskExecute_StudentRegister = false;          // - waitNotify_StudentR
 // UserRegister - canceled _ addCorrection ?_ userUpdate ?_ solvePage ?_ correction Update
 const waitNotify_UserRegister = new WaitNotify();     // AssignTaskExecute_UserRegister
 let AssignTaskExecute_UserRegister = false;             // - waitNotify_UserRegister
-const waitNotify_Rating = new WaitNotify();           // AssignTaskExecute_Rating
-let AssignTaskExecute_Rating = false;                   // - waitNotify_Rating
 const connection = mysql.createPool({
   host: 'sol-skhu.duckdns.org',
   user: 'Project',

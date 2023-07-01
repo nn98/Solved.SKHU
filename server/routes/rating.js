@@ -1,5 +1,8 @@
 const express = require('express');
+const WaitNotify = require("wait-notify");
 const router = express.Router();
+const waitNotify_Rating = new WaitNotify();           // AssignTaskExecute_Rating
+let AssignTaskExecute_Rating = false;                   // - waitNotify_Rating
 
 /* --------------- Rating Part --------------- */
 router.post('/rating', async (req, res) => {
