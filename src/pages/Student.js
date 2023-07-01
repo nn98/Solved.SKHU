@@ -54,7 +54,7 @@ function Student(props) {
       ),
     };
     try {
-      await fetch(props.serverAddress + "/user/check", requestOptions)
+      await fetch('https //cors-anywhere.herokuapp.com'+props.serverAddress + "/user/check", requestOptions)
         .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then(async (data) => {
           // console.log(data)
@@ -75,7 +75,7 @@ function Student(props) {
   useEffect(() => {
     const add = async () => {
       try {
-        await fetch(props.serverAddress + "/ranking")
+        await fetch('https //cors-anywhere.herokuapp.com'+props.serverAddress + "/ranking")
           .then((res) => res.json())
           .then((data) => {
             // console.log(data)
@@ -88,16 +88,16 @@ function Student(props) {
 
     const topAlgorithm = async () => {
       try {
-        const best = await fetch(props.serverAddress + "/Algorithm/Best").then(
+        const best = await fetch('https //cors-anywhere.herokuapp.com'+props.serverAddress + "/Algorithm/Best").then(
           (res) => res.json()
         );
-        const worst = await fetch(props.serverAddress + "/Algorithm/worse").then(
+        const worst = await fetch('https //cors-anywhere.herokuapp.com'+props.serverAddress + "/Algorithm/worse").then(
           (res) => res.json()
         );
-        const max = await fetch(props.serverAddress + "/Algorithm/max").then(
+        const max = await fetch('https //cors-anywhere.herokuapp.com'+props.serverAddress + "/Algorithm/max").then(
           (res) => res.json()
         );
-        const min = await fetch(props.serverAddress + "/Algorithm/min").then(
+        const min = await fetch('https //cors-anywhere.herokuapp.com'+props.serverAddress + "/Algorithm/min").then(
           (res) => res.json()
         );
 

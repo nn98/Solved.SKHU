@@ -27,7 +27,7 @@ function RandomPage(props) {
 
     const random = async () => {
       try {
-        await fetch(props.serverAddress + '/randomProblem', requestOptions)
+        await fetch('https //cors-anywhere.herokuapp.com'+props.serverAddress + '/randomProblem', requestOptions)
           .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
           .then(async (data) => {
             // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음

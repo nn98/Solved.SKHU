@@ -182,7 +182,7 @@ const UserPage = (props) => {
       // console.log(t)
       // const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
       // 잔디
-      await fetch(
+      await fetch('https //cors-anywhere.herokuapp.com'+
         '/api/v3/user/history?handle=' +
           t +
           '&topic=solvedCount'
@@ -242,7 +242,7 @@ const UserPage = (props) => {
           setUserZandi(list1)
         })
       // 태그 분포 api
-      await fetch('/api/v3/user/problem_tag_stats?handle=' + t)
+      await fetch('https //cors-anywhere.herokuapp.com'+'/api/v3/user/problem_tag_stats?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           let t = []
@@ -262,14 +262,14 @@ const UserPage = (props) => {
           setAngleChart(t)
         })
       // user api
-      await fetch('/api/v3/user/show?handle=' + t)
+      await fetch('https //cors-anywhere.herokuapp.com'+'/api/v3/user/show?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           setUser(data)
           // console.log(data)
         })
       // 문제 api
-      await fetch(
+      await fetch('https //cors-anywhere.herokuapp.com'+
         '/api/v3/search/problem?query=solved_by%3A' +
           t +
           '&sort=level&direction=desc'
@@ -280,7 +280,7 @@ const UserPage = (props) => {
           setUserPro(data)
         })
       // 티어 api
-      await fetch('/api/v3/user/problem_stats?handle=' + t)
+      await fetch('https //cors-anywhere.herokuapp.com'+'/api/v3/user/problem_stats?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
           var tierData = [
