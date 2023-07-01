@@ -53,6 +53,11 @@ connection.getConnection((err) => {
   }
   console.log('Connected to MySQL');
 });
+const mysqlMiddleware = (req, res, next) => {
+  // req 객체에 MySQL connection 객체를 할당
+  req.mysql = connection;
+  next();
+};
 
 httpsServer.listen(httpsPort, () => {
   console.log(`HTTPS Server running on port  ${httpsPort}`);
@@ -69,16 +74,18 @@ process.setMaxListeners(50);
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const rankingRouter = require('./routes/ranking');
 const assignmentsRouter = require('./routes/assignments');
 const qnaRouter = require('./routes/qna');
 
 assignmentsRouter.setConnection(connection);
-qnaRouter.setConnection(connection);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+// 미들웨어를 Express 앱에 연결
+app.use(mysqlMiddleware);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -87,8 +94,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/ranking', rankingRouter);
 app.use('/assignments', assignmentsRouter.router);
-app.use('/qna', qnaRouter.router);
+app.use('/qna', qnaRouter);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -207,16 +215,6 @@ app.post('/rating', async (req, res) => {
   if (AssignTaskExecute_Rating) await waitNotify_Rating.wait();
 });
 /* --------------- Rating Part --------------- */
-
-/* --------------- Ranking Part --------------- */
-app.get('/ranking', (req, res) => {
-  const sql = 'select * from user order by skhurank';
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    res.send(result);
-  });
-});
-/* --------------- Ranking Part --------------- */
 
 /* --------------- Recommend Algorithm Part --------------- */
 app.get('/MaxAlgorithm', (req, res) => {

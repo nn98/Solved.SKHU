@@ -1,23 +1,8 @@
 const express = require('express');
 const router = express.Router();
-let connection;
-function setConnection(mainConnection) {
-    connection = mainConnection;
-}
 /* --------------- QnA Part --------------- */
-router.post('/User', (req, res) => {
-    const sql = 'insert into qnauser set ?';
-    connection.query(sql, req.body, function (err, result, fields) {
-        if (err) {
-            res.send({ error: err.errno });
-        } else {
-            console.log(result);
-            res.send({ data: '어서오세요' });
-        }
-    });
-});
-
 router.get('/', (req, res) => {
+    const connection = req.mysql;
     const sql = 'select * from qna  order by createdat desc';
 
     connection.query(sql, function (err, result, fields) {
@@ -27,7 +12,21 @@ router.get('/', (req, res) => {
     });
 });
 
+router.post('/User', (req, res) => {
+    const connection = req.mysql;
+    const sql = 'insert into qnauser set ?';
+    connection.query(sql, req.body, function (err, result, fields) {
+        if (err) {
+            res.send({error: err.errno});
+        } else {
+            console.log(result);
+            res.send({data: '어서오세요'});
+        }
+    });
+});
+
 router.get('/Problem', (req, res) => {
+    const connection = req.mysql;
     const sql = 'select distinct problem_id from solve;';
     connection.query(sql, function (err, result, fields) {
         if (err) throw err;
@@ -37,6 +36,7 @@ router.get('/Problem', (req, res) => {
 });
 
 router.get('/Inner', (req, res) => {
+    const connection = req.mysql;
     const sql = 'select * from qnainner';
     connection.query(sql, function (err, result, fields) {
         if (err) throw err;
@@ -46,13 +46,14 @@ router.get('/Inner', (req, res) => {
 });
 
 router.post('/Add', (req, res) => {
+    const connection = req.mysql;
     const userBody = [req.body.userId, req.body.password];
     const userSql = 'select * from qnauser where qnauser.name = ? and qnauser.password = ?;';
     connection.query(userSql, userBody, function (err, result, fields) {
         if (err) throw err;
 
         if (result.length === 0) {
-            res.send({ error: '사용자가 올바르지 않습니다.' });
+            res.send({error: '사용자가 올바르지 않습니다.'});
         } else {
             const insertBody = [req.body.content, req.body.userIP, req.body.userId, req.body.problem];
             const insertSql = 'insert into qna(content, userip, user_id, problem) value (?,?,?,?);';
@@ -66,12 +67,13 @@ router.post('/Add', (req, res) => {
 });
 
 router.post('/InnerAdd', (req, res) => {
+    const connection = req.mysql;
     const userBody = [req.body.userId, req.body.password];
     const userSql = 'select * from qnauser where qnauser.name = ? and qnauser.password = ?;';
     connection.query(userSql, userBody, function (err, result, fields) {
         if (err) throw err;
         if (result.length === 0) {
-            res.send({ error: '사용자가 올바르지 않습니다.' });
+            res.send({error: '사용자가 올바르지 않습니다.'});
         } else {
             const insertBody = [req.body.content, req.body.userIP, req.body.userId, req.body.qnaId];
             const insertSql = 'insert into qnainner(content, userip, user_id, qna_id) value (?,?,?,?);';
@@ -85,18 +87,19 @@ router.post('/InnerAdd', (req, res) => {
 });
 
 router.post('/Delete', (req, res) => {
+    const connection = req.mysql;
     const userBody = [req.body.userId, req.body.password];
     const userSql = 'select * from qnauser where qnauser.name = ? and qnauser.password = ?;';
     connection.query(userSql, userBody, function (err, result, fields) {
         if (err) throw err;
         if (result.length === 0) {
-            res.send({ error: '사용자가 올바르지 않습니다.' });
+            res.send({error: '사용자가 올바르지 않습니다.'});
         } else {
             const deleteBody = [req.body.ID, req.body.userId];
             const deleteSql = 'delete from qna where qna.id = ? and qna.user_id = ?;';
             connection.query(deleteSql, deleteBody, function (err, result, fields) {
                 if (result.affectedRows === 0) {
-                    res.send({ error: '사용자가 올바르지 않습니다.' });
+                    res.send({error: '사용자가 올바르지 않습니다.'});
                 } else {
                     console.log('QnA 삭제');
                     res.redirect('/');
@@ -107,18 +110,19 @@ router.post('/Delete', (req, res) => {
 });
 
 router.post('/InnerDelete', (req, res) => {
+    const connection = req.mysql;
     const userBody = [req.body.userId, req.body.password];
     const userSql = 'select * from qnauser where qnauser.name = ? and qnauser.password = ?;';
     connection.query(userSql, userBody, function (err, result, fields) {
         if (err) throw err;
         if (result.length === 0) {
-            res.send({ error: '사용자가 올바르지 않습니다.' });
+            res.send({error: '사용자가 올바르지 않습니다.'});
         } else {
             const deleteBody = [req.body.ID, req.body.userId];
             const deleteSql = 'delete from qnainner where qnainner.id = ? and qnainner.user_id = ?;';
             connection.query(deleteSql, deleteBody, function (err, result, fields) {
                 if (result.affectedRows === 0) {
-                    res.send({ error: '사용자가 올바르지 않습니다.' });
+                    res.send({error: '사용자가 올바르지 않습니다.'});
                 } else {
                     console.log('QnA안에꺼 삭제');
                     res.redirect('/Inner');
@@ -129,7 +133,4 @@ router.post('/InnerDelete', (req, res) => {
 });
 /* --------------- QnA Part --------------- */
 
-module.exports = {
-    router,
-    setConnection
-};
+module.exports = router;

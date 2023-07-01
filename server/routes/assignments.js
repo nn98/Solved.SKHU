@@ -1,20 +1,17 @@
 const express = require('express');
 const router = express.Router();
-let connection;
-function setConnection(mainConnection) {
-    connection = mainConnection;
-}
 
 /* --------------- Assignments Part --------------- */
-const WaitNotify = require("wait-notify");
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
+const WaitNotify = require('wait-notify');
+const waitNotify_Assignment_All_Task = new WaitNotify();  // AssignTaskExecute_StudentRegister
+let AssignTaskExecute_Assignment_All_Task = false;          // - waitNotify_StudentRegister
 let processing = false;
-// global.processing;
 let called = 0;
-// global.called;
 
 router.get('/', (req, res) => {
+    const connection = req.mysql;
     console.log('!+++++++++++++++++++', 'assignments/get ', 'is called');
     let sql =
         'select * from lecture;' +
@@ -28,7 +25,7 @@ router.get('/', (req, res) => {
         }
         console.log('result is recived ... response');
         // res.json(result);
-        res.json({ result: result, processing: processing ,called:called});
+        res.json({result: result, processing: processing, called: called});
     });
 });
 
@@ -40,11 +37,12 @@ let myDate;
 let sql;
 
 router.post('/', async (req, res) => {
+    const connection = req.mysql;
     console.log('!+++++++++++++++++++', 'assignments/post ', 'is called');
     called++;
-    console.log('%%%%%processing:',processing);
+    console.log('%%%%%processing:', processing);
     processing = true;
-    console.log('%%%%%set processing:',processing);
+    console.log('%%%%%set processing:', processing);
     // console.log('clean assignment_Result');
     assignment_Result = [];
     // console.log(req.body);
@@ -57,12 +55,12 @@ router.post('/', async (req, res) => {
     let reAssignment = req.body.reAssignment;
     console.log('deadline:\t\t', deadLine);
     myDate = deadLine.split('-');
-    console.log('deadline:\t\t',myDate);
+    console.log('deadline:\t\t', myDate);
     let myTime = myDate[2].split('T');
-    console.log('myTime:\t\t\t',myTime);
+    console.log('myTime:\t\t\t', myTime);
     let spTime = myTime[1].split(':');
-    spTime[0]=Number(spTime[0])+9;
-    console.log('spTime:\t\t\t',spTime);
+    spTime[0] = Number(spTime[0]) + 9;
+    console.log('spTime:\t\t\t', spTime);
     var newDate = new Date(myDate[0], myDate[1] - 1, myTime[0], spTime[0]);
     // console.log(newDate.getTime());
     deadLine = newDate.getTime();
@@ -70,11 +68,11 @@ router.post('/', async (req, res) => {
     console.log('reAssignment:\t', reAssignment);
     if (!reAssignment) {
         console.log('not reAssign...');
-        console.log('#---------','$ASYNC --- wait for checkResult, assignment_R.length:', assignment_Result.length);
+        console.log('#---------', '$ASYNC --- wait for checkResult, assignment_R.length:', assignment_Result.length);
         re_asyncReturn = true;
-        checkResult(pID, lectureId, deadLine);
+        checkResult(pID, lectureId, deadLine, connection);
         if (re_asyncReturn) await re_waitReturn.wait();
-        console.log('#---------','$ASYNC --- checkResult is finish, assignment_R.length:', assignment_Result.length);
+        console.log('#---------', '$ASYNC --- checkResult is finish, assignment_R.length:', assignment_Result.length);
     }
 
     if ((assignment_Result.length < 1) | reAssignment) {
@@ -85,8 +83,8 @@ router.post('/', async (req, res) => {
         console.log('@---------', 'execute assignment.');
         AssignTaskExecute_Assignment_All_Task = true;
         parallelizationControl = [
-            { AsyncTaskExecute: false, waitNotify: new WaitNotify(), fin: false },
-            { AsyncTaskExecute: false, waitNotify: new WaitNotify(), fin: false },
+            {AsyncTaskExecute: false, waitNotify: new WaitNotify(), fin: false},
+            {AsyncTaskExecute: false, waitNotify: new WaitNotify(), fin: false},
         ];
         let head_assignment_Result = [];
         let head_ID_LIST = ID_LIST.slice(0, ID_LIST.length / 2);
@@ -151,21 +149,20 @@ router.post('/', async (req, res) => {
 
         console.log('#--------- save result...');
         if (reAssignment & isAssigned) {
-            sql = 'update assignment_result set'+
+            sql = 'update assignment_result set' +
                 " result='" + JSON.stringify(assignment_Result) +
                 "' where" +
                 ' id=' + pID +
                 ' and lectureid="' + lectureId +
                 '" and deadline=' + deadLine +
                 ";";
-        }
-        else {
-            console.log('without result:',('insert into assignment_result (id,lectureid,deadline) values(' +
+        } else {
+            console.log('without result:', ('insert into assignment_result (id,lectureid,deadline) values(' +
                 pID +
                 ",'" +
                 lectureId +
                 "'," +
-                deadLine+
+                deadLine +
                 ");"));
             sql =
                 'insert into assignment_result (id,result,lectureid,deadline) values(' +
@@ -175,12 +172,12 @@ router.post('/', async (req, res) => {
                 "'," +
                 lectureId +
                 "," +
-                deadLine+
+                deadLine +
                 ");";
 
         }
 
-        console.log('$$$$$sql:',sql);
+        console.log('$$$$$sql:', sql);
 
         try {
             connection.query(sql, async function (err, result, fields) {
@@ -195,14 +192,14 @@ router.post('/', async (req, res) => {
         }
     }
 
-    console.log('%%%%%wait for return - processing:',processing);
+    console.log('%%%%%wait for return - processing:', processing);
     if (re_asyncReturn) await re_waitReturn.wait();
     // console.log('send response: ', assignment_Result);
     // ID_LIST=assignment_Result;
     processing = false;
     // res.send(assignment_Result);
-    console.log('%%%%%return - processing:',processing);
-    res.json({ result: assignment_Result, processing: processing });
+    console.log('%%%%%return - processing:', processing);
+    res.json({result: assignment_Result, processing: processing});
 });
 
 let urls = [
@@ -226,7 +223,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
     console.log('----------', 'paral:', flag, '2. execute');
     // console.log("rere at execute:", assignment_Result);
     puppeteer
-        .launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
+        .launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']})
         .then(async browser => {
             if (parallelizationControl[flag].AsyncTaskExecute) {
                 await parallelizationControl[flag].waitNotify.wait();
@@ -236,7 +233,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
             parallelizationControl[flag].AsyncTaskExecute = true;
             const page = await browser.newPage();
             await page.setDefaultNavigationTimeout(0);
-            await page.goto(url, { waitUntil: 'networkidle2', timeout: 0 });
+            await page.goto(url, {waitUntil: 'networkidle2', timeout: 0});
 
             const content = await page.content();
             const $ = cheerio.load(content);
@@ -262,7 +259,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
                     // !===== #84 check deadLine console.log('name0', name0);
                     // !===== #84 check deadLine for (let i = 0; ++i < name0.length; console.log(i, name0[i]));
 
-                    for (let i = 0; ++i < name0.length; ) {
+                    for (let i = 0; ++i < name0.length;) {
                         // console.log("N", i, name0[i]);
                         if (name0[i].split('</td>').length > 3) {
                             let v = name0[i].split('</td>');
@@ -275,7 +272,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
                                 // !===== #84 check deadLine console.log('data', data);
 
                                 // AC!! & DL Check
-                                lac = lac < 20 ? ((data == '맞았습니다!!')||(data == '100점') ? 20 : 10) : lac;
+                                lac = lac < 20 ? ((data == '맞았습니다!!') || (data == '100점') ? 20 : 10) : lac;
                                 red.push(data);
                             }
                         } else {
@@ -317,7 +314,7 @@ async function execute(ID_LIST, pID, deadLine, processID, url, assignment_Result
             assignment_Result.push(insert);
             // console.log("rere at result:", assignment_Result);
             console.log('----------', 'paral:', flag, '\t\t', processID, 'is', insert.result);
-            isFinish(ID_LIST, pID, deadLine, assignment_Result, flag);
+            await isFinish(ID_LIST, pID, deadLine, assignment_Result, flag);
         })
         .catch(error => {
             console.log('----------', 'paral:', flag, 'html include err', error);
@@ -353,9 +350,9 @@ async function isFinish(ID_LIST, pID, deadLine, assignment_Result, flag) {
     }
 }
 
-async function checkResult(pid, lectureid, deadLine) {
+async function checkResult(pid, lectureid, deadLine, connection) {
     console.log('!——————————check result existence...');
-    let sql = 'select * from assignment_result where id=' + pid + ' and lectureid=' + lectureid + ' and deadline=' + deadLine +';';
+    let sql = 'select * from assignment_result where id=' + pid + ' and lectureid=' + lectureid + ' and deadline=' + deadLine + ';';
     console.log(sql);
     try {
         connection.query(sql, async function (err, result, fields) {
@@ -386,9 +383,7 @@ async function checkResult(pid, lectureid, deadLine) {
         re_waitReturn.notify();
     }
 }
+
 /* --------------- Assignments Part --------------- */
 
-module.exports = {
-    router,
-    setConnection
-};
+module.exports = router;
