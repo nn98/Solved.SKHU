@@ -125,7 +125,6 @@ const Assignments = (e) => {
         headers: {
           "Content-Type": "application/json",
         }, // json형태의 데이터를 서버로 보냅니다.
-        mode: 'cors', // CORS 요청임을 알리는 옵션
         body: JSON.stringify(
           sbody // 이 body에 해당하는 데이터를 서버가 받아서 처리합니다.
         ),
@@ -175,9 +174,7 @@ const Assignments = (e) => {
   const subjectAdd = async () => {
       //tq2o
     try {
-      await fetch(e.serverAddress + "/assignments", {
-
-      })
+      await fetch(e.serverAddress + "/assignments")
         .then((res) => res.json())
         .then((data) => {
           // console.log("Lec:", data[0]);
