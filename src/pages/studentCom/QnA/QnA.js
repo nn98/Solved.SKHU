@@ -19,7 +19,7 @@ const QnA = (e) => {
   // 댓글 출력문
   const qnaFind = async () => {
     try {
-      const res = await fetch('https //cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA').then((res) =>
+      const res = await fetch('https://cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA').then((res) =>
         res.json()
       )
       setComments(res)
@@ -31,7 +31,7 @@ const QnA = (e) => {
 
   const problemAdd = async () => {
     try {
-      const res = await fetch('https //cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/Problem').then((res) =>
+      const res = await fetch('https://cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/Problem').then((res) =>
         res.json()
       )
       console.log(res)
@@ -74,7 +74,7 @@ const QnA = (e) => {
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
       }
-      await fetch('https //cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/Add', requestOptions)
+      await fetch('https://cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/Add', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
@@ -106,7 +106,7 @@ const QnA = (e) => {
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
       }
-      await fetch('https //cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/Delete', requestOptions)
+      await fetch('https://cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/Delete', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음

@@ -58,7 +58,7 @@ function AlgoPage(props) {
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
       }
-      await fetch('https //cors-anywhere.herokuapp.com'+props.serverAddress + '/rating', requestOptions)
+      await fetch('https://cors-anywhere.herokuapp.com'+props.serverAddress + '/rating', requestOptions)
         .then((res) => res.json())
         .then((data) => {
           // console.log(data)

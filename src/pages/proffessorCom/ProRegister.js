@@ -44,7 +44,7 @@ const ProRegister = (e) => {
         ),
       };
       // 이 URL은 exprees의 서버이기 때문에 3000번이 되어서는 안됨 충돌가능성이 있음, 뒤 서브스트링으로 구별
-      await fetch('https //cors-anywhere.herokuapp.com'+serverAddress + "/register/professor", requestOptions)
+      await fetch('https://cors-anywhere.herokuapp.com'+serverAddress + "/register/professor", requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음

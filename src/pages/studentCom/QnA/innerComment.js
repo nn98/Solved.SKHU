@@ -24,7 +24,7 @@ const InnerComment = (e) => {
   // 대댓글 출력문
   const qnaInnerFind = async () => {
     try {
-      const res = await fetch('https //cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/Inner').then((res) =>
+      const res = await fetch('https://cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/Inner').then((res) =>
         res.json()
       )
       setInnerComments(res)
@@ -58,7 +58,7 @@ const InnerComment = (e) => {
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
       }
-      await fetch('https //cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/InnerAdd', requestOptions)
+      await fetch('https://cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/InnerAdd', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
@@ -91,7 +91,7 @@ const InnerComment = (e) => {
         }, // json형태의 데이터를 서버로 보냅니다.
         body: JSON.stringify(body),
       }
-      await fetch('https //cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/InnerDelete', requestOptions)
+      await fetch('https://cors-anywhere.herokuapp.com'+e.serverAddress + '/QnA/InnerDelete', requestOptions)
         .then((res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then((data) => {
           // .then을 한 번더 써야 사용할 수 있는 JSON 실질적인 값을 받을 수 있음
