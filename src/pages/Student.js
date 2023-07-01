@@ -45,6 +45,7 @@ function Student(props) {
       headers: {
         "Content-Type": "application/json",
       }, // json형태의 데이터를 서버로 보냅니다.
+      mode: 'cors', // CORS 요청임을 알리는 옵션
       body: JSON.stringify(
         // 이 body에 해당하는 데이터를 서버가 받아서 처리합니다.
         {
