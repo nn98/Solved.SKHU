@@ -125,3 +125,6 @@ package-lock.json
 # InteliJ
 .idea/
 *.iml
+
+# Keys
+server/keys/
