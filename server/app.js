@@ -14,11 +14,11 @@ const port = process.env.PORT || 3001;
 const httpsPort = 3002;
 
 const privateKey = fs.readFileSync(
-    'keys/privkey8.pem',
+    '/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem',
     'utf8'
 );
-const certificate = fs.readFileSync('keys/cert8.pem', 'utf8');
-const ca = fs.readFileSync('keys/chain8.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/chain.pem', 'utf8');
 const credentials = {
   key: privateKey,
   cert: certificate,
