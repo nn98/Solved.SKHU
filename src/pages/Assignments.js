@@ -173,7 +173,7 @@ const Assignments = (e) => {
 
   const subjectAdd = async () => {
     try {
-      await fetch('https://cors-anywhere.herokuapp.com'+e.serverAddress+"/assignments")
+      await fetch('https://cors-anywhere.herokuapp.com' + e.serverAddress + "/assignments")
         .then((res) => res.json())
         .then((data) => {
           // console.log("Lec:", data[0]);
