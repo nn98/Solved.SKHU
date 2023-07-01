@@ -10,7 +10,7 @@ const waitNotify_UserRegister = new WaitNotify();     // AssignTaskExecute_UserR
 let AssignTaskExecute_UserRegister = false;             // - waitNotify_UserRegister
 
 /* --------------- Register Part - Professor --------------- */
-app.post('/professor', (req, res) => {
+router.post('/professor', (req, res) => {
     const connection = req.mysql;
     console.log('proRegister/post ', 'is called');
     // console.log(req);
@@ -45,14 +45,14 @@ app.post('/professor', (req, res) => {
     }
 });
 /* --------------- Register Part - Professor / Register Part - Student --------------- */
-app.get('/student', (req, res) => {
+router.get('/student', (req, res) => {
     console.log('studentRegister/get ', 'is called');
     const b = req.body;
     console.log('body', b);
     res.send(b);
 });
 
-app.post('/student', async (req, res) => {
+router.post('/student', async (req, res) => {
     const connection = req.mysql;
     console.log('studentRegister/post ', 'is called');
     const b = req.body;
@@ -115,7 +115,7 @@ app.post('/student', async (req, res) => {
 /* --------------- Register Part - Student --------------- */
 
 /* --------------- UserRegister --------------- */
-app.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
     const connection = req.mysql;
     const url = 'https://solved.ac/ranking/o/309';
     const b = req.body;

@@ -8,7 +8,7 @@ router.post('/page', (req, res) => {
 });
 
 /* +++++ UserCheck +++++ */
-app.post('/check', (req, res) => {
+router.post('/check', (req, res) => {
   console.log('userCheck/get', '- called');
   let sql = 'select ID from user;';
   connection.query(sql, function (err, result, fields) {
