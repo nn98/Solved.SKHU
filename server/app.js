@@ -1,22 +1,18 @@
-// Packages
 const bodyParser = require('body-parser');
-const cheerio = require('cheerio');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
 const fs = require('fs');
-// const http = require('http');
 const createError = require('http-errors');
 const https = require('https');
 const logger = require('morgan');
 const mysql = require('mysql2');
 const path = require('path');
-const puppeteer = require('puppeteer');
 
-// const Vals
 const app = express();
 const port = process.env.PORT || 3001;
 const httpsPort = 3002;
+
 const privateKey = fs.readFileSync(
     'keys/privkey8.pem',
     'utf8'
@@ -28,8 +24,12 @@ const credentials = {
   cert: certificate,
   ca: ca,
 };
+
 const httpsServer = https.createServer(credentials, app);
-const WaitNotify = require('wait-notify');
+httpsServer.listen(httpsPort, () => {
+  console.log(`HTTPS Server running on port  ${httpsPort}`);
+});
+
 const connection = mysql.createPool({
   host: 'sol-skhu.duckdns.org',
   user: 'Project',
@@ -47,37 +47,21 @@ connection.getConnection((err) => {
   console.log('Connected to MySQL');
 });
 const mysqlMiddleware = (req, res, next) => {
-  // req 객체에 MySQL connection 객체를 할당
   req.mysql = connection;
   next();
 };
 
-httpsServer.listen(httpsPort, () => {
-  console.log(`HTTPS Server running on port  ${httpsPort}`);
-});
-
-/*
-const httpServer = http.createServer(app);
-httpServer.listen(80, () => {
-  console.log('HTTP Server running on port 80');
-});
-*/
-
 process.setMaxListeners(50);
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const rankingRouter = require('./routes/ranking');
+const algorithmRouter = require('./routes/algorithm');
 const assignmentsRouter = require('./routes/assignments');
 const qnaRouter = require('./routes/qna');
+const randomProblemRouter = require('./routes/randomProblem');
+const rankingRouter = require('./routes/ranking');
+const ratingRouter = require('./routes/rating');
+const registerRouter = require('./routes/register');
+const usersRouter = require('./routes/users');
 
-assignmentsRouter.setConnection(connection);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
-// 미들웨어를 Express 앱에 연결
 app.use(mysqlMiddleware);
 app.use(logger('dev'));
 app.use(express.json());
@@ -85,11 +69,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/ranking', rankingRouter);
-app.use('/assignments', assignmentsRouter.router);
+app.use('/algorithm', algorithmRouter);
+app.use('/assignments', assignmentsRouter);
 app.use('/qna', qnaRouter);
+app.use('/randomProblem', randomProblemRouter);
+app.use('/ranking', rankingRouter);
+app.use('/rating', ratingRouter);
+app.use('/register', registerRouter);
+app.use('/users', usersRouter);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -97,7 +84,6 @@ app.listen(port, () => {
   console.log(`express is  ${port}`);
 });
 
-// System check
 app.get('/', (req, res) => {
   res.send('working?');
 });
@@ -105,12 +91,9 @@ app.get('/httpstest', (req, res) => {
   res.send('https is working?');
 });
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
-// error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
