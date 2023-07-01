@@ -53,7 +53,7 @@ function Student(props) {
       ),
     };
     try {
-      await fetch(props.serverAddress + "/userCheck", requestOptions)
+      await fetch(props.serverAddress + "/user/check", requestOptions)
         .then(async (res) => res.json()) // res 결과 값을 PROMISE 형태 파일로 받음
         .then(async (data) => {
           // console.log(data)
@@ -87,16 +87,16 @@ function Student(props) {
 
     const topAlgorithm = async () => {
       try {
-        const best = await fetch(props.serverAddress + "/BestAlgorithm").then(
+        const best = await fetch(props.serverAddress + "/Algorithm/Best").then(
           (res) => res.json()
         );
-        const worst = await fetch(props.serverAddress + "/WorstAlgorithm").then(
+        const worst = await fetch(props.serverAddress + "/Algorithm/worse").then(
           (res) => res.json()
         );
-        const max = await fetch(props.serverAddress + "/MaxAlgorithm").then(
+        const max = await fetch(props.serverAddress + "/Algorithm/max").then(
           (res) => res.json()
         );
-        const min = await fetch(props.serverAddress + "/MinAlgorithm").then(
+        const min = await fetch(props.serverAddress + "/Algorithm/min").then(
           (res) => res.json()
         );
 
