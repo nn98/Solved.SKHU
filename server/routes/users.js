@@ -7,4 +7,18 @@ router.post('/page', (req, res) => {
   res.send(b);
 });
 
+/* +++++ UserCheck +++++ */
+app.post('/check', (req, res) => {
+  console.log('userCheck/get', '- called');
+  let sql = 'select ID from user;';
+  connection.query(sql, function (err, result, fields) {
+    if (err) {
+      console.log('error in RandomProblem/get', err);
+      throw err;
+    }
+    console.log('userCheck/get', '- callback');
+    res.json(result);
+  });
+});
+
 module.exports = router;
