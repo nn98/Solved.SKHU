@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 /* +++++ Random +++++ */
-app.post('/', (req, res) => {
+router.post('/', (req, res) => {
     const connection = req.mysql;
     console.log('randomProblem/get', '- called');
     let sql = 'select * from problem where solved_rank between 1 and 17 order by rand() limit 1;';

@@ -25,7 +25,7 @@ router.post('/User', (req, res) => {
     });
 });
 
-router.get('/Problem', (req, res) => {
+router.get('/problem', (req, res) => {
     const connection = req.mysql;
     const sql = 'select distinct problem_id from solve;';
     connection.query(sql, function (err, result, fields) {
@@ -35,7 +35,7 @@ router.get('/Problem', (req, res) => {
     });
 });
 
-router.get('/Inner', (req, res) => {
+router.get('/inner', (req, res) => {
     const connection = req.mysql;
     const sql = 'select * from qnainner';
     connection.query(sql, function (err, result, fields) {
