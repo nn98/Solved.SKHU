@@ -114,6 +114,35 @@ app.post('/userPage', async (req, res) => {
   if (userPage_wait) waitnotify_UserPage.wait();
   res.send(json(data));
 });
+app.get('/userPage', async (req, res) => {
+
+  console.log('!##### userPage-Post');
+
+  const userName = req.params.userName;
+  console.log('userName:', userName);
+
+  const waitnotify_UserPage = new WaitNotify();
+  let userPage_wait = true;
+
+  try {
+
+    const data = [];
+    data.zanData = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount');
+    data.tagData = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName);
+    data.userData = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName);
+    data.problemData = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc');
+    data.tierData = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName);
+
+  } catch (err) {
+    console.log(err)
+  } finally {
+    userPage_wait = false;
+    waitnotify_UserPage.notify();
+  }
+
+  if (userPage_wait) waitnotify_UserPage.wait();
+  res.send(json(data));
+});
 
 /* --------------- QnA Part --------------- */
 app.post('/QnAUser', (req, res) => {
