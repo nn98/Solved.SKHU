@@ -120,6 +120,7 @@ const Assignments = (e) => {
         reAssignment: props.reAssignment,
       };
       const requestOptions = {
+        // 똑같은데 왜 에러가날까
         // 데이터 통신의 방법과 보낼 데이터의 종류, 데이터를 설정합니다.
         method: "POST", // POST는 서버로 요청을 보내서 응답을 받고, GET은 서버로부터 응답만 받습니다. PUT은 수정, DELETE는 삭제
         headers: {
