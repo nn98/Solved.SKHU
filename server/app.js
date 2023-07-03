@@ -35,32 +35,32 @@ const fs = require('fs');
 const http = require('http');
 const https = require('https');
 
-const privateKey = fs.readFileSync(
-  '/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem',
-  'utf8'
-);
-const certificate = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/cert.pem', 'utf8');
-const ca = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/chain.pem', 'utf8');
-
-const credentials = {
-  key: privateKey,
-  cert: certificate,
-  ca: ca,
-};
-
-// Starting both http & https servers
-const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
-
-/*
-httpServer.listen(80, () => {
-  console.log('HTTP Server running on port 80');
-});
-*/
-
-httpsServer.listen(httpsport, () => {
-  console.log(`HTTPS Server running on port  ${httpsport}`);
-});
+// const privateKey = fs.readFileSync(
+//   '/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem',
+//   'utf8'
+// );
+// const certificate = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/cert.pem', 'utf8');
+// const ca = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/chain.pem', 'utf8');
+//
+// const credentials = {
+//   key: privateKey,
+//   cert: certificate,
+//   ca: ca,
+// };
+//
+// // Starting both http & https servers
+// const httpServer = http.createServer(app);
+// const httpsServer = https.createServer(credentials, app);
+//
+// /*
+// httpServer.listen(80, () => {
+//   console.log('HTTP Server running on port 80');
+// });
+// */
+//
+// httpsServer.listen(httpsport, () => {
+//   console.log(`HTTPS Server running on port  ${httpsport}`);
+// });
 
 app.get('/', (req, res) => {
   res.send('working?');
@@ -72,7 +72,7 @@ app.get('/httpstest', (req, res) => {
 
 var mysql = require('mysql');
 var connection = mysql.createPool({
-  host: 'localhost',
+  host: 'sol-skhu.duckdns.org',
   user: 'Project',
   password: 'testing00',
   database: 'swp',
@@ -85,63 +85,67 @@ connection.getConnection(() => {
   console.log('connecting');
 });
 
+app.get('/userPage', async (req, res) => {
+  console.log('!--------------- userPage-Get');
+
+  const userName = req.query.userName;
+  console.log('userName:', userName);
+
+  const data = {};
+
+  try {
+    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount');
+    data.zanData = zanDataResponse.data
+
+    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName);
+    data.tagData = tagDataResponse.data;
+
+    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName);
+    data.userData = userDataResponse.data;
+
+    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc');
+    data.problemData = problemDataResponse.data;
+
+    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName);
+    data.tierData = tierDataResponse.data;
+
+    res.json(data);
+  } catch (err) {
+    console.log('err at try');
+    res.status(500).json({error: 'Internal Server Error'});
+  }
+});
+
 app.post('/userPage', async (req, res) => {
 
-  console.log('!##### userPage-Post');
+  console.log('!--------------- userPage-Post');
 
   const userName = req.body;
   console.log('userName:', userName);
 
-  const waitnotify_UserPage = new WaitNotify();
-  let userPage_wait = true;
+  const data = {};
 
   try {
+    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount');
+    data.zanData = zanDataResponse.data
 
-    const data = [];
-    data.zanData = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount');
-    data.tagData = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName);
-    data.userData = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName);
-    data.problemData = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc');
-    data.tierData = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName);
+    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName);
+    data.tagData = tagDataResponse.data;
 
+    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName);
+    data.userData = userDataResponse.data;
+
+    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc');
+    data.problemData = problemDataResponse.data;
+
+    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName);
+    data.tierData = tierDataResponse.data;
+
+    res.json(data);
   } catch (err) {
-    console.log(err)
-  } finally {
-    userPage_wait = false;
-    waitnotify_UserPage.notify();
+    console.log('err at try');
+    res.status(500).json({error: 'Internal Server Error'});
   }
-
-  if (userPage_wait) waitnotify_UserPage.wait();
-  res.send(json(data));
-});
-app.get('/userPage', async (req, res) => {
-
-  console.log('!##### userPage-Post');
-
-  const userName = req.params.userName;
-  console.log('userName:', userName);
-
-  const waitnotify_UserPage = new WaitNotify();
-  let userPage_wait = true;
-
-  try {
-
-    const data = [];
-    data.zanData = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount');
-    data.tagData = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName);
-    data.userData = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName);
-    data.problemData = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc');
-    data.tierData = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName);
-
-  } catch (err) {
-    console.log(err)
-  } finally {
-    userPage_wait = false;
-    waitnotify_UserPage.notify();
-  }
-
-  if (userPage_wait) waitnotify_UserPage.wait();
-  res.send(json(data));
 });
 
 /* --------------- QnA Part --------------- */
