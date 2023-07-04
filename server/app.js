@@ -94,19 +94,49 @@ app.get('/userPage', async (req, res) => {
   const data = {};
 
   try {
-    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount', {credentials: 'include'});
+    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount', {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.zanData = zanDataResponse.data
 
-    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName, {credentials: 'include'});
+    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName, {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.tagData = tagDataResponse.data;
 
-    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName, {credentials: 'include'});
+    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName, {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.userData = userDataResponse.data;
 
-    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc', {credentials: 'include'});
+    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc', {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.problemData = problemDataResponse.data;
 
-    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName, {credentials: 'include'});
+    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName, {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.tierData = tierDataResponse.data;
 
     res.json(data);
@@ -126,24 +156,54 @@ app.post('/userPage', async (req, res) => {
   const data = {};
 
   try {
-    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount', {credentials: 'include'});
+    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount', {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.zanData = zanDataResponse.data
 
-    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName, {credentials: 'include'});
+    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName, {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.tagData = tagDataResponse.data;
 
-    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName, {credentials: 'include'});
+    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName, {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.userData = userDataResponse.data;
 
-    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc', {credentials: 'include'});
+    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc', {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.problemData = problemDataResponse.data;
 
-    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName, {credentials: 'include'});
+    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName, {
+      headers: {
+        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
+      },
+      credentials: 'include',
+      withCredentials: true
+    });
     data.tierData = tierDataResponse.data;
 
     res.json(data);
   } catch (err) {
-    console.log('err at try');
+    console.log('err at try\n', err);
     res.status(500).json({error: 'Internal Server Error'});
   }
 });
