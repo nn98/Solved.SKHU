@@ -94,19 +94,19 @@ app.get('/userPage', async (req, res) => {
   const data = {};
 
   try {
-    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount');
+    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount', {credentials: 'include'});
     data.zanData = zanDataResponse.data
 
-    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName);
+    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName, {credentials: 'include'});
     data.tagData = tagDataResponse.data;
 
-    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName);
+    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName, {credentials: 'include'});
     data.userData = userDataResponse.data;
 
-    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc');
+    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc', {credentials: 'include'});
     data.problemData = problemDataResponse.data;
 
-    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName);
+    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName, {credentials: 'include'});
     data.tierData = tierDataResponse.data;
 
     res.json(data);
@@ -126,19 +126,19 @@ app.post('/userPage', async (req, res) => {
   const data = {};
 
   try {
-    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount');
+    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount', {credentials: 'include'});
     data.zanData = zanDataResponse.data
 
-    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName);
+    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName, {credentials: 'include'});
     data.tagData = tagDataResponse.data;
 
-    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName);
+    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName, {credentials: 'include'});
     data.userData = userDataResponse.data;
 
-    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc');
+    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc', {credentials: 'include'});
     data.problemData = problemDataResponse.data;
 
-    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName);
+    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName, {credentials: 'include'});
     data.tierData = tierDataResponse.data;
 
     res.json(data);
