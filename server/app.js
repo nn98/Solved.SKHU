@@ -141,7 +141,7 @@ app.get('/userPage', async (req, res) => {
 
     res.json(data);
   } catch (err) {
-    console.log('err at try');
+    console.log('err at try\n', err);
     res.status(500).json({error: 'Internal Server Error'});
   }
 });
