@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://solved.ac/:path*"
+    },
+    {
+      "source": "/api/:path*/",
+      "destination": "https://solved.ac/:path*/"
+    }
+  ]
+}
