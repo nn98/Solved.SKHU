@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import './user.css'
 // import { useLocation } from 'react-router-dom'
-import { Collapse } from '@mui/material'
+import {Collapse} from '@mui/material'
 // import { NULL } from "mysql/lib/protocol/constants/types";
 
 import CalendarHeatmap from 'react-calendar-heatmap'
@@ -109,7 +109,7 @@ const renderActiveShape = (props) => {
         stroke={fill}
         fill="none"
       />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -163,7 +163,7 @@ const UserPage = (props) => {
     var result = []
     var curDate = startDate
     while (curDate <= lastDate) {
-      result.push({ date: curDate.toISOString().split('T')[0], count: 0 })
+      result.push({date: curDate.toISOString().split('T')[0], count: 0})
       curDate.setDate(curDate.getDate() + 1)
     }
     return result
@@ -177,29 +177,29 @@ const UserPage = (props) => {
 
   const userAdd = async () => {
     try {
-      console.log('props.userName:',props.userName)
+      console.log('props.userName:', props.userName)
       const t = props.userName === '' ? 'q9922000' : props.userName
       // console.log(t)
       // const pag = location.state !== null ? localStorage.state.userId : 'q9922000'
       // 잔디
       await fetch(
         '/api/v3/user/history?handle=' +
-          t +
-          '&topic=solvedCount'
-          // , {
-          //   method: "GET",
-          //   credentials: "include",
-          // }
+        t +
+        '&topic=solvedCount'
+        // , {
+        //   method: "GET",
+        //   credentials: "include",
+        // }
       )
         .then((res) => {
-          console.log('OK?',res.ok)
-            if(res.ok) {
-                return res.json();
-            }
-            throw new Error('NO OK TLQKF');
+          console.log('OK?', res.ok)
+          if (res.ok) {
+            return res.json();
+          }
+          throw new Error('NO OK TLQKF');
         })
         .then((data) => {
-          console.log('zandiData',data)
+          console.log('zandiData', data)
           let count = 1
           let list1 = getDatesStartToLast(
             shiftDate(new Date(), -365),
@@ -219,7 +219,7 @@ const UserPage = (props) => {
                 list1.findIndex(
                   (v) => v.date === data[data.length - i].timestamp.slice(0, 10)
                 )
-              ].count = count
+                ].count = count
               // list.push({
               //   date: data[data.length - i].timestamp.slice(0, 10),
               //   count: count,
@@ -238,7 +238,7 @@ const UserPage = (props) => {
           // list.push({ date: data[0].timestamp.slice(0, 10), value: 1 })
           list1[
             list1.findIndex((v) => v.date === data[0].timestamp.slice(0, 10))
-          ].count = todayCount
+            ].count = todayCount
           setUserZandi(list1)
         })
       // 태그 분포 api
@@ -246,13 +246,13 @@ const UserPage = (props) => {
         .then((res) => res.json())
         .then((data) => {
           let t = []
-          // console.log(data.items.slice(0, 6))
+          console.log('tabdata', data.items.slice(0, 6))
           // let sum = 0
           for (let i = 0; i < 6; i++) {
             t.push({
               subject: data.items[i].tag.key,
               // A: Math.ceil((data.items[i].exp / sum) * 100),
-              A: data.items[i].exp,
+              A: data.items[i].total,
               // A: angleData[i].A,
               // fullMark: 150,
             })
@@ -266,23 +266,24 @@ const UserPage = (props) => {
         .then((res) => res.json())
         .then((data) => {
           setUser(data)
-          // console.log(data)
+          console.log('userdata', data)
         })
       // 문제 api
       await fetch(
         '/api/v3/search/problem?query=solved_by%3A' +
-          t +
-          '&sort=level&direction=desc'
+        t +
+        '&sort=level&direction=desc'
       )
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data)
+          console.log('problemdata', data)
           setUserPro(data)
         })
       // 티어 api
       await fetch('/api/v3/user/problem_stats?handle=' + t)
         .then((res) => res.json())
         .then((data) => {
+          console.log('tierdata', data)
           var tierData = [
             {
               style: 'rgb(163,92,33)',
@@ -333,16 +334,16 @@ const UserPage = (props) => {
               num++
             }
             tierData[num].pSum += data[i].solved
-            tierData[num].eSum += data[i].exp
+            tierData[num].eSum += parseInt(Number(data[i].solved) * 1.6 ** i)
             tierData[num].type.push(data[i])
           }
 
           var circleData = []
           for (let i = 1; i < data.length; i++) {
-            if (data[i].exp === 0) {
+            if (data[i].total === 0) {
               let addData = {}
               addData.name = '?'
-              addData.value = data[i].exp
+              addData.value = data[i].total
 
               circleData.unshift(addData)
               continue
@@ -352,14 +353,14 @@ const UserPage = (props) => {
               tierData[parseInt((i - 1) / 5)].big_tear.substring(0, 1) +
               '' +
               (5 - ((i - 1) % 5))
-            addData.value = data[i].exp
+            addData.value = parseInt(Number(data[i].solved) * 1.6 ** i)
 
             circleData.unshift(addData)
           }
-          // console.log(circleData)
+          console.log('circleData', circleData)
           setCircleChart(circleData)
 
-          // console.log(tierData)
+          console.log('tierData', tierData)
           setUserTier(tierData)
           // console.log(data)
         })
@@ -401,8 +402,8 @@ const UserPage = (props) => {
             user.tier === 31
               ? 'linear-gradient( to bottom, #7df7ffd0, #ff7ca9d0 )'
               : user.tier === 0
-              ? '#343434d0'
-              : props.COLORS[props.COLORS.length - user.tier] + 'd0',
+                ? '#343434d0'
+                : props.COLORS[props.COLORS.length - user.tier] + 'd0',
         }}
       >
         <a
@@ -432,8 +433,8 @@ const UserPage = (props) => {
         >
           {props.userName === '' ? 'q9922000' : props.userName}
         </span>
-        <br />
-        <hr style={{ margin: '8% 0' }} />
+        <br/>
+        <hr style={{margin: '8% 0'}}/>
         {/* <span
           style={{
             width: '10%',
@@ -444,7 +445,7 @@ const UserPage = (props) => {
         >
          
         </span> */}
-        <span style={{ fontSize: '1.5em', }}>
+        <span style={{fontSize: '1.5em',}}>
           {user.solvedCount} {'   '}문제 해결
         </span>
       </div>
@@ -474,10 +475,10 @@ const UserPage = (props) => {
               return `color-beammp-${c}`
             }}
             tooltipDataAttrs={(value) => {
-              return { 'data-tip': `${value.date} ${value.count}문제` }
+              return {'data-tip': `${value.date} ${value.count}문제`}
             }}
           />
-          <ReactTooltip />
+          <ReactTooltip/>
         </div>
         <div className="tearTable">
           <p>난이도 분포</p>
@@ -514,13 +515,13 @@ const UserPage = (props) => {
               <div className="datahead">문제</div>
               <div className="datahead">EXP</div>
             </div>
-            <hr />
+            <hr/>
             {userTier.map((BigTears, index) => (
               <div key={BigTears.big_tear}>
                 <div onClick={() => onClickEnter(index)}>
                   <div
                     className="BigTears"
-                    style={{ color: BigTears.style, fontWeight: 'bold' }}
+                    style={{color: BigTears.style, fontWeight: 'bold'}}
                   >
                     {BigTears.big_tear}
                   </div>
@@ -542,7 +543,7 @@ const UserPage = (props) => {
                       >
                         <div
                           className="data"
-                          style={{ color: BigTears.style, fontWeight: 'bold' }}
+                          style={{color: BigTears.style, fontWeight: 'bold'}}
                         >
                           {BigTears.big_tear.substr(0, 1)}
                           {5 - index2}
@@ -629,9 +630,9 @@ const UserPage = (props) => {
           <div className="angleChart">
             <ResponsiveContainer width="100%" height={500}>
               <RadarChart cx="50%" cy="50%" outerRadius="80%" data={angleChart}>
-                <PolarGrid />
-                <PolarAngleAxis dataKey="subject" />
-                <PolarRadiusAxis angle={90} />
+                <PolarGrid/>
+                <PolarAngleAxis dataKey="subject"/>
+                <PolarRadiusAxis angle={90}/>
                 <Radar
                   dataKey="A"
                   stroke="#00c78b"
