@@ -93,7 +93,7 @@ function Student(props) {
         const worst = await fetch(props.serverAddress + "/WorstAlgorithm").then(
           (res) => res.json()
         );
-        const max = await fetch(props.serverAddress + "/MaxAlgorithm").then(
+        const max = await fetch(props.serverAddress + "/Algorithm/max").then(
           (res) => res.json()
         );
         const min = await fetch(props.serverAddress + "/MinAlgorithm").then(
