@@ -8,6 +8,8 @@ const httpsport = 3002;
 const WaitNotify = require('wait-notify');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 process.setMaxListeners(50);
 
 const waitNotify_Assignment_Individual = new WaitNotify(); // Assignment - execute, isFinish
@@ -84,6 +86,23 @@ var connection = mysql.createPool({
 connection.getConnection(() => {
   console.log('connecting');
 });
+
+/* Test Part - retry Separate  */
+
+const mysqlMiddleware = (req, res, next) => {
+  req.mysql = connection;
+  next();
+};
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(mysqlMiddleware);
+
+const algorithmRouter = require('./routes/algorithm');
+app.use('/algorithm', algorithmRouter);
+
 
 app.get('/userPage', async (req, res) => {
   console.log('!--------------- userPage-Get');
