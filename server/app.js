@@ -10,6 +10,7 @@ const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+require('dotenv').config();
 process.setMaxListeners(50);
 
 const waitNotify_Assignment_Individual = new WaitNotify(); // Assignment - execute, isFinish
@@ -72,19 +73,14 @@ app.get('/httpstest', (req, res) => {
   res.send('https is working?');
 });
 
-var mysql = require('mysql');
-var connection = mysql.createPool({
-  host: 'sol-skhu.duckdns.org',
-  user: 'Project',
-  password: 'testing00',
-  database: 'swp',
-  multipleStatements: true,
-  charset: 'utf8mb4',
-  connectionLimit: 30,
-});
-
-connection.getConnection(() => {
-  console.log('connecting');
+const connection = require('./config/dbConnection');
+connection.getConnection((err, conn) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
+  }
+  console.log('Connected to the database');
+  conn.release();
 });
 
 /* Test Part - retry Separate  */
@@ -103,129 +99,8 @@ app.use(mysqlMiddleware);
 const algorithmRouter = require('./routes/algorithm');
 app.use('/algorithm', algorithmRouter);
 
-
-app.get('/userPage', async (req, res) => {
-  console.log('!--------------- userPage-Get');
-
-  const userName = req.query.userName;
-  console.log('userName:', userName);
-
-  const data = {};
-
-  try {
-    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount', {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.zanData = zanDataResponse.data
-
-    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName, {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.tagData = tagDataResponse.data;
-
-    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName, {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.userData = userDataResponse.data;
-
-    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc', {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.problemData = problemDataResponse.data;
-
-    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName, {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.tierData = tierDataResponse.data;
-
-    res.json(data);
-  } catch (err) {
-    console.log('err at try\n', err);
-    res.status(500).json({error: 'Internal Server Error'});
-  }
-});
-
-app.post('/userPage', async (req, res) => {
-
-  console.log('!--------------- userPage-Post');
-
-  const userName = req.body;
-  console.log('userName:', userName);
-
-  const data = {};
-
-  try {
-    const zanDataResponse = await axios.get('https://solved.ac/api/v3/user/history?handle=' + userName + '&topic=solvedCount', {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.zanData = zanDataResponse.data
-
-    const tagDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_tag_stats?handle=' + userName, {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.tagData = tagDataResponse.data;
-
-    const userDataResponse = await axios.get('https://solved.ac/api/v3/user/show?handle=' + userName, {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.userData = userDataResponse.data;
-
-    const problemDataResponse = await axios.get('https://solved.ac/api/v3/search/problem?query=solved_by%3A' + userName + '&sort=level&direction=desc', {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.problemData = problemDataResponse.data;
-
-    const tierDataResponse = await axios.get('https://solved.ac/api/v3/user/problem_stats?handle=' + userName, {
-      headers: {
-        Cookie: 'solvedacToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJxOTkyMjAwMCIsInRva2VuVmVyc2lvbiI6MiwiaWF0IjoxNjg4NDUyMzYwfQ.WhtDZ_KeSPBNGq33gP08XVE_YOLLySGczMModtU1U4M.Yi6WhNs26SuwQ8OlWE8ALsVz52nh%2BFLyrR9GIyYC%2B2Y'
-      },
-      credentials: 'include',
-      withCredentials: true
-    });
-    data.tierData = tierDataResponse.data;
-
-    res.json(data);
-  } catch (err) {
-    console.log('err at try\n', err);
-    res.status(500).json({error: 'Internal Server Error'});
-  }
-});
+const userPageRouter = require('./routes/userPage')
+app.use('/userPage', userPageRouter);
 
 /* --------------- QnA Part --------------- */
 app.post('/QnAUser', (req, res) => {
