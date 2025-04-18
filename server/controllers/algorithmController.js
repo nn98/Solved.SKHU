@@ -1,54 +1,41 @@
+// controllers/algorithmController.js
 const AlgorithmModel = require('../models/algorithmModel');
 
 const AlgorithmController = {
-    getMax: (req, res) => {
-        AlgorithmModel.getMaxProblems(req.mysql, (err, result) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ error: "최다 해결 문제 조회 실패" });
-            }
-            res.json(result);
-        });
+    getMax: async (req, res) => {
+        try {
+            const results = await AlgorithmModel.getMaxProblems(req.mysql);
+            res.json(results);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
     },
 
-    getMin: (req, res) => {
-        AlgorithmModel.getMinProblems(req.mysql, (err, result) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ error: "최소 해결 문제 조회 실패" });
-            }
-            res.json(result);
-        });
+    getMin: async (req, res) => {
+        try {
+            const results = await AlgorithmModel.getMinProblems(req.mysql);
+            res.json(results);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
     },
 
-    getBest: (req, res) => {
-        AlgorithmModel.getBestProblems(req.mysql, (err, result) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ error: "베스트 문제 조회 실패" });
-            }
-            res.json(result);
-        });
+    getBest: async (req, res) => {
+        try {
+            const results = await AlgorithmModel.getBestProblems(req.mysql);
+            res.json(results);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
     },
 
-    getWorst: (req, res) => {
-        AlgorithmModel.getWorstProblems(req.mysql, (err, result) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ error: "워스트 문제 조회 실패" });
-            }
-            res.json(result);
-        });
-    },
-
-    getTest: (req, res) => {
-        AlgorithmModel.getTest(req.mysql, (err, result) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ error: "테스트 문제 조회 실패" });
-            }
-            res.json(result);
-        });
+    getWorst: async (req, res) => {
+        try {
+            const results = await AlgorithmModel.getWorstProblems(req.mysql);
+            res.json(results);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
     }
 };
 
