@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const axios = require('axios');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -8,6 +7,8 @@ const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+
+const app = express();
 require('dotenv').config();
 process.setMaxListeners(50);
 
@@ -29,49 +30,12 @@ let AssignTaskExecute_Rating = false; // - waitNotify_Rating
 
 app.use(cors());
 app.use(bodyParser.json());
-// app.listen(port, () => {
-//   console.log(`express is  ${port}`);
-// });
-
-// const fs = require('fs');
-
-// const https = require('https');
-
-// const privateKey = fs.readFileSync(
-//   '/etc/letsencrypt/live/sol-skhu.duckdns.org/privkey.pem',
-//   'utf8'
-// );
-// const certificate = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/cert.pem', 'utf8');
-// const ca = fs.readFileSync('/etc/letsencrypt/live/sol-skhu.duckdns.org/chain.pem', 'utf8');
-
-// const credentials = {
-//   key: privateKey,
-//   cert: certificate,
-//   ca: ca,
-// };
-
-// Starting both http & https servers
 const port = process.env.PORT || 3001;
 const http = require('http');
 
-
-// const httpsServer = https.createServer(credentials, app);
 const httpServer = http.createServer(app);
 httpServer.listen(port, () => {
   console.log(`HTTP Server running on port ${port}`);
-});
-
-
-// httpsServer.listen(httpsport, () => {
-//   console.log(`HTTPS Server running on port  ${httpsport}`);
-// });
-
-app.get('/', (req, res) => {
-  res.send('working?');
-});
-
-app.get('/httpstest', (req, res) => {
-  res.send('https is working?');
 });
 
 const connection = require('./config/dbConnection');
@@ -84,18 +48,27 @@ connection.getConnection((err, conn) => {
   conn.release();
 });
 
+app.get('/', (req, res) => {
+  res.send('working?');
+});
+
 /* Test Part - retry Separate  */
 
-const mysqlMiddleware = (req, res, next) => {
-  req.mysql = connection;
+// const mysqlMiddleware = (req, res, next) => {
+//   req.mysql = connection;
+//   next();
+// };
+// app.use(mysqlMiddleware);
+
+app.use((req, res, next) => {
+  req.mysql = connection; // 커넥션 풀을 req에 할당
   next();
-};
+});
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(mysqlMiddleware);
 
 const algorithmRouter = require('./routes/algorithm');
 app.use('/algorithm', algorithmRouter);
