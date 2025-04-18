@@ -2,7 +2,7 @@
 const RatingModel = require('../models/ratingModel');
 
 const RatingController = {
-    rating: async (req, res) => {
+    getRating: async (req, res) => {
         try {
             const userId = req.body.ID;
             if (!userId) return res.status(400).json({ error: 'ID is required' });
