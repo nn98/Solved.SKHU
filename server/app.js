@@ -71,15 +71,8 @@ app.use('/QnA', qnaRouter);
 const ratingRouter = require('./routes/rating');
 app.use('/rating', ratingRouter);
 
-/* --------------- Ranking Part --------------- */
-app.get('/ranking', (req, res) => {
-  const sql = 'select * from user order by skhurank';
-  connection.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    res.send(result);
-  });
-});
-/* --------------- Ranking Part --------------- */
+const rankingRouter = require('./routes/ranking');
+app.use('/ranking', rankingRouter);
 
 /* --------------- Recommend Algorithm Part --------------- */
 app.get('/MaxAlgorithm', (req, res) => {
