@@ -1,38 +1,37 @@
-// controllers/algorithmController.js
 const AlgorithmModel = require('../models/algorithmModel');
 
 const AlgorithmController = {
-    getMax: async (req, res) => {
+    getMaxAlgorithm: async (req, res) => {
         try {
-            const results = await AlgorithmModel.getMaxProblems(req.mysql);
-            res.json(results);
+            const result = await AlgorithmModel.getMaxAlgorithm();
+            res.json(result);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
     },
 
-    getMin: async (req, res) => {
+    getMinAlgorithm: async (req, res) => {
         try {
-            const results = await AlgorithmModel.getMinProblems(req.mysql);
-            res.json(results);
+            const result = await AlgorithmModel.getMinAlgorithm();
+            res.json(result);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
     },
 
-    getBest: async (req, res) => {
+    getBestAlgorithm: async (req, res) => {
         try {
-            const results = await AlgorithmModel.getBestProblems(req.mysql);
-            res.json(results);
+            const result = await AlgorithmModel.getBestAlgorithm();
+            res.json(result);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
     },
 
-    getWorst: async (req, res) => {
+    getWorstAlgorithm: async (req, res) => {
         try {
-            const results = await AlgorithmModel.getWorstProblems(req.mysql);
-            res.json(results);
+            const result = await AlgorithmModel.getWorstAlgorithm();
+            res.json(result);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }

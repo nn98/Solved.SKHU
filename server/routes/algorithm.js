@@ -3,9 +3,9 @@ const express = require('express');
 const router = express.Router();
 const AlgorithmController = require('../controllers/algorithmController');
 
-router.get('/max', AlgorithmController.getMax);
-router.get('/min', AlgorithmController.getMin);
-router.get('/best', AlgorithmController.getBest);
-router.get('/worst', AlgorithmController.getWorst);
+router.get('/max', AlgorithmController.getMaxAlgorithm);
+router.get('/min', AlgorithmController.getMinAlgorithm);
+router.get('/best', AlgorithmController.getBestAlgorithm);
+router.get('/worst', AlgorithmController.getWorstAlgorithm);
 
 module.exports = router;
