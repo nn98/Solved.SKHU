@@ -69,31 +69,31 @@ const qnaRouter = require('./routes/qna');
 app.use('/QnA', qnaRouter);
 
 /* --------------- Rating Part --------------- */
-app.post('/rating', async (req, res) => {
+app.get('/rating', async (req, res) => {
   let i;
-  console.log('rating-post: call', req.body.ID);
+  console.log('rating-post: call', req.query.ID);
   const sqls = [
-    // 'select skhurank from User where ID ="' + req.body.ID + '";',
+    // 'select skhurank from User where ID ="' + req.query.ID + '";',
     'select problem_id, namekr, solved_rank ,count(problem_id) as sum from user right join solve on user.id = solve.user_id' +
     ' join problem on solve.problem_id = problem.id where user.id in (',
 
     'select id from user where skhurank = (select skhurank from user where id="' +
-    req.body.ID +
+    req.query.ID +
     '")-2 ',
 
     'union select id from user where skhurank = (select skhurank from user where id="' +
-    req.body.ID +
+    req.query.ID +
     '")-1 union ',
 
     'select id from user where skhurank = (select skhurank from user where id="' +
-    req.body.ID +
+    req.query.ID +
     '")+1 ',
     'union select id from user where skhurank = (select skhurank from user where id="' +
-    req.body.ID +
+    req.query.ID +
     '")+2) ',
 
     'and problem_id not in(select problem_id from solve where user_id = "' +
-    req.body.ID +
+    req.query.ID +
     '")' +
     'group by problem_id having count(problem_id)>=1 order by count(problem_id) desc;',
     // ")"
@@ -102,22 +102,22 @@ app.post('/rating', async (req, res) => {
     // "",
     '',
     'select * from user where skhurank = (select skhurank from user where id="' +
-    req.body.ID +
+    req.query.ID +
     '")-2 ',
     'union select * from user where skhurank = (select skhurank from user where id="' +
-    req.body.ID +
+    req.query.ID +
     '")-1 union ',
     'select * from user where skhurank = (select skhurank from user where id="' +
-    req.body.ID +
+    req.query.ID +
     '") ',
     'union select * from user where skhurank = (select skhurank from user where id="' +
-    req.body.ID +
+    req.query.ID +
     '")+1 ',
     'union select * from user where skhurank = (select skhurank from user where id="' +
-    req.body.ID +
+    req.query.ID +
     '")+2; ',
   ];
-  const query1 = 'select skhurank from user where id = "' + req.body.ID + '";';
+  const query1 = 'select skhurank from user where id = "' + req.query.ID + '";';
 
   AssignTaskExecute_Rating = true;
   connection.query(query1, async function (err, result, fields) {
