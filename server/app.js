@@ -46,16 +46,6 @@ let AsyncTaskExecute_Assignment_Individual = [false, false];
 const waitNotify_Assignment_All_Task = new WaitNotify(); // AssignTaskExecute_Assignment_All_Task
 let AssignTaskExecute_Assignment_All_Task = false; // - waitNotify_Assignment_All_Task
 
-const waitNotify_StudentRegister = new WaitNotify(); // AssignTaskExecute_StudentRegister
-let AssignTaskExecute_StudentRegister = false; // - waitNotify_StudentRegister
-
-// UserRegister - canceled _ addCorrection ?_ userUpdate ?_ solvePage ?_ correction Update
-const waitNotify_UserRegister = new WaitNotify(); // AssignTaskExecute_UserRegister
-let AssignTaskExecute_UserRegister = false; // - waitNotify_UserRegister
-
-const waitNotify_Rating = new WaitNotify(); // AssignTaskExecute_Rating
-let AssignTaskExecute_Rating = false; // - waitNotify_Rating
-
 app.get('/', (req, res) => {
   res.send('working?');
 });
@@ -77,6 +67,16 @@ app.use('/rating', ratingRouter);
 
 const rankingRouter = require('./routes/ranking');
 app.use('/ranking', rankingRouter);
+
+const registerRouter = require('./routes/register');
+app.use('/register', registerRouter); // 모든 등록 관련 경로는 /register 하위로
+
+const waitNotify_StudentRegister = new WaitNotify(); // AssignTaskExecute_StudentRegister
+let AssignTaskExecute_StudentRegister = false; // - waitNotify_StudentRegister
+
+// UserRegister - canceled _ addCorrection ?_ userUpdate ?_ solvePage ?_ correction Update
+const waitNotify_UserRegister = new WaitNotify(); // AssignTaskExecute_UserRegister
+let AssignTaskExecute_UserRegister = false; // - waitNotify_UserRegister
 
 /* --------------- Register Part - Professor --------------- */
 app.post('/proRegister', (req, res) => {
