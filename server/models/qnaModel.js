@@ -1,66 +1,84 @@
 // models/qnaModel.js
-class QnaModel {
-    static executeQuery(connection, sql, params = []) {
-        return new Promise((resolve, reject) => {
-            connection.query(sql, params, (err, results) => {
-                if (err) return reject(err);
-                resolve(results);
-            });
-        });
-    }
+const prisma = require('../prisma/client');
 
+class QnaModel {
     // 사용자 생성
-    static createUser(connection, userData) {
-        const sql = 'INSERT INTO qnauser SET ?';
-        return this.executeQuery(connection, sql, userData);
+    static async createUser(userData) {
+        // userData: { name, password, ... }
+        return prisma.qnauser.create({ data: userData });
     }
 
     // 질문 전체 조회
-    static getQuestions(connection) {
-        const sql = 'SELECT * FROM qna ORDER BY createdat DESC';
-        return this.executeQuery(connection, sql);
+    static async getQuestions() {
+        return prisma.qna.findMany({
+            orderBy: { createdat: 'desc' }
+        });
     }
 
     // 문제 목록 조회
-    static getProblems(connection) {
-        const sql = 'SELECT DISTINCT problem_id FROM solve';
-        return this.executeQuery(connection, sql);
+    static async getProblems() {
+        const problems = await prisma.$queryRaw`SELECT DISTINCT problem_id FROM solve`;
+        return problems;
     }
 
     // 답변 전체 조회
-    static getAnswers(connection) {
-        const sql = 'SELECT * FROM qnainner';
-        return this.executeQuery(connection, sql);
+    static async getAnswers() {
+        return prisma.qnainner.findMany();
     }
 
     // 사용자 인증
-    static verifyUser(connection, userId, password) {
-        const sql = 'SELECT * FROM qnauser WHERE name = ? AND password = ?';
-        return this.executeQuery(connection, sql, [userId, password]);
+    static async verifyUser(userId, password) {
+        return prisma.qnauser.findFirst({
+            where: {
+                name: userId,
+                password: password
+            }
+        });
     }
 
     // 질문 추가
-    static addQuestion(connection, content, userIP, userId, problem) {
-        const sql = 'INSERT INTO qna(content, userip, user_id, problem) VALUES (?,?,?,?)';
-        return this.executeQuery(connection, sql, [content, userIP, userId, problem]);
+    static async addQuestion(content, userIP, userId, problem) {
+        return prisma.qna.create({
+            data: {
+                content,
+                userip: userIP,
+                user_id: userId,
+                problem
+            }
+        });
     }
 
     // 답변 추가
-    static addAnswer(connection, content, userIP, userId, qnaId) {
-        const sql = 'INSERT INTO qnainner(content, userip, user_id, qna_id) VALUES (?,?,?,?)';
-        return this.executeQuery(connection, sql, [content, userIP, userId, qnaId]);
+    static async addAnswer(content, userIP, userId, qnaId) {
+        return prisma.qnainner.create({
+            data: {
+                content,
+                userip: userIP,
+                user_id: userId,
+                qna_id: qnaId
+            }
+        });
     }
 
     // 질문 삭제
-    static deleteQuestion(connection, id, userId) {
-        const sql = 'DELETE FROM qna WHERE id = ? AND user_id = ?';
-        return this.executeQuery(connection, sql, [id, userId]);
+    static async deleteQuestion(id, userId) {
+        // 질문 id와 user_id가 모두 일치해야 삭제
+        return prisma.qna.deleteMany({
+            where: {
+                id: id,
+                user_id: userId
+            }
+        });
     }
 
     // 답변 삭제
-    static deleteAnswer(connection, id, userId) {
-        const sql = 'DELETE FROM qnainner WHERE id = ? AND user_id = ?';
-        return this.executeQuery(connection, sql, [id, userId]);
+    static async deleteAnswer(id, userId) {
+        return prisma.qnainner.deleteMany({
+            where: {
+                id: id,
+                user_id: userId
+            }
+        });
     }
 }
 
