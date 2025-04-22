@@ -28,6 +28,7 @@ class QnaModel {
 
     // 사용자 인증
     static async verifyUser(userId, password) {
+        console.log('userId', userId, 'password', password);
         return prisma.qnauser.findFirst({
             where: {
                 name: userId,
