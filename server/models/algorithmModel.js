@@ -5,12 +5,12 @@ class AlgorithmModel {
         return prisma.$queryRaw`
             SELECT
                 problem.solved_rank,
-                problem.id,
+                problem.problem_id,
                 problem.namekr,
                 problem.rate,
                 COUNT(solve.problem_id) AS sum
             FROM solve
-                JOIN problem ON solve.problem_id = problem.id
+                JOIN problem ON solve.problem_id = problem.problem_id
             GROUP BY solve.problem_id
             HAVING COUNT(solve.problem_id) > 0
             ORDER BY sum DESC
@@ -22,12 +22,12 @@ class AlgorithmModel {
         return prisma.$queryRaw`
             SELECT
                 problem.solved_rank,
-                problem.id,
+                problem.problem_id,
                 problem.namekr,
                 problem.rate,
                 COUNT(solve.problem_id) AS sum
             FROM solve
-                JOIN problem ON solve.problem_id = problem.id
+                JOIN problem ON solve.problem_id = problem.problem_id
             GROUP BY solve.problem_id
             HAVING COUNT(solve.problem_id) > 0
             ORDER BY sum ASC
@@ -38,13 +38,13 @@ class AlgorithmModel {
     static async getBestAlgorithm() {
         return prisma.$queryRaw`
             SELECT
-                id,
+                problem_id,
                 namekr,
                 rate,
                 solved_rank
             FROM problem
             WHERE
-                id IN (SELECT problem_id FROM solve)
+                problem_id IN (SELECT problem_id FROM solve)
               AND namekr REGEXP '^[가-힇 % %]*$'
             ORDER BY CAST(rate AS SIGNED) DESC
                 LIMIT 10
@@ -54,13 +54,13 @@ class AlgorithmModel {
     static async getWorstAlgorithm() {
         return prisma.$queryRaw`
             SELECT
-                id,
+                problem_id,
                 namekr,
                 rate,
                 solved_rank
             FROM problem
             WHERE
-                id IN (SELECT problem_id FROM solve)
+                problem_id IN (SELECT problem_id FROM solve)
               AND namekr REGEXP '^[가-힇 % %]*$'
             ORDER BY CAST(rate AS SIGNED) ASC
                 LIMIT 10

@@ -27,57 +27,60 @@ class QnaModel {
     }
 
     // 사용자 인증
-    static async verifyUser(userId, password) {
-        console.log('userId', userId, 'password', password);
+    static async verifyUser(user_id, password) {
         return prisma.qnauser.findFirst({
             where: {
-                name: userId,
+                user_id: user_id,
                 password: password
             }
         });
     }
 
     // 질문 추가
-    static async addQuestion(content, userIP, userId, problem) {
+    static async addQuestion(content, user_ip, user_id, problem) {
+        // user_id는 FK 관계라면 connect 사용 필요 (아래 주석 참고)
         return prisma.qna.create({
             data: {
                 content,
-                userip: userIP,
-                user_id: userId,
-                problem
+                user_ip,
+                problem,
+                user: { connect: { user_id } }
             }
         });
+        // 만약 FK가 아니라면 아래처럼 사용
+        // return prisma.qna.create({
+        //     data: { content, user_ip, user_id, problem }
+        // });
     }
 
     // 답변 추가
-    static async addAnswer(content, userIP, userId, qnaId) {
+    static async addAnswer(content, user_ip, user_id, qna_id) {
         return prisma.qnainner.create({
             data: {
                 content,
-                userip: userIP,
-                user_id: userId,
-                qna_id: qnaId
+                user_ip,
+                user_id,
+                qna_id
             }
         });
     }
 
     // 질문 삭제
-    static async deleteQuestion(id, userId) {
-        // 질문 id와 user_id가 모두 일치해야 삭제
+    static async deleteQuestion(qna_question_id, user_id) {
         return prisma.qna.deleteMany({
             where: {
-                id: id,
-                user_id: userId
+                qna_question_id: qna_question_id,
+                user_id: user_id
             }
         });
     }
 
     // 답변 삭제
-    static async deleteAnswer(id, userId) {
+    static async deleteAnswer(id, user_id) {
         return prisma.qnainner.deleteMany({
             where: {
                 id: id,
-                user_id: userId
+                user_id: user_id
             }
         });
     }

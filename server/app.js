@@ -128,7 +128,7 @@ app.post('/studentRegister', async (req, res) => {
     if ((b.sC === 'stuSK#') | (b.sC === 'S')) {
         console.log('Student code is correct');
         let sql =
-            'insert into student (id, name, bojid) values(' +
+            'insert into student (student_id, name, bojid) values(' +
             Number(b.sI) +
             ', ' +
             "'" +
@@ -196,7 +196,7 @@ app.post('/register', async (req, res) => {
     }
     AssignTaskExecute_UserRegister = true;
     console.log('solved check success');
-    let sqls = 'select * from user where id = "' + b.ui + '"';
+    let sqls = 'select * from user where user_id = "' + b.ui + '"';
     console.log('run conntion', sqls);
 
     if (errOcc) return;
@@ -463,7 +463,7 @@ async function userUpdate(url, req) {
                         classs +
                         '",gitid = "' +
                         bojid +
-                        '" where id = "' +
+                        '" where user_id = "' +
                         userid +
                         '";';
                     console.log(sql);
@@ -581,7 +581,7 @@ async function correctionUpdate(url) {
                 }
                 id = resul4[1];
                 correction = resul4[resul4.length - 2];
-                const sql = 'update user set correction = "' + correction + '" where id = "' + id + '";';
+                const sql = 'update user set correction = "' + correction + '" where user_id = "' + id + '";';
                 console.log(sql);
                 connection.query(sql, async function (err, result, fields) {
                     if (err) {
@@ -613,7 +613,7 @@ app.get('/assignments', (req, res) => {
     console.log('!+++++++++++++++++++', 'assignments/get ', 'is called');
     let sql =
         'select * from lecture;' +
-        'select ID,replace(name,substring(name,2),\'**\') as name,bojid,Lecture_ID from student as s join learn as l on s.id=l.student_id order by name;';
+        'select s.student_id, replace(name,substring(name,2),\'**\') as name, bojid, lecture_id from student as s join learn as l on s.student_id = l.student_id order by name;';
     console.log('get Lectures', sql);
 
     connection.query(sql, function (err, result, fields) {
@@ -715,7 +715,7 @@ app.post('/assignments', async (req, res) => {
 
         sql =
             'select * from assignment_result where' +
-            ' id=' + pID +
+            ' assignment_result_id=' + pID +
             ' and lectureid=' + lectureId +
             ' and deadline=' + deadLine +
             ";";
@@ -749,12 +749,12 @@ app.post('/assignments', async (req, res) => {
             sql = 'update assignment_result set' +
                 " result='" + JSON.stringify(assignment_Result) +
                 "' where" +
-                ' id=' + pID +
+                ' assignment_result_id=' + pID +
                 ' and lectureid="' + lectureId +
                 '" and deadline=' + deadLine +
                 ";";
         } else {
-            console.log('without result:', ('insert into assignment_result (id,lectureid,deadline) values(' +
+            console.log('without result:', ('insert into assignment_result (assignment_result_id,lectureid,deadline) values(' +
                 pID +
                 ",'" +
                 lectureId +
@@ -762,7 +762,7 @@ app.post('/assignments', async (req, res) => {
                 deadLine +
                 ");"));
             sql =
-                'insert into assignment_result (id,result,lectureid,deadline) values(' +
+                'insert into assignment_result (assignment_result_id,result,lectureid,deadline) values(' +
                 pID +
                 ",'" +
                 JSON.stringify(assignment_Result) +
@@ -949,7 +949,7 @@ async function isFinish(ID_LIST, pID, deadLine, assignment_Result, flag) {
 
 async function checkResult(pid, lectureid, deadLine) {
     console.log('!——————————check result existence...');
-    let sql = 'select * from assignment_result where id=' + pid + ' and lectureid=' + lectureid + ' and deadline=' + deadLine + ';';
+    let sql = 'select * from assignment_result where assignment_result_id=' + pid + ' and lectureid=' + lectureid + ' and deadline=' + deadLine + ';';
     console.log(sql);
     try {
         connection.query(sql, async function (err, result, fields) {
@@ -1003,7 +1003,7 @@ app.post('/randomProblem', (req, res) => {
 /* +++++ UserCheck +++++ */
 app.post('/userCheck', (req, res) => {
     console.log('userCheck/get', '- called');
-    let sql = 'select ID from user;';
+    let sql = 'select use_id from user;';
     connection.query(sql, function (err, result, fields) {
         if (err) {
             console.log('error in RandomProblem/get', err);

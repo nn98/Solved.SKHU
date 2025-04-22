@@ -5,17 +5,17 @@ class ProblemModel {
     static async getMaxProblems() {
         // groupBy + join은 Prisma에서 직접 지원하지 않으므로 2단계로 구현
         const maxSolved = await prisma.solve.groupBy({
-            by: ['problemId'],
-            _count: { problemId: true },
-            orderBy: { _count: { problemId: 'desc' } },
+            by: ['problem_id'],
+            _count: { problem_id: true },
+            orderBy: { _count: { problem_id: 'desc' } },
             take: 10,
         });
 
-        const problemIds = maxSolved.map(item => item.problemId);
+        const problemIds = maxSolved.map(item => item.problem_id);
         const problems = await prisma.problem.findMany({
-            where: { id: { in: problemIds } },
+            where: { problem_id: { in: problemIds } },
             select: {
-                id: true,
+                problem_id: true,
                 namekr: true,
                 rate: true,
                 solvedRank: true,
@@ -23,8 +23,8 @@ class ProblemModel {
         });
 
         return problemIds.map(pid => {
-            const problem = problems.find(p => p.id === pid);
-            const count = maxSolved.find(m => m.problemId === pid)._count.problemId;
+            const problem = problems.find(p => p.problem_id === pid);
+            const count = maxSolved.find(m => m.problem_id === pid)._count.problem_id;
             return { ...problem, solvedCount: count };
         });
     }
@@ -32,17 +32,17 @@ class ProblemModel {
     // 최소 해결 문제
     static async getMinProblems() {
         const minSolved = await prisma.solve.groupBy({
-            by: ['problemId'],
-            _count: { problemId: true },
-            orderBy: { _count: { problemId: 'asc' } },
+            by: ['problem_id'],
+            _count: { problem_id: true },
+            orderBy: { _count: { problem_id: 'asc' } },
             take: 10,
         });
 
-        const problemIds = minSolved.map(item => item.problemId);
+        const problemIds = minSolved.map(item => item.problem_id);
         const problems = await prisma.problem.findMany({
-            where: { id: { in: problemIds } },
+            where: { problem_id: { in: problemIds } },
             select: {
-                id: true,
+                problem_id: true,
                 namekr: true,
                 rate: true,
                 solvedRank: true,
@@ -50,8 +50,8 @@ class ProblemModel {
         });
 
         return problemIds.map(pid => {
-            const problem = problems.find(p => p.id === pid);
-            const count = minSolved.find(m => m.problemId === pid)._count.problemId;
+            const problem = problems.find(p => p.problem_id === pid);
+            const count = minSolved.find(m => m.problem_id === pid)._count.problem_id;
             return { ...problem, solvedCount: count };
         });
     }
@@ -60,12 +60,12 @@ class ProblemModel {
     static async getBestProblems() {
         return prisma.$queryRaw`
             SELECT 
-                p.ID as id,
+                p.problem_id as problem_id,
                 p.namekr as namekr,
                 p.rate as rate,
                 p.SOLVED_RANK as solvedRank
             FROM problem p
-            WHERE p.ID IN (SELECT s.PROBLEM_ID FROM solve s)
+            WHERE p.problem_id IN (SELECT s.problem_id FROM solve s)
               AND p.namekr REGEXP '^[가-힇 % %]*$'
             ORDER BY CAST(p.rate AS SIGNED) DESC
             LIMIT 10
@@ -76,12 +76,12 @@ class ProblemModel {
     static async getWorstProblems() {
         return prisma.$queryRaw`
             SELECT 
-                p.ID as id,
+                p.problem_id as problem_id,
                 p.namekr as namekr,
                 p.rate as rate,
                 p.SOLVED_RANK as solvedRank
             FROM problem p
-            WHERE p.ID IN (SELECT s.PROBLEM_ID FROM solve s)
+            WHERE p.problem_id IN (SELECT s.problem_id FROM solve s)
               AND p.namekr REGEXP '^[가-힇 % %]*$'
             ORDER BY CAST(p.rate AS SIGNED) ASC
             LIMIT 10

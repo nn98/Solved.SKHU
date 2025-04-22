@@ -7,191 +7,166 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Algorithm {
-  id       String                @id @unique(map: "ID_UNIQUE") @map("ID") @db.VarChar(40)
-  namekr   String?               @map("namekr") @db.VarChar(100)
-  problems ProblemHasAlgorithm[]
-
-  @@map("algorithm")
-}
-
-model Emoji {
-  id    Int     @id @default(autoincrement()) @map("id")
-  value String? @map("value") @db.MediumText
-
-  @@map("emoji")
-}
-
-model Learn {
-  studentId Int     @map("Student_ID")
-  lectureId Int     @map("Lecture_ID")
-  lecture   Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "Learn_ibfk_1")
-  student   Student @relation(fields: [studentId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_Student_has_Lecture_Student1")
-
-  @@id([studentId, lectureId])
-  @@index([lectureId], map: "fk_Student_has_Lecture_Lecture1_idx")
-  @@index([studentId], map: "fk_Student_has_Lecture_Student1_idx")
-  @@map("learn")
-}
-
-model Lecture {
-  id           Int     @id @default(autoincrement()) @map("ID")
-  professor    String? @map("professor") @db.VarChar(45)
-  code         String? @map("code") @db.VarChar(45)
-  name         String? @map("name") @db.VarChar(45)
-  distribution Int?    @map("distribution")
-  learns       Learn[]
-
-  @@map("lecture")
-}
-
-model Problem {
-  id         Int                   @id @unique(map: "ID_UNIQUE") @default(autoincrement()) @map("ID")
-  namekr     String?               @map("namekr") @db.VarChar(1000)
-  nameen     String?               @map("nameen") @db.VarChar(1000)
-  rate       String?               @map("rate") @db.VarChar(45)
-  solvedRank Int                   @map("SOLVED_RANK")
-  solvedrank Solvedrank            @relation(fields: [solvedRank], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_PROBLEM_SOLVED_RANK1")
-  algorithms ProblemHasAlgorithm[]
-  solves     Solve[]
-
-  @@index([solvedRank], map: "fk_PROBLEM_SOLVED_RANK1_idx")
-  @@map("problem")
-}
-
-model ProblemHasAlgorithm {
-  proId     Int       @map("PRO_ID")
-  algId     String    @map("ALG_ID") @db.VarChar(100)
-  algorithm Algorithm @relation(fields: [algId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_PROBLEM_has_Algorithm_Algorithm1")
-  problem   Problem   @relation(fields: [proId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_PROBLEM_has_Algorithm_PROBLEM1")
-
-  @@id([proId, algId])
-  @@index([algId], map: "fk_PROBLEM_has_Algorithm_Algorithm1_idx")
-  @@index([proId], map: "fk_PROBLEM_has_Algorithm_PROBLEM1_idx")
-  @@map("problem_has_algorithm")
-}
-
-model Qna {
-  id        Int        @id @default(autoincrement()) @map("ID")
-  createdat DateTime   @default(now()) @map("createdat")
-  content   String?    @map("content") @db.LongText
-  userip    String     @map("userip") @db.VarChar(200)
-  userId    String     @map("USER_ID") @db.VarChar(200)
-  problem   String     @map("problem") @db.VarChar(200)
-  user      Qnauser    @relation(fields: [userId], references: [name], onDelete: Cascade, map: "Qna_ibfk_1")
-  qnainner  Qnainner[]
-
-  @@index([userId], map: "USER_ID")
-  @@map("qna")
-}
-
-model Qnainner {
-  id        Int      @id @default(autoincrement()) @map("ID")
-  createdat DateTime @default(now()) @map("createdat")
-  content   String?  @map("content") @db.LongText
-  userip    String   @map("userip") @db.VarChar(200)
-  userId    String   @map("USER_ID") @db.VarChar(200)
-  qnaId     Int      @map("QNA_ID")
-  user      Qnauser  @relation(fields: [userId], references: [name], onDelete: Cascade, map: "Qnainner_ibfk_1")
-  qna       Qna      @relation(fields: [qnaId], references: [id], onDelete: Cascade, map: "Qnainner_ibfk_2")
-
-  @@index([userId], map: "USER_ID")
-  @@index([qnaId], map: "qnaId")
-  @@map("qnainner")
-}
-
-model Qnauser {
-  name     String     @id @unique(map: "Qnauser.name_unique") @map("name") @db.VarChar(200)
-  password String     @map("password") @db.VarChar(200)
-  qnas     Qna[]
-  qnainner Qnainner[]
-
-  @@map("qnauser")
-}
-
-model Solve {
-  userId    String  @map("USER_ID") @db.VarChar(20)
-  problemId Int     @map("PROBLEM_ID")
-  date      String? @map("date") @db.VarChar(50)
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "Solve_ibfk_1")
-  problem   Problem @relation(fields: [problemId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_USER_has_PROBLEM_PROBLEM1")
-
-  @@id([problemId, userId])
-  @@index([problemId], map: "fk_USER_has_PROBLEM_PROBLEM1_idx")
-  @@index([userId], map: "fk_USER_has_PROBLEM_USER1_idx")
-  @@map("solve")
-}
-
-model Solvedrank {
-  id                               Int       @id @default(autoincrement()) @map("ID")
-  tier                             String?   @map("tier") @db.VarChar(25)
-  problems                         Problem[]
-  user_user_solvedrankTosolvedrank User[]    @relation("user_solvedrankTosolvedrank")
-
-  @@map("solvedrank")
-}
-
-model Student {
-  id     Int     @id @map("ID")
-  name   String? @map("name") @db.VarChar(45)
-  bojid  String? @map("bojid") @db.VarChar(45)
-  learns Learn[]
-
-  @@map("student")
-}
-
-model User {
-  id                                     String      @unique(map: "ID_UNIQUE") @map("ID") @db.VarChar(20)
-  problems                               Int         @map("problems")
-  solvedrank                             Int?        @map("solvedrank")
-  worldrank                              String?     @map("worldrank") @db.VarChar(100)
-  skhurank                               Int?        @map("skhurank") @db.UnsignedInt
-  rating                                 Int?        @map("rating") @db.UnsignedInt
-  class                                  String?     @map("class") @db.VarChar(45)
-  correction                             String?     @map("correction") @db.VarChar(45)
-  gitid                                  String?     @map("gitid") @db.VarChar(45)
-  ranking                                Ranking?
-  solves                                 Solve[]
-  solvedrank_user_solvedrankTosolvedrank Solvedrank? @relation("user_solvedrankTosolvedrank", fields: [solvedrank], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_USER_SOLVED.AC_RANK")
-
-  @@index([solvedrank], map: "fk_USER_SOLVED.AC_RANK_idx")
-  @@map("user")
-}
-
-model Ranking {
-  userId     String  @id @unique(map: "User_ID_UNIQUE") @map("User_ID") @db.VarChar(20)
-  worldrank  String? @map("worldrank") @db.VarChar(200)
-  skhurank   Int?    @map("skhurank") @db.UnsignedInt
-  tier       String? @map("tier") @db.VarChar(45)
-  rating     Int?    @map("rating") @db.UnsignedInt
-  class      String? @map("class") @db.VarChar(45)
-  pro        String? @map("pro") @db.VarChar(45)
-  correction String? @map("correction") @db.VarChar(45)
-  user       User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_Ranking_User1")
-
-  @@index([userId], map: "fk_Ranking_User1_idx")
-  @@map("ranking")
+model algorithm {
+  algorithm_id          String                  @id @unique(map: "ID_UNIQUE") @db.VarChar(40)
+  namekr                String?                 @db.VarChar(100)
+  problem_has_algorithm problem_has_algorithm[]
 }
 
 model assignment_result {
-  ID        Int
-  result    Json?
-  lectureId Int
-  deadline  BigInt
+  assignment_result_id Int
+  result               Json?
+  lectureId            Int
+  deadline             BigInt
 
-  @@id([ID, lectureId, deadline])
+  @@id([assignment_result_id, lectureId, deadline])
+}
+
+model emoji {
+  emoji_id Int     @id @default(autoincrement())
+  value    String? @db.MediumText
+}
+
+model learn {
+  student_id Int
+  lecture_id Int
+  lecture    lecture @relation(fields: [lecture_id], references: [lecture_id], onDelete: Cascade, onUpdate: NoAction, map: "Learn_ibfk_1")
+  student    student @relation(fields: [student_id], references: [student_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_Student_has_Lecture_Student1")
+
+  @@id([student_id, lecture_id])
+  @@index([lecture_id], map: "fk_Student_has_Lecture_Lecture1_idx")
+  @@index([student_id], map: "fk_Student_has_Lecture_Student1_idx")
+}
+
+model lecture {
+  lecture_id   Int     @id @default(autoincrement())
+  professor    String? @db.VarChar(45)
+  code         String? @db.VarChar(45)
+  name         String? @db.VarChar(45)
+  distribution Int?
+  learn        learn[]
+}
+
+model problem {
+  problem_id            Int                     @id @unique(map: "ID_UNIQUE") @default(autoincrement())
+  namekr                String?                 @db.VarChar(1000)
+  nameen                String?                 @db.VarChar(1000)
+  rate                  String?                 @db.VarChar(45)
+  SOLVED_RANK           Int
+  solved_rank           solved_rank             @relation(fields: [SOLVED_RANK], references: [solved_rank_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_PROBLEM_SOLVED_RANK1")
+  problem_has_algorithm problem_has_algorithm[]
+  solve                 solve[]
+
+  @@index([SOLVED_RANK], map: "fk_PROBLEM_SOLVED_RANK1_idx")
+}
+
+model problem_has_algorithm {
+  problem_id   Int
+  algorithm_id String    @db.VarChar(100)
+  algorithm    algorithm @relation(fields: [algorithm_id], references: [algorithm_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_PROBLEM_has_Algorithm_Algorithm1")
+  problem      problem   @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_PROBLEM_has_Algorithm_PROBLEM1")
+
+  @@id([problem_id, algorithm_id])
+  @@index([algorithm_id], map: "fk_PROBLEM_has_Algorithm_Algorithm1_idx")
+  @@index([problem_id], map: "fk_PROBLEM_has_Algorithm_PROBLEM1_idx")
+}
+
+model qna_answer {
+  qna_answer_id   Int          @id @default(autoincrement())
+  createdat       DateTime     @default(now())
+  content         String?      @db.LongText
+  user_ip         String       @db.VarChar(200)
+  user_id         String       @db.VarChar(200)
+  qna_question_id Int
+  qna_user        qna_user     @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "Qnainner_ibfk_1")
+  qna_question    qna_question @relation(fields: [qna_question_id], references: [qna_question_id], onDelete: Cascade, map: "Qnainner_ibfk_2")
+
+  @@index([user_id], map: "USER_ID")
+  @@index([qna_question_id], map: "qnaId")
+}
+
+model qna_question {
+  qna_question_id Int          @id @default(autoincrement())
+  createdat       DateTime     @default(now())
+  content         String?      @db.LongText
+  user_ip         String       @db.VarChar(200)
+  user_id         String       @db.VarChar(200)
+  problem_id      String       @db.VarChar(200)
+  qna_answer      qna_answer[]
+  qna_user        qna_user     @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "Qna_ibfk_1")
+
+  @@index([user_id], map: "USER_ID")
+}
+
+model qna_user {
+  user_id       String         @id @unique(map: "Qnauser.name_unique") @db.VarChar(200)
+  user_password String         @db.VarChar(200)
+  qna_answer    qna_answer[]
+  qna_question  qna_question[]
+}
+
+model ranking {
+  user_id    String  @id @unique(map: "User_ID_UNIQUE") @db.VarChar(20)
+  worldrank  String? @db.VarChar(200)
+  skhurank   Int?    @db.UnsignedInt
+  tier       String? @db.VarChar(45)
+  rating     Int?    @db.UnsignedInt
+  class      String? @db.VarChar(45)
+  pro        String? @db.VarChar(45)
+  correction String? @db.VarChar(45)
+  user       user    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_Ranking_User1")
+
+  @@index([user_id], map: "fk_Ranking_User1_idx")
+}
+
+model solve {
+  user_id    String  @db.VarChar(20)
+  problem_id Int
+  date       String? @db.VarChar(50)
+  user       user    @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "Solve_ibfk_1")
+  problem    problem @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_USER_has_PROBLEM_PROBLEM1")
+
+  @@id([problem_id, user_id])
+  @@index([problem_id], map: "fk_USER_has_PROBLEM_PROBLEM1_idx")
+  @@index([user_id], map: "fk_USER_has_PROBLEM_USER1_idx")
 }
 
 model solved_rank {
-  ID   Int     @id @default(autoincrement())
-  Tier String? @db.VarChar(25)
+  solved_rank_id                     Int       @id @default(autoincrement())
+  tier                               String?   @db.VarChar(25)
+  problem                            problem[]
+  user_user_solved_rankTosolved_rank user[]    @relation("user_solved_rankTosolved_rank")
+}
+
+model student {
+  student_id Int     @id
+  name       String? @db.VarChar(45)
+  bojid      String? @db.VarChar(45)
+  learn      learn[]
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model student_backup {
-  ID    Int
-  name  String? @db.VarChar(45)
-  bojid String? @db.VarChar(45)
+  student_id Int
+  name       String? @db.VarChar(45)
+  bojid      String? @db.VarChar(45)
 
   @@ignore
+}
+
+model user {
+  user_id                                   String       @unique(map: "ID_UNIQUE") @db.VarChar(20)
+  problems                                  Int
+  solved_rank                               Int?
+  worldrank                                 String?      @db.VarChar(100)
+  skhurank                                  Int?         @db.UnsignedInt
+  rating                                    Int?         @db.UnsignedInt
+  class                                     String?      @db.VarChar(45)
+  correction                                String?      @db.VarChar(45)
+  git_id                                    String?      @db.VarChar(45)
+  ranking                                   ranking?
+  solve                                     solve[]
+  solved_rank_user_solved_rankTosolved_rank solved_rank? @relation("user_solved_rankTosolved_rank", fields: [solved_rank], references: [solved_rank_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_USER_SOLVED.AC_RANK")
+
+  @@index([solved_rank], map: "fk_USER_SOLVED.AC_RANK_idx")
 }
