@@ -2,15 +2,14 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-    try {
-        // 실제 존재하는 테이블/모델명으로 테스트
-        const result = await await prisma.$queryRaw`SELECT DISTINCT problem_id FROM solve`;
-        console.log('쿼리 결과:', result);
-    } catch (e) {
-        console.error('에러:', e);
-    } finally {
-        await prisma.$disconnect();
-    }
+    prisma.qna.create({
+        data: {
+            content : 'test',
+            userip: '155',
+            user_id: 'test',
+            problem: 1000,
+        }
+    });
 }
 
 main();
