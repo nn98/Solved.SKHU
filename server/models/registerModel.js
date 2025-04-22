@@ -30,7 +30,7 @@ class RegisterModel {
             // 학생 정보 등록
             await tx.student.create({
                 data: {
-                    id: Number(sI),
+                    student_id: Number(sI),
                     name: sN,
                     bojid: bI,
                 },
@@ -39,8 +39,8 @@ class RegisterModel {
             // 수강 정보 등록
             await tx.learn.create({
                 data: {
-                    studentId: Number(sI),
-                    lectureId: lI,
+                    student_id: Number(sI),
+                    lecture_id: lI,
                 },
             });
         });
@@ -48,7 +48,7 @@ class RegisterModel {
 
     static async isUserExists(connection, userId) {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT * FROM user WHERE id = ?', [userId], (err, result) => {
+            connection.query('SELECT * FROM user WHERE user_id = ?', [userId], (err, result) => {
                 if (err) return reject(err);
                 resolve(result.length > 0);
             });
@@ -74,7 +74,7 @@ class RegisterModel {
         return {
             worldrank: resul[0],
             skhurank: resul[1],
-            userid: resul[2],
+            user_id: resul[2],
             rating: resul[3],
             classs: resul[4],
             problems: resul[5],

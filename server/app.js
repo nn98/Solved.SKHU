@@ -613,7 +613,7 @@ app.get('/assignments', (req, res) => {
     console.log('!+++++++++++++++++++', 'assignments/get ', 'is called');
     let sql =
         'select * from lecture;' +
-        'select s.student_id, replace(name,substring(name,2),\'**\') as name, bojid, lecture_id from student as s join learn as l on s.student_id = l.student_id order by name;';
+        'select s.student_id as student_id, replace(name,substring(name,2),\'**\') as name, bojid, lecture_id from student as s join learn as l on s.student_id = l.student_id order by name;';
     console.log('get Lectures', sql);
 
     connection.query(sql, function (err, result, fields) {
@@ -716,7 +716,7 @@ app.post('/assignments', async (req, res) => {
         sql =
             'select * from assignment_result where' +
             ' assignment_result_id=' + pID +
-            ' and lectureid=' + lectureId +
+            ' and lecture_id=' + lectureId +
             ' and deadline=' + deadLine +
             ";";
 
@@ -754,7 +754,7 @@ app.post('/assignments', async (req, res) => {
                 '" and deadline=' + deadLine +
                 ";";
         } else {
-            console.log('without result:', ('insert into assignment_result (assignment_result_id,lectureid,deadline) values(' +
+            console.log('without result:', ('insert into assignment_result (assignment_result_id,lecture_id,deadline) values(' +
                 pID +
                 ",'" +
                 lectureId +
@@ -762,7 +762,7 @@ app.post('/assignments', async (req, res) => {
                 deadLine +
                 ");"));
             sql =
-                'insert into assignment_result (assignment_result_id,result,lectureid,deadline) values(' +
+                'insert into assignment_result (assignment_result_id,result,lecture_id,deadline) values(' +
                 pID +
                 ",'" +
                 JSON.stringify(assignment_Result) +
@@ -949,7 +949,7 @@ async function isFinish(ID_LIST, pID, deadLine, assignment_Result, flag) {
 
 async function checkResult(pid, lectureid, deadLine) {
     console.log('!——————————check result existence...');
-    let sql = 'select * from assignment_result where assignment_result_id=' + pid + ' and lectureid=' + lectureid + ' and deadline=' + deadLine + ';';
+    let sql = 'select * from assignment_result where assignment_result_id=' + pid + ' and lecture_id=' + lectureid + ' and deadline=' + deadLine + ';';
     console.log(sql);
     try {
         connection.query(sql, async function (err, result, fields) {
@@ -1003,59 +1003,13 @@ app.post('/randomProblem', (req, res) => {
 /* +++++ UserCheck +++++ */
 app.post('/userCheck', (req, res) => {
     console.log('userCheck/get', '- called');
-    let sql = 'select use_id from user;';
+    let sql = 'select user_id from user;';
     connection.query(sql, function (err, result, fields) {
         if (err) {
-            console.log('error in RandomProblem/get', err);
+            console.log('error in userCheck/get', err);
             throw err;
         }
         console.log('userCheck/get', '- callback');
         res.json(result);
     });
 });
-
-/****************************************
-
- var createError = require('http-errors');
- var express = require('express');
- var path = require('path');
- var cookieParser = require('cookie-parser');
- var logger = require('morgan');
-
- var indexRouter = require('./routes/index');
- var usersRouter = require('./routes/users');
-
- var app = express();
-
- // view engine setup
- app.set('views', path.join(__dirname, 'views'));
- app.set('view engine', 'pug');
-
- app.use(logger('dev'));
- app.use(express.json());
- app.use(express.urlencoded({ extended: false }));
- app.use(cookieParser());
- app.use(express.static(path.join(__dirname, 'public')));
-
- app.use('/', indexRouter);
- app.use('/users', usersRouter);
-
- // catch 404 and forward to error handler
- app.use(function(req, res, next) {
- next(createError(404));
- });
-
- // error handler
- app.use(function(err, req, res, next) {
- // set locals, only providing error in development
- res.locals.message = err.message;
- res.locals.error = req.app.get('env') === 'development' ? err : {};
-
- // render the error page
- res.status(err.status || 500);
- res.render('error');
- });
-
- module.exports = app;
-
- ****************************************/

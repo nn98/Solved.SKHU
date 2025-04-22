@@ -54,13 +54,13 @@ class QnaModel {
     }
 
     // 답변 추가
-    static async addAnswer(content, user_ip, user_id, qna_id) {
+    static async addAnswer(content, user_ip, user_id, qna_question_id) {
         return prisma.qnainner.create({
             data: {
                 content,
                 user_ip,
                 user_id,
-                qna_id
+                qna_question_id
             }
         });
     }
@@ -76,10 +76,10 @@ class QnaModel {
     }
 
     // 답변 삭제
-    static async deleteAnswer(id, user_id) {
+    static async deleteAnswer(qna_answer_id, user_id) {
         return prisma.qnainner.deleteMany({
             where: {
-                id: id,
+                qna_answer_id: qna_answer_id,
                 user_id: user_id
             }
         });

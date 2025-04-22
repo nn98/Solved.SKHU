@@ -10,7 +10,7 @@ class RatingModel {
     }
 
     static async getSkhurank(connection, userId) {
-        const sql = 'SELECT skhurank FROM user WHERE id = ?';
+        const sql = 'SELECT skhurank FROM user WHERE user_id = ?';
         const result = await this.executeQuery(connection, sql, [userId]);
         return result.length > 0 ? result[0].skhurank : null;
     }
@@ -20,13 +20,13 @@ class RatingModel {
         let problemsSql = `
       SELECT problem_id, namekr, solved_rank, COUNT(problem_id) AS sum
       FROM user
-      RIGHT JOIN solve ON user.id = solve.user_id
-      JOIN problem ON solve.problem_id = problem.id
-      WHERE user.id IN (
-        SELECT id FROM user WHERE skhurank = ? - 2
-        UNION SELECT id FROM user WHERE skhurank = ? - 1
-        UNION SELECT id FROM user WHERE skhurank = ? + 1
-        UNION SELECT id FROM user WHERE skhurank = ? + 2
+      RIGHT JOIN solve ON user.user_id = solve.user_id
+      JOIN problem ON solve.problem_id = problem.problem_id
+      WHERE user.user_id IN (
+        SELECT user_id FROM user WHERE skhurank = ? - 2
+        UNION SELECT user_id FROM user WHERE skhurank = ? - 1
+        UNION SELECT user_id FROM user WHERE skhurank = ? + 1
+        UNION SELECT user_id FROM user WHERE skhurank = ? + 2
       )
       AND problem_id NOT IN (
         SELECT problem_id FROM solve WHERE user_id = ?
@@ -50,11 +50,11 @@ class RatingModel {
             problemsSql = `
         SELECT problem_id, namekr, solved_rank, COUNT(problem_id) AS sum
         FROM user
-        RIGHT JOIN solve ON user.id = solve.user_id
-        JOIN problem ON solve.problem_id = problem.id
-        WHERE user.id IN (
-          SELECT id FROM user WHERE skhurank = ? + 1
-          UNION SELECT id FROM user WHERE skhurank = ? + 2
+        RIGHT JOIN solve ON user.user_id = solve.user_id
+        JOIN problem ON solve.problem_id = problem.problem_id
+        WHERE user.user_id IN (
+          SELECT user_id FROM user WHERE skhurank = ? + 1
+          UNION SELECT user_id FROM user WHERE skhurank = ? + 2
         )
         AND problem_id NOT IN (
           SELECT problem_id FROM solve WHERE user_id = ?

@@ -16,10 +16,10 @@ model algorithm {
 model assignment_result {
   assignment_result_id Int
   result               Json?
-  lectureId            Int
+  lecture_id           Int
   deadline             BigInt
 
-  @@id([assignment_result_id, lectureId, deadline])
+  @@id([assignment_result_id, lecture_id, deadline])
 }
 
 model emoji {
@@ -48,16 +48,16 @@ model lecture {
 }
 
 model problem {
-  problem_id            Int                     @id @unique(map: "ID_UNIQUE") @default(autoincrement())
-  namekr                String?                 @db.VarChar(1000)
-  nameen                String?                 @db.VarChar(1000)
-  rate                  String?                 @db.VarChar(45)
-  SOLVED_RANK           Int
-  solved_rank           solved_rank             @relation(fields: [SOLVED_RANK], references: [solved_rank_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_PROBLEM_SOLVED_RANK1")
-  problem_has_algorithm problem_has_algorithm[]
-  solve                 solve[]
+  problem_id                                   Int                     @id @unique(map: "ID_UNIQUE") @default(autoincrement())
+  namekr                                       String?                 @db.VarChar(1000)
+  nameen                                       String?                 @db.VarChar(1000)
+  rate                                         String?                 @db.VarChar(45)
+  solved_rank                                  Int
+  solved_rank_problem_solved_rankTosolved_rank solved_rank             @relation("problem_solved_rankTosolved_rank", fields: [solved_rank], references: [solved_rank_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_PROBLEM_SOLVED_RANK1")
+  problem_has_algorithm                        problem_has_algorithm[]
+  solve                                        solve[]
 
-  @@index([SOLVED_RANK], map: "fk_PROBLEM_SOLVED_RANK1_idx")
+  @@index([solved_rank], map: "fk_PROBLEM_SOLVED_RANK1_idx")
 }
 
 model problem_has_algorithm {
@@ -132,10 +132,10 @@ model solve {
 }
 
 model solved_rank {
-  solved_rank_id                     Int       @id @default(autoincrement())
-  tier                               String?   @db.VarChar(25)
-  problem                            problem[]
-  user_user_solved_rankTosolved_rank user[]    @relation("user_solved_rankTosolved_rank")
+  solved_rank_id                           Int       @id @default(autoincrement())
+  tier                                     String?   @db.VarChar(25)
+  problem_problem_solved_rankTosolved_rank problem[] @relation("problem_solved_rankTosolved_rank")
+  user_user_solved_rankTosolved_rank       user[]    @relation("user_solved_rankTosolved_rank")
 }
 
 model student {
