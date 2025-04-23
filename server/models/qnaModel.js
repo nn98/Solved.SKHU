@@ -1,13 +1,11 @@
 // models/qnaModel.js
 const prisma = require('../prisma/client');
-const humps = require('humps'); // npm install humps
 
 class QnaModel {
     // 사용자 생성
     static async createUser(body) {
-        // body: { userId, userPassword, ... }
-        const data = humps.decamelizeKeys(body);
-        return prisma.qna_user.create({ data });
+        // body: { user_id, user_password, ... }
+        return prisma.qna_user.create({ data: body });
     }
 
     // 질문 전체 조회
@@ -24,58 +22,63 @@ class QnaModel {
 
     // 답변 전체 조회
     static async getAnswers() {
-        return prisma.qna_answer.findMany();
+        return prisma.qna_answer.findMany({
+            orderBy: { createdat: 'desc' }
+        });
     }
 
     // 사용자 인증
     static async verifyUser(body) {
-        // body: { userId, userPassword }
-        const where = humps.decamelizeKeys({
-            userId: body.userId,
-            userPassword: body.userPassword
+        // body: { user_id, user_password }
+        if (body.user_id === undefined || body.user_password === undefined) return false;
+        return prisma.qna_user.findFirst({
+            where: {
+                user_id: body.user_id,
+                user_password: body.user_password
+            }
         });
-        return prisma.qna_user.findFirst({ where });
     }
 
     // 질문 추가
     static async addQuestion(body) {
-        // body: { content, userIp, userId, problemId }
-        const data = humps.decamelizeKeys({
-            content: body.content,
-            userIp: body.userIp,
-            problemId: body.problemId
-        });
+        // body: { content, user_ip, user_id, problem_id }
         // 관계 필드는 직접 명시
-        data.qna_user = { connect: { user_id: body.userId } };
-        return prisma.qna_question.create({ data });
+        return prisma.qna_question.create({
+            data: {
+                content: body.content,
+                user_ip: body.user_ip,
+                problem_id: body.problem_id,
+                qna_user: { connect: { user_id: body.user_id } }
+            }
+        });
     }
 
     // 답변 추가 (특정 질문에)
     static async addAnswer(body) {
-        // body: { content, userIp, userId, questionId }
-        const data = humps.decamelizeKeys({
-            content: body.content,
-            userIp: body.userIp,
-            userId: body.userId,
-            qnaQuestionId: body.questionId
+        // body: { content, user_ip, user_id, qna_question_id }
+        return prisma.qna_answer.create({
+            data: {
+                content: body.content,
+                user_ip: body.user_ip,
+                qna_user: { connect: { user_id: body.user_id } },
+                qna_question: { connect: { qna_question_id: body.question_id } },
+            }
         });
-        // user_id, qna_question_id는 snake_case로 맞춰서 사용
-        return prisma.qna_answer.create({ data });
     }
 
     // 질문 단일 삭제
     static async deleteQuestion(body) {
-        // body: { questionId }
+        // body: { qna_question_id }
         return prisma.qna_question.delete({
-            where: { qna_question_id: body.questionId }
+            where: { qna_question_id: body.qna_question_id },
         });
     }
 
     // 답변 단일 삭제
     static async deleteAnswer(body) {
-        // body: { answerId }
+        // body: { qna_answer_id }
         return prisma.qna_answer.delete({
-            where: { qna_answer_id: body.answerId }
+            where: { qna_answer_id: body.answer_id }
         });
     }
 }
