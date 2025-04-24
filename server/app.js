@@ -11,6 +11,14 @@ require('dotenv').config();
 process.setMaxListeners(50);
 BigInt.prototype.toJSON = function () { return this.toString(); };
 
+const app = express();
+app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+
 const connection = require('./config/dbConnection');
 connection.getConnection((err, conn) => {
     if (err) {
@@ -20,25 +28,12 @@ connection.getConnection((err, conn) => {
     console.log('Connected to the database');
     conn.release();
 });
-
-const app = express();
-app.use(cors());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(express.urlencoded({extended: false}));
-app.use((req, res, next) => {
-    req.mysql = connection; // 커넥션 풀을 req에 할당
-    next();
-});
+app.use((req, res, next) => { req.mysql = connection; next(); }); // 커넥션 풀을 req에 할당
 
 const port = process.env.PORT || 3001;
 const http = require('http');
 const httpServer = http.createServer(app);
-httpServer.listen(port, () => {
-    console.log(`HTTP Server running on port ${port}`);
-});
+httpServer.listen(port, () => { console.log(`HTTP Server running on port ${port}`); });
 
 const waitNotify_Assignment_Individual = new WaitNotify(); // Assignment - execute, isFinish
 let AsyncTaskExecute_Assignment_Individual = [false, false];
@@ -46,9 +41,14 @@ let AsyncTaskExecute_Assignment_Individual = [false, false];
 const waitNotify_Assignment_All_Task = new WaitNotify(); // AssignTaskExecute_Assignment_All_Task
 let AssignTaskExecute_Assignment_All_Task = false; // - waitNotify_Assignment_All_Task
 
-app.get('/', (req, res) => {
-    res.send('working?');
-});
+const waitNotify_StudentRegister = new WaitNotify(); // AssignTaskExecute_StudentRegister
+let AssignTaskExecute_StudentRegister = false; // - waitNotify_StudentRegister
+
+// UserRegister - canceled _ addCorrection ?_ userUpdate ?_ solvePage ?_ correction Update
+const waitNotify_UserRegister = new WaitNotify(); // AssignTaskExecute_UserRegister
+let AssignTaskExecute_UserRegister = false; // - waitNotify_UserRegister
+
+app.get('/', (req, res) => { res.send('working?'); });
 
 const algorithmRouter = require('./routes/algorithm');
 app.use('/algorithm', algorithmRouter);
@@ -70,13 +70,6 @@ app.use('/ranking', rankingRouter);
 
 const registerRouter = require('./routes/register');
 app.use('/register', registerRouter); // 모든 등록 관련 경로는 /register 하위로
-
-const waitNotify_StudentRegister = new WaitNotify(); // AssignTaskExecute_StudentRegister
-let AssignTaskExecute_StudentRegister = false; // - waitNotify_StudentRegister
-
-// UserRegister - canceled _ addCorrection ?_ userUpdate ?_ solvePage ?_ correction Update
-const waitNotify_UserRegister = new WaitNotify(); // AssignTaskExecute_UserRegister
-let AssignTaskExecute_UserRegister = false; // - waitNotify_UserRegister
 
 /* --------------- Register Part - Professor --------------- */
 app.post('/proRegister', (req, res) => {
