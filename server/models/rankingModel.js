@@ -1,4 +1,3 @@
-// models/rankingModel.js
 const prisma = require('../prisma/client');
 
 class RankingModel {

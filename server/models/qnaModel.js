@@ -1,4 +1,3 @@
-// models/qnaModel.js
 const prisma = require('../prisma/client');
 
 class QnaModel {
