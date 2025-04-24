@@ -14,6 +14,7 @@ const RatingController = {
             // 문제 및 유저 목록 조회
             const { problems, users } = await RatingModel.getProblemsAndUsers(req.mysql, userId, skhurank);
 
+            console.log('problems',problems,'users',users);
             res.json({ problems, users });
         } catch (err) {
             console.error('Rating Error:', err);
