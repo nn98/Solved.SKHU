@@ -1,111 +1,93 @@
-const prisma = require('../prisma/client');
-
+// models/ratingModel.js
 class RatingModel {
-    // skhurank 조회
-    static async getSkhurank(userId) {
-        const user = await prisma.user.findUnique({
-            where: { user_id: userId },
-            select: { skhurank: true }
+    static executeQuery(connection, sql, params = []) {
+        return new Promise((resolve, reject) => {
+            connection.query(sql, params, (err, results) => {
+                if (err) return reject(err);
+                resolve(results);
+            });
         });
-        return user ? user.skhurank : null;
     }
 
-    // 문제 및 유저 목록 조회
-    static async getProblemsAndUsers(userId, skhurank) {
-        // skhurank가 1일 때
+    static async getSkhurank(connection, userId) {
+        const sql = 'SELECT skhurank FROM user WHERE user_id = ?';
+        const result = await this.executeQuery(connection, sql, [userId]);
+        return result.length > 0 ? result[0].skhurank : null;
+    }
+
+    static async getProblemsAndUsers(connection, userId, skhurank) {
+        // SQL 쿼리 조립 (템플릿 리터럴 활용)
+        let problemsSql = `
+            SELECT
+                p.problem_id,
+                p.namekr,
+                p.solved_rank,
+                COUNT(s.problem_id) AS sum
+            FROM
+                solve s
+                INNER JOIN
+                user u ON s.user_id = u.user_id
+                INNER JOIN
+                problem p ON s.problem_id = p.problem_id
+                LEFT JOIN
+                solve s2 ON p.problem_id = s2.problem_id AND s2.user_id = ?
+            WHERE
+                u.skhurank BETWEEN ? - 2 AND ? + 2
+              AND s2.problem_id IS NULL
+            GROUP BY
+                p.problem_id, p.namekr, p.solved_rank
+            HAVING
+                COUNT(s.problem_id) >= 1
+            ORDER BY
+                sum DESC;
+
+        `;
+
+        let usersSql = `
+      SELECT * FROM user WHERE skhurank = ? - 2
+      UNION SELECT * FROM user WHERE skhurank = ? - 1
+      UNION SELECT * FROM user WHERE skhurank = ?
+      UNION SELECT * FROM user WHERE skhurank = ? + 1
+      UNION SELECT * FROM user WHERE skhurank = ? + 2
+    `;
+
+        // skhurank가 1일 때는 일부 쿼리만 사용
+        let problemsParams, usersParams;
         if (skhurank === 1) {
-            // 문제 목록: skhurank가 1, 2, 3인 유저가 푼 문제 중, 현재 유저가 안 푼 문제
-            const solvedProblems = await prisma.solve.findMany({
-                where: { user_id: userId },
-                select: { problem_id: true }
-            });
-            const solvedProblemIds = solvedProblems.map(s => s.problem_id);
-
-            const users = await prisma.user.findMany({
-                where: {
-                    OR: [
-                        { skhurank: 1 },
-                        { skhurank: 2 },
-                        { skhurank: 3 }
-                    ]
-                }
-            });
-
-            const problems = await prisma.problem.findMany({
-                where: {
-                    solves: {
-                        some: {
-                            user: {
-                                skhurank: { in: [1, 2, 3] }
-                            }
-                        },
-                        none: {
-                            user_id: userId
-                        }
-                    }
-                },
-                select: {
-                    problem_id: true,
-                    namekr: true,
-                    solved_rank: true,
-                    solves: true
-                }
-            });
-
-            // solved 개수 집계
-            const problemsWithCount = problems.map(p => ({
-                ...p,
-                sum: p.solves.length
-            })).filter(p => p.sum >= 1)
-                .sort((a, b) => b.sum - a.sum);
-
-            return { problems: problemsWithCount, users };
+            problemsSql = `
+        SELECT problem_id, namekr, solved_rank, COUNT(problem_id) AS sum
+        FROM user
+        RIGHT JOIN solve ON user.user_id = solve.user_id
+        JOIN problem ON solve.problem_id = problem.problem_id
+        WHERE user.user_id IN (
+          SELECT user_id FROM user WHERE skhurank = ? + 1
+          UNION SELECT user_id FROM user WHERE skhurank = ? + 2
+        )
+        AND problem_id NOT IN (
+          SELECT problem_id FROM solve WHERE user_id = ?
+        )
+        GROUP BY problem_id
+        HAVING COUNT(problem_id) >= 1
+        ORDER BY COUNT(problem_id) DESC
+      `;
+            usersSql = `
+        SELECT * FROM user WHERE skhurank = ?
+        UNION SELECT * FROM user WHERE skhurank = ? + 1
+        UNION SELECT * FROM user WHERE skhurank = ? + 2
+      `;
+            problemsParams = [skhurank, skhurank, userId];
+            usersParams = [skhurank, skhurank, skhurank];
         } else {
-            // skhurank가 2 이상일 때
-            const rankRange = [skhurank - 2, skhurank - 1, skhurank, skhurank + 1, skhurank + 2];
-
-            const solvedProblems = await prisma.solve.findMany({
-                where: { user_id: userId },
-                select: { problem_id: true }
-            });
-            const solvedProblemIds = solvedProblems.map(s => s.problem_id);
-
-            const users = await prisma.user.findMany({
-                where: {
-                    skhurank: { in: rankRange }
-                }
-            });
-
-            const problems = await prisma.problem.findMany({
-                where: {
-                    solves: {
-                        some: {
-                            user: {
-                                skhurank: { gte: skhurank - 2, lte: skhurank + 2 }
-                            }
-                        },
-                        none: {
-                            user_id: userId
-                        }
-                    }
-                },
-                select: {
-                    problem_id: true,
-                    namekr: true,
-                    solved_rank: true,
-                    solves: true
-                }
-            });
-
-            // solved 개수 집계
-            const problemsWithCount = problems.map(p => ({
-                ...p,
-                sum: p.solves.length
-            })).filter(p => p.sum >= 1)
-                .sort((a, b) => b.sum - a.sum);
-
-            return { problems: problemsWithCount, users };
+            problemsParams = [skhurank, skhurank, skhurank, skhurank, userId];
+            usersParams = [skhurank, skhurank, skhurank, skhurank, skhurank];
         }
+
+        // 두 쿼리를 동시에 실행하고 결과를 합침
+        const [problems, users] = await Promise.all([
+            this.executeQuery(connection, problemsSql, problemsParams),
+            this.executeQuery(connection, usersSql, usersParams),
+        ]);
+        return { problems, users };
     }
 }
 
