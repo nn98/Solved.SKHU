@@ -60,7 +60,7 @@ class QnaModel {
                 content: body.content,
                 user_ip: body.user_ip,
                 qna_user: { connect: { user_id: body.user_id } },
-                qna_question: { connect: { qna_question_id: body.question_id } },
+                qna_question: { connect: { qna_question_id: body.qna_question_id } },
             }
         });
     }
