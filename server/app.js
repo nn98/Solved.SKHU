@@ -978,21 +978,6 @@ async function checkResult(pid, lectureid, deadLine) {
 
 /* +-------------- Renewal Part ------------------+ */
 
-/* +++++ Random +++++ */
-app.post('/randomProblem', (req, res) => {
-    console.log('randomProblem/get', '- called');
-    let sql = 'select * from problem where solved_rank between 1 and 17 order by rand() limit 1;';
-    console.log('get randomProblem', sql);
-    connection.query(sql, function (err, result, fields) {
-        if (err) {
-            console.log('error in RandomProblem/get', err);
-            throw err;
-        }
-        console.log('randomProblem/get', '- callback');
-        res.json(result);
-    });
-});
-
 /* +++++ UserCheck +++++ */
 app.post('/userCheck', (req, res) => {
     console.log('userCheck/get', '- called');

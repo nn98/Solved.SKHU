@@ -87,6 +87,37 @@ class ProblemModel {
             LIMIT 10
         `;
     }
+
+    static async getRandomProblem () {
+    // 1. 조건에 맞는 문제 개수 조회
+    const count = await prisma.problem.count({
+        where: {
+            solved_rank: {
+                gte: 1,
+                lte: 17
+            }
+        }
+    });
+
+    if (count === 0) return null;
+
+    // 2. 랜덤 인덱스 생성
+    const randomIndex = Math.floor(Math.random() * count);
+
+    // 3. 랜덤 문제 1개 조회
+    const problems = await prisma.problem.findMany({
+        where: {
+            solved_rank: {
+                gte: 1,
+                lte: 17
+            }
+        },
+        skip: randomIndex,
+        take: 1
+    });
+
+    return problems[0] || null;
+}
 }
 
 module.exports = ProblemModel;
