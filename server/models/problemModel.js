@@ -18,7 +18,7 @@ class ProblemModel {
                 problem_id: true,
                 namekr: true,
                 rate: true,
-                solvedRank: true,
+                solved_rank: true,
             }
         });
 
@@ -45,7 +45,7 @@ class ProblemModel {
                 problem_id: true,
                 namekr: true,
                 rate: true,
-                solvedRank: true,
+                solved_rank: true,
             }
         });
 
@@ -63,7 +63,7 @@ class ProblemModel {
                 p.problem_id as problem_id,
                 p.namekr as namekr,
                 p.rate as rate,
-                p.SOLVED_RANK as solvedRank
+                p.SOLVED_RANK as solved_rank
             FROM problem p
             WHERE p.problem_id IN (SELECT s.problem_id FROM solve s)
               AND p.namekr REGEXP '^[가-힇 % %]*$'
@@ -79,7 +79,7 @@ class ProblemModel {
                 p.problem_id as problem_id,
                 p.namekr as namekr,
                 p.rate as rate,
-                p.SOLVED_RANK as solvedRank
+                p.SOLVED_RANK as solved_rank
             FROM problem p
             WHERE p.problem_id IN (SELECT s.problem_id FROM solve s)
               AND p.namekr REGEXP '^[가-힇 % %]*$'
