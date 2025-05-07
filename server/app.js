@@ -30,11 +30,6 @@ connection.getConnection((err, conn) => {
 });
 app.use((req, res, next) => { req.mysql = connection; next(); }); // 커넥션 풀을 req에 할당
 
-const port = process.env.PORT || 3001;
-const http = require('http');
-const httpServer = http.createServer(app);
-httpServer.listen(port, () => { console.log(`HTTP Server running on port ${port}`); });
-
 const waitNotify_Assignment_Individual = new WaitNotify(); // Assignment - execute, isFinish
 let AsyncTaskExecute_Assignment_Individual = [false, false];
 
@@ -991,3 +986,5 @@ app.post('/userCheck', (req, res) => {
         res.json(result);
     });
 });
+
+module.exports = app;
