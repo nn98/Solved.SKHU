@@ -7,7 +7,7 @@
 
 <hr/>
 
-<img src="img/Member.png" alt="">
+<img src="img/Member_01.png" alt="">
 <div style="text-align: center;">
 
 |   |   **Name**    |김윤서|이현복|이영수|안석범|
