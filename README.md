@@ -13,7 +13,7 @@
 |   |   **Name**    |김윤서|이현복|이영수|안석범|
 |:--|:-------------:|:--:|:--:|:--:|:--:|
 |   | **GitHub_ID** |[nn98](https://github.com/nn98)|[LEEHYUNBOK](https://github.com/LEEHYUNBOK)|[styx2021](https://github.com/styx2021)|[Ahnseokbeom](https://github.com/Ahnseokbeom)|
-|   |   **Role**    |__BE__ <br> _Server_|__FE__ <br> _Design_|__FE__ <br> _UI_|__BE__ <br> _DB_|
+|   |   **Role**    |__FE__ <br> _UI_|__FE__ <br> _Design_|__BE__ <br> _Server_|__BE__ <br> _DB_|
 |   |   **Stack**   | <img src="https://img.shields.io/badge/Node.js-339933?style=platic&logo=node.js&logoColor=white"/> <br> <img src="https://img.shields.io/badge/Oracle Cloude-F80000?style=platic&logo=oracle&logoColor=white"/> | <img src="https://img.shields.io/badge/React.js-61DAFB?style=platic&logo=react&logoColor=white"/> <br> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white"/> |<img src="https://img.shields.io/badge/React.js-61DAFB?style=platic&logo=react&logoColor=white"/>| <img src="https://img.shields.io/badge/JAVA-007396?style=platic&logo=Joplin&logoColor=white"/><br><img src="https://img.shields.io/badge/MySQL-4479A1?style=platic&logo=MySQL&logoColor=white"/> |
 
 </div>
